@@ -106,7 +106,7 @@ git clone git@github.com:jyanglab/2022-agro932-lab.git
 
 
 ```bash
-# snapshots all the file in prparation for versioning
+# snapshots all the file in preparation for versioning
 git add --all
 
 # records file snapshots permanently in version history
@@ -123,7 +123,8 @@ git commit -m "descriptive message"
 # uploads all local branch commits to Github
 git push
 
-# updates your current local working branch with all new commits from the corresponding remote branch
+# updates your current local working branch with 
+# all new commits from the corresponding remote branch
 git pull
 ```
 
@@ -151,7 +152,7 @@ In a typical research project, I will copy the following folders into the projec
 - __data/__: Here we store our raw data of small size. 
 - __graphs/__: Graphs produced during the analysis.
 - __lib/__: Some functions used within this project.
-- __profilling/__: Contain main scripts for the project, inncluding code documentations. It contains some sub-directories.
+- __profiling/__: Contain main scripts for the project, including code documentations. It contains some sub-directories.
 
  
 ---
@@ -196,8 +197,8 @@ A __path__ specifies a unique location in a file system.
 
 I employ a numbering system to sort the research code.
 - Scripts were named by number, letter, and other numbers that separated by dots. For example:
-  - `1.pheno/A.1_pheno_processing.Rmd`
-  - `1.pheno/A.2_pheno_plot.Rmd`
+  - `profilling/1.pheno/A.1_pheno_processing.Rmd`
+  - `profilling/1.pheno/A.2_pheno_plot.Rmd`
 
 --
 
@@ -214,7 +215,7 @@ Use informative commit messages. Read the following suggestions:
 
 ### Quick Introduction to HCC
 
-- HCC cluster, i.e., __crane__, has a head node, which controls the cluster and compute nodes which is where the action happens. 
+- HCC cluster, i.e., __crane__ or __rhino__, has a head node, which controls the cluster and compute nodes which is where the action happens. 
 
 --
 
@@ -224,8 +225,14 @@ Use informative commit messages. Read the following suggestions:
 
 - The only tasks that acceptable on the head node are:
   - Compiling/building files
-  - Installing R packages
+  - Installing software or R packages
   - Submitting or checking on jobs
+
+--
+
+- Pre-installed modules
+  - `module avail`
+  - `module load R/3.6`
 
 ---
 
@@ -238,6 +245,7 @@ Use informative commit messages. Read the following suggestions:
  - You can read and write.
  - But the size is small (20GB per user).
  - Normally used for configure files, user defined functions, user installed software packages.
+  - `cd $HOME; mkdir bin`
 
 --
 
@@ -254,10 +262,12 @@ Use informative commit messages. Read the following suggestions:
 ### File systems on `crane`
   
 #### `$COMMON`:
-  - New file system. 1TB per use for free.
+  - New file system. 1TB per user for free.
   - __No backups are made__! Don’t be silly!
   - No purge policy.
   - Used to store things (i.e. code, git repo) that are routinely needed on multiple clusters
+    - `cd $COMMON; mkdir courses`
+    - `git clone git@github.com:jyanglab/2022-agro932-lab.git`
 
 
 
