@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Population differentiation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Users/jyang21/Documents/courses/2022-agro932/2022-agro932/asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Population differentiation
+### Jinliang Yang
+### Feb. 8th, 2020
+
+---
+
+
+
+
+# What is a __population__?
+
+__Population__ or __subpopulation__ (these two terms will be used interchangeably) means a group of randomly mated diploid individuals.
+
+--
+
+## At genomics level?
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="pops.png" height=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+Two populations with __A__ and __a__ alleles.
+
+#### In population 1: 
+`\(p_1 =0.8\)` and `\(q_1=0.2\)`
+
+#### In population 2: 
+`\(p_2=0.2\)` and `\(q_2=0.8\)`
+]
+
+---
+
+# Hardy-Weinberg Equilibrium (HWE)
+
+For a single locus with two alleles: 
+  - __A__ ( `\(p\)` ) and __a__  ( `\(q\)` )
+  
+There are three possible diploid genotypes:
+  - __AA__, __Aa__, and __aa__
+
+--
+
+Under HWE, assuming there is no selection, no mutation, no migration, no drift, and random mating, the expected genotype frequencies for the three diploid genotypes are:
+
+`\begin{align*}
+E(p_{AA}) = p^2 \\
+E(p_{Aa}) = 2pq \\
+E(p_{aa}) = q^2 \\
+\end{align*}`
+
+---
+
+# Population differentiation
+
+If a population is not completely random mating, the allele frequencies within a subpopulation will tend to be different. 
+- Mutation
+- Selection
+- Drift
+- Migration
+
+--
+
+## Population structure
+
+Population differentiation leads to __population structure__
+  - Individuals __within population__ tend to be more closely related than individuals __between populations__.
+
+
+---
+
+# Population differentiation
+
+&lt;div align="center"&gt;
+&lt;img src="pops.png" height=200&gt;
+&lt;/div&gt;
+
+### How do we measure differences among populations?
+
+### How do we define population in practice?
+
+
+---
+# The Wahlund Effect
+
+## Departure from HWE
+The form of the deviation from HWE is always the same:
+  - The are __fewer heterozygotes__ observed than are expected under HWE
+
+--
+
+This deficit of heterozygotes is known as the __Wahlund effect__.
+
+- It occurs when sampling multiple subpopulations without knowning the underlying population structure:
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="pops.png" height=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- Sample equal number of individuals =&gt; `\(\bar{p}=0.5\)` 
+- heterozygotes: `\(2\bar{p}\bar{q} = 0.5\)`
+- The observed heterozygotes should be `\(2p_1q_1=2 \times 0.8 \times0.2=0.32\)` or `\(2p_2q_2=0.32\)`
+]
+
+---
+
+# The Wahlund Effect
+
+A useful measure of allele frequency differences among populations will be  the variance in frequencies, `\(\sigma^2\)`.
+
+--
+
+The mean of the subpopulation allele frequencies will be:
+`\begin{align*}
+&amp; E(p) = \bar{p} = \frac{\sum_i^np_i}{n} \\
+\end{align*}`
+
+--
+The variance of `\(p\)` is:
+`\begin{align*}
+&amp; Var(p) = \sigma^2 = \frac{\sum_i^n (p_i - \bar{p})^2}{n} \\
+\end{align*}`
+
+
+--
+
+In general, the magnitude of the Wahlund effect on the expected frequency of each genotype can be denoted as:
+
+`\begin{align*}
+&amp; E(p_{AA}) = \bar{p}^2 + \sigma^2 \\
+&amp; E(P_{Aa}) = 2\bar{p}\bar{q} - 2\sigma^2 \\
+&amp; E(p_{aa}) = \bar{q}^2 + \sigma^2
+\end{align*}`
+
+Where `\(\bar{p}\)` and `\(\bar{q}\)` represent the average allele frequencies across populations.
+
+---
+# Measuring popl. differentiation using `\(F_{ST}\)`
+
+Variance in allele frequency is highly dependent on the average allele frequency.
+- i.e., a locus with an average allele freq of `\(p=0.5\)` will show a much higher variance among populations than a locus sampled from exactly the same individuals but with `\(p=0.1\)`.
+
+--
+
+To standardize the variance, we define a new statistic of differentiation as:
+
+`\begin{align*}
+F_{ST} = \frac{\sigma^2}{\bar{p}\bar{q}}
+\end{align*}`
+
+- `\(\sigma^2\)` is the observed sample variance in the freq of allele `\(A\)` among populations
+- `\(\bar{p}\)` and `\(\bar{q}\)` is the average freq of allele `\(A\)` and `\(a\)` among populations
+
+---
+# Measuring popl. differentiation using `\(F_{ST}\)`
+
+`\begin{align*}
+F_{ST} = \frac{\sigma^2}{\bar{p}\bar{q}}
+\end{align*}`
+
+- `\(\sigma^2\)` is the observed sample variance in the freq of allele `\(A\)` among populations
+- `\(\bar{p}\)` and `\(\bar{q}\)` is the average freq of allele `\(A\)` and `\(a\)` among populations
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="pops.png" height=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- `\(\sigma^2=0.09\)` 
+- `\(\bar{p} = 0.5\)` and `\(\bar{q} = 0.5\)`
+- `\(F_{ST} = \frac{0.9}{0.5 \times 0.5} = 0.36\)`
+]
+
+---
+
+# Measuring popl. differentiation using `\(F_{ST}\)`
+
+`\(F_{ST}\)` was first introduced by Wright (1931, 1943, 1951).
+- The amount of differentiation among subpopulations.
+- It had the same expected value for neutral alleles __at any frequency__.
+- `\(F_{ST}\)` ranges between 0 and 1.
+  - `\(F_{ST} = 0\)` indicates no differentiation
+  - `\(F_{ST} = 1\)` indicates complete fixation of aleternative alleles in different subpopulations
+
+
+--
+#### Relate `\(F_{ST}\)` back to the Wahlund effect
+
+`\begin{align*}
+&amp; E(p_{AA}) = \bar{p}^2 + \bar{p}\bar{q}F_{ST} \\
+&amp; E(P_{Aa}) = 2\bar{p}\bar{q} - 2\bar{p}\bar{q}F_{ST} \\
+&amp; E(p_{aa}) = \bar{q}^2 + \bar{p}\bar{q}F_{ST}
+\end{align*}`
+
+- When there is no differentiation ( `\(F_{ST}=0\)` ), there is no deficit of heterozygotes.
+- But when there is complete differentiation ( `\(F_{ST}=1\)` ), there is complete lack of heterozygotes.
+
+---
+
+# Evidence for population differentiation
+
+Using our example, by applying a `\(\chi^2\)` test, we find the probability that these allele counts were drawn from one single population to be `\(P=0.025\)`.
+
+
+```r
+chisq.test(matrix(c(8,2,2,8), ncol=2))
+```
+
+```
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  matrix(c(8, 2, 2, 8), ncol = 2)
+## X-squared = 5, df = 1, p-value = 0.02535
+```
+
+In the other words, it is likely that the two subpolutions are differentiated.
+
+--
+
+### Permutation using `\(F_{ST}\)` or related measures
+
+- The null hypothesis is that `\(F_{ST}=0\)`
+- Permute the samples among populations many times, generating a null distribution of values
+- The P-value is then based on the position of the observed value of `\(F_{ST}\)` in the simulated distribution.
+
+---
+
+# Evidence for population differentiation
+
+### How do we interpret our summaries of differentiation?
+How much is "a lot" or "a little" differentiation?
+
+--
+
+### Wright's guidelines
+
+Wright (1978, p.85)
+
+&gt; "We will take `\(F_{ST} =0.25\)` as an arbitrary value above which there is very great differentiation, the range 0.15 to 0.25 as indicating moderately great differentiation."
+
+- The results depend on the markers being used.
+- Not the magitude of any particular value of `\(F_{ST}\)`, but rather the __evolutionary forces__ driving such differentiation.
+
+
+---
+# Evolutionary processes on differentiation
+
+Much of the recent work in this field has been focused on teasing apart the patterns generated by these forces.
+
+### Mutation
+
+- The effect of mutation will be quite small, mainly be limited to the introduction of new alleles into populations
+
+
+### Drift
+
+### Migration
+
+### __Selection__
+
+- We will focus on the overall effects of selection on difference between populations. 
+ 
+
+
+---
+
+# The effect of selection on population differentiation
+
+## Strong negative selection
+ - Will prevent any variants from reaching appreciable population frequency and 
+ - Therefore, will have __little effect__ on the differentiation among segregating polymorphisms.
+
+## Weak negative selection
+- Allow variants to segregate at low frequencies 
+- but constrains the range of allele frequencies that are possible
+
+
+---
+
+## Weak negative selection
+- Allow variants to segregate at low frequencies 
+- but constrains the range of allele frequencies that are possible
+ - This constraint means that __on average `\(F_{ST}\)` will be lower for a weakly deleterious variant__ than for a typical
+  neutral one that is able to drift to any frequency.
+  
+
+&lt;div align="center"&gt;
+&lt;img src="fig5.5.png" height=300&gt;
+&lt;/div&gt;
+
+From Hahn 2019, Figure 5.5. Effect of negative selection on `\(F_{ST}\)`.
+ 
+---
+
+## Balancing selection
+
+- Weak __negative selection__ will cause variants to be _at a lower frequencies within each population_.
+- Polymorphsims under __balancing selection__ may be _at any frequency_.
+  - But, balancing selection also constrains the range of possible allele frequencies.
+  - Means smaller changes in allele frequencies between populations as compared to neutral SNPs.
+  - Acts to __lower `\(F_{ST}\)`__.
+
+
+--
+
+## Positive selection
+
+Acts similarly across all subpopulations within a species _is not expected to cause population differentiation_.
+
+However, positive selection restricted to a subset of populations, refferred to as __local adaptation__,
+can result in very large differences in allele frequencies.
+
+---
+
+## Positive selection
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="fig5.6.png" height=500&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+From Hahn 2019, Figure 5.6. Effect of positive selection on `\(F_{ST}\)`.
+
+Figure shows the large excess of nonsynonymous SNPs with `\(F_{ST} &gt; 0.65\)`.
+
+This excess is measured relative to SNPs presumed to be under little direct selection (in this example, nongenic SNPs).
+]
+
+
+---
+
+# Defining Populations
+
+- Require to first identify populations
+- To assign our samples to these populations
+
+--
+
+#### Population are known ahead of time
+- The assignment of individuals to populations.
+
+#### Population are not predefined
+- Simultaneously estimate the number of populations and to assign individuals to populations.
+
+--
+
+#### Admixed population
+
+Some individuals in our sample may have mixed ancestry
+- Genetic origins trace back to multiple populations.
+- To estimate the fraction of their ancestry contributed by each source population.
+
+---
+
+## Using the Wahlund effect to identify population structure
+
+The logic is:
+
+- Mis-assigning individuals to subpopulations can cause them to be in __Hardy-Weinberg disequilibrium__ by introducing unlikely genotypes.
+
+--
+
+- One way is to attempt to minimize the amount of __Hardy-Weinberg disequilibrium__
+
+--
+
+Most software packages do this by trying a very large number of different assignments, often by using MCMC methods.
+  - structure
+  - fineSTRUCTURE
+  - ADMIXTURE
+  - NGSadmix
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
