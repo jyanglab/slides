@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Direct Selection</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Direct Selection
+### Jinliang Yang
+### Feb. 15th, 2020
+
+---
+
+
+
+
+
+# Direct and linked selection
+
+Mutations are __advantageous__, __deleterious__, or __neutral__.
+
+### Direct selection
+The effects of selection on these mutation themselves
+
+### Linked selection
+The effects of selection on mutations closely linked to those under selection.
+
+
+--
+
+-------
+
+Because the __expected patterns of polymorphism__ are often different, and therefore different methods will be used to detect one type of selection or the other.
+
+---
+# The accumulation of sequence divergence
+
+
+### Cumulative number of mutations in different timescales
+
+- 100 years
+  - Different lines, varieties, etc.
+
+--
+
+- 10,000 years
+  - wild ancestors, modern breeding lines
+  
+--
+
+- 10 million years
+  - Two different species, i.e., the grass (_Poaceae_) subfamilies diverged from a common ancestor 60-80 My.
+  - Grasses (wheat, barley, Brachypodium, Sorghum, Oryza, Zea)
+
+--
+
+------------
+
+Species differ because new alleles arise and are fixed.
+
+  
+---
+# The accumulation of sequence divergence
+
+
+## Necleotide substituion rate ( `\(k\)` )
+
+The variable `\(k\)` is defined as the substitution rate of __new alleles__
+  - The rate of alleles that are fixed over long periods of time.
+  - It determines how quickly two squences are expected to diverge over time.
+
+--
+
+## Sequence divergence ( `\(d\)` )
+
+We define `\(d\)` as the genetic distance between two orthologous sequences. 
+- We generally calculate `\(d\)` by taking a single sequence from each species and counting the number of positions that differ between them, divided by the total number of aligned necleotides.
+
+
+---
+
+# The accumulation of sequence divergence
+
+The contribution of the __rate of substituion ( `\(k\)` )__ to the expected amount of __divergence ( `\(d\)` )__ can be seen in the following equation:
+
+`\begin{align*}
+E(d) = k2t + \theta_{Anc}
+\end{align*}`
+
+- Where `\(k\)` represents the allele substitution rate.
+- `\(t\)` is the time since the species split
+  - We use `\(2t\)` because substitutions can occur on both branches of the phylogenetic tree.
+- `\(\theta_{Anc}\)`: average amount of nucleotide variation expected between two sequences in the ancestor.
+  - Because at the time of speciation there differences have already accumulated along the two linages.
+
+--
+
+Simplified as below if assuming divergence levels are much greater than the expected levels of polymorphism in the ancestral species,
+
+`\begin{align*}
+E(d) = k2t
+\end{align*}`
+
+
+---
+
+# What affects `\(k\)`?
+
+Two quantities determine the rate of substitution ( `\(k\)` ).
+
+### The probability of fixation of any mutation ( `\(u\)` ).
+
+### The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# Fixation rate of new mutation
+
+
+#### Neutral mutation ( `\(u_0\)` )
+
+If a mutation has no effect on fitness, the probability of fixing is equal to __its current frequency__. 
+
+--
+
+New mutations always begin at frequency `\(\frac{1}{2N}\)`, therefore,
+
+`\begin{align*}
+u_0 = \frac{1}{2N}
+\end{align*}`
+
+--
+
+#### Advantageous mutations ( `\(u_a\)` )
+
+For new, advantageous mutations ( `\(s &gt; 0\)` ) and large effective population sizes, the probability of fixation is
+
+`\begin{align*}
+u_a \approx 2s_a
+\end{align*}`
+
+according to Haldane 1927; Fisher 1930; Wright 1931.
+
+- `\(s_a\)` is the __selective advantage of the new allele in a heterozygote__ and `\(2s_a\)` in a homozygote.
+
+---
+
+# Fixation rate of new mutation
+
+#### Deleterious mutations ( `\(u_d\)` )
+
+For new, deleterious mutations ( `\(s &lt; 0\)` ) that don't have large effects, the probability of fixation is (Kimura 1957):
+
+`\begin{align*}
+u_d \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+- Here `\(s_d\)` is the __deleterious effect of the new allele in a heterozygote__ and `\(2s_d\)` is the effect in a homozygote.
+
+
+
+---
+# Fixation rate of new mutation
+
+Probability of fixation, relative to a neutral allele, of new, selected mutations:
+
+`\begin{align*}
+u/u_0 \approx \frac{2s}{1 - e^{(-4N s)}} / \frac{1}{2N} = \frac{4Ns}{1 - e^{(-4N s)}}
+\end{align*}`
+
+.pull-left[
+
+```r
+ns &lt;- seq(from = -1, to =1, by=0.01)
+plot(ns, 4*ns/(1 - exp(-4*ns)), xlab="Ns", ylab="")
+abline(v=0, lty=2, lwd=2)
+```
+
+&lt;img src="w5class_files/figure-html/unnamed-chunk-1-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+
+--
+
+.pull-right[
+- `\(Ns=0\)`, neutral mutations
+- `\(Ns &gt; 0\)`, slightly advantageous mutations are not that much more likely to fix than neutral mutations.
+- `\(Ns &lt; 0\)`, slightly deleterious mutations have some probability of fixing.
+]
+
+
+---
+
+# What affects `\(k\)`?
+
+Two quantities determine the rate of substitution ( `\(k\)` ).
+
+### The probability of fixation of any mutation ( `\(u\)` ).
+
+`\begin{align*}
+u_0 &amp; = \frac{1}{2N} \\
+u_a &amp; \approx 2s_a \\
+u_d &amp; \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+
+### The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# The total number of mutations 
+
+If the probability of a mutation at a nucleotide in each generation is `\(\nu\)`, then in a population of `\(N\)` diploid individuals, there will be __ `\(2N\nu\)` new mutations per generation at a single site__.
+
+--
+
+- with `\(f_0\)` representing the fraction of neutral mutations.
+  - __ `\(2N \nu f_0\)`__ will be neutral
+
+--
+
+- The remaining will be advantageous (__ `\(f_a\)` fraction__) and deleterious (__ `\(f_d\)` fraction__).
+  - __ `\(2N \nu f_a\)`__ new advantageous mutations
+  - __ `\(2N \nu f_d\)`__ new deleterious mutations
+
+
+--
+
+If advantageous and deleterious mutations have no contribution, then the subsitution rate is a function of only _the total number_ of neutral mutations that arise and the _probability that each of them fixes_.
+
+
+`\begin{align*}
+k = (2N \nu f_0) \frac{1}{2N} = \nu f_0
+\end{align*}`
+
+---
+
+# The total number of mutations 
+
+`\begin{align*}
+k = (2N \nu f_0) \frac{1}{2N} = \nu f_0
+\end{align*}`
+
+
+Substitute the symbol `\(\mu\)` for the total rate at which neutral mutations arise, `\(\mu = \nu f_0\)`, the rate of neutral mutations is:
+
+`\begin{align*}
+k = \mu
+\end{align*}`
+
+--
+
+When considering only neutral mutations, __the substitution rate is equal to the neutral mutation rate ( `\(\mu\)` )__, regardless of population size.
+
+- While more mutations arise in large populations, each of them has a smaller chance of eventually going to fixation
+
+- Likewise, it is more likely that any single new mutation will fix in a small population, but there are fewer mutations overall.
+
+---
+
+# Advantageous and deleterious mutations
+
+The rate of subsitution for advantageous mutations:
+
+`\begin{align*}
+k = (2N \nu f_a) 2s_a = 4N \nu f_as_a
+\end{align*}`
+
+--
+
+The rate of subsitution for deleterious mutations:
+
+`\begin{align*}
+k &amp; = (2N \nu f_d) \times \frac{2s_d}{1 - e^{(-4N s_d)}} \\
+&amp; = \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+--
+
+----------------
+
+- The population size ( `\(N\)` ) plays an important role in the rate of substitution of selected mutations.
+
+- More advantageous mutations will fix in larger populations than in smaller populations
+
+- More deleterious mutation will fix in smaller populations relative to larger populations.
+
+---
+
+# Detecting selection using divergence
+
+In coding regions, we measure divergenece that is due to nonsynonymous and synoymous changes.
+
+- `\(d_N\)` as the number of nonsynonymous difference per nonsynonymous site
+
+- `\(d_S\)` as the number of synonymous differences per synonymous site
+
+--
+
+Note that natural selection has __a profound effect__ on the number of nonsynonymous mutations that are fixed.
+
+`\begin{align*}
+E(d_N) &amp; = k2t \\
+ &amp; = 2t (\nu f_0 + 4N \nu f_as_a + \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}) \\
+ &amp; = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+\end{align*}`
+
+The total nonsynonymous divergence in a region is due to all three types of mutations, therefore, our expression for `\(d_N\)` includes all three terms.
+
+---
+
+# Detecting selection using divergence
+
+`\begin{align*}
+E(d_N) &amp; = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+\end{align*}`
+
+- A higher underlying mutation rate, `\(\nu\)`, and longer divergence times, `\(t\)`, will increase the amount of divergence
+
+- The proportion of advantageous mutations fixed will be a function of the frequency at which they arise and their average selective effect
+
+- The deleterious mutations can also contribute to divergence if selection is weak enough.
+
+
+---
+
+# Synonymous mutations
+
+Here we assume all synonymous changes are neutral.
+- That is, `\(f_0 =1\)` and `\(f_a = f_d =0\)`
+
+--
+
+The total expected amount of synonymous divergence between two sequences is:
+
+`\begin{align*}
+E(d_S) &amp; = \nu 2t \\
+\end{align*}`
+
+For neutral mutations, the substitution rate is simply equal to the mutation rate.
+
+---
+
+# The ratio of nonsynonymous to synonymous divergence
+
+Because both `\(\nu\)` and `\(t\)` will be approximately the same of nonsynonymous and synonymous sites in the same gene, dividing above equations gives
+
+
+`\begin{align*}
+\frac{E(d_N)}{E(d_S)} &amp; = f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}} \\
+\end{align*}`
+
+--
+
+- Relative to synonymous divergence, the level of nonsynonymous divergence is again due to the fractions of mutations that are __neutral__, __advantageous__, and __deleterious__.
+
+- Note that here, `\(f_0\)` represents only the __nonsynonymous mutations__.
+
+
+---
+# Some general guidelines
+
+__ `\(d_N/d_S &lt;&lt; 1\)`__
+The vast majority of nonsynonymous mutations are deleterious, and negative (purifying) selection is predominant.
+
+--
+
+__ `\(d_N/d_S &lt; 1\)`__
+The majority of nonsynonymous mutations are deleterious, but here may be some unknown fraction of advantageous mutations.
+
+--
+
+__ `\(d_N/d_S = 1\)`__
+This situation can occur in two cases:
+- First, there is no selection and all nonsynoymous mutations are neutral.
+- Second, there is simply a large number of neutral and advantageous mutations (as well as deleterious mutations).
+
+--
+
+__  `\(d_N/d_S &gt; 1\)`__
+There are many advantageous nonsynonymous mutations and positive selection is predominant, but there are still many deleterious mutations.
+
+---
+# Interpreting `\(d_N/d_S\)`
+
+&lt;div align="center"&gt;
+&lt;img src="dnds.png" height=300&gt;
+&lt;/div&gt;
+
+&gt; Yang and Gaut, 2011. _Arabidopsis thaliana_ and _A. Lyrata_
+
+The mean values for individal genes vary from 0 to &gt;2
+
+This range indicates that at least 75% to 85% of nonsynonymous mutations are deleterious and do not fix.
+
+
+---
+# Detecting selection using polymorphism
+
+On timescales shorter than those required for mutations to fix, selection will change the mean frequency of alleles in a population.
+
+For new mutations, the density of polymorphisms found at frequency `\(q\)` is given by (Wright 1969):
+
+`\begin{align*}
+f(q) &amp; = \frac{2 \nu}{q(1-q)} \frac{1 - e^{(-4Ns)(1-q)}}{1 - e^{(-4N s)}} \\
+\end{align*}`
+
+- Where `\(\nu\)` is again the total rate of mutation.
+- `\(s\)` is the fitness effect. Advantageous mutations have `\(s &gt; 0\)` and deleterious mutations have `\(s &lt;0\)`
+
+
+---
+
+# The expected frequency spectra
+
+`\begin{align*}
+f(q) &amp; = \frac{2 \nu}{q(1-q)} \frac{1 - e^{(-4Ns)(1-q)}}{1 - e^{(-4N s)}} \\
+\end{align*}`
+
+
+
+```r
+# expected freq spectra
+f &lt;- function(q, ns){
+  frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
+  return(frq)}
+q &lt;- seq(from = 0.01, to =0.99, by=0.01)
+
+## Ploting function
+plot(q, f(q, ns=0.01), type="l", lty=1, lwd=3, xlab="Ns", ylab="No. of polymorhpic sites", cex.lab=2)
+lines(q, f(q, ns=-50), type="l", lty=1, lwd=3, col="red")
+lines(q, f(q, ns=-5), type="l", lty=2, lwd=3, col="red")
+lines(q, f(q, ns=5), type="l", lty=1, lwd=3, col="blue")
+lines(q, f(q, ns=50), type="l", lty=2, lwd=3, col="blue")
+legend(0.6, 200, title="Ns", legend=c("-50", "5", "0", "-5", "50"), 
+       col=c("red", "red", "black", "blue", "blue"), 
+       lty=c(1,2,1,1,2), cex=2, lwd=3)
+```
+
+---
+
+# The expected frequency spectra
+
+`\begin{align*}
+f(q) &amp; = \frac{2 \nu}{q(1-q)} \frac{1 - e^{(-4Ns)(1-q)}}{1 - e^{(-4N s)}} \\
+\end{align*}`
+
+.pull-left[
+&lt;img src="w5class_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+--
+
+.pull-right[
+- Deleterious alleles =&gt; lower frequencies
+ - most strongly deleterious mutations are immediately removed from the population
+ 
+- Advantage alleles shifted toward higher frequencies
+  - most strongly advantageous mutations fix very rapidly.
+]
+
+
+---
+# `\(\pi_N/\pi_S\)`
+
+
+Within a species, by analogy with the logic of the comparison of `\(d_N\)` and `\(d_S\)`, we can compare the average number of non-synonymous differences per nonsynoymous site ( `\(\pi_N\)` ) to the average number of synonymous differences per synonymous site ( `\(\pi_S\)` ).
+- Combining the methods for calculating `\(\pi\)`
+- With the methods for calculating nonsynonymous and synonymous changes.
+
+--
+
+### Interpretation of the ratio
+
+- Values of `\(\pi_N/\pi_S\)` below 1 are again evidence for the predominance of purifying selection, and the vast majority of all coding loci show `\(\pi_N/\pi_S &lt; 1\)`
+- However, interpretation of `\(\pi_N/\pi_S &gt; 1\)` is different.
+
+---
+# `\(\pi_N/\pi_S\)`
+
+### Interpretation of the ratio
+
+- Since positive selction will rapidly fix advantageous mutations, these adaptive changes will rarely be found in studies of polymorphism
+
+- Instead, balancing selection will result in `\(\pi_N/\pi_S &gt; 1\)`
+  - heterozygote advantage (heterosis)
+  - Therefore `\(d_N/d_S &gt; 1\)` for strong evidence of positive selection
+  - `\(\pi_N/\pi_S &gt; 1\)` is a very strict criterion for detecting balancing selection.
+  - Single sites under very strong selection will never contribute enough to values of `\(\pi_N\)` to push `\(\pi_N/\pi_S\)` greater than 1.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
