@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phenotypic and Genotypic Values</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-03-10" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Phenotypic and Genotypic Values
+### Jinliang Yang
+### March 10, 2022
+
+---
+
+
+
+
+
+# Phenotype
+
+&lt;div align="center"&gt;
+&lt;img src="height.png" height=200&gt;
+&lt;/div&gt;
+
+Phenotype in a population can be characterized in terms of its __mean__ and __variance__.
+  - Here we have a F2 population. 
+  - The plant height ranges from 100-200 cm, with a mean of 150 cm.
+
+--
+
+A population can be characterized by its __allele__ and __genotype frequencies__.
+ - Allele frequencies are `\(p = q = 0.5\)`.
+ - Genotype frequencies are `\(p^2\)`, `\(2pq\)`, and `\(q^2\)`.
+
+
+---
+
+# A F2 population
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="f2.png" height=500&gt;
+&lt;/div&gt;
+]
+
+--
+
+## Basic Phenotypic Model
+
+`\begin{align*}
+\mathbf{P} &amp;= \mathbf{G} + \mathbf{E} \\
+\end{align*}`
+
+
+- `\(\mathbf{P}\)`: Phenotypic value
+- `\(\mathbf{G}\)`: Genotypic value
+- `\(\mathbf{E}\)`: Environmental deviation
+
+
+--
+
+### Genotypic Value
+
+
+`\begin{align*}
+\mathbf{G} &amp;= \mathbf{A} + \mathbf{D} +  \mathbf{I} \\
+\end{align*}`
+
+
+- `\(\mathbf{A}\)`: Additive genetic value
+- `\(\mathbf{D}\)`: Dominance value
+- `\(\mathbf{I}\)`: Epistasis deviation
+
+---
+
+# Genotypic value
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="f2_2.png" height=500&gt;
+&lt;/div&gt;
+]
+
+
+At a given locus, there are three possible genotypes: `\(A_1A_1\)`, `\(A_1A_2\)`, and `\(A_2A_2\)`. 
+
+- Now we consider this locus has a large effect on plant height.
+
+--
+
+
+- Midpoint between `\(A_1A_1\)` and `\(A_2A_2\)` is commonly standardized to 0. Or, represented as `\(m\)`.
+
+&lt;div align="center"&gt;
+&lt;img src="ad.png" height=300&gt;
+&lt;/div&gt;
+
+---
+
+# Gene action (or mode of inheritance):
+
+&lt;div align="center"&gt;
+&lt;img src="ad.png" height=300&gt;
+&lt;/div&gt;
+
+- Value of `\(A_1A_2\)` ( `\(d\)` ) indicates gene action at the locus
+  - `\(d = 0\)`: __additive__ gene action
+  - `\(d = a\)` or `\(-a\)`: __complete dominance__ or __complete recessive__
+  - `\(d &gt; a\)` or `\(d &lt; -a\)`: __overdominance__ or __underdominance__
+  - Any other values of `\(d\)` besides those above values are __partial dominance__
+
+
+---
+
+# Population Mean
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ad.png" height=300&gt;
+&lt;/div&gt;
+]
+
+| Genotype  | Freq.   | Value   | 
+| :-------: |: ------- :| :-------: | 
+| `\(A_1A_1\)`  | `\(p^2\)`   | `\(+a\)`    | 
+| `\(A_1A_2\)`  | `\(2pq\)`   | `\(d\)`     | 
+| `\(A_2A_2\)`  | `\(q^2\)`   | `\(-a\)`    |
+
+What is the __Population mean ( `\(\mu\)` )__ or the expected genotypic value?
+
+--
+
+`\begin{align*}
+\mu = \sum f_i x_i \\
+\end{align*}`
+
+where `\(f_i\)` is the frequency and `\(x_i\)` is the value of the event `\(i\)`.
+
+--
+
+`\begin{align*}
+\mu = &amp; p^2a + 2pqd - q^2a \\
+    = &amp; a(p-q) + 2pqd
+\end{align*}`
+
+where `\(\mu\)` is the deviation from the midpoint of the homozygotes.
+
+- The first term comes from the homozygote values
+- The second from the value of the heterozygote
+
+
+---
+# Mutliple Loci
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="f2_3.png" height=500&gt;
+&lt;/div&gt;
+]
+
+When multiple loci are acting **independently** and contributing to overall value, the mean is:
+
+`\begin{align*}
+\mu =  \sum_{i=1}^k{a}_i(p_i - q_i) + 2\sum_{i=1}^kp_iq_id_i
+\end{align*}`
+
+- Summation over all the loci
+- `\(k\)` is the number of loci affecting the genotypic value of a trait
+
+---
+
+# The average effect of `\(A_1\)`
+
+&lt;div align="center"&gt;
+&lt;img src="A1.png" height=150&gt;
+&lt;/div&gt;
+
+- Consider the `\(A_1\)` allele. Under HWE, the probability an `\(A_1\)` allele combines with another `\(A_1\)` allele to form an `\(A_1A_1\)` genotype is `\(p\)`. The value of the `\(A_1A_1\)` genotype is `\(a\)`. 
+
+
+- The probability an `\(A_1\)` allele combines with an `\(A_2\)` allele to form a heterozygote, with value `\(d\)`, is `\(q\)`. 
+
+--
+
+- Thus, the mean value of individuals that received `\(A_1\)` is `\(pa + qd\)`.
+
+- And, the average effect of allele `\(A_1\)` is:
+
+`\begin{align*}
+\alpha_1 = &amp; pa + dq - (a(p-q) + 2pqd) \\
+  = &amp; q(a + d(q - p)) \\
+\end{align*}`
+
+
+---
+
+# Allele Substitution 
+
+Similarly,
+
+`\begin{align*}
+\alpha_2 = -p(a + d(q-p))
+\end{align*}`
+
+
+--
+
+What is effect of substituting an `\(A_1\)` allele for `\(A_2\)`?
+
+This can be simply expressed as the __difference in average effect of the two alleles__:
+
+`\begin{align*}
+\alpha = &amp; \alpha_1 - \alpha_2 \\
+  = &amp; q(a + d(q-p)) - (-p(a + d(q-p))) \\
+  = &amp; a + d(q - p)
+\end{align*}`
+
+--
+
+Therefore,
+`\begin{align*}
+\alpha_1  &amp; =  q(a + d(q - p)) \\
+  &amp; = q\alpha \\
+\alpha_2  &amp; =  -p(a + d(q - p)) \\
+  &amp; = -p\alpha \\
+\end{align*}`
+
+---
+
+# Genotypic values and Breeding values
+
+### Genotypic value
+
+Now, the value of a particular genotype can be partitioned into __the average effects of the alleles__ and any __residuals value__ that the average effects do not account for.
+
+Specifically, the __genotypic value__ of `\(A_iA_j\)`
+`\begin{align*}
+G_{ij} = \mu + \alpha_i + \alpha_j + \delta_{ij}
+\end{align*}`
+
+- Where `\(\mu\)` is the population mean
+- `\(\delta_{ij}\)` is the dominance deviation.
+
+--
+
+### Breeding value
+
+The __Breeding value__ associated with `\(A_iA_j\)` is defined as: the sum of `\(\alpha_i\)` and `\(\alpha_j\)`.
+- Breeding value is the value of an individual as a parent!
+
+---
+# A breeding program for hybrid maize
+
+|      Season    | Activity        | 
+| :-------:      | :----------------------------------  | 
+| Summer1 | (1) Grow 80 F2 populations (S0 generation)  |
+|          | (2) Cross 50 selected S0 plants in each population to a haploid inducer  |
+| Winter1 | (1) Double the chrosome of putative haploids to create doubled haploids  | 
+|         | (2) Self doubled haploids to increase seeds | 
+| Summer2 | (1) Discard 1,000/4,000 DH lines based on per se performance  | 
+|         | (2) Cross each of 3,000 remaining DH lines to an appropriate __inbred tester__ | 
+| Summer3 | Yield trials of 3,000 testcrosses in unreplicated trials at 6-8 locations  | 
+| Summer4 | (1) Select 400 DH lines based on their testcross performance  | 
+|         | (2) Cross 400 DH lines to __3 inbred testers__ each | 
+| ...   | ... |
+| Summer7 | Release 0-2 new hybrids | 
+&gt; Bernardo, Table 1.2
+
+---
+# Testcross effect of an allele
+
+A common breeding procedure is to cross individuals or families that belong to one population with a __tester__ that belongs to a different population.
+
+--
+
+#### The population being testcrossed
+
+The frequency of the `\(A_1\)` allele is `\(p\)` and the frequency of `\(A_2\)` allele is `\(q\)`.
+
+#### The tester used
+
+The frequency of the `\(A_1\)` allele is `\(p_T\)` and the frequency of `\(A_2\)` allele is `\(q_T\)`.
+
+--
+
+#### The genotype frequencies
+
+The frequency of the 
+- `\(A_1A_1\)` allele is `\(pp_T\)`,
+- `\(A_2A_2\)` allele is `\(qq_T\)`,
+- `\(A_1A_2\)` allele is `\(pq_T + p_Tq\)`.
+
+
+---
+
+# Testcross effect of an allele
+
+#### The genotype frequencies
+
+The frequency and the effect of the 
+- `\(A_1A_1\)` allele is `\(pp_T\)` =&gt; `\(a\)`
+- `\(A_2A_2\)` allele is `\(qq_T\)` =&gt; `\(-a\)`
+- `\(A_1A_2\)` allele is `\(pq_T + p_Tq\)` =&gt; `\(d\)`
+
+--
+
+The testcross mean is the sum of the genotypic values multiplied by their frequencies:
+
+`\begin{align*}
+\mu_T = &amp; a(pp_T - qq_T)  + d(pq_T + p_Tq) \\
+\end{align*}`
+
+
+---
+
+# Average testcross effect of an allele
+
+
+&lt;div align="center"&gt;
+&lt;img src="A1_tester.png" height=150&gt;
+&lt;/div&gt;
+
+--
+
+- Consider the `\(A_1\)` allele. Under HWE, the probability an `\(A_1\)` allele combines with __another `\(A_1\)` allele from the tester to form an `\(A_1A_1\)` genotype is `\(p_T\)`__. The value of the `\(A_1A_1\)` genotype is `\(a\)`. 
+
+- The probability an `\(A_1\)` allele combines with __an `\(A_2\)` allele  from the tester to form a heterozygote__, with value `\(d\)`, is `\(q_T\)`. 
+
+--
+
+- Thus, the mean value of individuals that received `\(A_1\)` is `\(p_Ta + q_Td\)` and, the average test effect of allele `\(A_1\)` is:
+
+`\begin{align*}
+\alpha_1^T = &amp; p_Ta + q_Td + a(pp_T - qq_T)  + d(pq_T + p_Tq) \\
+  = &amp; q(a + d(q_T - p_T))
+\end{align*}`
+
+---
+
+# Average testcross effect of an allele
+
+The average test effect of allele `\(A_1\)` is:
+`\begin{align*}
+\alpha_1^T =  q(a + d(q_T - p_T))
+\end{align*}`
+
+The average test effect of allele `\(A_2\)` is:
+`\begin{align*}
+\alpha_2^T =  -p(a + d(q_T - p_T))
+\end{align*}`
+
+--
+
+The average testcross effect of an allele substitution is analogous to `\(\alpha\)` and is denoted by `\(\alpha^T\)`.
+
+`\begin{align*}
+\alpha^T &amp; = \alpha_1^T - \alpha_2^T\\
+ &amp; = a + d(q_T - p_T) \\
+\end{align*}`
+
+- The average testcross effect of an allele substitution __does not depend on the allele frequencies in the population being testcrossed__.
+
+- It underscores the dependence of testcross effects on the particular tester used.
+
+---
+
+# General and specific combining ability
+
+Breeders of hybrid crops evaluate the performance of a set of inbreds from one population in crosses with a set of inbreds from a second population.
+
+--
+
+Consider two populations, `\(P1\)` and `\(P2\)`, each in Hardy-Weinberg equilibrium.
+
+The genotypic value of `\(A_i^{P1}A_j^{P2}\)` is:
+
+`\begin{align*}
+G_{i^{P1}j^{P2}} = \mu_{P1 \times P2} + \alpha_i^{P1} + \alpha_j^{P2} + \delta_{ij}^{P1P2}
+\end{align*}`
+
+- Where `\(\mu_{P1 \times P2}\)` is the mean of the cross between the two populations
+- `\(\alpha_i^{P1}\)` is the __average testcross effect__ of the `\(A_i^{P1}\)` allele
+- `\(\alpha_j^{P2}\)` is the __average testcross effect__ of the `\(A_j^{P2}\)` allele
+- `\(\delta_{ij}^{P1P2}\)` is the dominance deviation associated with the `\(A_i^{P1}A_j^{P2}\)` genotype.
+
+--
+
+-------
+
+- Here, `\(\alpha_i^{P1}\)` and `\(\alpha_j^{P2}\)` represent the __general combining ability__ of the `\(A_i^{P1}\)` and `\(A_j^{P2}\)` alleles.
+- `\(\delta_{ij}^{P1P2}\)` is the __specific combining ability__ between the `\(A_i^{P1}\)` and `\(A_j^{P2}\)` alleles.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
