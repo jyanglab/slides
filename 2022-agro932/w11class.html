@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Mating designs and Vg</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-03-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Mating designs and Vg
+### Jinliang Yang
+### March 29, 2022
+
+---
+
+
+
+
+
+# Why estimate genetic variance?
+
+### Variance paritition
+
+`\begin{align*}
+V_P &amp; = V_G + V_E \\
+\end{align*}`
+
+--
+
+### Broad-sense heritability
+
+`\begin{align*}
+H^2 &amp; = \frac{V_G}{V_P} 
+\end{align*}`
+
+
+- Proportion of variance due to genotypic effects
+- This represents __nature__ versus __nurture__
+
+---
+
+# Why estimate genetic variance?
+
+### Variance paritition
+
+`\begin{align*}
+V_P &amp; = V_G + V_E \\
+V_P &amp; = V_A + V_D + V_E \\
+\end{align*}`
+
+--
+
+### Narrow-sense heritability
+
+`\begin{align*}
+h^2 &amp; = \frac{V_A}{V_P} \\
+\end{align*}`
+
+
+- Proportion of phenotypic variation due to variation in __breeding values__.
+- Since parents __pass on alleles__, __not genotype__
+  - `\(h^2\)` is more meaningful in determining expected amount of genetic progress from generation to generation due to selection and intermating.
+
+
+---
+# Why estimate genetic variance?
+
+## Scientific reasons
+
+
+- Fitness related traits show the lowest heritabilities (Kruuk et al., 2000)
+  - In a population at equilibrium there should be no heritable variation for fitness
+  - Because alleles conferring fitness benefits should have increased in frequency until they reached fixation
+
+- Deterimine the power of gene mapping studies
+ - Low mapping power for traits with low heritability
+
+
+---
+# Why estimate genetic variance?
+
+## Practical reasons
+
+- Designing breeding programs for new crop species.
+  - Large estimates of genetic variance indicate that selection can proceed immediately.
+
+####  Breeder's equation
+
+`\begin{align*}
+R &amp;  =  \frac{i h^2\sigma_P}{L} \\
+&amp; = \frac{i V_G}{\sigma_P L}
+\end{align*}`
+
+--
+
+- Prediction:
+  - Predict response to selection
+
+- Allocating resources in field performance trials. 
+
+---
+
+# How to estimate genetic variances
+
+
+### Basic steps
+
+#### 1. Relative developed by some sort of mating design.
+
+#### 2. The progeny are evaluated in a set of environments.
+
+#### 3. Variance components are estimated from the mean squares in the __analysis of variance__.
+
+#### 4. The variance components are interpreted in terms of the covariances between relatives.
+
+---
+
+# Mating design
+
+A mating design is a systematic method of developing progeny.
+
+--
+
+### Half-sib design
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=200&gt;
+&lt;/div&gt;
+
+- Random mating of each of `\(N\)` males to `\(n\)` different females and evaluation of a single offspring from each female.
+- Estimate `\(V_A\)`
+
+---
+
+# Mating design
+
+### Full-sib design
+
+&lt;div align="center"&gt;
+&lt;img src="fs.png" height=150&gt;
+&lt;/div&gt;
+
+- `\(N\)` randomly selected males are each mated to several females, but now several (rather than one) offspring are assayed per family.
+- Estimate `\(V_A + V_D\)`
+
+
+---
+
+# Mating design (NC Design)
+
+- This mating design was developed by Comstock and Robinson (1948)
+- The mating design produces large number of progenies and is also useful for self-pollinated crops with multiple flowers. 
+
+### North Carolina Design I
+
+&lt;div align="center"&gt;
+&lt;img src="nc1.png" height=150&gt;
+&lt;/div&gt;
+
+- Each male is mated to a different set of females (independent sample) to produce progenies for evaluation
+- The progenies include both full-sibs and half-sibs
+- Estimate `\(V_A\)` and `\(V_D\)` separately.
+
+
+---
+# Mating design (NC Design)
+
+### North Carolina Design II
+
+&lt;div align="center"&gt;
+&lt;img src="nc2.png" height=150&gt;
+&lt;/div&gt;
+
+- Factorial design
+- parents  are divided into a male group and a female group.
+- Each member from the male group is mated to a member from the female group.
+- Estimate `\(V_A\)` and `\(V_D\)` separately, but with more power!
+
+
+---
+# Mating design (NC Design)
+
+### Diallel
+
+&lt;div align="center"&gt;
+&lt;img src="d.png" height=150&gt;
+&lt;/div&gt;
+
+- A group of parents is crossed to itself
+- Estimate `\(V_A\)` and `\(V_D\)` separately and to inference about heterosis (i.e., SCA and GCA).
+
+---
+# Mating design (NC Design)
+
+### North Carolina Design III
+
+- In this design, a random sample of F2 plants is backcrossed to the two inbred parents.
+- It is considered the most powerful of all the three NC designs.
+- Estimate `\(V_A\)` and `\(V_D\)` with equal precision
+
+&lt;div align="center"&gt;
+&lt;img src="nc3.png" height=200&gt;
+&lt;/div&gt;
+
+--
+
+- A modified version called Triple testcross (TTC).
+- Added a third tester not just the two inbreds.
+- Can estimate epistasis, also capable of estimating `\(V_A\)` and `\(V_D\)`
+
+
+---
+# Assumptions
+
+#### 1) Relatives are random members of a single random-mating population
+ - a) Thus heritability and genetic variance estimates strictly apply to that population only.
+ - b) Fixed sets of progeny cannot be used for estimating genetic variances.
+  - For example, fixed set of cultivars selected for yield cannot be used.
+  - A random sample of individuals from the population, represent the spectrum of performance, need to be used.
+
+--
+
+#### 2) Regular diploid and solely Mendelian inheritance
+
+#### 3) No environmental covariance between relatives
+
+#### 4) No linkage
+
+#### 5) Non-inbred relatives.
+
+---
+
+# How to estimate genetic variances
+
+
+### Basic steps
+
+#### 1. Relative developed by some sort of mating design.
+
+#### 2. The progeny are evaluated in a set of environments.
+
+
+#### 3. Variance components are estimated from the mean squares in the __analysis of variance__.
+
+#### 4. The variance components are interpreted in terms of the covariances between relatives.
+
+---
+
+# How to estimate genetic variances
+
+
+### Basic steps
+
+#### 1. Relative developed by some sort of mating design.
+- Using Half-sib design as an example
+
+--
+
+#### 2. The progeny are evaluated in a set of environments.
+- The progeny, replications, and environments are assumed random.
+- Suppose `\(n\)` progeny are evaluated in a randomized complete block design (RCBD) with `\(r\)` replications in one environment.
+
+
+---
+
+# How to estimate genetic variances
+
+#### 3. Variance components are estimated from the mean squares in the __analysis of variance__.
+
+#### 4. The variance components are interpreted in terms of the covariances between relatives.
+
+-------------
+
+- First, the linear model is written down.
+
+- Second, with the assumptions of the model made explicit, an expression for the total __phenotypic variance is written in terms of components__.
+
+- Third, the componenets of variance associated with the model are expressed as covariances between specific classes of relatives.
+
+- Fourth, using the mechanistic interpretations of phenotypic covariances between relatives, the observable variance components are used to __partition the phenotypic variance into its causal sources__.
+
+---
+# Half-sib design
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=200&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+p_{ijr} = \mu + f_i + b_{r} + e_{ijr}
+\end{align*}`
+
+- where `\(p_{ijr}\)` is the phenotype value of the `\(j\)`th offspring of the  `\(i\)`th father evalutated in the `\(r\)`th replication,
+- `\(f_i\)` is the effect of the `\(i\)`th father,
+- `\(b_{r}\)` is the effect of the `\(r\)`th replication,
+- and `\(e_{ijr}\)` is the residual error. The `\(e_{ijr}\)` have expectation equal to zero.
+
+---
+# Step3: ANOVA
+
+- First, the linear model is written down.
+
+`\begin{align*}
+p_{ijr} = \mu + f_i + b_{r} + e_{ijr}
+\end{align*}`
+
+- Second, with the assumptions of the model made explicit, an expression for the total __phenotypic variance is written in terms of components__.
+
+
+---------
+
+A basic assumption of linear models uderlying ANOVA is that the random factors are uncorrelated with each other.
+- The analysis of variance partitions the total phenotypic variance into the sum of the variances from each of the contributing factors.
+
+--
+
+`\begin{align*}
+V_p = V_f + V_b + V_e
+\end{align*}`
+
+
+---
+# Step3: ANOVA
+
+- A 2nd key concept in the __ANOVA__ is that the variance between-group is equal to the covariance within-group. 
+  - Or __Var(B) = Cov(W)__
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+p_{ijr} = \mu + f_i + b_{r} + e_{ijr}
+\end{align*}`
+
+`\begin{align*}
+Cov(HS) &amp; = Cov(p_{ij_1r}, p_{ij_2r}) \\
+&amp; = Cov(\mu + f_i + b_{r} + e_{ij_1r}, \mu + f_i + b_{r} + e_{ij_2r}) \\
+&amp; = Cov(f_i, f_i) + Cov(f_i, b_r) + ... + Cov(e_{ij_1r}, e_{ij_2r}) \\
+&amp; = V_f
+\end{align*}`
+
+--
+
+Thus, the covariance between paternal half-sibs equals to the variance among paternal (father) effects.
+
+---
+
+# Genetic covariances for general relatives
+
+`\begin{align*}
+Cov_G = rV_A + uV_D
+\end{align*}`
+
+Where,
+`\begin{align*}
+&amp; r = 2f_{XY} \\
+&amp; u = \Delta_{XY} \\
+\end{align*}`
+
+Note that `\(u\)` is normally zero unless they IBD through __both of their respective parents__.
+for example, full sibs and double first cousins.
+
+
+
+|  |   Relationship     | Coancestry | r  | u  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| First degree  | Parent:offspring   |  1/4  | 1/2    |  0  |  
+| Second degree  | Half sibs    |    1/8     | 1/4 |  0 |  
+|                | Full sibs     |   1/4    | 1/2 |  __1/4__ |  
+|                | Grantparent:offspring | 1/8 | 1/4 | 0 |
+| Third degree   | great-grantparent:offspring |  1/16   | 1/8 |  0 |  
+
+---
+# Step3: ANOVA
+
+- First, the linear model is written down.
+
+`\begin{align*}
+p_{ijr} = \mu + f_i + b_{r} + e_{ijr}
+\end{align*}`
+
+- Second, with the assumptions of the model made explicit, an expression for the total __phenotypic variance__ is written in terms of components.
+
+`\begin{align*}
+V_p = V_f + V_b + V_e
+\end{align*}`
+
+- Third, the components of variance associated with the model are __expressed as covariances__ between specific classes of relatives.
+
+`\begin{align*}
+Cov(HS) = V_f
+\end{align*}`
+
+- Fourth, using the mechanistic interpretations of phenotypic covariances between relatives, the observable variance components are used to partition the phenotypic variance into its causal sources.
+
+`\begin{align*}
+Cov(HS) = \frac{1}{4}V_A = V_f
+\end{align*}`
+
+---
+# ANOVA Table
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+p_{ij} = \mu + f_i + e_{ij}
+\end{align*}`
+
+Consider a balanced HS design in which `\(n\)` half-sibs are assayed from each of `\(N\)` males, so that there are a total of `\(T=Nn\)` individuals.
+
+#### Total SS (sum of squares)
+
+`\begin{align*}
+SS_T = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p})^2
+\end{align*}`
+
+- Here, `\(\bar{p}\)` is the grand mean.
+
+---
+# ANOVA Table
+
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+p_{ij} = \mu + f_i + e_{ij}
+\end{align*}`
+
+#### Variance partitioning
+
+`\begin{align*}
+SS_T &amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p} )^2 \\
+&amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p_i} + \bar{p_i} - \bar{p} )^2 \\
+&amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n [ (p_{ij} - \bar{p_i})^2 + 2(p_{ij} - \bar{p_i})(\bar{p_i} - \bar{p} ) + (\bar{p_i} - \bar{p} )^2 ]\\
+\end{align*}`
+
+- Here, `\(\bar{p_i}\)` is the observed family means.
+
+---
+# ANOVA Table
+
+By definition of a mean, `\(\sum\limits_{j=1}^n (p_{ij} - \bar{p_i})=0\)`
+
+--
+
+Therefore,
+`\begin{align*}
+SS_T &amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p} )^2  = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p_i} + \bar{p_i} - \bar{p} )^2 \\
+&amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n [ (p_{ij} - \bar{p_i})^2 + 2(p_{ij} - \bar{p_i})(\bar{p_i} - \bar{p} ) + (\bar{p_i} - \bar{p} )^2 ]\\
+&amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p_i})^2 + \sum\limits_{i=1}^N \sum\limits_{j=1}^n (\bar{p_i} - \bar{p} )^2 \\
+&amp; = SS_e + SS_f
+\end{align*}`
+
+--
+- `\(SS_e\)` (__within-family sum of squares__) is simply the sum of the squared deviations of individual measures from their observed family means
+
+- `\(SS_f\)` (__among-family sum of squares__) is the sum of the squared deviations of observed family means from the grand mean.
+
+---
+# ANOVA Table
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+SS_e = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij}- \bar{p_i})^2
+\end{align*}`
+
+- Because `\(\sum\limits_{j=1}^n (p_{ij}- \bar{p_i})^2 / (n-1)\)` is an unbiased estimate of the variance among sibs in the `\(i\)`th family
+- From our asumption that variance within each family is equal to `\(V_e\)`
+
+--
+
+- Therefore,
+
+`\begin{align*}
+E(SS_e) = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij}- \bar{p_i})^2 = N(n-1)V_e
+\end{align*}`
+
+
+---
+# ANOVA Table
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+SS_f = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (\bar{p_i} - \bar{p} )^2 = n\sum\limits_{i=1}^N (\bar{p_i} - \bar{p} )^2
+\end{align*}`
+
+- Because `\(\sum\limits_{j=1}^N (\bar{p_i} - \bar{p})^2 / (N-1)\)` is an unbiased estimate of the variance of the observed family means
+
+`\begin{align*}
+SS_f &amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (\bar{p_i} - \bar{p} )^2 = n\sum\limits_{i=1}^N (\bar{p_i} - \bar{p} )^2 \\
+&amp; = n(N-1) V_{\bar{p_i}}
+\end{align*}`
+
+
+---
+# ANOVA Table
+
+`\begin{align*}
+SS_f &amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (\bar{p_i} - \bar{p} )^2 = n\sum\limits_{i=1}^N (\bar{p_i} - \bar{p} )^2 \\
+&amp; = n(N-1) V_{\bar{p_i}}
+\end{align*}`
+
+
+`\(V_{\bar{p_i}}\)` is the expected variance of the observed family means, here we asumed to be the same for all families.
+
+
+--
+
+- The variance of observed family means is a function of the variance of the true family means, the ( `\(\mu + f_i\)` ), as well as their sampling error, ( `\(\bar{e_i} = \bar{p_i} - (\mu + f_i)\)` )
+
+- First term is `\(V_f\)` and the 2nd term is `\(V_e/n\)`
+
+--
+
+- Therefore,
+
+
+`\begin{align*}
+SS_f &amp; = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (\bar{p_i} - \bar{p} )^2 = n\sum\limits_{i=1}^N (\bar{p_i} - \bar{p} )^2 \\
+&amp; = n(N-1) V_{\bar{p_i}} \\
+&amp; = (N-1)(V_e + nV_f)
+\end{align*}`
+
+
+
+---
+
+# ANOVA table for a  half sib design
+
+&lt;div align="center"&gt;
+&lt;img src="hs.png" height=150&gt;
+&lt;/div&gt;
+
+| Source        |    df     |  Sums of Squares      | MS      | E(MS) |
+| :------:      | :-------: | :--------------------:|:------: | :---------------: |
+| Among-families  | N-1       |  `\(SS_f=n\sum\limits_{i=1}^N (\bar{p}_i - \bar{p})^2 = (N-1)(V_e + nV_f)\)` | `\(MS_f\)` | `\(V_e + n V_f\)`   |
+| Within-families  | N(n-1)    |  `\(SS_e = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij}- \bar{p_i})^2 = N(n-1)V_e\)` | `\(MS_e\)`  | `\(V_e\)` | 
+| Total   |  T-1  |  `\(SS_T = \sum\limits_{i=1}^N \sum\limits_{j=1}^n (p_{ij} - \bar{p} )^2\)`  | `\(MS_t\)`       | `\(V_T\)` |
+
+
+
+
+---
+# Step3: ANOVA
+
+- First, the linear model is written down.
+
+`\begin{align*}
+p_{ijr} = \mu + f_i + b_{r} + e_{ijr}
+\end{align*}`
+
+- Second, with the assumptions of the model made explicit, an expression for the total __phenotypic variance__ is written in terms of components.
+
+`\begin{align*}
+V_p = V_f + V_b + V_e
+\end{align*}`
+
+- Third, the components of variance associated with the model are __expressed as covariances__ between specific classes of relatives.
+
+`\begin{align*}
+Cov(HS) = V_f
+\end{align*}`
+
+- Fourth, using the mechanistic interpretations of phenotypic covariances between relatives, the observable variance components are used to partition the phenotypic variance into its causal sources.
+
+`\begin{align*}
+Cov(HS) &amp; = \frac{1}{4}V_A = V_f \\
+&amp; = \frac{MS_s - MS_e}{n}
+\end{align*}`
+
+
+---
+# The general analysis
+
+Suppose `\(n\)` progeny are evaluated inn a randomized complete block design with `\(r\)` replications or blocks in each of `\(e\)` environments.
+
+- `\(MS_{error}\)`: the mean squares for the pooled error
+- `\(MS_{PE}\)`: mean squares for progeny `\(\times\)` environment interaction
+- `\(MS_{progeny}\)`: mean squares for progeny
+
+--
+
+ANOVA table for one type of progeny (one-factor design)
+
+
+
+| Source        |    df     |  Observed MS      |  E(MS) |
+| :------:      | :-------: | :--------------------:|:------: | 
+| Environment   | `\(e-1\)`       |   |  |   
+| Blocks        | `\((r-1)e\)`    |   |  | 
+| Progeny       | `\(n-1\)`       | `\(MS_{progeny}\)`  | `\(V_e + rV_{PE} + reV_{progeny}\)`       | 
+| Progeny x E   | `\((n-1)(e-1)\)`   |  `\(MS_{PE}\)` | `\(V_e + rV_{PE}\)`       | 
+| pooled error  | `\((n-1)(r-1)e\)`   |  `\(MS_{error}\)` | `\(V_e\)`       | 
+
+
+--
+
+`\begin{align*}
+V_{progeny} = \frac{MS_{progeny} - MS_{PE}}{re}
+\end{align*}`
+
+
+---
+
+# How to estimate genetic variances
+
+### Basic steps
+
+#### 1. Relative developed by some sort of mating design.
+
+#### 2. The progeny are evaluated in a set of environments.
+
+#### 3. Variance components are estimated from the mean squares in the __analysis of variance__.
+
+#### 4. The variance components are interpreted in terms of the covariances between relatives.
+
+---
+
+# How to estimate genetic variances
+
+### Basic steps
+
+#### 4. The variance components are interpreted in terms of the covariances between relatives.
+
+Assume epistasis is absent:
+
+- Half-sibs: `\(V_{progeny} = \frac{1}{4} V_A\)`
+- Full-sibs: `\(V_{progeny} = \frac{1}{2} V_A + \frac{1}{4} V_D\)`
+- Recombinant inbred lines or doubled haploids: `\(V_{progeny} = 2 V_A\)`
+- Testcrosses: `\(V_{progeny} = \frac{1}{2} V_{\alpha_i^T}\)`
+  - where `\(V_{\alpha_i^T}\)` is the variance of average testcross effects of alleles.
+- Clones. `\(V_{progeny} = V_G\)`
+
+---
+
+# How to estimate genetic variances
+
+Considering inbreeding:
+
+- Half-sibs: `\(V_{progeny} = \frac{1+F}{4} V_A\)`
+  - `\(V_A  = \frac{4}{1+F} V_{progeny}\)`
+  
+- Full-sibs: `\(V_{progeny} = \frac{1+F}{2} V_A + \frac{1}{4} V_D\)`
+ - In this design, `\(V_A\)` and `\(V_D\)` cannot estimated separately
+ 
+- Recombinant inbred lines or doubled haploids: `\(V_{progeny} = 2 V_A\)`
+  - `\(V_A = \frac{1}{2} V_{progeny}\)`
+  
+- Testcrosses: `\(V_{progeny} = \frac{1+F}{2} V_{\alpha_i^T}\)`
+  - where `\(V_{\alpha_i^T}\)` is the variance of average testcross effects of alleles.
+  - `\(V_{\alpha_i^T} = \frac{2}{1+F} V_{progeny}\)`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
