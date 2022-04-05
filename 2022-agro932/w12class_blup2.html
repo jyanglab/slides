@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>BLUP calculation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# BLUP calculation
+### Jinliang Yang
+### April 7th, 2022
+
+---
+
+
+
+
+
+# The Linear Mixed Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+where,
+- `\(\mathbf{y}\)` is a vector of observed phenotypes 
+- `\(\mathbf{X}\)` is the __design__ or __incidence__ matrix
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects to be estimated
+- `\(\mathbf{Z}\)` is the __incidence__ matrix for random effects
+- `\(\mathbf{u}\)` is the vector of the __random__ effects to be predicted
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{u} \\
+    \mathbf{e} 
+  \end{bmatrix}
+  \sim N
+  \begin{bmatrix}
+    \mathbf{0},  &amp; 
+    \Bigg(
+    \begin{array}{cccc}
+    \mathbf{G \sigma_u^2} &amp; \mathbf{0} \\
+    \mathbf{0} &amp; \mathbf{R\sigma_e^2} \\
+    \end{array}
+    \Bigg)
+  \end{bmatrix} \\
+\end{align*}`
+
+--
+
+Or,
+`\begin{align*}
+  \mathbf{u}  \sim N\mathbf{(0, \mathbf{G^*})} \\
+  \mathbf{e}  \sim N\mathbf{(0, \mathbf{R^*})} \\
+\end{align*}`
+
+
+---
+# Mixed Model Equation (MME)
+
+&gt; According to Henderson (1949, 1950)
+
+### Joint Distribution
+
+`\begin{align*}
+f(\mathbf{y},\mathbf{u})  &amp;= g(\mathbf{y}|\mathbf{u}) h(\mathbf{u}) \\
+\end{align*}`
+
+--
+### Likelihood
+
+`\begin{align*}
+L(\mathbf{R^*}|\mathbf{y})  &amp;= g(\mathbf{y}|\mathbf{u}) \\
+  &amp;= 2\pi^{-\frac{1}{2}n}|\mathbf{R^*}|^{-\frac{1}{2}}exp\left\{ - \frac{(\mathbf{y - Xb - Zu}^{'})\mathbf{R^*}^{-1} (\mathbf{y - Xb - Zu})}{2} \right\} \\
+L(\mathbf{G^*}|\mathbf{u})  &amp;= h(\mathbf{u}) \\
+  &amp;= 2\pi^{-\frac{1}{2}q}|\mathbf{G^*}|^{-\frac{1}{2}}exp\left\{ - \frac{(\mathbf{u^{'}G^{*-1}}\mathbf{u})}{2} \right\}  
+\end{align*}`
+
+---
+# MME derivation
+
+Maximize joint distribution `\(f(\mathbf{y},\mathbf{u})\)` to derive MME
+
+`\begin{align*}
+f(\mathbf{y},\mathbf{u})  = &amp; g(\mathbf{y}|\mathbf{u}) h(\mathbf{u}) \\
+  = &amp; 2\pi^{-\frac{1}{2}n}|\mathbf{R^*}|^{-\frac{1}{2}}exp\left\{ - \frac{(\mathbf{y - Xb - Zu}^{'})\mathbf{R^*}^{-1} (\mathbf{y - Xb - Zu})}{2} \right\} \\
+  &amp; \times 2\pi^{-\frac{1}{2}q}|\mathbf{G^*}|^{-\frac{1}{2}}exp\left\{ - \frac{(\mathbf{u^{'}G^{*-1}}\mathbf{u})}{2} \right\}  \\
+  = &amp; 4 \pi^{-\frac{1}{2}n -\frac{1}{2}q}|\mathbf{R^*}|^{-\frac{1}{2}}|\mathbf{G^*}|^{-\frac{1}{2}} \\
+  &amp; \times exp \left\{ - \frac{(\mathbf{y - Xb - Zu}^{'})\mathbf{R}^{*-1} (\mathbf{y - Xb - Zu})}{2} - \frac{(\mathbf{u^{'}G^{*-1}}\mathbf{u})}{2} \right\} \\
+  = &amp; C \times exp \left\{ 
+  -\frac{1}{2}
+  \begin{bmatrix}
+    \mathbf{u^{'}} \\
+    \mathbf{(y - Xb - Zu)^{'}} \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{G^*} &amp; \mathbf{0} \\
+    \mathbf{0} &amp; \mathbf{R^*} \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{u} \\
+    \mathbf{(y - Xb - Zu)} \\
+  \end{bmatrix}
+  \right\}
+\end{align*}`
+
+
+---
+# MME derivation
+
+`\begin{align*}
+f(\mathbf{y},\mathbf{u})  = &amp; g(\mathbf{y}|\mathbf{u}) h(\mathbf{u}) \\
+  =  &amp; C \times \exp \left\{ - \frac{(\mathbf{y - Xb - Zu})^{'}\mathbf{R^*}^{-1} (\mathbf{y - Xb - Zu}) + (\mathbf{u^{'}G^{*-1}}\mathbf{u})}{2} \right\} \\
+\end{align*}`
+
+To maximize joint distribution, we just need to minimize the "numerator".
+
+`\begin{align*}
+&amp; (\mathbf{y - Xb - Zu})^{'}\mathbf{R}^{-1} (\mathbf{y - Xb - Zu}) + (\mathbf{u^{'}G^{-1}}\mathbf{u}) \\
+&amp; =  \mathbf{y}^{'}\mathbf{R}^{-1}\mathbf{y} + \mathbf{y}^{'}\mathbf{R}^{-1}\mathbf{Xb} + \mathbf{y}^{'}\mathbf{R}^{-1}\mathbf{Zu} \\
+  &amp; - \mathbf{b^{'}X^{'}R^{-1}y} + \mathbf{b^{'}X^{'}R^{-1}Xb} + \mathbf{b^{'}X^{'}R^{-1}Zu} \\
+  &amp; - \mathbf{u^{'}Z^{'}R^{-1}y} + \mathbf{u^{'}Z^{'}R^{-1}Xb} + \mathbf{u^{'}Z^{'}R^{-1}Zu} \\
+  &amp; + \mathbf{u^{'}G^{-1}}\mathbf{u} \\
+&amp; =  \mathbf{y}^{'}\mathbf{R}^{-1}\mathbf{y}  \\
+  &amp; - 2\mathbf{b^{'}X^{'}R^{-1}y} + \mathbf{b^{'}X^{'}R^{-1}Xb} + 2\mathbf{b^{'}X^{'}R^{-1}Zu} \\
+  &amp; - 2\mathbf{u^{'}Z^{'}R^{-1}y} + \mathbf{u^{'}Z^{'}R^{-1}Zu} \\
+  &amp; + \mathbf{u^{'}G^{-1}}\mathbf{u} \\ 
+\end{align*}`
+
+---
+# MME: differentiation
+
+Get differentiation of `\(f(\mathbf{b},\mathbf{u})\)`
+
+`\begin{align*}
+&amp; \frac{\partial  f(\mathbf{b},\mathbf{u})}{\partial \mathbf{b}} =-2\mathbf{X^{'}R^{*-1}y} + 2\mathbf{X^{'}R^{*-1}Xb} + 2\mathbf{X^{'}R^{*-1}Zu} = 0 \\
+&amp; \frac{\partial  f(\mathbf{b},\mathbf{u})}{\partial \mathbf{u}} = -2\mathbf{G^{*-1}u} + 2\mathbf{b^{'}X^{'}R^{*-1}Z} + 2\mathbf{Z^{'}R^{*-1}Zu} -  2\mathbf{Z^{'}R^{*-1}y}= 0 \\
+\end{align*}`
+
+### Solve the two equations
+
+`\begin{align*}
+&amp;  \mathbf{X^{'}R^{*-1}Xb} + \mathbf{X^{'}R^{*-1}Zu} = \mathbf{X^{'}R^{*-1}y}  \\
+&amp; \mathbf{G^{*-1}u} + \mathbf{b^{'}X^{'}R^{*-1}Z} + \mathbf{Z^{'}R^{*-1}Zu} = \mathbf{Z^{'}R^{*-1}y} \\
+\end{align*}`
+
+Therefore, we get __Henderson's Mixed Model Equation__
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{*-1}X} &amp; \mathbf{X^{'}R^{*-1}Z} \\
+    \mathbf{X^{'}R^{*-1}Z} &amp; \mathbf{Z^{'}R^{*-1}Z} + \mathbf{G^{*-1}} \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{b} \\
+    \mathbf{u} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{*-1}y} \\
+    \mathbf{Z^{'}R^{*-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+---
+
+# The Linear Mixed Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+where,
+- `\(\mathbf{y}\)` is a vector of observed phenotypes 
+- `\(\mathbf{X}\)` is the __design__ or __incidence__ matrix
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects to be estimated
+- `\(\mathbf{Z}\)` is the __incidence__ matrix for random effects
+- `\(\mathbf{u}\)` is the vector of the __random__ effects to be predicted
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{u} \\
+    \mathbf{e} 
+  \end{bmatrix}
+  \sim N
+  \begin{bmatrix}
+    \mathbf{0},  &amp; 
+    \Bigg(
+    \begin{array}{cccc}
+    \mathbf{G \sigma_u^2} &amp; \mathbf{0} \\
+    \mathbf{0} &amp; \mathbf{R\sigma_e^2} \\
+    \end{array}
+    \Bigg)
+  \end{bmatrix} \\
+\end{align*}`
+
+
+Or,
+`\begin{align*}
+  \mathbf{u}  \sim N\mathbf{(0, \mathbf{G^*})} \\
+  \mathbf{e}  \sim N\mathbf{(0, \mathbf{R^*})} \\
+\end{align*}`
+
+---
+# MME for b and u
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{*-1}X} &amp; \mathbf{X^{'}R^{*-1}Z} \\
+    \mathbf{Z^{'}R^{*-1}X} &amp; \mathbf{Z^{'}R^{*-1}Z} + \mathbf{G^{*-1}} \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{b} \\
+    \mathbf{u} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{*-1}y} \\
+    \mathbf{Z^{'}R^{*-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+Note that `\(\mathbf{R^*}=\mathbf{R}V_e\)` and `\(\mathbf{G^*}=\mathbf{G}V_u\)` 
+
+Multiply `\(V_e\)` on both sides
+
+--
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1} \lambda} \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{b} \\
+    \mathbf{u} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+where `\(\lambda = V_e/V_u\)`
+
+--
+
+----
+
+### Solve MME to get b and u __simultaneously__
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1}} V_e/V_u \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+
+
+---
+
+# A Breeding Example
+
+Bernardo 2020. Table 10.1: Minnesota Barley cultivars
+
+### Materials
+
+Four __related__ barley cultivars:
+- __M__orex, __R__obust, __E__xcel, __S__tander
+
+### Experimental design
+- M, R, and S in 18 environments (set1)
+- R, E, and S in 9 environments (set2)
+
+---
+
+# A Breeding Example
+
+| Set | Num of Env| Cultivar | Grain yield  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | 
+| Set1  | 18  |  M  | 4.45 | 
+| Set1  | 18  |  R  | 4.61 | 
+| Set1  | 18  |  S  | 5.27 | 
+| Set2  | 9   |  R  | 5.00 | 
+| Set2  | 9   |  E  | 5.82 | 
+| Set2  | 9   |  S  | 5.79 | 
+
+--
+
+### Scalar notation
+
+`\begin{align*}
+  y_{ij} = \mu + s_i + c_j + e_{ij}
+\end{align*}`
+
+
+- `\(y_{ij}\)` is the mean yield of `\(j\)`th cultivar estimated in the environments of set `\(i\)`
+- `\(s_{i}\)` is the mean effect of set `\(i\)` across different environments
+- `\(c_{j}\)` is the effect of cultivar `\(j\)`
+- `\(e_{ij}\)` is the residual error
+
+---
+
+# A Breeding Example
+
+| Set | Num of Env| Cultivar | Grain yield  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | 
+| Set1  | 18  |  M  | 4.45 | 
+| Set1  | 18  |  R  | 4.61 | 
+| Set1  | 18  |  S  | 5.27 | 
+| Set2  | 9   |  R  | 5.00 | 
+| Set2  | 9   |  E  | 5.82 | 
+| Set2  | 9   |  S  | 5.79 | 
+
+### Matrix notation
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+- `\(\mathbf{y}\)` is a vector of observed grain yield phenotype
+- `\(\mathbf{X}\)` is the __field design matrix__ of two sets and different environments
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects due to sets of yield trials
+- `\(\mathbf{Z}\)` is the __cultivar design matrix__ of four selected cultivars
+- `\(\mathbf{u}\)` is the vector of the __random__ effects due to cultivars
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+---
+
+# A Breeding Example
+
+| Env | Cultivar | Grain yield  | 
+| :-------: | :-------: | :-----------: | :-----------: | 
+| Set1  |  M  | 4.45 | 
+| Set1  |  R  | 4.61 | 
+| Set1  |  S  | 5.27 | 
+| Set2  |  R  | 5.00 | 
+| Set2  |  E  | 5.82 | 
+| Set2  |  S  | 5.79 | 
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+`\begin{align*}
+  \begin{bmatrix}
+    4.45 \\
+    4.61 \\
+    5.27 \\
+    5.00 \\
+    5.82 \\
+    5.79 \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    1 &amp; 0 \\
+    1 &amp; 0 \\
+    0 &amp; 1 \\
+    0 &amp; 1 \\
+    0 &amp; 1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    b_1 \\
+    b_2 \\
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+    1 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    l_1 \\
+    l_2 \\
+    l_3 \\
+    l_4 \\
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+    e_{11} \\
+    e_{12} \\
+    e_{13} \\
+    e_{22} \\
+    e_{24} \\
+    e_{23} \\
+  \end{bmatrix}
+\end{align*}`
+
+Here `\(\mathbf{X}\)` and `\(\mathbf{Z}\)` are incidence matricies of 1s and 0s.
+
+---
+
+# A Breeding Example
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+`\begin{align*}
+  \begin{bmatrix}
+    4.45 \\
+    4.61 \\
+    5.27 \\
+    5.00 \\
+    5.82 \\
+    5.79 \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    1 &amp; 0 \\
+    1 &amp; 0 \\
+    0 &amp; 1 \\
+    0 &amp; 1 \\
+    0 &amp; 1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    b_1 \\
+    b_2 \\
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+    1 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    l_1 \\
+    l_2 \\
+    l_3 \\
+    l_4 \\
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+    e_{11} \\
+    e_{12} \\
+    e_{13} \\
+    e_{22} \\
+    e_{24} \\
+    e_{23} \\
+  \end{bmatrix}
+\end{align*}`
+
+## input data into R
+
+
+```r
+y &lt;- matrix(c(4.45, 4.61, 5.27, 5.00, 5.82, 5.79), byrow=FALSE, nrow=6)
+#y
+X &lt;- matrix(c(1,1,1,0,0,0, 0, 0,0, 1, 1,1), byrow=FALSE, nrow=6)
+# X
+Z &lt;- matrix(c(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,1,0,0, 0,0,0,1, 0,0,1,0),byrow=TRUE, nrow=6)
+#Z
+```
+
+---
+
+# Random effects
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+
+In this example, `\(\mathbf{u}\)` comprises the breeding values of the inbred lines.
+
+--
+
+### Mean of `\(\mathbf{u}\)`
+By defintion, the breeding values of inbreds have a mean of zero:
+
+`\begin{align*}
+E(\mathbf{u}) = 0
+\end{align*}`
+
+--
+
+### Variance of `\(\mathbf{u}\)`
+
+Is a function of the covariance between relatives!
+
+---
+
+# Genetic covariances
+
+Genetic covariances for general relatives is
+
+`\begin{align*}
+Cov(X, Y) = 2f_{XY}V_A + \Delta_{XY}V_D
+\end{align*}`
+
+
+
+If we assume dominance is negligible, then the covariance is equal to `\(2f_{XY}V_A\)`.
+
+--
+
+In the barley example, `\(f_{XY}\)` are as follows:
+
+|  | Morex | Robust  | Stander | Excel |
+| :-------: | :-------: | :-----------: | :-----------: | 
+| Morex  |  1 | 1/2 | 11/32 | 7/16 |
+| Robust  |    | 1   | 43/64 | 27/32
+| Stander |    | | 1 | 91/128 |
+| Excel  |    |  |   | 1 |
+
+---
+
+# The covarinace matrix of u
+
+|  | Morex | Robust  | Stander | Excel |
+| :-------: | :-------: | :-----------: | :-----------: | 
+| Morex  |  1 | 1/2 | 11/32 | 7/16 |
+| Robust  |    | 1   | 43/64 | 27/32
+| Stander |    | | 1 | 91/128 |
+| Excel  |    |  |   | 1 |
+
+`\begin{align*}
+V(\mathbf{u}) &amp; = \mathbf{A}V_A \\
+  &amp; =
+  \begin{bmatrix}
+    2 &amp; 1 &amp; 11/16 &amp; 7/8 \\
+    1 &amp; 2 &amp; 43/32 &amp; 27/16 \\
+    11/16 &amp; 43/32 &amp; 2 &amp; 91/64  \\
+    7/8 &amp; 27/16 &amp; 91/64 &amp; 2  \\
+  \end{bmatrix}
+  V_A
+\end{align*}`
+
+Where the elements of `\(\mathbf{A}\)`, __the additive relationship matrix__, are equal to twice the `\(f_{XY}\)` among these cultivars.
+
+--
+
+- Note that the nonzero off-diagonal elements in `\(\mathbf{A}\)` reflect _the use of information from relative_ in BLUP.
+
+- If they are unrelated inbreds, `\(\mathbf{A}\)` would have off-diagonal elements equal to zero!
+
+---
+
+# Random effects
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+
+### Mean of `\(\mathbf{e}\)`
+
+By definition, the breeding values of inbreds have a mean of zero:
+
+`\begin{align*}
+E(\mathbf{e}) = 0
+\end{align*}`
+
+--
+
+### Variance of `\(\mathbf{e}\)`
+
+`\begin{align*}
+V(\mathbf{e}) = \mathbf{R}V_R
+\end{align*}`
+
+`\(V_R\)` here is the within-environment error variance. 
+
+In this example, set 1 had 18 environments and set 2 had 9 environments. 
+
+---
+
+# Random effects
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+### Variance of `\(\mathbf{e}\)`
+
+`\(\mathbf{R}\)` is a diagonal matrix with the reciprocal of the number of environments in each set:
+
+`\begin{align*}
+  \mathbf{R} =
+  \begin{bmatrix}
+    1/18 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1/18 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1/18 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1/9 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/9 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/9 \\
+  \end{bmatrix}
+\end{align*}`
+
+The zero off-diagonal elements in `\(\mathbf{R}\)` indicate that the nongenetic effects are assumed independent from each other.
+
+---
+# MME for b and u
+
+### Solve MME to get b and u __simultaneously__
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1}} V_e/V_u \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+
+-----------
+
+In our example, 
+
+`\(\mathbf{A^{-1}} = \mathbf{G^{-1}}\)`
+- Because we assumed genetic covariances were just due to breeding values
+
+--
+
+`\(\lambda = {V_R}/{V_A}\)`
+
+--
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+---
+
+# BLUP Calcualtion
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+### Left-hand side (LHS)
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+This matrix is composed of submatrices.
+--
+
+### Right-hand side (RHS)
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+This matrix is composed of subvectors.
+
+---
+
+# Left-hand side (LHS)
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+Because we have already set up the `\(\mathbf{y}\)` vector and the `\(\mathbf{X}\)`, and `\(\mathbf{Z}\)` matrices.
+
+Now let's input `\(\mathbf{A}\)` and `\(\mathbf{R}\)` matrcies.
+
+--
+
+`\begin{align*}
+\mathbf{A} =
+  \begin{bmatrix}
+    2 &amp; 1 &amp; 11/16 &amp; 7/8 \\
+    1 &amp; 2 &amp; 43/32 &amp; 27/16 \\
+    11/16 &amp; 43/32 &amp; 2 &amp; 91/64  \\
+    7/8 &amp; 27/16 &amp; 91/64 &amp; 2  \\
+  \end{bmatrix}
+\end{align*}`
+
+
+```r
+A &lt;- matrix(c(2,1,11/16,7/8, 1,2,43/32,27/16, 11/16, 43/32,2,91/64, 7/8, 27/16, 91/64,2), nrow=4, byrow=TRUE)
+#A
+```
+---
+
+# Left-hand side (LHS)
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+Because we have already set up the `\(\mathbf{y}\)` vector and the `\(\mathbf{X}\)`, and `\(\mathbf{Z}\)` matrices.
+
+Now let's input `\(\mathbf{A}\)` and `\(\mathbf{R}\)` matrices.
+
+`\begin{align*}
+  \mathbf{R} =
+  \begin{bmatrix}
+    1/18 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1/18 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1/18 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1/9 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/9 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/9 \\
+  \end{bmatrix}
+\end{align*}`
+
+
+```r
+R &lt;- matrix(c(1/18,0,0,0,0,0, 
+              0,1/18,0,0,0,0, 
+              0,0,1/18,0,0,0,
+              0,0,0,1/9,0,0, 
+              0,0,0,0,1/9,0, 
+              0,0,0,0,0,1/9), nrow=6, byrow=T)
+```
+
+---
+
+# Left-hand side (LHS)
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+#### First step
+
+`\(\mathbf{X^{'}R^{-1}X}\)`
+
+
+```r
+a11 &lt;- t(X) %*% solve(R) %*% X
+```
+
+#### Second step
+
+`\(\mathbf{X^{'}R^{-1}Z}\)`
+
+
+```r
+a12 &lt;- t(X) %*% solve(R) %*% Z
+```
+
+---
+
+# Left-hand side (LHS)
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+#### Third step
+
+`\(\mathbf{Z^{'}R^{-1}X}\)`
+
+
+```r
+a21 &lt;- t(Z) %*% solve(R) %*% X
+```
+
+--
+
+#### Fourth step
+
+`\(\mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A\)`
+
+We previous talked about `\(V_R\)` and `\(V_A\)`. For now, let's assume the ratio of `\(V_R/V_A=5\)`
+
+
+```r
+a22 &lt;- t(Z) %*% solve(R) %*% Z + solve(A) * 5
+```
+
+---
+
+# Left-hand side (LHS)
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{A^{-1}} V_R/V_A \\
+  \end{bmatrix}^{-1}
+\end{align*}`
+
+
+
+```r
+lhs &lt;- rbind(cbind(a11, a12), cbind(a21, a22))
+lhs
+```
+
+```
+##      [,1] [,2]          [,3]      [,4]          [,5]       [,6]
+## [1,]   54    0  1.800000e+01 18.000000  1.800000e+01  0.0000000
+## [2,]    0   27  0.000000e+00  9.000000  9.000000e+00  9.0000000
+## [3,]   18    0  2.133710e+01 -1.515837  1.387779e-16 -0.1809955
+## [4,]   18    9 -1.515837e+00 36.694385 -1.311475e+00 -6.5840813
+## [5,]   18    9 -7.906633e-18 -1.311475  3.224590e+01 -2.6229508
+## [6,]    0    9 -1.809955e-01 -6.584081 -2.622951e+00 18.9992582
+```
+
+---
+
+# Right-hand side (RHS)
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+
+```r
+b1 &lt;- t(X) %*% solve(R) %*% y
+b2 &lt;- t(Z) %*% solve(R) %*% y
+rhs &lt;- rbind(b1, b2)
+```
+
+---
+# MME for b and u
+
+### Solve MME to get b and u __simultaneously__
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1}} V_e/V_u \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+---------------
+
+
+```r
+solve(lhs) %*% rhs
+```
+
+```
+##            [,1]
+## [1,]  4.8228227
+## [2,]  5.4149695
+## [3,] -0.3254156
+## [4,] -0.1747288
+## [5,]  0.3616762
+## [6,]  0.1781441
+```
+---
+
+# A Breeding Example
+
+| Set | Num of Env| Cultivar | Grain yield  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | 
+| Set1  | 18  |  M  | 4.45 | 
+| Set1  | 18  |  R  | 4.61 | 
+| Set1  | 18  |  S  | 5.27 | 
+| Set2  | 9   |  R  | 5.00 | 
+| Set2  | 9   |  E  | 5.82 | 
+| Set2  | 9   |  S  | 5.79 | 
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+
+
+```r
+out &lt;- solve(lhs) %*% rhs
+```
+- BLUE of Set1 = 4.8228227 and Set2 = 5.4149695
+
+- BLUP of M = -0.3254156, R = -0.1747288, S = 0.3616762, E = 0.1781441
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
