@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genomic Selection in Practice</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-04-19" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Genomic Selection in Practice
+### Jinliang Yang
+### April 19, 2022
+
+---
+
+
+
+
+
+# A real world example: Loblolly pine data
+
+Loblolly pine (Pinus taeda) data
+&gt;Resende Jr. et al. (2012) ([DOI: 10.1534/genetics.111.137026](http://dx.doi.org/10.1534/genetics.111.137026))
+
+
+- __Mating Design__: 70 full-sib families and 951 individuals in total using _a circular mating design_
+- __Phenotyping__: 17 traits with distinct heritabilities and genetic architectures
+- __Genotyping__: with 4,853 SNPs using the SNP array method. 
+  - The full dataset can be downloaded from the paper. 
+
+---
+
+# A real world example: Loblolly pine data
+
+In this example, we will use the breeding values of crown width across the planting beds at age 6 (CWAC6). 
+
+
+```r
+# read phenotype and SNP files
+pheno_file &lt;- "https://jyanglab.com/img/data/DATA_nassau_age6_CWAC.csv"
+geno_file &lt;- "https://jyanglab.com/img/data/Snp_Data.csv"
+pheno &lt;- read.csv(pheno_file, header=TRUE, stringsAsFactors = FALSE)
+hist(pheno$Derregressed_BV, main="Crown width at Age 6", xlab="width")
+```
+
+![](w14lab_gs3_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+
+---
+# Loblolly pine data
+
+
+### Remove missing phenotypes 
+
+There are some accessions containing no phenotype. We need to remove these accessions first.
+
+
+```r
+na.index &lt;-  which(is.na(pheno$Derregressed_BV))
+# length(na.index)
+pheno &lt;- pheno[-na.index, ]
+
+# phenotypes 
+y &lt;- pheno$Derregressed_BV
+y &lt;- matrix(y, ncol=1)
+```
+
+
+---
+# Genotype data: SNP quality control
+
+In the `geno` matrix, row indicates individual, column indicates SNPs.
+
+### Missingness and MAF
+
+
+```r
+geno &lt;- read.csv(geno_file, header=TRUE, stringsAsFactors = FALSE)
+dim(geno)
+
+# Keep genotypes for these remaining lines
+geno &lt;- geno[geno$Genotype %in% pheno$Genotype, ]
+# markers 
+geno &lt;- geno[,-1] # 861 x 4853
+geno[geno == -9] &lt;- NA
+
+# missing rate
+missing &lt;- apply(geno, 2, function(x){sum(is.na(x))/length(x)})
+# minor allele frequency
+maf &lt;- apply(geno, 2, function(x){
+  frq &lt;- mean(x, na.rm=TRUE)/2 # 1 allele
+  return(ifelse(frq &gt; 0.5, 1-frq, frq))
+})
+```
+
+---
+# Genotype data: SNP quality control
+
+In the `geno` matrix, row indicates individual, column indicates SNPs.
+
+
+#### Plot the results
+
+```r
+hist(missing, breaks=100, col="blue", xlab="SNP Missing rate")
+hist(maf, breaks=100, col="blue", xlab="Minor Allele Freq")
+```
+
+---
+# SNP quality control
+
+Removing SNPs with high missing rate (missingness &gt; 0.2) and low MAF (MAF &lt; 0.05)
+
+- Question: How many markers are removed?
+
+
+```r
+idx1 &lt;- which(missing &gt; 0.2) #154
+idx2 &lt;- which(maf &lt; 0.05) #1647
+idx &lt;- unique(c(idx1, idx2)) #1784
+
+geno2 &lt;- geno[, -idx]
+dim(geno2)
+```
+
+
+---
+# SNP quality control
+
+### Missing marker imputation
+
+Replace missing marker genotypes with __mean values__. Then store the marker genotypes in a matrix object `Z`. 
+
+
+```r
+Z &lt;- matrix(0, ncol=ncol(geno2), nrow=nrow(geno2))
+for (j in 1:ncol(geno2)){
+  #cat("j = ", j, '\n')
+  Z[,j] &lt;- ifelse(is.na(geno2[,j]), mean(geno2[,j], na.rm=TRUE), geno2[,j])
+}
+# sum(is.na(Z))
+write.table(Z, "data/Z.txt", sep="\t", row.names = FALSE, 
+            col.names=FALSE, quote=FALSE)
+```
+
+
+
+---
+
+# Genomic relationship
+
+### SNP Matrix standardization
+
+Standardize the genotype matrix to have a mean of zero and variance of one. Save this matrix as `Zs`. 
+
+
+```r
+Zs &lt;- scale(Z, center = TRUE, scale = TRUE)
+# dimensions 
+n &lt;- nrow(Zs)
+m &lt;- ncol(Zs)
+```
+
+---
+
+# The GBLUP Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+where,
+- `\(\mathbf{y}\)` is a vector of observed phenotypes 
+- `\(\mathbf{X}\)` is the __design__ or __incidence__ matrix
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects to be estimated
+- `\(\mathbf{Z}\)` is the __incidence__ matrix for random effects
+- `\(\mathbf{u}\)` is the vector of the __random__ effects to be predicted
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+
+`\begin{align*}
+  \mathbf{u}  \sim N\mathbf{(0, \mathbf{G^*})} \\
+  \mathbf{e}  \sim N\mathbf{(0, \mathbf{R^*})} \\
+\end{align*}`
+
+---
+
+# Genomic relationship
+
+### Calcualte genomic relationship
+
+- Compute the second genomic relationship matrix of [VanRaden (2008)](https://www.ncbi.nlm.nih.gov/pubmed/18946147) using the entire markers. 
+- Then add a very small positive constant (e.g., 0.001) to the diagonal elements so that `G` matrix is invertible. 
+
+
+```r
+# Given matrices x and y as arguments, return a matrix cross-product. 
+# This is formally equivalent to (but usually slightly faster than) 
+# the call t(x) %*% y (crossprod) or x %*% t(y) (tcrossprod).
+G &lt;- tcrossprod(Zs) / ncol(Zs)
+# G &lt;- Zs %*% t(Zs) /ncol(Zs)
+G &lt;- G + diag(n)*0.001
+```
+
+---
+
+# Solve MME for GBLUP
+
+Set up mixed model equations (MME) by fitting the model:
+
+  `$$\mathbf{y = 1\beta + Zu + e}$$`
+  
+- where `\(\beta\)` is the intercept, 
+- `\(\mathbf{Z}\)` is the incident matrix of individuals, 
+- `\(\mathbf{u}\)` is the breeding value of the individuals, 
+- and `\(\mathbf{e}\)` is the residual. 
+
+
+
+---
+
+# Solve MME for GBLUP
+
+Set up mixed model equations (MME) by fitting the model:
+
+  `$$\mathbf{y = 1\beta + Zu + e}$$`
+  
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{\beta}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{1^{'}R^{-1}1} &amp; \mathbf{1^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}1} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1}} \lambda \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{1^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+Directly take the inverse of LHS to obtain the solutions for GBLUP. Report the estimates of intercept and additive genetic values. Use `\(\lambda = 1.35\)`. 
+
+
+```r
+lambda &lt;- 1.35 # fit$Ve / fit$Vm
+Ginv &lt;- solve(G)
+ones &lt;- matrix(1, ncol=1, nrow=n)
+Z &lt;- diag(n)
+```
+
+--
+
+
+```r
+# The function "crossprod" is formally equivalent to (but usually slightly faster than) 
+# the call t(x) %*% y (crossprod) or x %*% t(y) (tcrossprod).
+LHS1 &lt;- cbind(crossprod(ones), crossprod(ones, Z)) 
+LHS2 &lt;- cbind(crossprod(Z, ones), crossprod(Z) +  Ginv*lambda)
+LHS &lt;- rbind(LHS1, LHS2)
+RHS &lt;- rbind( crossprod(ones, y), crossprod(Z,y) )
+sol &lt;- solve(LHS, RHS)
+head(sol)
+tail(sol)
+```
+
+---
+
+# R package: `rrBLUP`
+
+Fit GBLUP by using the `mixed.solve` function in the [rrBLUP](https://cran.r-project.org/web/packages/rrBLUP/index.html) R package. 
+
+
+```r
+#install.packages("rrBLUP")
+library(rrBLUP)
+
+?mixed.solve
+```
+
+--
+
+```
+mixed.solve(y, Z=NULL, K=NULL, X=NULL, method="REML", 
+        bounds=c(1e-09, 1e+09), SE=FALSE, return.Hinv=FALSE)
+```
+
+- __y__: Vector ( `\(n \times 1\)` ) of observations. Missing values (NA) are omitted, along with the corresponding rows of X and Z.
+
+- __Z__: Design matrix ( `\(n \times m\)` ) for the random effects. If not passed, assumed to be the identity matrix.
+
+- __K__: Covariance matrix ( `\(m \times m\)`) for random effects; must be positive semi-definite. If not passed, assumed to be the identity matrix.
+
+- __X__: Design matrix ( `\(n \times p\)` ) for the fixed effects. If not passed, a vector of 1's is used to model the intercept. X must be full column rank (implies β is estimable).
+
+---
+
+# R package: `rrBLUP`
+
+  `$$\mathbf{y = 1\beta + Zu + e}$$`
+  
+
+```r
+#install.packages("rrBLUP")
+library(rrBLUP)
+fit &lt;- mixed.solve(y = y, X=NULL, K=G, Z=NULL)
+```
+
+--
+
+- Report the estimates of intercept and additive genetic values. 
+- Do they agree with previous estimates? 
+- Also, report the estimated genomic heritability and the ratio of variance components `\(\lambda = \frac{V_e}{V_A}\)`. 
+
+
+```r
+summary(fit)
+fit$Vu # additive genetic variance
+fit$Ve # residual variance
+fit$beta # intercept 
+head(fit$u) # additive genetic values
+# plot(1:length(u), u)
+fit$Vu / (fit$Vu + fit$Ve) # genomic h2
+fit$Ve / fit$Vu # ratio of variance components 
+# plot(x=sol[-1], y=fit$u)
+```
+
+---
+
+# RR-BLUP
+
+Set up mixed model equations (MME) by fitting the model 
+`$$\mathbf{y = 1b + Zm + e}$$`
+where `\(\mathbf{b}\)` is the intercept, `\(\mathbf{Z}\)` is the standardized marker genotypes ( __`Zs`__ ), `\(\mathbf{m}\)` is the additive marker genetic effects, and `\(\mathbf{e}\)` is the residual. 
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{m}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{I} V_e/V_{M_i} \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+Directly take the inverse of LHS to obtain the solutions for marker-based GBLUP (RR-BLUP). Report the estimates of intercept and marker additive genetic effects. Use `\(\lambda = 4326.212\)`. 
+
+--
+
+
+```r
+lambda &lt;- 4326.212 # fit$Ve / fit$Vu
+ones &lt;- matrix(1, ncol=1, nrow=n)
+I &lt;- diag(m)
+LHS1 &lt;- cbind(crossprod(ones), crossprod(ones, Zs)) 
+LHS2 &lt;- cbind(crossprod(Zs, ones), crossprod(Zs) +  I*lambda)
+LHS &lt;- rbind(LHS1, LHS2)
+RHS &lt;- rbind( crossprod(ones, y), crossprod(Zs,y) )
+sol2 &lt;- solve(LHS, RHS)
+head(sol2)
+tail(sol2)
+```
+
+---
+
+# Use `rrBLUP` package
+
+Fit RR-BLUP by using the `mixed.solve` function in the [rrBLUP](https://cran.r-project.org/web/packages/rrBLUP/index.html) R package. 
+
+- Report the estimates of intercept and marker additive genetic effects. 
+- o they agree with the estimates with the manual calculation? 
+- Also, report the ratio of variance components `\(\lambda = \frac{V_e}{V_A}\)`. 
+
+
+```r
+library(rrBLUP)
+fit &lt;- mixed.solve(y = y, X=NULL, K=G, Z=NULL) # GBLUP
+fit2 &lt;- mixed.solve(y = y, X=NULL, K=NULL,  Z=Zs) # RR-BLUP
+```
+
+--
+
+
+```r
+fit2$Vu # marker additive genetic variance
+fit2$Ve # residual variance
+fit2$beta # intercept 
+head(fit2$u) # marker additive genetic effects
+tail(fit2$u)
+fit2$Ve / fit2$Vu # ratio of variance components 
+# plot(x=sol2[-1], y=fit2$u)
+```
+
+---
+
+
+# K-fold validation
+
+In the model training process, a __cross-validation__ method will be used within the training population.
+
+- __k-fold__ cross-validation
+  - The training population is divided in `\(k\)` sets (i.e., 5-fold). 
+  
+- __delete-one__ (or __leave-one-out__) cross-validation
+  - Use `\(n-1\)` to train the model.
+
+--
+
+### Prediction accuracy
+
+The prediction accuracy (denoted by `\(r_{MG}\)`) is the correlation between the true genotypic value and the genotypic value predicted from marker effects.
+
+---
+
+# K-fold validation using R function
+
+### Step1: divide into training and testing sets
+
+
+```r
+library(modelr)
+library(rrBLUP)
+set.seed(1234)
+cv  &lt;- crossv_kfold(data.frame(idx=1:length(y), y=y), k = 5)
+
+### training
+tr_idx &lt;- cv$train[[1]]$idx
+test_idx &lt;- cv$test[[1]]$idx
+fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, return.Hinv=FALSE)
+u &lt;- as.matrix(fit$u)
+
+### validation
+pred &lt;- Zs[test_idx, ] %*% u
+out &lt;- c(pred[,1]) + c(fit$beta)
+
+### accuracy
+acc &lt;- cor(y[test_idx,], out, use="complete")
+```
+
+---
+
+# Repeated K-fold validation
+
+### Step2: train and test the model K times
+
+
+```r
+res &lt;- data.frame()
+for(i in 1:5){
+  ### training
+  tr_idx &lt;- cv$train[[i]]$idx
+  test_idx &lt;- cv$test[[i]]$idx
+  fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, return.Hinv=FALSE)
+  u &lt;- as.matrix(fit$u)
+
+  ### validation
+  pred &lt;- Zs[test_idx, ] %*% u
+  out &lt;- c(pred[,1]) + c(fit$beta)
+
+  ### accuracy
+  acc &lt;- cor(y[test_idx,], out, use="complete")
+  
+  ### output results
+  temp &lt;- data.frame(rep=1, cv=i, r=acc)
+  res &lt;- rbind(res, temp)
+}
+```
+
+
+---
+
+# Repeated K-fold validation
+
+### Step3: repeat it n times
+
+
+```r
+library(modelr)
+library(rrBLUP)
+
+kfold_cv &lt;- function(y=y, Zs=Zs, k=5, nrep=10){
+  res &lt;- data.frame()
+  for(n in 1:nrep){
+    message(sprintf("###&gt;&gt;&gt; working on the [ %s ] rep of [ %s-fold ] CV", n, k))
+    cv  &lt;- crossv_kfold(data.frame(idx=1:length(y), y=y), k = k)
+    res2 &lt;- data.frame()
+    for(i in 1:5){
+      ### training
+      tr_idx &lt;- cv$train[[i]]$idx
+      test_idx &lt;- cv$test[[i]]$idx
+      fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, return.Hinv=FALSE)
+      u &lt;- as.matrix(fit$u)
+      ### validation
+      pred &lt;- Zs[test_idx, ] %*% u
+      out &lt;- c(pred[,1]) + c(fit$beta)
+      ### accuracy
+      acc &lt;- cor(y[test_idx,], out, use="complete")
+      ### output results
+      temp &lt;- data.frame(rep=n, cv=i, r=acc)
+      res2 &lt;- rbind(res2, temp)
+    }
+    res &lt;- rbind(res, res2)
+  }
+  return(res)
+}
+
+set.seed(1234)
+output &lt;- kfold_cv(y=y, Zs=Zs, k=5, nrep=2)
+```
+
+
+---
+
+# Repeated K-fold validation
+
+
+
+```r
+library(ggplot2)
+
+ggplot(output, aes(x=as.factor(rep), y=r)) + 
+  #geom_violin(trim = FALSE)+
+  geom_boxplot()+
+  geom_dotplot(binaxis='y', stackdir='center')
+```
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
