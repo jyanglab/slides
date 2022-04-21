@@ -430,7 +430,7 @@ The prediction accuracy (denoted by `\(r_{MG}\)`) is the correlation between the
 
 
 ```r
-library(modelr)
+#library(modelr)
 library(rrBLUP)
 set.seed(1234)
 cv  &lt;- crossv_kfold(data.frame(idx=1:length(y), y=y), k = 5)
@@ -438,7 +438,8 @@ cv  &lt;- crossv_kfold(data.frame(idx=1:length(y), y=y), k = 5)
 ### training
 tr_idx &lt;- cv$train[[1]]$idx
 test_idx &lt;- cv$test[[1]]$idx
-fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, return.Hinv=FALSE)
+fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, 
+                   return.Hinv=FALSE)
 u &lt;- as.matrix(fit$u)
 
 ### validation
@@ -487,9 +488,6 @@ for(i in 1:5){
 
 
 ```r
-library(modelr)
-library(rrBLUP)
-
 kfold_cv &lt;- function(y=y, Zs=Zs, k=5, nrep=10){
   res &lt;- data.frame()
   for(n in 1:nrep){
@@ -497,17 +495,13 @@ kfold_cv &lt;- function(y=y, Zs=Zs, k=5, nrep=10){
     cv  &lt;- crossv_kfold(data.frame(idx=1:length(y), y=y), k = k)
     res2 &lt;- data.frame()
     for(i in 1:5){
-      ### training
       tr_idx &lt;- cv$train[[i]]$idx
       test_idx &lt;- cv$test[[i]]$idx
       fit &lt;- mixed.solve(y = y[tr_idx,], Z=Zs[tr_idx,], K=NULL, SE=FALSE, return.Hinv=FALSE)
       u &lt;- as.matrix(fit$u)
-      ### validation
       pred &lt;- Zs[test_idx, ] %*% u
       out &lt;- c(pred[,1]) + c(fit$beta)
-      ### accuracy
       acc &lt;- cor(y[test_idx,], out, use="complete")
-      ### output results
       temp &lt;- data.frame(rep=n, cv=i, r=acc)
       res2 &lt;- rbind(res2, temp)
     }
@@ -515,11 +509,7 @@ kfold_cv &lt;- function(y=y, Zs=Zs, k=5, nrep=10){
   }
   return(res)
 }
-
-set.seed(1234)
-output &lt;- kfold_cv(y=y, Zs=Zs, k=5, nrep=2)
 ```
-
 
 ---
 
@@ -528,8 +518,16 @@ output &lt;- kfold_cv(y=y, Zs=Zs, k=5, nrep=2)
 
 
 ```r
-library(ggplot2)
+library(rrBLUP)
+set.seed(1234)
+output &lt;- kfold_cv(y=y, Zs=Zs, k=5, nrep=2)
+```
 
+--
+
+
+```r
+library(ggplot2)
 ggplot(output, aes(x=as.factor(rep), y=r)) + 
   #geom_violin(trim = FALSE)+
   geom_boxplot()+
