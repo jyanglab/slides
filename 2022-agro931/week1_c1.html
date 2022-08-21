@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-08-22" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction
+### Jinliang Yang
+### Aug. 22, 2022
+
+---
+
+
+
+
+# About the course
+
+### Course [website](https://jyanglab.com/agro931/)
+  - Online HTML slides
+  - Important dates
+
+### Canvas 
+  - Announcements
+  - Handouts 
+  - homework assignments (keys)
+
+### Course format
+  - In-person lecture session (with the Zoom option if needed)
+  - In-class computational demo (Using [R software](https://www.r-project.org/) for statistical computing)
+  
+---
+# Scope of the Course
+
+### Population genetics
+
+Study the genetic composition of natural populations and its evolutionary causes and consequences.
+
+- `Popgen` is the study of **evolution**.
+
+- The language of `popgen` is **Mathematics**.
+
+--
+
+### Quantitative genetics 
+
+Study of the genetic basis of phenotypic variation.
+
+- `Quantgen` is the study of the **complex trait**, or **phenotype**.
+
+- The language of `Quantgen` is **Statistics**.
+
+--
+
+- [AGRO-932](https://jyanglab.com/agro932/) (Biometrical genetics and plant breeding) 
+  - Spring of every even-numbered year (next offfer: Spring 2024)
+
+---
+# Population genetics
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="Mendel.png" height=150&gt;
+&lt;/div&gt;
+- __Gregor Mendel__, the founder of modern genetics.
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="Darwin.png" height=150&gt;
+&lt;/div&gt;
+- __Charles Darwin__, the founder of modern evolution.
+]
+
+--
+
+Population genetics emerged from early efforts to reconcile Mendelian genetics with Darwinian thought.
+
+- Many of the important ideas and mathematical models emerged before the 1940s
+- Before DNA was discovered and yet the usefulness of these models has not diminished
+
+---
+# Quantitative genetics 
+
+It almost synonymous with __statistics__!
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="fisher.jpg" height=150&gt;
+&lt;/div&gt;
+- __R. A. Fisher__ is a founder of quantitative genetics but also of analysis of variance and randomization procedures in statistics.
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="Karl_Pearson_1912.jpg" height=150&gt;
+&lt;/div&gt;
+- The early geneticist __Karl Pearson__ originated the concepts of regression and correlation.
+]
+
+--
+
+In the 2nd part of the course, we will be deeply involved with the statistical evaluation of the basic quantitative genetic models.
+
+
+---
+
+# Texts and other readings
+
+Falconer &amp; Mackay, 1996 Introduction to Quantitative Genetics. Fourth Edition.
+
+&lt;div align="center"&gt;
+&lt;img src="qg_book.png" height=150&gt;
+&lt;/div&gt;
+
+### __Study the material before class meets.__
+- Pay attention to the problems in the textbook. 
+- Note that problems and solutions are presented at the end of the text.
+
+
+---
+
+# Definitions
+
+#### Locus (plural: loci)
+A __locus__ is a specific spot in the genome: maybe an entire gene, or a single base pair. 
+- such as, chr1 from 1001-1005: A A __T__ C G. 
+
+--
+
+#### Alleles
+At each genetic locus, there may be multiple genetic variants segregating in the population
+--- these are known as __alleles__.
+
+- allele 1: A A __T__ C G. 
+- allele 2: A A __C__ C G. 
+
+Allele transfers from one generation to next
+
+--
+
+#### Genotype
+- A __Genotype__ is a pair of alleles
+Genotype is not transferred from one generation to the next due to segregation of alleles.
+
+
+---
+
+# Population
+
+A population is a group of interbreeding individuals
+- Same species
+- Close proximity
+- Share a gene pool
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+assuming 2 alleles per locus
+]
+
+- Each offspring = random sample of one egg and one sperm from the gene pool
+- The probability of sampling a particular allele = the frequency of that allele in the gene pool, assuming equal fitness, random mating, ...
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
+We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
+
+### Allele frequency ( `\(p\)` and `\(q\)` ) 
+Frequency/proportion of alleles of a particular identity at one locus
+
+### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
+Proportion of individuals with a specific genotype (combination of alleles)
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
+
+
+```r
+n = 5
+n11 = 1
+f11 = n11/n
+f11
+```
+
+```
+## [1] 0.2
+```
+
+The frequency of minor allele `\(A_1\)` in the population is then given by
+
+`\begin{align*}
+p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
+\end{align*}`
+
+---
+
+# Relationship between allele and genotype frequencies
+
+
+```r
+p = seq(0, 1, by=0.01)
+q = 1 - p
+f11 &lt;- p^2
+f12 &lt;- 2*p*q
+f22 &lt;- q^2
+
+plot(f11, type="l", col="black", xlab="p", ylab="Genotype Frequency")
+lines(f12, col="red")
+lines(f22, col="blue")
+```
+
+![](week1_c1_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+---
+
+# Relationship between allele and genotype frequencies
+
+![](week1_c1_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+- Maximum frequency of heterozygotes occurs when p = q = 0.50
+
+- Frequency of heterozygotes cannot be greater than 0.50
+
+- When allele frequency is low, that allele occurs predominantly in heterozygotes
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
