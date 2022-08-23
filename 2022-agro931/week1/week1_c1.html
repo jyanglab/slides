@@ -7,7 +7,7 @@
     <meta name="date" content="2022-08-22" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -180,101 +180,6 @@ assuming 2 alleles per locus
 
 - Each offspring = random sample of one egg and one sperm from the gene pool
 - The probability of sampling a particular allele = the frequency of that allele in the gene pool, assuming equal fitness, random mating, ...
-
----
-
-# Allele and genotype frequencies
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="dogs.jpg" height=150&gt;
-&lt;/div&gt;
-]
-
-.pull-right[
-- dog 1: AA AA __TT__ CC GG 
-- dog 2: AA AA __CC__ CC GG
-- dog 3: AA AA __CT__ CC GG 
-- dog 4: AA AA __CT__ CC GG
-- dog 5: AA AA __CC__ CC GG
-]
-
-Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
-We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
-
-### Allele frequency ( `\(p\)` and `\(q\)` ) 
-Frequency/proportion of alleles of a particular identity at one locus
-
-### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
-Proportion of individuals with a specific genotype (combination of alleles)
-
----
-
-# Allele and genotype frequencies
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="dogs.jpg" height=150&gt;
-&lt;/div&gt;
-]
-
-.pull-right[
-- dog 1: AA AA __TT__ CC GG 
-- dog 2: AA AA __CC__ CC GG
-- dog 3: AA AA __CT__ CC GG 
-- dog 4: AA AA __CT__ CC GG
-- dog 5: AA AA __CC__ CC GG
-]
-
-Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
-
-
-```r
-n = 5
-n11 = 1
-f11 = n11/n
-f11
-```
-
-```
-## [1] 0.2
-```
-
-The frequency of minor allele `\(A_1\)` in the population is then given by
-
-`\begin{align*}
-p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
-\end{align*}`
-
----
-
-# Relationship between allele and genotype frequencies
-
-
-```r
-p = seq(0, 1, by=0.01)
-q = 1 - p
-f11 &lt;- p^2
-f12 &lt;- 2*p*q
-f22 &lt;- q^2
-
-plot(f11, type="l", col="black", xlab="p", ylab="Genotype Frequency")
-lines(f12, col="red")
-lines(f22, col="blue")
-```
-
-![](week1_c1_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
----
-
-# Relationship between allele and genotype frequencies
-
-![](week1_c1_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
-
-- Maximum frequency of heterozygotes occurs when p = q = 0.50
-
-- Frequency of heterozygotes cannot be greater than 0.50
-
-- When allele frequency is low, that allele occurs predominantly in heterozygotes
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
