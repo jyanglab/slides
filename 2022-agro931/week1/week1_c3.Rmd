@@ -72,7 +72,7 @@ The __expected haplotype frequency__ = the product of the frequencies of the ind
 
 - Two loci: A and B with alleles $A_1$ (T) $A_2$ (C) and $B_1$ (G) $B_2$ (C)
 
-- Consier Haplotype $A_1B_2$ ( __--T-C__ )
+- Consider Haplotype $A_1B_2$ ( __--T-C__ )
 
 - Allele frequencies: $f_{A_1}=0.4$ and $f_{B_2} = 0.7$
 
@@ -93,7 +93,7 @@ If the observed haplotype frequency fits expectations under HWE, the alleles are
 \begin{align*}
 f_{AB} & = p_Ap_B \\
 f_{Ab} & = p_Ap_b = p_A(1-p_B) \\
-f_{aB} & = p_ap_B = (1- p_A)P_B \\
+f_{aB} & = p_ap_B = (1- p_A)p_B \\
 p_{ab} & = p_ap_b = (1 - p_A)(1 - p_B) \\
 \end{align*}
 
@@ -106,7 +106,7 @@ p_{ab} & = p_ap_b = (1 - p_A)(1 - p_B) \\
 \begin{align*}
 f_{AB} & \ne p_Ap_B \\
 f_{Ab} & \ne p_Ap_b = p_A(1-p_B) \\
-f_{aB} & \ne p_ap_B = (1- p_A)P_B \\
+f_{aB} & \ne p_ap_B = (1- p_A)p_B \\
 p_{ab} & \ne p_ap_b = (1 - p_A)(1 - p_B) \\
 \end{align*}
 
