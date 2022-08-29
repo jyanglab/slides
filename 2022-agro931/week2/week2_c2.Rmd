@@ -1,0 +1,113 @@
+---
+title: "Effectiveness of Selection"
+author: "Jinliang Yang"
+date: "Aug. 31, 2022"
+output:
+  xaringan::moon_reader: 
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Effectiveness of Selection
+
+### Initial allele freq
+
+  - Most effective at intermediate freq
+  
+  - Inefficient when targeted recessive allele is rare
+
+### Degree of dominance
+
+---
+
+# Allele freq change over time
+
+- $p_0$ = current frequency
+- $p_t$ = frequency at future time
+- $t$ = number of generations
+
+--
+----------
+
+
+
+
+### Selection for Dominant allele ( $s=1$ )
+
+(Same as selection against recessive genotype)
+
+\begin{align*}
+p_1 = & \frac{p}{1 - sq^2} \\
+= & \frac{1-q}{(1+q)(1-q)} = \frac{1}{1+q}
+\end{align*}
+
+
+--
+
+\begin{align*}
+p_2 = & \frac{p_1}{1 - sq^2_1} \\
+= & \frac{1-q_1}{(1-q_1^2)} = \frac{1 - (1-p_1)}{1 - (1-p_1)^2} = \frac{\frac{1}{1+q}}{1 - (\frac{q}{1+q})^2}
+= \frac{1+q}{1+2q}
+\end{align*}
+
+
+---
+
+# Allele freq change over time
+
+\begin{align*}
+p_1  & = \frac{1}{1+q} \\
+p_2  & = \frac{1+q}{1+2q} \\
+p_3  & = \frac{1+2q}{1+3q} \\
+\end{align*}
+
+
+
+--
+
+A pattern emerges ...
+
+\begin{align*}
+p_t  & = \frac{1+(t-1)q_0}{1+tq_0} \\
+q_t  & = 1- p_t = \frac{q_0}{1+tq_0} \\
+\end{align*}
+
+--
+
+The generations required to move from $p_0$ to $p_t$ is the same as to move from $q_0$ to $q_t$
+
+\begin{align*}
+1 + tq_0 & = \frac{q_0}{q_t} \\
+t & = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
+\end{align*}
+
+---
+
+# Simulation for selection against recessive
+
+```{r fig.align='center', fig.height=5}
+qt <- function(q0, t){
+  return(q0/(1+t*q0))
+}
+
+t <- 1:50
+plot(t, qt(0.95, t), type="l", lwd=3, col="red", xlab="generations", ylab="q", ylim=c(0, 1))
+```
+
+
+
+
+
+
+
+
+
+
+

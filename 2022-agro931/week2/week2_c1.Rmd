@@ -1,0 +1,304 @@
+---
+title: "Changes in allele frequency"
+author: "Jinliang Yang"
+date: "Aug. 29, 2022"
+output:
+  xaringan::moon_reader: 
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Factors lead  to changes of allele freq
+
+### Systematic processes
+
+Predictable both in amount and in direction
+
+- __Migration__
+
+- __Mutation__
+
+- __Selection__
+
+--
+
+### Stochastic process
+
+Arises in small populations from the effect of sampling.
+
+- Predictable in amount but not in direction
+
+---
+
+# Migration
+
+- Rate of change depends on rate of migration and difference in allele frequency between original pop and immigrants
+
+- In agriculture, can think of cross-breeding as having a similar effect as migration
+
+--
+
+### In mixed population after migration
+
+- $m$ = proportion of new immigrants (each generation)
+- $q_m$ = allele freq in immigrant population
+- $q_0$ = allele freq in original pop
+
+--
+
+\begin{align*}
+q_1 & = mq_m + (1-m)q_0 \\
+ & = m(q_m - q_0) + q_0 \\
+\end{align*}
+
+--
+
+Change in allele freq:
+
+\begin{align*}
+\Delta q & = q_1 - q_0 = m(q_m - q_0)
+\end{align*}
+
+---
+
+# Mutation
+
+- To affect allele frequencies, a mutation has to be maintained!
+
+- New mutation = heterozygote (most commonly)
+  - 50% chance of being passed on 
+  - After $n$ generations, the probability of the allele remains
+
+\begin{align*}
+(1 - \frac{1}{2})^n
+\end{align*}
+
+--
+
+```{r echo=FALSE, fig.height=5}
+n <- 1:10
+plot(x=n, y=(1-1/2)^n, type="l", lwd=3)
+```
+
+---
+
+# Mutation
+
+### What is the true rate of mutation ( $\mu$ )? 
+
+- Depends on organism and locus
+
+--
+
+- Human:
+  - Point mutation (2.5 to 1 $\times 10^{-8}$ mutations/locus/generation)
+    > Neel et al 1986; Nachman and Crowell 2000
+
+- Viruses
+  - $1 \times 10^{-3}$ to $1 \times 10^{-5}$ per base/generation
+  
+  - SARS-CoV-2: spontaneous mutation rate of $1.3 \times 10^{-6}$ (this study found spike protein accumulated five times more mutations => consistent with the action of positive selection)
+   > Amicone et al 2022
+
+
+---
+
+# Recurrent Mutation
+
+- Forward mutation rate __ $\mu$__ from $A_1$ -> $A_2$
+- Backward mutation rate __ $\nu$__ from $A_1$ <- $A_2$
+
+- Given the initial allele freq $p_0$ for $A_1$ and $q_0$ for $A_2$
+
+--
+
+- Change $\Delta q = \mu p_0 - \nu q_0$
+
+--
+
+In equilibrium,
+
+\begin{align*}
+&\Delta q = \mu p_0 - \nu q_0 = 0 \\
+& \mu p_0 = \nu q_0 \\
+\end{align*}
+
+or 
+
+\begin{align*}
+& \mu (1- q) = \nu q \\
+& q = \frac{\mu}{\nu + \mu} \\
+\end{align*}
+
+---
+
+# Mutation
+
+- #### Mutation alone produces slow change in allele frequency
+
+- #### But, mutation may be important in some small pops (later)
+
+- #### And, mutation is the ultimate source of genetic variation
+
+---
+
+# Selection
+
+Selection occurs due to differences in viability and fertility (natural or artificial)
+
+--
+
+If fitness varies by genotype, selection will occur
+
+- __Directional__: favors phenotypes at one extreme of distribution range
+
+- __Stabilizing__: favors intermediate phenotypes
+
+- __Disruptive__: favors phenotypes at both extremes
+
+---
+
+# Selection (and Fitness)
+
+The contribution of offspring to the next generation is called the __fitness__ of the individual, or _selective value_.
+
+- Selection coefficient, __ $s$__, is the proportionate __REDUCTION__ in gametic contribution of a particular genotype _compared to the standard genotype_
+
+- Relative fitness $w = 1 -s$
+  - Most fit is set to 1
+  
+
+- e.g., $AA$, $Aa$, and $aa$ have survival of 0.75, 0.75, and 0.5, respectively
+
+--
+
+  - Then, the relative fitness is 1.0, 1.0, and 0.67 (0.5/0.75)
+
+--
+
+----------------------
+
+- Dominance needs to be accounted for when quantifying allele frequency changes with selection.
+
+- The degree of dominance influences the relative fitness of alleles. 
+
+- Here dominances is with respect to fitness only.
+
+---
+
+# Selection with dominance
+
+In this example, __ $A_1$ is the most favorable allele__, conferring the greatest degree of fitness
+
+| Degree of dominance | $A_2A_2$   | $A_1A_2$   | $A_1A_1$   |
+| :-------: | : ------ : | :-------: | :-------: |
+| Additive           | $1 - s$    | $1 - s/2$    | $1$     | 
+| Partial dominance   |  $1 -s$        |  $1 - hs$        |  $1$   | 
+| Complete dominance | $1 -s$   | $1$    | $1$    |
+| Overdominance      | $1 -s_2$ | $1$ | $1-s_1$ | 
+
+--
+
+Here, $h$ is the heterozygous effect (or level of dominance) from the fitness of the heterozygote relative to the difference between homozygotes.
+
+---
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   |
+| :-------: | : ------ : | :-------: | :-------: |
+| Initial frq           | $p^2$    | $2pq$    | $q^2$     | 
+| Coefficient of selection | $0$   | $0$      | $s$       |
+| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   | 
+| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |
+
+---
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   | Total |
+| :-------: | : ------ : | :-------: | :-------: | :-------: |
+| Initial frq           | $p^2$    | $2pq$    | $q^2$     |  $1$        |
+| Coefficient of selection | $0$   | $0$      | $s$       |             |
+| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   |            |
+| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |  $1-sq^2$ |
+
+
+
+--
+
+### After one generation of selection against recessive
+
+Note that there has been a proportionate loss of $sq^2$ due to the selection.
+
+The $A_1$ allele freq, 
+
+
+\begin{align*}
+p_1 & = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
+& = \frac{p}{1- sq^2} \\
+\end{align*}
+
+---
+
+# Selection
+
+### After one generation of selection against recessive
+
+
+\begin{align*}
+p_1  = \frac{p}{1- sq^2} \\
+\end{align*}
+
+### Change in allele freq after one generation
+
+\begin{align*}
+\Delta p & = p_1 - p_0  = \frac{p}{1- sq^2} - p\\
+& = \frac{p-p(1-sq^2)}{1-sq^2} \\
+& = \frac{spq^2}{1 - sq^2}
+\end{align*}
+
+--
+
+Then,
+
+\begin{align*}
+\Delta q & = -\Delta p = -\frac{spq^2}{1 - sq^2}
+\end{align*}
+
+---
+
+# Simulation for selection against recessive
+
+```{r fig.align='center', fig.height=5}
+deltap <- function(s, p){
+  q <- 1-p
+  return((s*p*q^2)/(1 - s*q^2))
+}
+
+p <- seq(0, 1, by=0.01)
+plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|")
+lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
+```
+
+
+
+
+
+
+
+
+
+
+
