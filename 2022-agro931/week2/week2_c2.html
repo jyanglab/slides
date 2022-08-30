@@ -22,8 +22,6 @@ class: center, middle, inverse, title-slide
 
 
 
----
-
 # Selection
 
 Selection occurs due to differences in __viability__ and __fertility__ (natural or artificial)
@@ -48,7 +46,7 @@ The contribution of offspring to the next generation is called the __fitness__ o
 
 
 - Selection coefficient ( `\(s\)` ) 
-  - is the proportionate __REDUCTION__ in gametic contribution of a particular genotype _compared to the standard genotype_
+  - The proportionate __REDUCTION__ in gametic contribution of a particular genotype _compared to the standard genotype_
 
 - Relative fitness: `\(w = 1 -s\)`
   - Most fit is set to 1
@@ -186,7 +184,7 @@ plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|"
 lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
 ```
 
-&lt;img src="week2_c2_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="week2_c2_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -199,11 +197,106 @@ lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
   
   - Inefficient when targeted recessive allele is rare
 
+--
+
 ### Degree of dominance
+
+- It will become more complex
+
+---
+
+# Degree of dominance
+
+|                    | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   | Total |
+| :-------: | : ------ : | :-------: | :-------: | :-------: |
+| Initial frq           | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`     |  `\(1\)`        |
+| Fitness ( `\(w\)` ): recessive  |  `\(1\)`        |  `\(1\)`        |  `\(1 -s\)`   |   
+| Fitness ( `\(w\)` ): dominance   |  `\(w_{11}\)`        |  `\(w_{12}\)`        |  `\(w_{22}\)`   |            |
+| Gametic contribution | `\(p^2\)`   | `\(2pq\)`    | `\(q^2(1-s)\)`    |  `\(1-sq^2\)` |
+
+--
+
+### Recessive:
+
+`\begin{align*}
+p_1 &amp; = \frac{p^2 + pq}{p^2 + 2pq + q^2(1-s)} = \frac{p}{1- sq^2} \\
+\end{align*}`
+
+--
+
+### Degree of dominance:
+
+`\begin{align*}
+p_1 &amp; = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}`
+
+---
+
+# Average fitness
+
+`\begin{align*}
+p_1 &amp; = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}`
+
+`\begin{align*}
+\bar{w} = p^2w_{11} + 2pqw_{12} + q^2w_{22} \\
+\end{align*}`
+
+- `\(w_{11}\)`: genotype specific fitness for `\(A_1A_1\)`
+- `\(w_{12}\)`: genotype specific fitness for `\(A_1A_2\)`
+- `\(w_{22}\)`: genotype specific fitness for `\(A_2A_2\)`
+
+`\begin{align*}
+\Delta p &amp; = \frac{p^2w_{11} + pqw_{12}}{\bar{w}} - p \\
+&amp; = \frac{pq(p(w_{11} - w_{12}) + q(w_{12} - w_{22}))}{\bar{w}}
+\end{align*}`
+
+---
+
+# Practice Problem
+
+In a population of fireflies, allele `\(A_1\)` results in a brighter light. We wish to select for the `\(A_1\)` allele to save money on electricity.
+
+--
+
+36% of the population is `\(A_1A_1\)`. We spray all the dimly lit `\(A_2A_2\)` individuals so they are sterile but estimate that we missed 10%, which randomly mate with the others.
+
+--
+
+### Questions:
+
+- What is the fitness of each genotype?
+
+- What time of dominance model is this?
+
+- What is the proportion of fireflies _carrying_ the unwanted, `\(A_2\)` allele after one generation of selection?
+
+
+---
+
+# Average fitness
+
+- Define each of your variables ( `\(A_1\)`, `\(A_2\)`, `\(p\)`, `\(q\)` )
+
+- Identify % survial/contribution of each genotype
+
+- Calculate the relative fitness ( `\(w\)` ) for each genotype
+
+- Use the general equation with `\(\bar{w}\)`
+
+`\begin{align*}
+p_1 &amp; = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}`
+
+- When you get your answer does it make sense?
+
+  - For example, for the favorable allele, i.e., `\(A_1\)` allele, does `\(p_1\)` increase?
 
 ---
 
 # Allele freq change over time
+
+Selection for generations to achieve target frequency:
 
 - `\(p_0\)` = current frequency
 - `\(p_t\)` = frequency at future time
@@ -212,12 +305,9 @@ lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
 --
 ----------
 
-
-
-
 ### Selection for Dominant allele ( `\(s=1\)` )
 
-(Same as selection against recessive genotype)
+It is the same as selection against recessive genotype.
 
 `\begin{align*}
 p_1 = &amp; \frac{p}{1 - sq^2} \\
@@ -244,8 +334,6 @@ p_2  &amp; = \frac{1+q}{1+2q} \\
 p_3  &amp; = \frac{1+2q}{1+3q} \\
 \end{align*}`
 
-
-
 --
 
 A pattern emerges ...
@@ -268,17 +356,57 @@ t &amp; = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
 
 # Simulation for selection against recessive
 
+`\begin{align*}
+p_t  &amp; = \frac{1+(t-1)q_0}{1+tq_0} \\
+q_t  &amp; = 1- p_t = \frac{q_0}{1+tq_0} \\
+\end{align*}`
+
 
 ```r
-qt &lt;- function(q0, t){
-  return(q0/(1+t*q0))
-}
-
-t &lt;- 1:50
-plot(t, qt(0.95, t), type="l", lwd=3, col="red", xlab="generations", ylab="q", ylim=c(0, 1))
+get_pt &lt;- function(p0, t){
+  q0 &lt;- 1 - p0
+  return(1- q0/(1+t*q0))
+  }
 ```
 
-&lt;img src="week2_c2_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+--
+
+`\begin{align*}
+t &amp; = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
+\end{align*}`
+
+
+```r
+get_t &lt;- function(p0, pt){
+  q0 = 1- p0
+  qt = 1 - pt
+  return(1/qt - 1/q0)
+  }
+```
+
+---
+
+# Simulation for selection against recessive
+
+
+```r
+t &lt;- 1:50
+plot(t, get_pt(0.05, t), type="l", lwd=3, col="red", 
+     xlab="generations", ylab="q", ylim=c(0, 1))
+points(x=get_t(p0=0.05, pt=0.6), y=0.6, col="blue", cex=3)
+points(x=get_t(p0=0.05, pt=0.9), y=0.9, col="blue", cex=3)
+```
+
+&lt;img src="week2_c2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+```r
+get_t(p0=0.6, pt=0.9) #7.5
+```
+
+```
+## [1] 7.5
+```
+
 
 
 
