@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genetic Drift</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-09-02" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Genetic Drift
+### Jinliang Yang
+### Sep. 2, 2022
+
+---
+
+
+
+
+# Wright-Fisher Simulation
+
+In the absence of migration, mutation, or selection, what is the allele freq over time?
+
+--
+
+
+```r
+wright_fisher &lt;- function(N=1000, A1=100, t=1000){
+  p &lt;- A1/(2*N)
+  ### make a numeric vector to hold the results
+  freq &lt;- as.numeric();
+  ### Use for loop to run over t generations
+  for (i in 1:t){
+    A1 &lt;- rbinom(1, 2*N, p) # samling allele from a binom distribution
+    p &lt;- A1/(2*N)
+    freq[i] &lt;- p
+  }
+  return(freq)
+}
+frq &lt;- wright_fisher(N=1000, A1=100, t=1000)
+```
+
+- N: population size = # of individuals per generation (assuming it is constant)
+- A1: # of A1 allele in generation 0
+- t: generations
+
+---
+
+
+```r
+set.seed(12347)
+N=2000; A1=2000; t=50
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
+    for(u in 1:100){
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
+      lines(frq,type="l",col=(randomcolor))
+    }
+```
+
+&lt;img src="week2_c3_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+set.seed(12347)
+N=20; A1=20; t=50
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
+    for(u in 1:20){
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
+      lines(frq,type="l",col=(randomcolor))
+    }
+```
+
+&lt;img src="week2_c3_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Small Populations
+
+### Genetic drift
+
+Change in allele frequencies __by chance__ from the random sampling of gametes in a finite (small) population
+
+--
+
+Allele frequencies are subject to __random fluctuations__ arsing from the sampling of gametes.
+
+
+
+---
+
+# Consequences of small population
+
+### Random drift
+
+- Leads to allele fixation
+
+--
+
+### Differentiation between sub-populations
+
+- Leads to genetic differentiation and local group (or geographic isolation)
+
+--
+
+### Uniformity within sub-populations
+
+- Reduces diversity and becomes more alike in genotype in local groups
+
+--
+
+### Increased homozygosity
+
+- Reduces heterozygotes and results in inbreeding
+
+
+
+---
+
+# Two different perspectives
+
+## Sampling process
+
+- Describe it in terms of sampling variance
+
+- Focus on understanding the binomial sampling
+
+--
+
+## Inbreeding process
+
+- Describe it in terms of the genotypic changes resulting from matings between related individuals
+
+- Understand the causes and consequences of inbreeding
+
+---
+
+# Sampling: the idealized population
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="week2_c3_files/figure-html/unnamed-chunk-3-1.png" height=350&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="drift.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--------------------
+
+Several random drawn sets of gametes to form several sub-populations
+
+- Each line is distinct and of size `\(N\)`
+- Generations do not overlap
+- Random mating within each line, including self-fertilization, no selection, disregard mutation
+
+---
+
+# Sampling: the idealized population
+
+- For each sub-population with N individuals =&gt; `\(2N\)` alleles
+
+- If they segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ) at a given locus, you can think of sampling one allele ( `\(A_1\)` ) like flipping a coin (to get head). 
+  - Need to update the freq ( `\(p_t\)` ) of each generation
+  
+Therefore, this approximates a binomial sampling process
+
+---
+
+# Binomial distribution
+
+### Distribution function
+
+`\begin{align*}
+Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+\end{align*}`
+
+- `\(n\)`, number of trials
+- `\(x\)`, number of successes
+- `\(p\)`, probability of success
+
+
+### Expected value (mean)
+
+`\begin{align*}
+E(X) = np
+\end{align*}`
+
+### Variance
+
+`\begin{align*}
+V(X) = np(1-p)
+\end{align*}`
+
+---
+
+# Binomial Distribution
+
+__Flipping a coin to get heads__
+
+### Distribution function
+
+
+`\begin{align*}
+Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+\end{align*}`
+
+- `\(n\)`, number of trials -  __total times we flip the coin__
+- `\(x\)`, number of successes - __# of flips when we get heads__
+- `\(p\)`, probability of success - __fair coin = 0.5__
+
+--
+
+Mean: __Number of flips `\(\times\)` probability of heads__
+`\begin{align*}
+E(X) = np
+\end{align*}`
+
+Variance: __Number of flips `\(\times\)` prob of heads `\(\times\)` prob of tails__
+
+`\begin{align*}
+V(X) = np(1-p)
+\end{align*}`
+
+---
+
+# Binomial Distribution
+
+__Get `\(A_1\)` allele__
+
+### Distribution function
+
+
+`\begin{align*}
+Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+\end{align*}`
+
+- `\(n\)`, number of trials -  __total number of gametes ( `\(2N\)` )__
+- `\(x\)`, number of successes - __# of sampling when we get `\(A_1\)`__
+- `\(p\)`, probability of success - __Allele freq of `\(A_1\)` ( `\(p_0\)` )__
+
+
+---
+
+# Variance of allele frequencies
+
+`\begin{align*}
+Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+\end{align*}`
+
+- Let `\(X=\)` number of `\(A_1\)` alleles in the sample 
+
+- `\(2N\)` = number of gametes
+
+- `\(p_0\)` = probability of getting the `\(A_1\)` allele (or the allele freq)
+
+
+--
+
+### Variance
+
+
+
+`\begin{align*}
+V(X) &amp; = np(1-p) \\
+ &amp; = 2Np_0(1-p_0)
+\end{align*}`
+
+__Number of gametes `\(\times\)` prob of `\(A_1\)` `\(\times\)` prob of `\(A_2\)`__
+
+
+---
+
+# Variance of allele frequencies
+
+### Variance
+
+`\begin{align*}
+V(X) &amp; = 2Np_0(1-p_0)
+\end{align*}`
+
+#### Describe variance in terms of `\(p\)` in the sample
+
+- Freq of `\(A_1 = p = \frac{X = n_{A_1}}{2N}\)`
+
+
+`\begin{align*}
+V(p) &amp; = V(\frac{X}{2N}) = \frac{V(X)}{4N^2} = \frac{p_0(1-p_0)}{2N} \\
+\end{align*}`
+
+--
+
+#### Change in allele freq to generation 1
+
+`\(\Delta p = p_1 - p_0\)`, because `\(p_0\)` is constant (no variance), so:
+
+--
+
+`\begin{align*}
+V(\Delta p)  = V(p) &amp; = \frac{p_0(1-p_0)}{2N} \\
+&amp; = V(q) = V(\Delta q)
+\end{align*}`
+
+---
+
+# Variance of allele frequencies
+
+`\begin{align*}
+V(\Delta p)  = V(\Delta q) &amp; = \frac{p_0(1-p_0)}{2N} \\
+&amp; = \frac{p_0q_0}{2N} \\
+\end{align*}`
+
+- Variance in `\(\Delta p\)` expresses the __magnitude of change in allele freq__
+
+- With the assumption that the mean of __total__ population is unchanged, it measures:
+
+  - Expected change in any one individual
+  
+  - Variance of allele freq across individuals at generation 1
+
+--
+
+- In next generation, process repeats itself, but variance differs from line to line because each has a different starting freq
+
+- Over time, each sub-population fluctuates in allele freq and they become more spread apart
+
+
+---
+
+# Variance at generation t
+
+`\begin{align*}
+V(q)  =  p_0q_0(1-(1-\frac{1}{2N})^t) \\
+\end{align*}`
+
+
+--
+
+- Eventually, each line will become fixed
+  - Proportion of lines fixed for each allele can be estimated by `\(p_0\)` and `\(q_0\)`
+  
+---
+
+# Fixation
+
+- Eventually, each line will become fixed
+
+- But, the mean allele freq of the lines is still `\(p_0\)` and `\(q_0\)`
+
+- So, `\(p_0\)` is the fraction of lines expected to be fixed for `\(A_1\)` and `\(q_0\)` the fraction fixed for `\(A_2\)`
+
+---
+
+# Genotype frequencies
+
+- Dispersion via drift leads to increased variation among lines and less within each line
+
+- For the population as a whole, this leads to increased homozygosity
+(decreased heterozygosity)
+
+- Genotype frequencies can be deduced from the variance in allele frequencies
+
+- Homozygotes are gained (equally to p and q) at the expense of heterozygotes
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
