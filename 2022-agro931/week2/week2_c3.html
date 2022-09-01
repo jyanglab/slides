@@ -185,6 +185,8 @@ Therefore, this approximates a binomial sampling process
 
 # Binomial distribution
 
+A binomial distribution can be thought of as simply the probability of a __SUCCESS__ or __FAILURE__ outcome in an experiment that is repeated multiple times. 
+
 ### Distribution function
 
 `\begin{align*}
@@ -196,13 +198,13 @@ Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
 - `\(p\)`, probability of success
 
 
-### Expected value (mean)
+#### Expected value (mean)
 
 `\begin{align*}
 E(X) = np
 \end{align*}`
 
-### Variance
+#### Variance
 
 `\begin{align*}
 V(X) = np(1-p)
@@ -336,13 +338,6 @@ V(\Delta p)  = V(\Delta q) &amp; = \frac{p_0(1-p_0)}{2N} \\
 
 --
 
-- In next generation, process repeats itself, but variance differs from line to line because each has a different starting freq
-
-- Over time, each sub-population fluctuates in allele freq and they become more spread apart
-
-
----
-
 # Variance at generation t
 
 `\begin{align*}
@@ -350,33 +345,64 @@ V(q)  =  p_0q_0(1-(1-\frac{1}{2N})^t) \\
 \end{align*}`
 
 
---
 
-- Eventually, each line will become fixed
-  - Proportion of lines fixed for each allele can be estimated by `\(p_0\)` and `\(q_0\)`
-  
 ---
 
+
+
+
+```r
+set.seed(12347)
+N=2000; A1=2000; t=50
+frq1 &lt;- frq2 &lt;- frq3 &lt;- c()
+for(u in 1:1000){
+  ft1 &lt;- wright_fisher(N=N, A1=A1, t=N/10)
+  frq1 &lt;- c(frq1, ft1)
+  ft2 &lt;- wright_fisher(N=N, A1=A1, t=N/2)
+  frq2 &lt;- c(frq2, ft2)
+  ft3 &lt;- wright_fisher(N=N, A1=A1, t=3*N)
+  frq3 &lt;- c(frq3, ft3)
+}
+
+plot(density(frq1),  xlim=c(0,1), col="blue", lwd=3, xlab="p", ylab= "", main="Fig 3.4")
+lines(density(frq2), col="red", lwd=3)
+lines(density(frq3), col="green", lwd=3)
+```
+
+&lt;div align="center"&gt;
+&lt;img src="f_var.png" height=300&gt;
+&lt;/div&gt;
+
+---
 # Fixation
 
+&lt;div align="center"&gt;
+&lt;img src="f_var.png" height=300&gt;
+&lt;/div&gt;
+
+- Over time, each sub-population fluctuates in allele freq and they become more spread apart
+
 - Eventually, each line will become fixed
-
-- But, the mean allele freq of the lines is still `\(p_0\)` and `\(q_0\)`
-
-- So, `\(p_0\)` is the fraction of lines expected to be fixed for `\(A_1\)` and `\(q_0\)` the fraction fixed for `\(A_2\)`
+  - But, the mean allele freq of the lines is still `\(p_0\)` and `\(q_0\)`
+  - So, `\(p_0\)` is the fraction of lines expected to be fixed for `\(A_1\)` and `\(q_0\)` the fraction fixed for `\(A_2\)`
 
 ---
 
 # Genotype frequencies
 
+&lt;div align="center"&gt;
+&lt;img src="sim_drift.png" height=300&gt;
+&lt;/div&gt;
+
+--
+
 - Dispersion via drift leads to increased variation among lines and less within each line
 
-- For the population as a whole, this leads to increased homozygosity
+--
+
+- For the population as a whole, this leads to __increased homozygosity__
 (decreased heterozygosity)
-
-- Genotype frequencies can be deduced from the variance in allele frequencies
-
-- Homozygotes are gained (equally to p and q) at the expense of heterozygotes
+  - Homozygotes are gained at the expense of heterozygotes
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
