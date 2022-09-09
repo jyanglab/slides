@@ -82,7 +82,7 @@ N_e \approx N + 2
 
 # Different number of males and females
 
-In domestic animals, the sexes are often unqually represented among the breeding individuals!
+In domestic animals, the sexes are often unequally represented among the breeding individuals!
 
 - No matter their relative numbers, males and females contribute equally to the alleles of the next generation
 
