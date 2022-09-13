@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Heterozygosity and Diversity</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Heterozygosity and Diversity
+### Jinliang Yang
+### Sept. 14, 2022
+
+---
+
+
+
+
+# Systematic and dispersive processes
+
+### Systematic process: mutation, migration, and selection
+
+- Bring the allele frequencies to stable equilibria at particular value
+
+
+--
+
+### Dispersive process - drift
+
+- Scatter the allele frequencies away from these equilibrium
+
+- Eventually lead to all alleles being either fixed or lost
+
+
+---
+
+# Non-recurrent neutral mutation
+
+### Infinite allele model (IAM) of mutation
+
+  - Probability of the same mutation occurs more than once is very, very, very small
+  
+--
+
+### Neutral model (new allele has no effect on fitness)
+
+  - Probability new allele becomes fixed in the absence of selection = `\(\frac{1}{2N}\)`
+  
+  - If `\(\mu\)` is mutation rate at the locus, total number of new mutants = `\(2N\mu\)`
+  
+  - Probability of a new mutant being fixed `\(= 2N \mu \times \frac{1}{2N} = \mu\)`
+
+&gt; Kimura, 1983
+
+
+---
+
+# Effective neutral mutation
+
+#### Probability of fixation of new mutation is influenced by selection 
+
+- Favorable (beneficial) or unfavorable (deleterious)
+
+--
+
+`\begin{align*}
+Pr(fixation) \approx \frac{1}{2N_e}
+\end{align*}`
+&gt; Kimura, 1983
+
+- __Effective neutral mutation__ is one  a coefficient of selection `\(s\)` against it
+  - Range from `\(s=0\)` (neutral) to `\(s=\frac{1}{2N_e}\)` or 
+
+--
+
+  - `\(N_es &lt; 1/2\)`: effectively neutral
+  
+  - `\(N_es &gt; 1/2\)`: under selection
+
+---
+
+# Effective neutral mutation
+
+### `\(N_es &lt; 1/2\)`: effectively neutral
+
+For example, inbred lines of mice resulting from sib matings have `\(N_e \approx 2.5\)`
+
+- To keep `\(N_es &lt; 1/2\)`, `\(s\)` can be as high as 0.2 and this allele could become fixed due to drift and have a negative effect on fitness
+
+--
+
+- The indication: favorable mutants are far too rare to conter balance the loss of fitness in small population!
+
+---
+
+# Selection and drift
+
+### Selection counteracts drift
+
+- Drift shifts allele frequency away from equilibrium
+
+- This reduces the average fitness of the population
+
+--
+
+### Probability of fixation under selection
+
+`\begin{align*}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
+\end{align*}`
+
+&gt; Moran, 1959
+
+--
+
+- If `\(2s\)` and `\(-4N_es\)` are small, numerator becomes `\(\approx 2s\)` and denominator `\(\approx 4N_es\)`
+
+`\begin{align*}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{2N_es} = \frac{1}{2N_e}
+\end{align*}`
+
+---
+
+# Probability of fixation under selection
+
+`\begin{align*}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
+\end{align*}`
+
+&gt; Moran, 1959
+
+- If `\(2N_es\)` is small, an advantageous mutation has about the same Pr(fixation) as a neutral mutation
+
+
+
+--
+
+### R function for the fixation equation
+
+
+```r
+pfix &lt;- function(ne, s){
+  # exp computes the exponential function
+  num &lt;- 1 - exp(-2*s) # numerator
+  den &lt;- 1 - exp(-4*ne*s)  # denominator
+  return(num/den)
+}
+```
+
+---
+
+# Probability of fixation under selection
+
+- In this case, `\(s\)` is selective advantage
+
+
+```r
+ne &lt;- seq(1, 100, by=1)
+plot(ne, 1/(2*ne), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="Pr(fixation)")
+lines(ne, pfix(ne, s=0.01), lty=2, lwd=3, col="blue")
+lines(ne, pfix(ne, s=0.05), lty=2, lwd=3, col="black")
+lines(ne, pfix(ne, s=0.1), lty=2, lwd=3, col="orange")
+```
+
+&lt;img src="week4_c2_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Probability of fixation under selection
+
+&lt;div align="center"&gt;
+&lt;img src="nes.png" width=450&gt;
+&lt;/div&gt;
+
+
+- Favorable mutations likely be lost
+
+- Mutation with a 1% advantage (heterozygous, `\(s=0.01\)`), has 2% probability of being fixed
+
+- If 10% advantage `\(s=0.1\)`, probability becomes 20%
+
+---
+
+# Fixation for recessive homozygotes
+
+### In a recessive model
+
+- Normal homozygotes have same fitness as heterozygotes
+
+- The equations don't fit
+
+--
+
+### For recessive advantageous mutation
+
+`\begin{align*}
+Pr(fixation) \approx 1.13 \sqrt{\frac{s}{2N_e}}
+\end{align*}`
+
+- `\(s\)` is the selective advantage of homozygote mutant
+
+&gt; Kimura, 1962
+
+---
+
+# Polymorphism and Neutral Theory
+
+Polymorphism is not always maintained by selection
+
+### Mutation-drift equilibrium (in the absence of selection)
+
+- Drift is reducing the number of alleles in the population
+
+- While, mutation is increasing
+
+- Eventually, equilibrium is reached with respect to the inbreeding coefficient ( `\(F\)` )
+
+
+---
+
+# Mutation-drift equilibrium
+
+- Probability two alleles are homozygous
+
+`\begin{align*}
+F_t = \frac{1}{N_e} + (1 - \frac{1}{2N_w})F_{t-1}
+\end{align*}`
+
+--
+
+- With mutation occurring at rate `\(\mu\)`, the probability two alleles are IBD is `\(F_t \times (1-\mu)^2\)`
+  
+  - `\((1 - \mu)^2\)` is the probability both alleles don't mutate to another allele
+
+  
+`\begin{align*}
+F_t = [\frac{1}{N_e} + (1 - \frac{1}{2N_w})F_{t-1}] (1 - \mu )^2
+\end{align*}`
+
+--
+
+- At equilibrium ( `\(F_e\)` ), `\(F_t = F_{t-1}\)`, through rearrangement:
+
+`\begin{align*}
+F_e = \frac{(1 - \mu )^2}{2N_e - (2N_e -1)(1 - \mu)^2}
+\end{align*}`
+
+--
+
+- But `\(\mu\)` is small as compared to 1 and can be ignored, so:
+
+`\begin{align*}
+F_e \approx \frac{1}{4N_e\mu + 1}
+\end{align*}`
+
+
+---
+
+# Mutation-drift equilibrium
+
+`\begin{align*}
+F_e \approx \frac{1}{4N_e\mu + 1}
+\end{align*}`
+
+
+- `\(F_e\)` is identify (or homozygosity)
+
+- So, the expected heterozygosity at equilibrium is ( `\(1 - F_e\)` ) or
+
+`\begin{align*}
+1- F_e &amp; \approx 1- \frac{1}{4N_e\mu + 1} \\
+H_e  &amp; \approx \frac{4N_e \mu}{4N_e\mu + 1}
+\end{align*}`
+
+--
+
+- Only the __probability of homozygosity__ remains constant at equilibrium
+
+- The actual alleles are constantly changing, mutating, and drifting
+
+
+---
+
+# Mutation-drift equilibrium
+
+`\begin{align*}
+F_e \approx \frac{1}{4N_e\mu + 1}
+\end{align*}`
+
+- The relationship between `\(N_e\)`, `\(\mu\)`, and `\(F\)` at quilibrium.
+
+
+```r
+fe &lt;- function(ne, mu){
+  den &lt;- 4*ne*mu + 1  # denominator
+  return(1/den)
+}
+```
+
+---
+
+# Mutation-drift equilibrium
+
+
+```r
+ne &lt;- seq(1, 50000, by=10)
+plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="F")
+lines(ne, fe(ne, mu=10^-5), lty=2, lwd=3, col="blue")
+lines(ne, fe(ne, mu=10^-6), lty=2, lwd=3, col="black")
+```
+
+&lt;img src="week4_c2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Mutation-drift equilibrium
+
+
+.pull-left[
+
+&lt;div align="center"&gt;
+&lt;img src="ne_mu_f.png" width=450&gt;
+&lt;/div&gt;
+`\begin{align*}
+1- F_e &amp; \approx 1- \frac{1}{4N_e\mu + 1} \\
+H_e  &amp; \approx \frac{4N_e \mu}{4N_e\mu + 1}
+\end{align*}`
+]
+
+--
+
+- #### When the mutation rate is low (black line, `\(10^{-6}\)`), `\(F\)` is high even at very large Ne
+
+  - Mutations happen very infrequently and do not contribute much to the heterozygosity
+  
+  - Mutated alleles are easily lost through drift
+
+
+- #### When the mutation rate is relative high (__red line__, `\(10^{-4}\)`)
+
+  - Mutation counteracts drift through introducing new alleles at a high rate
+
+
+---
+
+# From Heterozygosity to Diversity
+
+
+### Expected Heterozygosity ( `\(H_{exp}\)` )
+
+- Probability that two randomly chosen copies of a locus are different alleles
+
+- `\(H_{exp}\)` is often reported to compare populations
+
+  - Predict outlook for population or infer ancestral events
+  
+  - For example, high `\(H_{exp}\)` = maybe in HWE, large size, no obvious drift/inbreeding
+
+--
+
+`\(H_{exp}\)` = 1 - (avg expected __homozygosity__ over all loci)
+
+`\begin{align*}
+H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+\end{align*}`
+
+  - `\(m\)` is the number of loci
+  - `\(k\)` is the number of alleles at a particular locus
+  - `\(p_{ki}\)` is the frq of `\(i^{th}\)` allele at `\(k^{th}\)` locus
+
+---
+
+# Expected Heterozygosity
+
+
+| Loci | Allele   | Frq   | 
+| :-------: | : ------ : | :-------: | 
+| locus A   | `\(A_1\)`    | `\(0.2\)`    | 
+|           | `\(A_2\)`    | `\(0.8\)`    |
+| locus B   |  `\(B_1\)`        |  `\(0.3\)`        |  
+|           |  `\(B_2\)`        |  `\(0.7\)`        |  
+
+--
+
+`\begin{align*}
+H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+\end{align*}`
+
+  - `\(m=2\)` is the number of loci
+  - `\(k=2\)` is the number of alleles at a particular locus
+  - `\(p_{ki}\)` is the frq of `\(i^{th}\)` allele at `\(k^{th}\)` locus
+
+--
+
+`\begin{align*}
+H_{exp} &amp; = 1 - \frac{1}{2}\sum_{k=1}^{2} \sum_{i=1}^{2} p_{ki}^2 \\
+&amp; = 1 - \frac{1}{2}(0.2^2 + 0.8^2 + 0.3^2 + 0.7^2) \\
+&amp; = 0.37
+\end{align*}`
+
+---
+
+# Expected Heterozygosity
+
+
+- If `\(H_e\)` is high, it does not mean that there are a lot of heterozygotes.
+
+- It reflects potential diversity and how much heterozygosity you would expect if the population were to randomly mate (no selection, migration, mutation, etc.).
+
+--
+
+# Diversity - allelic richness
+
+- Count of how many alleles are in a sample
+
+- Informative when comparing populations
+
+  - A population with fewer alleles may be prone to inbreeding, drift
+  
+  - A locus with fewer alleles compared to others may indicate it is selected for/against
+  
+
+---
+
+# Nucleotide Diversity ( `\(\pi\)` )
+
+- Average of nucleotide difference between any two copies of a locus
+
+- When you look at a nucleotide position of two random copies of a gene, Diversity Diversity ( `\(\pi\)` ) is the probability they are different
+
+--
+
+`\begin{align*}
+\pi = \frac{n}{n-1} \sum_{ij} x_i x_j \pi_{ij}
+\end{align*}`
+
+- `\(x_i\)` is the freq of the `\(i^{th}\)` genotype
+- `\(\pi_{ij}\)` is the proportion of nucleotide differences between `\(i^{th}\)` and `\(i^{th}\)` genotype
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
