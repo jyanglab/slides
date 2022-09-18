@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Changes in allele frequency</title>
+    <title>Heterozygosity</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2022-08-29" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -13,146 +12,177 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Changes in allele frequency
+# Heterozygosity
 ### Jinliang Yang
-### Aug. 29, 2022
+### Sept. 14, 2022
 
 ---
 
 
 
 
-# Factors lead  to changes of allele freq
+# Systematic and dispersive processes
 
-### Systematic processes
+### Systematic process: mutation, migration, and selection
 
-Predictable both in amount and in direction
+- Bring the allele frequencies to stable equilibria at particular value
 
-- __Migration__
-
-- __Mutation__
-
-- __Selection__
 
 --
 
-### Stochastic process
+### Dispersive process - drift
 
-Arises in small populations from the effect of sampling.
+- Scatter the allele frequencies away from these equilibrium
 
-- Predictable in amount but not in direction
+- Eventually lead to all alleles being either fixed or lost
+
 
 ---
 
-# Migration
+# Non-recurrent neutral mutation
 
-- Rate of change depends on rate of migration and difference in allele frequency between original pop and immigrants
+### Infinite allele model (IAM) of mutation
 
-- In agriculture, can think of cross-breeding as having a similar effect as migration
-
---
-
-### In mixed population after migration
-
-- `\(m\)` = proportion of new immigrants (each generation)
-- `\(q_m\)` = allele freq in immigrant population
-- `\(q_0\)` = allele freq in original pop
-
---
-
-`\begin{align*}
-q_1 &amp; = mq_m + (1-m)q_0 \\
- &amp; = m(q_m - q_0) + q_0 \\
-\end{align*}`
-
---
-
-Change in allele freq:
-
-`\begin{align*}
-\Delta q &amp; = q_1 - q_0 = m(q_m - q_0)
-\end{align*}`
-
----
-
-# Mutation
-
-- To affect allele frequencies, a mutation has to be maintained!
-
-- New mutation = heterozygote (most commonly)
-  - 50% chance of being passed on 
-  - After `\(n\)` generations, the probability of the allele remains
-
-`\begin{align*}
-(1 - \frac{1}{2})^n
-\end{align*}`
-
---
-
-![](week2_c1_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
-
----
-
-# Mutation
-
-### What is the true rate of mutation ( `\(\mu\)` )? 
-
-- Depends on organism and locus
-
---
-
-- Human:
-  - Point mutation (2.5 to 1 `\(\times 10^{-8}\)` mutations/locus/generation)
-    &gt; Neel et al 1986; Nachman and Crowell 2000
-
-- Viruses
-  - `\(1 \times 10^{-3}\)` to `\(1 \times 10^{-5}\)` per base/generation
+  - Probability of the same mutation occurs more than once is very, very, very small
   
-  - SARS-CoV-2: spontaneous mutation rate of `\(1.3 \times 10^{-6}\)` (this study found spike protein accumulated five times more mutations =&gt; consistent with the action of positive selection)
-   &gt; Amicone et al 2022
+--
+
+### Neutral model (new allele has no effect on fitness)
+
+  - Probability new allele becomes fixed in the absence of selection = `\(\frac{1}{2N}\)`
+  
+  - If `\(\mu\)` is mutation rate at the locus, total number of new mutants = `\(2N\mu\)`
+  
+  - Probability of a new mutant being fixed `\(= 2N \mu \times \frac{1}{2N} = \mu\)`
+
+&gt; Kimura, 1983
 
 
 ---
 
-# Recurrent Mutation
+# Effective neutral mutation
 
-- Forward mutation rate __ `\(\mu\)`__ from `\(A_1\)` -&gt; `\(A_2\)`
-- Backward mutation rate __ `\(\nu\)`__ from `\(A_1\)` &lt;- `\(A_2\)`
+#### Probability of fixation of new mutation is influenced by selection 
 
-- Given the initial allele freq `\(p_0\)` for `\(A_1\)` and `\(q_0\)` for `\(A_2\)`
-
---
-
-- Change `\(\Delta q = \mu p_0 - \nu q_0\)`
+- Favorable (beneficial) or unfavorable (deleterious)
 
 --
-
-In equilibrium,
 
 `\begin{align*}
-&amp;\Delta q = \mu p_0 - \nu q_0 = 0 \\
-&amp; \mu p_0 = \nu q_0 \\
+Pr(fixation) \approx \frac{1}{2N_e}
+\end{align*}`
+&gt; Kimura, 1983
+
+- __Effective neutral mutation__ is one  a coefficient of selection `\(s\)` against it
+  - Range from `\(s=0\)` (neutral) to `\(s=\frac{1}{2N_e}\)` or 
+
+--
+
+  - `\(N_es &lt; 1/2\)`: effectively neutral
+  
+  - `\(N_es &gt; 1/2\)`: under selection
+
+---
+
+# Effective neutral mutation
+
+### `\(N_es &lt; 1/2\)`: effectively neutral
+
+For example, inbred lines of mice resulting from sib matings have `\(N_e \approx 2.5\)`
+
+- To keep `\(N_es &lt; 1/2\)`, `\(s\)` can be as high as 0.2 and this allele could become fixed due to drift and have a negative effect on fitness
+
+--
+
+- The indication: favorable mutants are far too rare to conter balance the loss of fitness in small population!
+
+---
+
+# Selection and drift
+
+### Selection counteracts drift
+
+- Drift shifts allele frequency away from equilibrium
+
+- This reduces the average fitness of the population
+
+--
+
+### Probability of fixation under selection
+
+`\begin{align*}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
 \end{align*}`
 
-or 
+&gt; Moran, 1959
+
+--
+
+- If `\(2s\)` and `\(-4N_es\)` are small, numerator becomes `\(\approx 2s\)` and denominator `\(\approx 4N_es\)`
 
 `\begin{align*}
-&amp; \mu (1- q) = \nu q \\
-&amp; q = \frac{\mu}{\nu + \mu} \\
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{2N_es} = \frac{1}{2N_e}
 \end{align*}`
 
 ---
 
-# Mutation
+# Probability of fixation under selection
 
-- #### Mutation alone produces slow change in allele frequency
+`\begin{align*}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
+\end{align*}`
 
-- #### But, mutation may be important in some small pops (later)
+&gt; Moran, 1959
 
-- #### And, mutation is the ultimate source of genetic variation
+- If `\(2N_es\)` is small, an advantageous mutation has about the same Pr(fixation) as a neutral mutation
 
 
 
+--
+
+### R function for the fixation equation
+
+
+```r
+pfix &lt;- function(ne, s){
+  # exp computes the exponential function
+  num &lt;- 1 - exp(-2*s) # numerator
+  den &lt;- 1 - exp(-4*ne*s)  # denominator
+  return(num/den)
+}
+```
+
+---
+
+# Probability of fixation under selection
+
+- In this case, `\(s\)` is selective advantage
+
+
+```r
+ne &lt;- seq(1, 100, by=1)
+plot(ne, 1/(2*ne), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="Pr(fixation)")
+lines(ne, pfix(ne, s=0.01), lty=2, lwd=3, col="blue")
+lines(ne, pfix(ne, s=0.05), lty=2, lwd=3, col="black")
+lines(ne, pfix(ne, s=0.1), lty=2, lwd=3, col="orange")
+```
+
+&lt;img src="week4_c2_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Probability of fixation under selection
+
+&lt;div align="center"&gt;
+&lt;img src="nes.png" width=450&gt;
+&lt;/div&gt;
+
+
+- Favorable mutations likely be lost
+
+- Mutation with a 1% advantage (heterozygous, `\(s=0.01\)`), has 2% probability of being fixed
+
+- If 10% advantage `\(s=0.1\)`, probability becomes 20%
 
 
 
