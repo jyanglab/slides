@@ -116,7 +116,7 @@ lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p
 - The red dashed horizontal segment is the $H_{obs}$ 
   - mean value of the $H_1$ and $H_2$
 
-- Because the curve is convave downward, $H_{obs}$ is always less than $H_{exp}$
+- Because the curve is concave downward, $H_{obs}$ is always less than $H_{exp}$
 
 ]
 
