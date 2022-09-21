@@ -16,6 +16,82 @@ options(htmltools.dir.version = FALSE)
 ```
 
 
+# Diversity measurement
+
+We now consider several statistics summarizing sequencing diversity that use information about __the frequency of derived alleles__
+  - As these capture more information about our sequencing data.
+
+--
+
+Fu and Li (1993) defined a statistic, $\epsilon_1$, based on the number of __derived singletons__ in a sample.
+
+\begin{align*}
+\epsilon_1 = S_1 \\
+\end{align*}
+
+- Where $S_1$ is the number of segregating site with derived alleles found on only one haplotype.
+
+--
+
+If we don't know the ancestral status, we can aslo define a statistic, $\eta_1$, based on __all singletons__ in a sample
+
+\begin{align*}
+\eta_1 = S_1^*\frac{n-1}{n} \\
+\end{align*}
+
+- Where $S_1^*$ is all the singletons.
+
+---
+# Diversity measurement
+
+A second summary statistic of diversity that uses ancestral state information is $\theta_H$:
+
+\begin{align*}
+\theta_H = \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+\end{align*}
+
+- Where $S_i$ is again the number of segregating sites where $i$ haplotypes carry the derived allele (Fay and Wu, 2000).
+
+--
+
+.pull-left[
+<div align="center">
+<img src="daf.png" height=300>
+</div>
+]
+
+--
+
+.pull-left[
+\begin{align*}
+\theta_H = & \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+= & \frac{(1^2 \times 4 + 2^2 \times 1 + 3^2 \times 2 + 6^2 \times 1 + 9^2 \times 2)}{10(10-1)/2} \\
+= & 4.98
+\end{align*}
+]
+
+---
+
+# Summary of the $\theta$ statistics
+
+All of these statistics --- $\epsilon_1, \eta_1, \theta_H$ --- are estimators of $\theta$ 
+- at __mutation-drift__ equilibrium 
+- under an __infinite sites__ mutational model
+
+
+--
+
+Specifically,
+
+\begin{align*}
+E(\epsilon_1) = E(\eta_1) = E(\theta_H)
+\end{align*}
+
+These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
+
+
+
+---
 
 # Detecting selection using the SFS
 
@@ -72,11 +148,11 @@ A straightforward way would be test a difference between two SFSs.
 
 ### Instead, we use $\theta$ to detect deviations.
 
-- $\pi$: pairwise necleotide diversity.
+- $\theta_\pi$: pairwise necleotide diversity.
 
 --
 
-- $\theta_W$: watterson's $\theta$, using total number of segregating sites
+- $\theta_W$: Watterson's $\theta$, using total number of segregating sites
 
 --
 
@@ -96,7 +172,7 @@ Tajima (1989) constructed the first test to detect difference between the SFS.
 His statistic, $D$, was defined as:
 
 \begin{align*}
-D = \frac{\pi - \theta_W}{\sqrt{Var(\pi - \theta_W)}}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
 \end{align*}
 
 --
@@ -104,7 +180,7 @@ D = \frac{\pi - \theta_W}{\sqrt{Var(\pi - \theta_W)}}
 Fu and Li (1993) created similar statistics. These are known as Fu and Li's $D$, $F$, $D^*$, and $F^*$.
 
 \begin{align*}
-D = \frac{\pi - \epsilon_1}{\sqrt{Var(\pi - \epsilon_1)}}
+D = \frac{\theta_\pi - \epsilon_1}{\sqrt{Var(\theta_\pi - \epsilon_1)}}
 \end{align*}
 
 \begin{align*}
@@ -112,7 +188,7 @@ F = \frac{\theta_W - \epsilon_1}{\sqrt{Var(\theta_W - \epsilon_1)}}
 \end{align*}
 
 \begin{align*}
-D^* = \frac{\pi - \eta_1}{\sqrt{Var(\pi - \eta_1)}}
+D^* = \frac{\theta_\pi - \eta_1}{\sqrt{Var(\theta_\pi - \eta_1)}}
 \end{align*}
 
 \begin{align*}
@@ -128,7 +204,7 @@ Tajima (1989) constructed the first test to detect difference between the SFS.
 His statistic, $D$, was defined as:
 
 \begin{align*}
-D = \frac{\pi - \theta_W}{\sqrt{Var(\pi - \theta_W)}}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
 \end{align*}
 
 Originally designed to fit a normal distribution, however, none of these test statistics fit a parametric distribution very well.
@@ -145,10 +221,10 @@ Originally designed to fit a normal distribution, however, none of these test st
 Tajima's $D$, Fu and Li's $D, F, D^*, F^*$:
 
 \begin{align*}
-D = \frac{\pi - \theta_W}{\sqrt{Var(\pi - \theta_W)}}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
 \end{align*}
 
-After a sweep, all SNPs are low in frequency, $\pi$ will be much lower than expected.
+After a sweep, all SNPs are low in frequency, $\theta_\pi$ will be much lower than expected.
 
 While statistics based on counts of segregating sites (like $\theta_W$) will be much closer to their expected values.
 
@@ -166,12 +242,12 @@ While statistics based on counts of segregating sites (like $\theta_W$) will be 
 Tajima's $D$, Fu and Li's $D, F, D^*, F^*$:
 
 \begin{align*}
-D = \frac{\pi - \theta_W}{\sqrt{Var(\pi - \theta_W)}}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
 \end{align*}
 
-Balancing selection lead to an excess of intermediate frequency neutral variation surrounding a selected site.
+Balancing selection lead to __an excess of intermediate frequency neutral variation__ surrounding a selected site.
 
-In such case, $\pi$ will be greater than $\theta_W$ and other statistics.
+In such case, $\theta_\pi$ will be greater than $\theta_W$ and other statistics.
 
 --
 
@@ -191,12 +267,12 @@ In such case, $\pi$ will be greater than $\theta_W$ and other statistics.
 # The power of the SFS
 
 The time window for positive selection is limited.
-- Too early during the sweep 
-  - signal will be not strong enough
+- #### Too early during the sweep 
+  - Signal will be not strong enough
   
 --
   
-- Too late after the sweep
+- #### Too late after the sweep
   - Both levels and frequencies of variants will have returned to normal
 
 --
@@ -206,13 +282,77 @@ Power also determined by the distance between our studied loci and the location 
 - Move far away enough and there will be no signal of selection at all.
 
 
+---
+
+# The Hudson, Kreitman, Aguadé (HKA) Test
+
+#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
+
+--
+
+Teases apart what is responsible for $\theta = 4N_e \mu$, testing for selection
+
+Under a neutral model:
+
+- All loci share the same $N_e$
+  
+- Neutral mutation rate $\mu$ varies for different loci, but should be constant for the same locus in different species
+
+--
+  - High neutral mutation rate = high polymorphism and greater divergence between species
+  
+  -  Low rate = low polymorphism and less divergence
+  
+---
+
+# The Hudson, Kreitman, Aguadé (HKA) Test
+
+#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
 
 
+To determine level of divergence
+- Examine fixed differences between species
+- Then look at number of polymorphisms between species
+
+--
+
+### The _Adh_ locus example
+
+|  | _Adh_   | Control locus    | 
+| :-------: | : ------ : | :-------: | 
+| Polymorphism within species (S)  | 0.101    | 0.022   | 
+| Divergence between species (D)  | 0.056     | 0.052   | 
+| Ratio S/D (within/between)    | 1.80    | 0.42    | 
+| $\chi^2$ P-value | 0.016 |     |     |
+
+--
+
+Conclusion: Excess polymorphism at _Adh_ may be due to balancing selection, but HKA can’t determine the true cause
 
 
+---
 
+# Cautions and Prospects
 
+- A review paper: [Detecting Natural Selection in Genomic Data](https://www.annualreviews.org/doi/abs/10.1146/annurev-genet-111212-133526) by Vitti, Grossman, and Sabeti, 2013.
 
+  - Frequency-based methods (i.e., Tajima's D, Fay & Wu's H, Ewens-Watterson test)
+  - Gene-based methods (i.e., Ka/Ks, MKT)
+  - Mutation rate-based methods (i.e., HKA test)
+
+--
+
+Rejection of the null hypothesis (H0: neutral theory) is not necessarily the same as demonstrating natural selection!
+Because we have strong assumptions:
+1. Constant Ne
+2. Populations are at mutation-drift equilibrium
+3. No gene flow
+4. No recombination
+...
+
+--
+
+Most of these tests are weak! They have little power to detect deviation unless these deviations are large.
 
 
 

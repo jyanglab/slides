@@ -148,7 +148,7 @@ legend(0.6, 200, title="Ne*s", legend=c("-50", "5", "0", "-5", "50"),
 # The expected distribution of `\(f(q)\)`
 
 `\begin{align*}
-f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4Ns)(1-q)}}{1 - e^{(-4N s)}} \\
+f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
 \end{align*}`
 
 .pull-left[
@@ -404,79 +404,6 @@ barplot(sfs, col="#cdc0b0", xlab="Derived allele frequency", ylab="No. of segreg
 
 - However, confounded by population demographics (i.e., population expansion)
 ]
-
----
-# Diversity measurement
-
-We now consider several statistics summarizing sequencing diversity that use informtion about the frequency of derived alleles, as these capture more information about our sequencing data.
-
-Fu and Li (1993) defined a statistic, `\(\epsilon_1\)`, based on the number of __derived singletons__ in a sample.
-
-`\begin{align*}
-\epsilon_1 = S_1 \\
-\end{align*}`
-
-- Where `\(S_1\)` is the number of segregating site with derived alleles found on only one haplotype.
-
---
-
-If we don't know the ancestral status, we can aslo define a statistic, `\(\eta_1\)`, based on all singletons in a sample
-
-`\begin{align*}
-\eta_1 = S_1^*\frac{n-1}{n} \\
-\end{align*}`
-
-- Where `\(S_1^*\)` is all the singletons.
-
----
-# Diversity measurement
-
-A second summary statistic of diversity that uses ancestral state information is `\(\theta_H\)`:
-
-`\begin{align*}
-\theta_H = \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
-\end{align*}`
-
-- Where `\(S_i\)` is again the number of segregating sites where `\(i\)` haplotypes carry the derived allele (Fay and Wu, 2000).
-
---
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="daf.png" height=300&gt;
-&lt;/div&gt;
-]
-
---
-
-.pull-left[
-`\begin{align*}
-\theta_H = &amp; \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
-= &amp; \frac{(1^2 \times 4 + 2^2 \times 1 + 3^2 \times 2 + 6^2 \times 1 + 9^2 \times 2)}{10(10-1)/2} \\
-= 4.98
-\end{align*}`
-]
-
----
-
-# Summary of the `\(\theta\)` statistics
-
-All of these statistics --- `\(\theta_\pi, \theta_W, \epsilon_1, \eta_1, \theta_H\)` --- are estimators of `\(\theta\)` 
-- at __mutation-drift__ equilibrium 
-- under an __infinite sites__ mutational model
-
-
---
-
-Specifically,
-
-`\begin{align*}
-E(\epsilon_1) = E(\eta_1) = E(\theta_H)
-\end{align*}`
-
-These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
-
-
 
 
 
