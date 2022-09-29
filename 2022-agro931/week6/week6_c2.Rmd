@@ -56,7 +56,7 @@ Coancestry ( $f_{XY}$ ) is the probability of two gametes, one from each parent 
 --
 
 .pull-right[
-### Coancestry $F_{XY}$
+### Coancestry $f_{XY}$
 \begin{align*}
 f_{XY} = & \frac{1}{4}Pr(x_1 	\equiv y_1) \\
 & + \frac{1}{4}Pr(x_1 	\equiv y_2) \\
@@ -104,7 +104,7 @@ f_{XX} = & \frac{1}{4}Pr(x_1 	\equiv x_1) + \frac{1}{4}Pr(x_1 	\equiv x_2)  + \f
 This result suggests that $f_{XX} = \frac{1}{2}$ if individual X is a non-inbred with $F_X=0$.
 
 ---
-# Case study 2: Parent-Offsrping
+# Case study 2: Parent-Offspring
 
 Draw gametes at random (one from each individual X and its progeny A), what is probability they are IBD (or $f_{XA}$)?
 
@@ -113,7 +113,7 @@ Draw gametes at random (one from each individual X and its progeny A), what is p
 </div>
 
 ---
-# Case study 2: Parent-Offsrping
+# Case study 2: Parent-Offspring
 
 Draw gametes at random (one from each individual X and its progeny A), what is probability they are IBD (or $f_{XA}$)?
 
@@ -131,7 +131,7 @@ Draw gametes at random (one from each individual X and its progeny A), what is p
 
 
 ---
-# Case study 2: Parent-Offsrping
+# Case study 2: Parent-Offspring
 
 
 
@@ -160,7 +160,7 @@ Draw gametes at random (one from each individual X and its progeny A), what is p
   - In total, of the 8 possible combinations, 4 include a gamete from parent Y where this relationship holds
 
 ---
-# Case study 2: Parent-Offsrping
+# Case study 2: Parent-Offspring
 
 
 .pull-left[
