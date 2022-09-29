@@ -1,5 +1,5 @@
 ---
-title: "Tabular Methods for relationships"
+title: "Relationship Matrix"
 author: "Jinliang Yang"
 date: "Sept. 30, 2022"
 output:
@@ -526,6 +526,6 @@ D_{ii} = \frac{1}{m}
 Z <- matrix(c(0,1,1,1,2,0), ncol=3)
 num <- Z %*% t(Z)
 
-G <- (Z %*% t(Z)) / ncol(Zs)
+G <- (Z %*% t(Z)) / ncol(Z)
 G
 ```

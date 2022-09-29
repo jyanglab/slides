@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Tabular Methods for relationships</title>
+    <title>Relationship Matrix</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
     <script src="libs/header-attrs/header-attrs.js"></script>
@@ -12,7 +12,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Tabular Methods for relationships
+# Relationship Matrix
 ### Jinliang Yang
 ### Sept. 30, 2022
 
@@ -540,7 +540,7 @@ D_{ii} = \frac{1}{m}
 Z &lt;- matrix(c(0,1,1,1,2,0), ncol=3)
 num &lt;- Z %*% t(Z)
 
-G &lt;- (Z %*% t(Z)) / ncol(Zs)
+G &lt;- (Z %*% t(Z)) / ncol(Z)
 G
 ```
 
