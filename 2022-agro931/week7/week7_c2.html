@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Continuous Variation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Continuous Variation
+### Jinliang Yang
+### Oct. 5th, 2020
+
+---
+
+
+
+
+
+
+# Expectation and Variance 
+
+### Expectation `\(E(X)\)`:  
+`\begin{align*}
+E(f(X)) = \sum\limits_{i=1}^kf(x_i)Pr(X = x_i)
+\end{align*}`
+
+
+`\begin{align*}
+E[X] &amp;= 0 \times (1 - p)^2 + 1 \times [2p(1-p)] + 2 \times p^2 = 2p \\
+\end{align*}`
+
+--
+
+### Variance `\(Var(X)\)`:
+`\begin{align*}
+Var(X) &amp;= E[X^2] - E[X]^2 \\
+       &amp;= 2p(1-p) \\
+\end{align*}`
+
+
+
+
+---
+# Probabilities
+
+### Joint Probability
+
+Two random variables to **occur together**.
+In the `Milk Yield` exmaple, the joint probability of `\(Pr(G=aa, MY &gt; 300)\)`?
+
+--
+
+### Marginal Probability
+
+A sum of **mutually exclusive** and **exhaustive** set of events.
+The marginal probability of `\(Pr(G=Aa)\)` for all possible MY?
+
+
+---
+# Examples for probabilities
+
+Two variables: Genotype and Milk Yield (MY)
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+--
+
+### Conditional Probability
+
+$$
+Pr(X = x | Y = y) = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)}
+$$
+
+--
+
+- What is the conditional probability of `\(Pr(MY \leq 100 | G=Aa)\)`?
+
+
+---
+# Genotype (X) and Milk Yield (MY)
+
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+--
+
+### Statistical Independence
+
+
+$$
+`\begin{align*}
+&amp; Pr(X = x_i|Y = y_j) \\
+&amp; = Pr(X = x_i|Y = y_k) \\
+&amp; = Pr(X = x_i) \\
+\end{align*}`
+$$
+
+--
+
+`\begin{equation}
+Pr(X = x_i, Y = y_j) = Pr(X = x_i) \times Pr(Y = y_j)
+\end{equation}`
+
+--
+
+$$
+`\begin{align*}
+&amp;Pr(MY &gt; 300, X_{AA}) \\
+&amp;Pr(MY &gt; 300) \times Pr(X_{AA}) \\
+\end{align*}`
+$$
+
+
+---
+# Genotype (X) and Milk Yield (MY)
+
+
+| Genotype | `\(MY = 100\)` | `\(MY = 150\)` | `\(MY = 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+What are the genotype effects, or `\(E(MY | X_{AA)}\)`, `\(E(MY | X_{aa)}\)`, `\(E(MY | X_{Aa)}\)`?
+
+--
+
+### Conditional Expectation
+
+The expectation (=mean) for variable `\(X\)` conditional on variable `\(Y=y\)` is:
+`\begin{align*}
+E(X|Y = y) &amp; = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
+&amp; = \sum\limits_{i=1}^k x_i \frac{Pr(X = x_i, Y = y)}{Pr(Y = y)} \\
+\end{align*}`
+
+
+---
+# Genotype (X) and Milk Yield (MY)
+
+
+| Genotype | `\(MY = 100\)` | `\(MY = 150\)` | `\(MY = 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+What are the genotype effects, or `\(E(MY | X_{AA)}\)`, `\(E(MY | X_{aa)}\)`, `\(E(MY | X_{Aa)}\)`?
+
+--
+
+$$
+`\begin{align*}
+E(MY| X_{AA}) &amp; = \sum\limits_{i=1}^3 MY_i Pr(MY = MY_i | X = X_{AA}) \\
+&amp; = 100 \times 0.06/0.36 + 150 \times 0.10/0.36 + 300 \times 0.20/0.36 = 81/0.36 = 225
+\end{align*}`
+$$
+--
+
+$$
+`\begin{align*}
+E(MY| X_{aa}) &amp; = \sum\limits_{i=1}^3 MY_i Pr(MY = MY_i | X = X_{aa}) \\
+&amp; = 100 \times 0.10/0.16 + 150 \times 0.04/0.16 + 300 \times 0.02/0.16 = 22/0.16 = 137.5
+\end{align*}`
+$$
+$$
+`\begin{align*}
+E(MY| X_{Aa}) &amp; = \sum\limits_{i=1}^3 MY_i Pr(MY = MY_i | X = X_{Aa}) \\
+&amp; = 100 \times 0.14/0.48 + 150 \times 0.18/0.48 + 300 \times 0.16/0.48 = 89/0.48 = 185.4
+\end{align*}`
+$$
+
+
+---
+# Covariance
+
+To quantify to what extent the two variables **co-vary**.
+
+$$
+`\begin{aligned}
+Cov(X, Y) &amp; = E([X - E(X)][Y - E(Y)]) \\
+&amp; = E(XY) - E(X)E(Y) \\
+\end{aligned}`
+$$
+where,
+$$
+`\begin{aligned}
+E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
+\end{aligned}`
+$$
+
+---
+# A plant example
+The number of florets per spikelet:
+
+`\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i = G_i + E_i
+\end{align*}`
+
+
+```
+## Warning: package 'knitr' was built under R version 4.1.2
+```
+
+```
+## Warning: package 'kableExtra' was built under R version 4.1.2
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+--
+
+### What is the covariance between G and P?
+
+
+$$
+`\begin{aligned}
+Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
+\end{aligned}`
+$$ 
+
+
+---
+### What is the covariance between G and P?
+
+
+$$
+`\begin{aligned}
+Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
+\end{aligned}`
+$$ 
+
+
+
+```r
+dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
+                 P=c(3, 2, 3, 2, 3, 2),
+                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
+                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
+                 Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
+kable(dt) # print the table
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+### What is the covariance between G and P?
+
+
+$$
+`\begin{aligned}
+Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
+\end{aligned}`
+$$ 
+
+
+
+```r
+dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
+                 P=c(3, 2, 3, 2, 3, 2),
+                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
+                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
+                 Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
+*kable(dt[1,]) # only print the first line to save space
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+--
+
+
+```r
+*sum(with(dt, G*P*Prob)) # E(GP)
+```
+
+```
+## [1] 6.55
+```
+
+```r
+*sum(with(dt, G*Prob)) # E(G)
+```
+
+```
+## [1] 2.55
+```
+
+```r
+*sum(with(dt,  P*Prob)) # E(P)
+```
+
+```
+## [1] 2.55
+```
+
+---
+### What is the covariance between G and P?
+
+
+$$
+`\begin{aligned}
+Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
+&amp;= 6.55 - (2.55)^2 = 0.0475 \\
+\end{aligned}`
+$$ 
+
+--
+
+Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
+
+
+```r
+*sum(dt$G * dt$E * dt$Prob) # E(GE)
+```
+
+```
+## [1] -5.551115e-17
+```
+
+```r
+*sum(dt$E * dt$Prob) # E(E)
+```
+
+```
+## [1] 0
+```
+$$
+`\begin{aligned}
+Cov(G, E) &amp;=E(GE) - E(G)E(E) \\
+&amp;= 0 - (2.55) \times 0 = 0 \\
+\end{aligned}`
+$$ 
+
+
+---
+# Correlation
+
+A mutual relationship between two variables.
+
+$$
+`\begin{align*}
+r_{XY} &amp; = Corr(X, Y) \\
+&amp; = \frac{Cov(X, Y)}{\sqrt{Var(X)Var(Y)} }\\
+\end{align*}`
+$$
+
+--
+
+### The correlation coefficent between G and P
+
+$$
+`\begin{align*}
+ r_{GP} &amp; = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
+\end{align*}`
+$$
+
+---
+
+$$
+`\begin{align*}
+ r_{GP} &amp; = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
+\end{align*}`
+$$
+
+`\(Cov(G, P) =0.0475\)`
+
+--
+
+`\(Var(G) = E(G^2) - E(G)^2\)`
+
+
+```r
+sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
+```
+
+```
+## [1] 0.0475
+```
+
+--
+
+`\(Var(P) = E(P^2) - E(P)^2\)`
+
+
+```r
+sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
+```
+
+```
+## [1] 0.2475
+```
+
+--
+
+$$
+`\begin{align*}
+ r_{GP} &amp; = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
+        &amp; = \frac{0.0475}{\sqrt{0.0475 \times 0.2475}} \\
+        &amp; = 0.438
+\end{align*}`
+$$
+
+---
+# Regression
+
+The regression of `\(Y\)` on `\(X\)`:
+$$
+\hat{y} = E(Y|X)
+$$
+This is also called the **best predictor** of `\(Y\)` given `\(X\)`.
+
+--
+
+Regression can be used to define **a linear model**:
+$$
+y = \hat{y} + e
+$$
+where `\(e\)` is called the residual.
+
+--
+
+Another definition of the simple linear regression model:
+
+$$
+`\begin{aligned}
+y = \bar{y} &amp; + \beta_{YX}(x - \bar{x})+e \\
+\text{with } &amp; \bar{y} = E(Y) \\
+&amp; \beta_{YX} = \frac{Cov(Y, X)}{Var(X)} \\
+\end{aligned}`
+$$
+
+---
+# Predict G based on P
+
+
+$$
+`\begin{aligned}
+&amp; G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
+&amp; \beta_{GP} = \frac{Cov(G, P)}{Var(P)} \\
+\end{aligned}`
+$$
+--
+
+$$
+`\begin{aligned}
+\beta_{GP} &amp; = \frac{Cov(G, P)}{Var(P)} \\
+&amp; = 0.0475/0.2475 = 0.192\\
+&amp; \bar{P} = E(P) = 2.55 \\
+&amp; \bar{G} = E(G) = 2.55 \\
+\end{aligned}`
+$$
+--
+
+$$
+`\begin{aligned}
+&amp; G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
+&amp; \hat{G} = \bar{G} + \beta_{GP}(P- \bar{P} ) \\
+&amp; = 2.55 + 0.192(P-2.55)
+\end{aligned}`
+$$
+
+---
+# Prediction Model
+
+$$
+`\begin{aligned}
+G &amp; = 2.55 + 0.192(P-2.55) \\
+&amp; = 2.0604 + 0.192 \times P
+\end{aligned}`
+$$
+
+
+```r
+plot(x=1, y=1, ylim=c(1, 5), xlim=c(2, 3), type="n", xlab="P", ylab="G")
+# a, b : single values specifying the intercept and the slope of the line
+abline(a=2.0604, b=0.192, lwd=3, col="red")
+```
+
+&lt;img src="week7_c2_files/figure-html/unnamed-chunk-7-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+# Get predicted G ( `\(\hat{G}\)` )
+
+Using the prediction model: 
+$$
+`\begin{aligned}
+G = 2.0604 + 0.192 \times P
+\end{aligned}`
+$$
+
+
+```r
+dt$ghat &lt;- 2.0604 + 0.192*dt$P
+kable(dt)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ghat &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Accuracy of prediction
+
+The accuracy of the prediction is equal to the **correlation of `\(\hat{y}\)` with its true value `\(y\)`**. 
+
+We can derive accuracy as:
+$$
+`\begin{aligned}
+r_{\hat{y}y} &amp; =  \frac{Cov(\hat{y}, y)}{\sqrt{Var(\hat{y})Var(y)}} \\
+&amp; = \frac{Cov(x, y)}{\sqrt{Var(x) Var(y)}} \\
+&amp; = r_{XY} \\
+\end{aligned}`
+$$
+
+
+---
+# Accuracy of prediction
+
+### Method One: 
+
+$$
+`\begin{aligned}
+r_{\hat{G}G} &amp; =  \frac{Cov(\hat{G}, G)}{\sqrt{Var(\hat{G})Var(G)}} \\
+\end{aligned}`
+$$
+
+
+```r
+vg &lt;- sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
+vghat &lt;- sum(dt$ghat^2 * dt$Prob) - sum(dt$ghat * dt$Prob)^2
+cov_g_ghat &lt;- sum(dt$ghat * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$ghat * dt$Prob)
+r_ghat_g &lt;- cov_g_ghat / sqrt(vg*vghat)
+r_ghat_g
+```
+
+```
+## [1] 0.4380858
+```
+
+---
+# Accuracy of prediction
+
+### Method Two:
+
+$$
+`\begin{aligned}
+r_{GP}  =  \frac{Cov(G, P)}{\sqrt{Var(G) Var(P)}} 
+\end{aligned}`
+$$
+
+
+```r
+vp &lt;- sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
+cov_g_p &lt;- sum(dt$P * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$P * dt$Prob)
+r_g_p &lt;- cov_g_p / sqrt(vg*vp)
+r_g_p
+```
+
+```
+## [1] 0.4380858
+```
+
+
+---
+# Decomposition of variance
+
+
+$$
+Y = G + E 
+$$
+Variance of Y can be decomposed as **explained** and **unexplained** variance components:
+
+$$
+`\begin{aligned}
+Var(Y) = r_{XY}^2 Var(Y) + (1 - r_{XY}^2) Var(Y)
+\end{aligned}`
+$$
+
+
+```r
+vg
+```
+
+```
+## [1] 0.0475
+```
+
+```r
+r_g_p^2 * vg
+```
+
+```
+## [1] 0.009116162
+```
+
+```r
+(1- r_g_p^2) *vg
+```
+
+```
+## [1] 0.03838384
+```
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

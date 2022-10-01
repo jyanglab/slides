@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical Foundations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical Foundations
+### Jinliang Yang
+### Oct. 3th, 2022
+
+---
+
+
+
+
+# Population Genetics vs. Quantitative genetics?
+
+### Population genetics
+- `Pop-gen` is the study of **evolution**.
+
+- The language of `pop-gen` is **Mathematics**.
+
+--
+
+### Quantitative genetics 
+- `Quant-gen` is the study of the **complex trait**, or **phenotype**.
+- The language of `Quant-gen` is **Statistics**.
+
+
+---
+# Quantitative genetics almost synonymous with statistics
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="fisher.jpg" height=150&gt;
+&lt;/div&gt;
+- __R. A. Fisher__ is a founder of quantitative genetics but also of analysis of variance and randomization procedures in statistics.
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="Karl_Pearson_1912.jpg" height=150&gt;
+&lt;/div&gt;
+- The early geneticist __Karl Pearson__ originated the concepts of regression and correlation.
+]
+
+--
+
+In the next couple weeks, we will be deeply involved with the statistical evalution of the basic quantiative genetic models.
+
+
+---
+# Quantitative genetics vs. statistics
+
+- Many genetic factors
+
+  - Determining the quantitative traits are almost always __normally distributed__
+
+--
+
+- Genetic factors act in pairs (two alleles per locus)
+  - __Explanatory variables__
+  - Each with two or three __levels of variation__
+  
+--
+
+- Passed on to progeny at random 
+
+  - __Random events__
+  
+--
+
+- Genetic factors sometimes show independent assortment 
+
+  - __Independence__
+
+
+---
+# Quantitative traits: statistical notation
+
+#### Conceptual Notation
+&lt;center&gt;
+&lt;div&gt;
+&lt;img src="diversity.jpg" width=200 height=100&gt;
+=
+&lt;img src="SNPs.png" width=100 height=100 &gt; + error 
+&lt;/div&gt;
+&lt;/center&gt;
+
+
+
+--
+#### Matrix Notation
+`\begin{align*}
+\underbrace{\begin{bmatrix}    
+Y_1\\
+Y_2\\
+\vdots \\
+Y_n\end{bmatrix}}_{n \times 1}  
+&amp;= \underbrace{\begin{bmatrix}
+   X_{11} &amp; X_{12} &amp; \cdots &amp; X_{1m} \\
+    X_{21} &amp; X_{22} &amp; \cdots &amp; X_{2m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nm}
+\end{bmatrix}}_{n \times m} \quad
+\underbrace{\begin{bmatrix}
+a_1\\
+a_2\\
+\vdots \\
+a_m\end{bmatrix}}_{m \times 1} 
++\underbrace{\begin{bmatrix}
+\epsilon_1\\
+\epsilon_2\\
+\vdots \\
+\epsilon_m\end{bmatrix}}_{n \times 1} 
+\end{align*}`
+
+
+--
+#### Statistical Notation
+`\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + \epsilon_i
+\end{align*}`
+  
+---
+# Why the normal distribution?
+![](normal.png)
+--
+
+### The Central Limit Theorem (CLT)
+
+- The CLT states that the sums of a set of random variables `\((X_1, X_2, X_3, ..., X_n)\)` is normally
+distributed no matter the distribution the individual X's were sampled from, 
+as long as they were sampled from __identical distributions__.
+
+
+
+
+---
+# A simulation experiment
+
+`\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + \epsilon_i
+\end{align*}`
+
+
+- For a given individual ( `\(i=1\)` ) with a number of loci ( `\(m=1,000\)` )
+
+- Each allele is `\(X_j \in (A, a)\)` , with the probability of `\(p\)` or `\(q=1-p\)`
+
+--
+
+- The effect of `\(j\)`th allele ( `\(\alpha_j\)` ) can be samples from any distribution (e.g., _uniform distribution_)
+
+According to the CLT, if `\(m\)` is __sufficiently large__, the sum is normally distributed.
+
+--
+
+
+```r
+m &lt;- 1000
+## for each allele, the chance of A or a is equal to 0.5
+x &lt;- rbinom(n=m, size=1, prob=0.5)
+## sample effect from a uniform distribution:
+a &lt;- runif(n=m)
+y &lt;- sum(x*a) + 0
+y
+```
+
+```
+## [1] 243.8146
+```
+
+---
+# A simulation experiment
+
+`\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + \epsilon_i
+\end{align*}`
+
+
+
+```r
+set.seed(1234) # seed for random number generator
+m &lt;- 1000
+n = 2000 # simulate a population of 2,000 individuals
+out &lt;- c() # create an empty vector
+*for(i in 1:n){
+  x &lt;- rbinom(n=m, size=1, prob=0.5) ## for each allele, the chance of A = 0.5
+  a &lt;- runif(n=m) ## sample effect from a uniform distribution:
+  y &lt;- sum(x*a)
+  out &lt;- c(out, y)
+} 
+#shapiro.test(out) # W = 0.99928, p-value = 0.6622
+hist(out, breaks=50, col="#b8860b", main="Phenotype Distribution", xlab="")
+```
+
+&lt;img src="week7_c1_files/figure-html/unnamed-chunk-2-1.png" width="25%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# A simulation experiment
+
+`\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + \epsilon_i
+\end{align*}`
+
+
+
+```r
+set.seed(1234) # seed for random number generator
+*m &lt;- 2
+n = 2000 # simulate a population of 2,000 individuals
+out &lt;- c()
+for(i in 1:n){
+  x &lt;- rbinom(n=m, size=1, prob=0.5) ## for each allele, the chance of A = 0.5
+  a &lt;- runif(n=m) ## sample effect from a uniform distribution:
+  y &lt;- sum(x*a)
+  out &lt;- c(out, y)
+} 
+#shapiro.test(out) # W = 0.91117, p-value &lt; 2.2e-16
+hist(out, breaks=50, col="#b8860b", main="Phenotype Distribution", xlab="")
+```
+
+&lt;img src="week7_c1_files/figure-html/unnamed-chunk-3-1.png" width="25%" style="display: block; margin: auto;" /&gt;
+
+---
+# Probability Density
+
+For a continuous trait, i.e., kernel number per ear (raning from 0 to 1,000), what is the `\(Pr(Y=100)\)`?
+
+--
+
+Assuming **wheat plant height** in a population is normally distributed, with m = 30 inch, sd=5.
+Question: `\(Pr(30 &lt; Y \leq 50)\)`?
+
+--
+
+Using the __probability density function__ (or **pdf**) and integration, we can calculate the probability that Y is contained in a certain bracket as:
+
+`\begin{align*}
+Pr(30 &lt; Y \leq 50) = \int_{30}^{50} f(y)d_y
+\end{align*}`
+
+--
+
+&lt;img src="week7_c1_files/figure-html/unnamed-chunk-4-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Expectation and variance 
+
+Define the random variable `\(X\)` (i.e. for genotype) which counts the number of allele `\(A\)`.
+`\begin{align*}
+  X &amp;=
+  \begin{cases}
+    2 &amp; \text{if } AA  \text{ with frequency } p^2 \\
+    1 &amp; \text{if } Aa \text{ with frequency } 2p(1-p) \\
+    0 &amp; \text{if } aa \text{ with frequency } (1-p)^2
+  \end{cases} \\
+\end{align*}`
+where `\(p\)` is the allele frequency of `\(A\)`. 
+
+--
+
+Then, according to *Formula (1)* in the Note:
+  
+`\begin{align*}
+E(f(X)) = \sum\limits_{i=1}^kf(x_i)Pr(X = x_i)
+\end{align*}`
+
+--
+
+Expected value of `\(X\)`:
+
+--
+
+`\begin{align*}
+E[X] &amp;= 0 \times (1 - p)^2 + 1 \times [2p(1-p)] + 2 \times p^2 = 2p \\
+\end{align*}`
+
+---
+# Expectation and variance 
+
+Define the random variable `\(X\)` which counts the number of allele `\(A\)`.
+`\begin{align*}
+  X &amp;=
+  \begin{cases}
+    2 &amp; \text{if } AA  \text{ with frequency } p^2 \\
+    1 &amp; \text{if } Aa \text{ with frequency } 2p(1-p) \\
+    0 &amp; \text{if } aa \text{ with frequency } (1-p)^2
+  \end{cases} \\
+\end{align*}`
+where `\(p\)` is the allele frequency of `\(A\)`. 
+
+--
+
+Expected value of __ `\(X^2\)`__:
+
+--
+
+`\begin{align*}
+E[X^2] &amp;= 0^2 \times (1 - p)^2 + 1^2 \times [2p(1-p)] + 2^2 \times p^2 \\
+&amp;= 2p(1-p) + 4p^2 \\
+\end{align*}`
+
+--
+
+Thus, the variance of allelic counts is 
+
+--
+
+`\begin{align*}
+Var(X) &amp;= E[X^2] - E[X]^2 \\
+&amp;= 2p(1-p) + 4p^2  - (2p)^2\\
+&amp;= 2p(1-p)
+\end{align*}`
+
+
+---
+# Alternative coding 
+
+Define the random variable `\(X\)` as below:
+
+`\begin{align*}
+  X &amp;=
+  \begin{cases}
+    1 &amp; \text{if } AA  \text{ with frequency } p^2 \\
+    0 &amp; \text{if } Aa \text{ with frequency } 2p(1-p) \\
+    -1 &amp; \text{if } aa \text{ with frequency } (1-p)^2
+  \end{cases} \\
+\end{align*}`
+where `\(p\)` is the allele frequency of `\(A\)`. 
+
+--
+
+Then, 
+`\begin{align*}
+E[X] &amp;= -1 \times (1 - p)^2 + 0 \times [2p(1-p)] + 1 \times p^2 \\
+&amp;= −(1 − 2p + p^2) + p^2 = 2p-1 \\
+E[X^2] &amp;= (-1)^2 \times (1 - p)^2 + 0^2 \times [2p(1-p)] + 1^2 \times p^2 \\
+&amp;= 1 − 2p + p^2 +p^2  = 2p^2 − 2p + 1 \\
+\end{align*}`
+Thus, the variance of allelic counts is 
+`\begin{align*}
+Var(X) &amp;= E[X^2] - E[X]^2 \\
+&amp;= 2p^2 − 2p + 1 − (4p^2 − 4p + 1)\\
+&amp;= -2p^2 + 2p = 2p(1-p)
+\end{align*}`
+
+
+---
+# Examples for probabilities
+
+Two variables: Genotype and Milk Yield (MY)
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | :-------: | :-------: | :-------: | :-------:| 
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+--
+
+### Joint Probability
+
+Two random variables to occur together.
+
+--
+
+- What is the joint probability of `\(Pr(G=aa, MY &gt; 300)\)`?
+
+
+---
+# Examples for probabilities
+
+Two variables: Genotype and Milk Yield (MY)
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+--
+
+### Marginal Probability
+
+A sum of **mutually exclusive** and **exhaustive** set of events.
+
+--
+
+- What is the marginal probability of `\(Pr(G=Aa)\)`?
+
+
+---
+# Examples for probabilities
+
+Two variables: Genotype and Milk Yield (MY)
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+--
+
+### Conditional Probability
+
+$$
+Pr(X = x | Y = y) = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)}
+$$
+
+--
+
+- What is the conditional probability of `\(Pr(MY \leq 100 | G=Aa)\)`?
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

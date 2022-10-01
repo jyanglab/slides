@@ -1,0 +1,192 @@
+---
+title: "Lab1: Basic R for Quant-Gen"
+date: "Oct. 9th, 2020"
+author: "Jinliang Yang"
+output:
+   rmdformats::material:
+      highlight: kate
+      self_contained: no
+      code_folding: hide
+---
+
+
+# Data Types in R
+
+For more information, please refer to [Quick-R](https://www.statmethods.net/r-tutorial/index.html).
+
+R has a wide variety of data types including scalars, __vectors__ (numerical, character, logical), matrices, __data frames__, and lists.
+
+### Vectors
+
+```{r}
+a <- c(1, 2, 5.3, 6, -2) # numeric vector
+b <- c("one","two","three", "four", "five") # character vector
+c <- c(TRUE,TRUE,TRUE,FALSE,TRUE) #logical vector
+```
+
+Refer to elements of a vector using subscripts.
+
+```{r}
+a[c(2,4)] # 2nd and 4th elements of vector
+```
+
+### Data Frames
+
+In a data frame, different columns can have different modes (numeric, character, factor, etc.). This is similar to SAS and SPSS datasets.
+
+```{r}
+mydata <- data.frame(b, a, c)
+names(mydata) <- c("ID","Value","Passed") # variable names
+mydata
+```
+
+
+# Operators in R
+
+### Arithmetic Operators include:
+
+| Operator |	Description |
+|--------- | -------------|
+| +	| addition |
+| -	| subtraction |
+| *	| multiplication |
+| /	| division |
+|^ or ** |	exponentiation |
+
+### Logical Operators include:
+
+| Operator | 	Description | 
+|--------- | -------------|
+|  >	|  greater than | 
+|  >=	|  greater than or equal to | 
+|  ==	|  exactly equal to | 
+|  !=	| not equal to | 
+
+
+# R for Loop
+Loops are used in programming to repeat a specific block of code.
+
+### Syntax of for loop
+
+```{bash, eval=FALSE}
+for (val in sequence)
+{
+statement
+}
+```
+
+### Example: for loop
+
+Below is an example to count the number of even numbers in a vector.
+
+```{r}
+x <- c(2,5,3,9,8,11,6)
+count <- 0
+for (i in 1:length(x)) {
+  if(x[i] %% 2 == 0) {
+    count = count + 1
+    }
+}
+print(count)
+```
+
+
+# The Central Limit Theorem (CLT)
+
+- The CLT states that the sums of a set of random variables $(X_1, X_2, X_3, ..., X_n)$ is normally
+distributed no matter the distribution the individual X's were sampled from, 
+as long as they were sampled from __identical distributions__.
+
+### A simulation experiment
+
+\begin{align*}
+Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + \epsilon_i
+\end{align*}
+
+
+- For a given individual ( $i=1$ ) with a number of loci ( $m=1,000$ )
+- Each allele is $X_j \in (A, a)$ , with the probability of $p$ or $1-p$
+- The effect of $j$th allele ( $\alpha_j$ ) can be samples from any distribution (e.g., _uniform distribution_)
+
+According to the CLT, if $m$ is __sufficiently large__, the sum is normally distributed.
+
+### Simulate one dividual
+
+Simulate an individual's phenotypic value. In this individual, the phenotype is determined by `m` number of markers with marker freq = 0.5. The markers' effects ( $\alpha$ ) are randomly draws from a uniform distribution.
+
+```{r}
+m <- 1000
+## for each allele, the chance of A or a is equal to 0.5
+x <- rbinom(n=m, size=1, prob=0.5)
+## sample effect from a uniform distribution:
+a <- runif(n=m)
+y <- sum(x*a) + 0
+y
+```
+
+Apply the above procedure to a population composed of `n` individuals.
+
+```{r}
+set.seed(1234) # seed for random number generator
+m <- 1000
+n <- 2000 # simulate a population of 2,000 individuals
+out <- c() # create an empty vector
+for(i in 1:n){ #<<
+  x <- rbinom(m, size=1, prob=0.5) ## for each allele, the chance of A = 0.5
+  a <- runif(m) ## sample effect from a uniform distribution:
+  y <- sum(x*a)
+  out <- c(out, y)
+} 
+
+```
+
+### Plot the result
+```{r}
+#shapiro.test(out) # W = 0.99928, p-value = 0.6622
+hist(out, breaks=50, col="#b8860b", main="Phenotype Distribution", xlab="")
+```
+
+### Determine what does the __sufficiently large__ mean?
+
+Pack the abvoe simulation procedure into an R function:
+```{r}
+sim_clt <- function(m=1, n=2000){
+  # m: number of markers, m=1
+  # n: number of individuals, n=2000
+  out <- c() # create an empty vector
+  for(i in 1:n){ #<<
+    x <- rbinom(m, size=1, prob=0.5) ## for each allele, the chance of A = 0.5
+    a <- runif(m) ## sample effect from a uniform distribution:
+    y <- sum(x*a)
+    out <- c(out, y)
+  } 
+  # output p.value
+  return(shapiro.test(out)$p.value)
+}
+```
+
+Then apply the function using an R for loop:
+
+We will run a sequene of number of markers from 10 to 1000, with the increment of 10. 
+
+```{r}
+set.seed(12345)
+pval <- c() # create an empty vector as the output
+# 
+num <- seq(from =10, to =1000, by=10) # 
+for(i in num){
+  # here we apply the function for the situation with i markers
+  tem <- sim_clt(m=i, n=2000)
+  pval <- c(pval, tem)
+}
+
+```
+
+Again, let's plot the result!
+
+```{r}
+plot(x=num, y=-log10(pval), col="#b8860b", main="Phenotype Distribution", xlab="")
+abline(h=-log10(0.01))
+```
+
+

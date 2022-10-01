@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+set.seed(1234)
+
+res <- data.frame()
+for(j in 2:1000){
+  m <- j   #<< different number of markers
+  n = 2000 # simulate a population of 2,000 individuals
+  out <- c()
+  for(i in 1:n){
+    x <- rbinom(n=m, size=1, prob=0.5) ## for each allele, the chance of A = 0.5
+    a <- runif(n=m) ## sample effect from a uniform distribution:
+    y <- sum(x*a)
+    out <- c(out, y)
+  } 
+  fit <- shapiro.test(out) # W = 0.91117, p-value < 2.2e-16
+  tem <- data.frame(markers=m, pval=fit$p.value)
+  res <- rbind(res, tem)
+}
+
+res$log10p <- -log10(res$pval) # 
+
+plot(res$markers, res$log10p)
+abline(h= 1.3, col="red", lwd=3)
+
+```
+
