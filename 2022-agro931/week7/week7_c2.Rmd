@@ -1,7 +1,7 @@
 ---
 title: "Continuous Variation"
 author: "Jinliang Yang"
-date: "Oct. 5th, 2020"
+date: "Oct. 5th, 2022"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -41,88 +41,84 @@ Var(X) &= E[X^2] - E[X]^2 \\
 
 
 ---
-# Probabilities
+# Examples for probabilities
 
-### Joint Probability
+| Genotype (G) | $MY \leq 100$ | $100 < MY \leq 300$ | $MY > 300$  | Marginal $Pr(G)$  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | __0.16__ | __0.48__ |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+#### Joint Probability
 
 Two random variables to **occur together**.
-In the `Milk Yield` exmaple, the joint probability of $Pr(G=aa, MY > 300)$?
+- In the `Milk Yield` example, the joint probability of $Pr(G=Aa, MY > 300) = 0.16$
 
 --
 
-### Marginal Probability
+#### Marginal Probability
 
 A sum of **mutually exclusive** and **exhaustive** set of events.
-The marginal probability of $Pr(G=Aa)$ for all possible MY?
-
+- The marginal probability of $Pr(G=Aa)=0.48$ for all possible MY
 
 ---
 # Examples for probabilities
 
-Two variables: Genotype and Milk Yield (MY)
-
 | Genotype (G) | $MY \leq 100$ | $100 < MY \leq 300$ | $MY > 300$  | Marginal $Pr(G)$  | 
 | :-------: | ------- | ------- | ------- | ------- | ------- |
 | aa      | 0.10 | 0.04 |  0.02  | 0.16    |
-| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| Aa     |  0.14 | 0.18 | __0.16__ | __0.48__ |
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
---
+#### Conditional Probability
 
-### Conditional Probability
-
-$$
-Pr(X = x | Y = y) = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)}
-$$
+Conditional probability is the likelihood of an event occurring, based on the occurrence of a previous event.
 
 --
 
-- What is the conditional probability of $Pr(MY \leq 100 | G=Aa)$?
-
-
----
-# Genotype (X) and Milk Yield (MY)
-
-
-| Genotype (G) | $MY \leq 100$ | $100 < MY \leq 300$ | $MY > 300$  | Marginal $Pr(G)$  | 
-| :-------: | ------- | ------- | ------- | ------- | ------- |
-| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
-| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
-| AA | 0.06 | 0.10 | 0.20 | 0.36 |
-| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
-
---
-
-### Statistical Independence
-
-
-$$
-\begin{align*}
-& Pr(X = x_i|Y = y_j) \\
-& = Pr(X = x_i|Y = y_k) \\
-& = Pr(X = x_i) \\
-\end{align*}
-$$
-
---
-
-\begin{equation}
-Pr(X = x_i, Y = y_j) = Pr(X = x_i) \times Pr(Y = y_j)
-\end{equation}
+- What is the conditional probability of $Pr(MY > 100 | G=Aa)$?
 
 --
 
 $$
 \begin{align*}
-&Pr(MY > 300, X_{AA}) \\
-&Pr(MY > 300) \times Pr(X_{AA}) \\
+Pr(X = x | Y = y) & = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)} \\
+Pr(MY > 100 | G=Aa) & = \frac{Pr(G=Aa, MY > 300)}{Pr(G=Aa)} = \frac{0.16}{0.48} = 0.33 \\
 \end{align*}
 $$
 
 
 ---
-# Genotype (X) and Milk Yield (MY)
+# Genotype (G) and Milk Yield (MY)
+
+
+| Genotype (G) | $MY \leq 100$ | $100 < MY \leq 300$ | $MY > 300$  | Marginal $Pr(G)$  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | __0.20__ | __0.36__ |
+| Marg. Prob.|  0.30 | 0.32 | __0.38__ | 1.00 |
+
+#### Statistical Independence
+
+Two events X and Y are statistical independent if and only if their joint probability can be factorized into their marginal probabilities. 
+- $Pr(X = x_i, Y = y_j) = Pr(X = x_i) \times Pr(Y = y_j)$
+
+
+--
+
+$$
+\begin{align*}
+&Pr(MY > 300, G = AA) = 0.20\\
+&Pr(MY > 300) \times Pr(G = AA) = 0.36 \times 0.38 = 0.14 \\
+\end{align*}
+$$
+
+
+---
+# Genotype (G) and Milk Yield (MY)
 
 
 | Genotype | $MY = 100$ | $MY = 150$ | $MY = 300$  | Marginal $Pr(G)$  | 
@@ -132,13 +128,14 @@ $$
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
-What are the genotype effects, or $E(MY | X_{AA)}$, $E(MY | X_{aa)}$, $E(MY | X_{Aa)}$?
+What are the genotype effects, or $E(MY | X_{AA})$, $E(MY | X_{aa})$, $E(MY | X_{Aa})$?
 
 --
 
-### Conditional Expectation
+#### Conditional Expectation
 
 The expectation (=mean) for variable $X$ conditional on variable $Y=y$ is:
+
 \begin{align*}
 E(X|Y = y) & = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 & = \sum\limits_{i=1}^k x_i \frac{Pr(X = x_i, Y = y)}{Pr(Y = y)} \\
@@ -146,7 +143,7 @@ E(X|Y = y) & = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 
 
 ---
-# Genotype (X) and Milk Yield (MY)
+# Genotype (G) and Milk Yield (MY)
 
 
 | Genotype | $MY = 100$ | $MY = 150$ | $MY = 300$  | Marginal $Pr(G)$  | 
@@ -156,7 +153,7 @@ E(X|Y = y) & = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
-What are the genotype effects, or $E(MY | X_{AA)}$, $E(MY | X_{aa)}$, $E(MY | X_{Aa)}$?
+What are the genotype effects, or $E(MY | X_{AA})$, $E(MY | X_{aa})$, $E(MY | X_{Aa})$?
 
 --
 
@@ -187,10 +184,24 @@ $$
 
 To quantify to what extent the two variables **co-vary**.
 
+#### If X and Y are independent
+
+Then the expectation operator $E$ has the property
+
+$$
+\begin{align*}
+E(XY) = E(X)E(Y) \\
+\end{align*}
+$$
+And Covariance is zero $Cov(X, Y) =0$
+
+--
+
+#### If X and Y are NOT independent
+
 $$
 \begin{aligned}
-Cov(X, Y) & = E([X - E(X)][Y - E(Y)]) \\
-& = E(XY) - E(X)E(Y) \\
+Cov(X, Y) & = E(XY) - E(X)E(Y) \\
 \end{aligned}
 $$
 where,
@@ -201,20 +212,27 @@ E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
 $$
 
 ---
-# A plant example
-The number of florets per spikelet:
+# A plant spikelet example
+
+The number of spikelets per spike:
 
 \begin{align*}
-Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i = G_i + E_i
+Y_{i} = G_i + E_i = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i
 \end{align*}
+
+<div align="center">
+<img src="spike.png" height=150>
+</div>
+
+--
 
 ```{r tables-mtcars, echo=FALSE}
 library(knitr)
 library(kableExtra)
-dt <- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
-                 P=c(3, 2, 3, 2, 3, 2),
-                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
-                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
+dt <- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", "Hawken"),
+                 P=c(3, 2, 3, 2, 3, 2)*10,
+                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2)*10,
+                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2)*10,
                  Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
 kable(dt)
 ```
@@ -222,18 +240,14 @@ kable(dt)
 
 --
 
-### What is the covariance between G and P?
+#### What is the covariance between G and P?
 
-
-$$
-\begin{aligned}
-Cov(G,P) &=E(GP) - E(G)E(P) \\
-\end{aligned}
-$$ 
 
 
 ---
-### What is the covariance between G and P?
+# A plant spikelet example
+
+#### What is the covariance between G and P?
 
 
 $$
@@ -244,55 +258,37 @@ $$
 
 
 ```{r}
-dt <- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
-                 P=c(3, 2, 3, 2, 3, 2),
-                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
-                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
+dt <- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", "Hawken"),
+                 P=c(30, 20, 30, 20, 30, 20),
+                 G=c(28, 28, 26, 26, 22, 22),
+                 E=c(2, -8, 4, -6, 8, -2),
                  Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
-kable(dt) # print the table
 ```
 
----
-### What is the covariance between G and P?
-
-
-$$
-\begin{aligned}
-Cov(G,P) &=E(GP) - E(G)E(P) \\
-\end{aligned}
-$$ 
-
-
-```{r}
-dt <- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
-                 P=c(3, 2, 3, 2, 3, 2),
-                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
-                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
-                 Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
-kable(dt[1,]) # only print the first line to save space #<<
-```
 --
 
 ```{r, results='markup'}
 sum(with(dt, G*P*Prob)) # E(GP) #<<
-
 sum(with(dt, G*Prob)) # E(G) #<<
-
 sum(with(dt,  P*Prob)) # E(P) #<<
 ```
 
 ---
-### What is the covariance between G and P?
+# A plant spikelet example
+
+#### What is the covariance between G and P?
 
 
 $$
 \begin{aligned}
 Cov(G,P) &=E(GP) - E(G)E(P) \\
-&= 6.55 - (2.55)^2 = 0.0475 \\
+&= 655 - (25.5)^2 = 4.75 \\
 \end{aligned}
 $$ 
 
 --
+
+#### What is the covariance between G and E?
 
 Similarly, to calculate $Cov(G, E) =E(GE) - E(G)E(E)$:
 
@@ -303,15 +299,14 @@ sum(dt$E * dt$Prob) # E(E) #<<
 $$
 \begin{aligned}
 Cov(G, E) &=E(GE) - E(G)E(E) \\
-&= 0 - (2.55) \times 0 = 0 \\
+&= 0 - (25.5) \times 0 = 0 \\
 \end{aligned}
 $$ 
-
-
 ---
-# Correlation
+# Correlation between X and Y
 
-A mutual relationship between two variables.
+A mutual relationship between two variables. 
+- It is any statistical relationship, whether __causal or not__, between two random variables.
 
 $$
 \begin{align*}
@@ -332,17 +327,19 @@ $$
 
 ---
 
+# The correlation coefficent between G and P
+
 $$
 \begin{align*}
  r_{GP} & = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
 \end{align*}
 $$
 
-$Cov(G, P) =0.0475$
+- $Cov(G, P) =4.75$
 
 --
 
-$Var(G) = E(G^2) - E(G)^2$
+- $Var(G) = E(G^2) - E(G)^2$
 
 ```{r}
 sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
@@ -350,7 +347,7 @@ sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
 
 --
 
-$Var(P) = E(P^2) - E(P)^2$
+- $Var(P) = E(P^2) - E(P)^2$
 
 ```{r}
 sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
@@ -361,17 +358,19 @@ sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
 $$
 \begin{align*}
  r_{GP} & = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
-        & = \frac{0.0475}{\sqrt{0.0475 \times 0.2475}} \\
-        & = 0.438
+        & = \frac{4.75}{\sqrt{4.75 \times 24.75}} = 0.438\\
 \end{align*}
 $$
 
 ---
-# Regression
+# Linear Regression
 
 The regression of $Y$ on $X$:
+
 $$
+\begin{align*}
 \hat{y} = E(Y|X)
+\end{align*}
 $$
 This is also called the **best predictor** of $Y$ given $X$.
 
@@ -400,28 +399,34 @@ $$
 
 
 $$
-\begin{aligned}
+\begin{align*}
 & G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
-& \beta_{GP} = \frac{Cov(G, P)}{Var(P)} \\
-\end{aligned}
+\end{align*}
 $$
 --
 
+For the bread wheat spikelet data:
+
+- $\begin{align*} \bar{P} & = E(P) = 25.5 \end{align*}$
+- $\begin{align*} \bar{G} & = E(G) = 25.5 \end{align*}$
+
+--
+
+And regression coefficient:
 $$
-\begin{aligned}
+\begin{align*}
 \beta_{GP} & = \frac{Cov(G, P)}{Var(P)} \\
-& = 0.0475/0.2475 = 0.192\\
-& \bar{P} = E(P) = 2.55 \\
-& \bar{G} = E(G) = 2.55 \\
-\end{aligned}
+& = 4.75/24.75 = 0.192\\
+\end{align*}
 $$
 --
 
+Therefore, the **best predictor** of $G$ given $P$ 
+
 $$
 \begin{aligned}
-& G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
-& \hat{G} = \bar{G} + \beta_{GP}(P- \bar{P} ) \\
-& = 2.55 + 0.192(P-2.55)
+\hat{G} & = \bar{G} + \beta_{GP}(P- \bar{P} ) \\
+& = 25.5 + 0.192(P-25.5)
 \end{aligned}
 $$
 
@@ -430,29 +435,30 @@ $$
 
 $$
 \begin{aligned}
-G & = 2.55 + 0.192(P-2.55) \\
-& = 2.0604 + 0.192 \times P
+\hat{G} & = 25.5 + 0.192 \times (P - 25.5) \\
+& = 20.604 + 0.192 \times P
 \end{aligned}
 $$
+--
 
 ```{r, out.width='40%', fig.align='center'}
-plot(x=1, y=1, ylim=c(1, 5), xlim=c(2, 3), type="n", xlab="P", ylab="G")
+plot(x=1, y=1, ylim=c(0, 50), xlim=c(0, 30), type="n", xlab="P", ylab="G")
 # a, b : single values specifying the intercept and the slope of the line
-abline(a=2.0604, b=0.192, lwd=3, col="red")
+abline(a=20.604, b=0.192, lwd=3, col="red")
 ```
 
 ---
-# Get predicted G ( $\hat{G}$ )
+# Get predicted G
 
 Using the prediction model: 
 $$
 \begin{aligned}
-G = 2.0604 + 0.192 \times P
+G = 20.604 + 0.192 \times P
 \end{aligned}
 $$
 
 ```{r}
-dt$ghat <- 2.0604 + 0.192*dt$P
+dt$ghat <- 20.604 + 0.192*dt$P
 kable(dt)
 ```
 
@@ -464,9 +470,8 @@ The accuracy of the prediction is equal to the **correlation of $\hat{y}$ with i
 We can derive accuracy as:
 $$
 \begin{aligned}
+r_{XY} & = \frac{Cov(x, y)}{\sqrt{Var(x) Var(y)}} \\
 r_{\hat{y}y} & =  \frac{Cov(\hat{y}, y)}{\sqrt{Var(\hat{y})Var(y)}} \\
-& = \frac{Cov(x, y)}{\sqrt{Var(x) Var(y)}} \\
-& = r_{XY} \\
 \end{aligned}
 $$
 
@@ -474,7 +479,11 @@ $$
 ---
 # Accuracy of prediction
 
-### Method One: 
+```{r}
+kable(dt)
+```
+
+--
 
 $$
 \begin{aligned}
@@ -489,47 +498,6 @@ cov_g_ghat <- sum(dt$ghat * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$ghat 
 r_ghat_g <- cov_g_ghat / sqrt(vg*vghat)
 r_ghat_g
 ```
-
----
-# Accuracy of prediction
-
-### Method Two:
-
-$$
-\begin{aligned}
-r_{GP}  =  \frac{Cov(G, P)}{\sqrt{Var(G) Var(P)}} 
-\end{aligned}
-$$
-
-```{r}
-vp <- sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
-cov_g_p <- sum(dt$P * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$P * dt$Prob)
-r_g_p <- cov_g_p / sqrt(vg*vp)
-r_g_p
-```
-
-
----
-# Decomposition of variance
-
-
-$$
-Y = G + E 
-$$
-Variance of Y can be decomposed as **explained** and **unexplained** variance components:
-
-$$
-\begin{aligned}
-Var(Y) = r_{XY}^2 Var(Y) + (1 - r_{XY}^2) Var(Y)
-\end{aligned}
-$$
-
-```{r}
-vg
-r_g_p^2 * vg
-(1- r_g_p^2) *vg
-```
-
 
 
 

@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Continuous Variation
 ### Jinliang Yang
-### Oct. 5th, 2020
+### Oct. 5th, 2022
 
 ---
 
@@ -47,88 +47,84 @@ Var(X) &amp;= E[X^2] - E[X]^2 \\
 
 
 ---
-# Probabilities
+# Examples for probabilities
 
-### Joint Probability
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | __0.16__ | __0.48__ |
+| AA | 0.06 | 0.10 | 0.20 | 0.36 |
+| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
+
+#### Joint Probability
 
 Two random variables to **occur together**.
-In the `Milk Yield` exmaple, the joint probability of `\(Pr(G=aa, MY &gt; 300)\)`?
+- In the `Milk Yield` example, the joint probability of `\(Pr(G=Aa, MY &gt; 300) = 0.16\)`
 
 --
 
-### Marginal Probability
+#### Marginal Probability
 
 A sum of **mutually exclusive** and **exhaustive** set of events.
-The marginal probability of `\(Pr(G=Aa)\)` for all possible MY?
-
+- The marginal probability of `\(Pr(G=Aa)=0.48\)` for all possible MY
 
 ---
 # Examples for probabilities
 
-Two variables: Genotype and Milk Yield (MY)
-
 | Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
 | :-------: | ------- | ------- | ------- | ------- | ------- |
 | aa      | 0.10 | 0.04 |  0.02  | 0.16    |
-| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| Aa     |  0.14 | 0.18 | __0.16__ | __0.48__ |
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
---
+#### Conditional Probability
 
-### Conditional Probability
-
-$$
-Pr(X = x | Y = y) = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)}
-$$
+Conditional probability is the likelihood of an event occurring, based on the occurrence of a previous event.
 
 --
 
-- What is the conditional probability of `\(Pr(MY \leq 100 | G=Aa)\)`?
-
-
----
-# Genotype (X) and Milk Yield (MY)
-
-
-| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
-| :-------: | ------- | ------- | ------- | ------- | ------- |
-| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
-| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
-| AA | 0.06 | 0.10 | 0.20 | 0.36 |
-| Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
-
---
-
-### Statistical Independence
-
-
-$$
-`\begin{align*}
-&amp; Pr(X = x_i|Y = y_j) \\
-&amp; = Pr(X = x_i|Y = y_k) \\
-&amp; = Pr(X = x_i) \\
-\end{align*}`
-$$
-
---
-
-`\begin{equation}
-Pr(X = x_i, Y = y_j) = Pr(X = x_i) \times Pr(Y = y_j)
-\end{equation}`
+- What is the conditional probability of `\(Pr(MY &gt; 100 | G=Aa)\)`?
 
 --
 
 $$
 `\begin{align*}
-&amp;Pr(MY &gt; 300, X_{AA}) \\
-&amp;Pr(MY &gt; 300) \times Pr(X_{AA}) \\
+Pr(X = x | Y = y) &amp; = \frac{Pr(X = x, Y = y)}{ Pr(Y = y)} \\
+Pr(MY &gt; 100 | G=Aa) &amp; = \frac{Pr(G=Aa, MY &gt; 300)}{Pr(G=Aa)} = \frac{0.16}{0.48} = 0.33 \\
 \end{align*}`
 $$
 
 
 ---
-# Genotype (X) and Milk Yield (MY)
+# Genotype (G) and Milk Yield (MY)
+
+
+| Genotype (G) | `\(MY \leq 100\)` | `\(100 &lt; MY \leq 300\)` | `\(MY &gt; 300\)`  | Marginal `\(Pr(G)\)`  | 
+| :-------: | ------- | ------- | ------- | ------- | ------- |
+| aa      | 0.10 | 0.04 |  0.02  | 0.16    |
+| Aa     |  0.14 | 0.18 | 0.16 | 0.48 |
+| AA | 0.06 | 0.10 | __0.20__ | __0.36__ |
+| Marg. Prob.|  0.30 | 0.32 | __0.38__ | 1.00 |
+
+#### Statistical Independence
+
+Two events X and Y are statistical independent if and only if their joint probability can be factorized into their marginal probabilities. 
+- `\(Pr(X = x_i, Y = y_j) = Pr(X = x_i) \times Pr(Y = y_j)\)`
+
+
+--
+
+$$
+`\begin{align*}
+&amp;Pr(MY &gt; 300, G = AA) = 0.20\\
+&amp;Pr(MY &gt; 300) \times Pr(G = AA) = 0.36 \times 0.38 = 0.14 \\
+\end{align*}`
+$$
+
+
+---
+# Genotype (G) and Milk Yield (MY)
 
 
 | Genotype | `\(MY = 100\)` | `\(MY = 150\)` | `\(MY = 300\)`  | Marginal `\(Pr(G)\)`  | 
@@ -138,13 +134,14 @@ $$
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
-What are the genotype effects, or `\(E(MY | X_{AA)}\)`, `\(E(MY | X_{aa)}\)`, `\(E(MY | X_{Aa)}\)`?
+What are the genotype effects, or `\(E(MY | X_{AA})\)`, `\(E(MY | X_{aa})\)`, `\(E(MY | X_{Aa})\)`?
 
 --
 
-### Conditional Expectation
+#### Conditional Expectation
 
 The expectation (=mean) for variable `\(X\)` conditional on variable `\(Y=y\)` is:
+
 `\begin{align*}
 E(X|Y = y) &amp; = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 &amp; = \sum\limits_{i=1}^k x_i \frac{Pr(X = x_i, Y = y)}{Pr(Y = y)} \\
@@ -152,7 +149,7 @@ E(X|Y = y) &amp; = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 
 
 ---
-# Genotype (X) and Milk Yield (MY)
+# Genotype (G) and Milk Yield (MY)
 
 
 | Genotype | `\(MY = 100\)` | `\(MY = 150\)` | `\(MY = 300\)`  | Marginal `\(Pr(G)\)`  | 
@@ -162,7 +159,7 @@ E(X|Y = y) &amp; = \sum\limits_{i=1}^k x_i Pr(X = x_i | Y = y) \\
 | AA | 0.06 | 0.10 | 0.20 | 0.36 |
 | Marg. Prob.|  0.30 | 0.32 | 0.38 | 1.00 |
 
-What are the genotype effects, or `\(E(MY | X_{AA)}\)`, `\(E(MY | X_{aa)}\)`, `\(E(MY | X_{Aa)}\)`?
+What are the genotype effects, or `\(E(MY | X_{AA})\)`, `\(E(MY | X_{aa})\)`, `\(E(MY | X_{Aa})\)`?
 
 --
 
@@ -193,10 +190,24 @@ $$
 
 To quantify to what extent the two variables **co-vary**.
 
+#### If X and Y are independent
+
+Then the expectation operator `\(E\)` has the property
+
+$$
+`\begin{align*}
+E(XY) = E(X)E(Y) \\
+\end{align*}`
+$$
+And Covariance is zero `\(Cov(X, Y) =0\)`
+
+--
+
+#### If X and Y are NOT independent
+
 $$
 `\begin{aligned}
-Cov(X, Y) &amp; = E([X - E(X)][Y - E(Y)]) \\
-&amp; = E(XY) - E(X)E(Y) \\
+Cov(X, Y) &amp; = E(XY) - E(X)E(Y) \\
 \end{aligned}`
 $$
 where,
@@ -207,26 +218,24 @@ E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
 $$
 
 ---
-# A plant example
-The number of florets per spikelet:
+# A plant spikelet example
+
+The number of spikelets per spike:
 
 `\begin{align*}
-Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i = G_i + E_i
+Y_{i} = G_i + E_i = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i
 \end{align*}`
 
+&lt;div align="center"&gt;
+&lt;img src="spike.png" height=150&gt;
+&lt;/div&gt;
 
-```
-## Warning: package 'knitr' was built under R version 4.1.2
-```
-
-```
-## Warning: package 'kableExtra' was built under R version 4.1.2
-```
+--
 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
@@ -235,45 +244,45 @@ Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i = G_i + E_i
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -282,18 +291,14 @@ Y_{i} = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i = G_i + E_i
 
 --
 
-### What is the covariance between G and P?
+#### What is the covariance between G and P?
 
-
-$$
-`\begin{aligned}
-Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
-\end{aligned}`
-$$ 
 
 
 ---
-### What is the covariance between G and P?
+# A plant spikelet example
+
+#### What is the covariance between G and P?
 
 
 $$
@@ -305,111 +310,13 @@ $$
 
 
 ```r
-dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
-                 P=c(3, 2, 3, 2, 3, 2),
-                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
-                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
+dt &lt;- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", "Hawken"),
+                 P=c(30, 20, 30, 20, 30, 20),
+                 G=c(28, 28, 26, 26, 22, 22),
+                 E=c(2, -8, 4, -6, 8, -2),
                  Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
-kable(dt) # print the table
 ```
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
----
-### What is the covariance between G and P?
-
-
-$$
-`\begin{aligned}
-Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
-\end{aligned}`
-$$ 
-
-
-
-```r
-dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
-                 P=c(3, 2, 3, 2, 3, 2),
-                 G=c(2.8, 2.8, 2.6, 2.6, 2.2, 2.2),
-                 E=c(0.2, -0.8, 0.4, -0.6, 0.8, -0.2),
-                 Prob=c(0.20, 0.05, 0.30, 0.20, 0.05, 0.20))
-*kable(dt[1,]) # only print the first line to save space
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
 --
 
 
@@ -418,7 +325,7 @@ dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
 ```
 
 ```
-## [1] 6.55
+## [1] 655
 ```
 
 ```r
@@ -426,7 +333,7 @@ dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
 ```
 
 ```
-## [1] 2.55
+## [1] 25.5
 ```
 
 ```r
@@ -434,21 +341,25 @@ dt &lt;- data.frame(Genotype=c("t/t", "t/t", "T/t", "T/t", "T/T", "T/T"),
 ```
 
 ```
-## [1] 2.55
+## [1] 25.5
 ```
 
 ---
-### What is the covariance between G and P?
+# A plant spikelet example
+
+#### What is the covariance between G and P?
 
 
 $$
 `\begin{aligned}
 Cov(G,P) &amp;=E(GP) - E(G)E(P) \\
-&amp;= 6.55 - (2.55)^2 = 0.0475 \\
+&amp;= 655 - (25.5)^2 = 4.75 \\
 \end{aligned}`
 $$ 
 
 --
+
+#### What is the covariance between G and E?
 
 Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
 
@@ -458,7 +369,7 @@ Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
 ```
 
 ```
-## [1] -5.551115e-17
+## [1] -3.552714e-15
 ```
 
 ```r
@@ -466,20 +377,19 @@ Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
 ```
 
 ```
-## [1] 0
+## [1] -2.220446e-16
 ```
 $$
 `\begin{aligned}
 Cov(G, E) &amp;=E(GE) - E(G)E(E) \\
-&amp;= 0 - (2.55) \times 0 = 0 \\
+&amp;= 0 - (25.5) \times 0 = 0 \\
 \end{aligned}`
 $$ 
-
-
 ---
-# Correlation
+# Correlation between X and Y
 
-A mutual relationship between two variables.
+A mutual relationship between two variables. 
+- It is any statistical relationship, whether __causal or not__, between two random variables.
 
 $$
 `\begin{align*}
@@ -500,17 +410,19 @@ $$
 
 ---
 
+# The correlation coefficent between G and P
+
 $$
 `\begin{align*}
  r_{GP} &amp; = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
 \end{align*}`
 $$
 
-`\(Cov(G, P) =0.0475\)`
+- `\(Cov(G, P) =4.75\)`
 
 --
 
-`\(Var(G) = E(G^2) - E(G)^2\)`
+- `\(Var(G) = E(G^2) - E(G)^2\)`
 
 
 ```r
@@ -518,12 +430,12 @@ sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
 ```
 
 ```
-## [1] 0.0475
+## [1] 4.75
 ```
 
 --
 
-`\(Var(P) = E(P^2) - E(P)^2\)`
+- `\(Var(P) = E(P^2) - E(P)^2\)`
 
 
 ```r
@@ -531,7 +443,7 @@ sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
 ```
 
 ```
-## [1] 0.2475
+## [1] 24.75
 ```
 
 --
@@ -539,17 +451,19 @@ sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
 $$
 `\begin{align*}
  r_{GP} &amp; = \frac{Cov(G, P)}{\sqrt{Var(G)Var(P)} }\\
-        &amp; = \frac{0.0475}{\sqrt{0.0475 \times 0.2475}} \\
-        &amp; = 0.438
+        &amp; = \frac{4.75}{\sqrt{4.75 \times 24.75}} = 0.438\\
 \end{align*}`
 $$
 
 ---
-# Regression
+# Linear Regression
 
 The regression of `\(Y\)` on `\(X\)`:
+
 $$
+`\begin{align*}
 \hat{y} = E(Y|X)
+\end{align*}`
 $$
 This is also called the **best predictor** of `\(Y\)` given `\(X\)`.
 
@@ -578,28 +492,34 @@ $$
 
 
 $$
-`\begin{aligned}
+`\begin{align*}
 &amp; G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
-&amp; \beta_{GP} = \frac{Cov(G, P)}{Var(P)} \\
-\end{aligned}`
+\end{align*}`
 $$
 --
 
+For the bread wheat spikelet data:
+
+- `\(\begin{align*} \bar{P} &amp; = E(P) = 25.5 \end{align*}\)`
+- `\(\begin{align*} \bar{G} &amp; = E(G) = 25.5 \end{align*}\)`
+
+--
+
+And regression coefficient:
 $$
-`\begin{aligned}
+`\begin{align*}
 \beta_{GP} &amp; = \frac{Cov(G, P)}{Var(P)} \\
-&amp; = 0.0475/0.2475 = 0.192\\
-&amp; \bar{P} = E(P) = 2.55 \\
-&amp; \bar{G} = E(G) = 2.55 \\
-\end{aligned}`
+&amp; = 4.75/24.75 = 0.192\\
+\end{align*}`
 $$
 --
 
+Therefore, the **best predictor** of `\(G\)` given `\(P\)` 
+
 $$
 `\begin{aligned}
-&amp; G = \bar{G}  + \beta_{GP}(P - \bar{P}) + e \\
-&amp; \hat{G} = \bar{G} + \beta_{GP}(P- \bar{P} ) \\
-&amp; = 2.55 + 0.192(P-2.55)
+\hat{G} &amp; = \bar{G} + \beta_{GP}(P- \bar{P} ) \\
+&amp; = 25.5 + 0.192(P-25.5)
 \end{aligned}`
 $$
 
@@ -608,40 +528,41 @@ $$
 
 $$
 `\begin{aligned}
-G &amp; = 2.55 + 0.192(P-2.55) \\
-&amp; = 2.0604 + 0.192 \times P
+\hat{G} &amp; = 25.5 + 0.192 \times (P - 25.5) \\
+&amp; = 20.604 + 0.192 \times P
 \end{aligned}`
 $$
+--
 
 
 ```r
-plot(x=1, y=1, ylim=c(1, 5), xlim=c(2, 3), type="n", xlab="P", ylab="G")
+plot(x=1, y=1, ylim=c(0, 50), xlim=c(0, 30), type="n", xlab="P", ylab="G")
 # a, b : single values specifying the intercept and the slope of the line
-abline(a=2.0604, b=0.192, lwd=3, col="red")
+abline(a=20.604, b=0.192, lwd=3, col="red")
 ```
 
-&lt;img src="week7_c2_files/figure-html/unnamed-chunk-7-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week7_c2_files/figure-html/unnamed-chunk-6-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
-# Get predicted G ( `\(\hat{G}\)` )
+# Get predicted G
 
 Using the prediction model: 
 $$
 `\begin{aligned}
-G = 2.0604 + 0.192 \times P
+G = 20.604 + 0.192 \times P
 \end{aligned}`
 $$
 
 
 ```r
-dt$ghat &lt;- 2.0604 + 0.192*dt$P
+dt$ghat &lt;- 20.604 + 0.192*dt$P
 kable(dt)
 ```
 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Genotype &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
@@ -651,52 +572,52 @@ kable(dt)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; t/t &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/t &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.6364 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; T/T &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.4444 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -709,9 +630,8 @@ The accuracy of the prediction is equal to the **correlation of `\(\hat{y}\)` wi
 We can derive accuracy as:
 $$
 `\begin{aligned}
+r_{XY} &amp; = \frac{Cov(x, y)}{\sqrt{Var(x) Var(y)}} \\
 r_{\hat{y}y} &amp; =  \frac{Cov(\hat{y}, y)}{\sqrt{Var(\hat{y})Var(y)}} \\
-&amp; = \frac{Cov(x, y)}{\sqrt{Var(x) Var(y)}} \\
-&amp; = r_{XY} \\
 \end{aligned}`
 $$
 
@@ -719,7 +639,75 @@ $$
 ---
 # Accuracy of prediction
 
-### Method One: 
+
+```r
+kable(dt)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ghat &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
 
 $$
 `\begin{aligned}
@@ -739,71 +727,6 @@ r_ghat_g
 ```
 ## [1] 0.4380858
 ```
-
----
-# Accuracy of prediction
-
-### Method Two:
-
-$$
-`\begin{aligned}
-r_{GP}  =  \frac{Cov(G, P)}{\sqrt{Var(G) Var(P)}} 
-\end{aligned}`
-$$
-
-
-```r
-vp &lt;- sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
-cov_g_p &lt;- sum(dt$P * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$P * dt$Prob)
-r_g_p &lt;- cov_g_p / sqrt(vg*vp)
-r_g_p
-```
-
-```
-## [1] 0.4380858
-```
-
-
----
-# Decomposition of variance
-
-
-$$
-Y = G + E 
-$$
-Variance of Y can be decomposed as **explained** and **unexplained** variance components:
-
-$$
-`\begin{aligned}
-Var(Y) = r_{XY}^2 Var(Y) + (1 - r_{XY}^2) Var(Y)
-\end{aligned}`
-$$
-
-
-```r
-vg
-```
-
-```
-## [1] 0.0475
-```
-
-```r
-r_g_p^2 * vg
-```
-
-```
-## [1] 0.009116162
-```
-
-```r
-(1- r_g_p^2) *vg
-```
-
-```
-## [1] 0.03838384
-```
-
 
 
 
