@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Population Genomics</title>
+    <title>Population Genomics Module 1</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-10-21" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -12,9 +13,9 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Population Genomics
+# Population Genomics Module 1
 ### Jinliang Yang
-### Oct. 212022
+### Oct. 21, 2022
 
 ---
 
@@ -23,9 +24,9 @@ class: center, middle, inverse, title-slide
 
 # About Me
 
-- Bachelor (2005) and Master (2008) degree from CAU!
+- Bachelor and Master degrees from CAU!
 
-- About 15 years experience in maize genetics
+- About 15 years experience in maize genetics and genomics
 
 --
 
@@ -46,42 +47,51 @@ class: center, middle, inverse, title-slide
 
 - My lab focuses on __quantitative genetics__ and __statistical genomics__ of maize and its wild relatives
 
-  - From historical _domestication_ to future _improvement_.
-
 --
 
 &lt;div align="center"&gt;
-&lt;img src="study.png" height=200&gt;
-&lt;img src="qrcode1.png" height=200&gt;
+&lt;img src="study.png" height=300&gt;
+&lt;/div&gt; 
+
+- From historical _domestication_ to future _improvement_.
+
+
+---
+
+# Slides for this class module
+
+- Scan QR code to view the HTML slides: 
+
+&lt;div align="center"&gt;
+&lt;img src="qr-code.png" height=300&gt;
 &lt;/div&gt; 
 
 --
 
-  - Lab website: https://jyanglab.com/
-    - TEACHING: Courses
-      - Click the [Module]()
+- Lab website: https://jyanglab.com/
+  - TEACHING: Courses
+    - __Module 1__: [[HTML](https://jyanglab.com/slides/2022-module/week1/w1.html)]
       
-  - Links for the slides: 
 
 ---
 
 # Goals and Objectives
 
 ### Overall goal: 
-
-Use maize as a model species to illustrate basic principles of crop domestication and its implication for crop improvement
+- Understand the basic principles of population genomics
+- Apply the knowledge for study crop domestication and its implication for crop improvement
 
 --
 
 ### Objectives:
 
-- 1) Understand basic population genomics terminology
+- 1) Learn basic population genomics terminology
 
 - 2) Learn how to measure diversity using sequencing data
 
 - 3) Understand the statistics for measuring population differentiation
 
-- 4) Be able to scan for direct and linked selection
+- 4) Be able to scan for direct and linked selection to detect selective sweeps
 
 ---
 
@@ -89,11 +99,13 @@ Use maize as a model species to illustrate basic principles of crop domesticatio
 
 ### __Nobel Prize in Physiology or Medicine 2022__
 
+
 .pull-left[
 &lt;div align="center"&gt;
 &lt;img src="paabo.png" height=350&gt;
 &lt;/div&gt;
 ]
+
 
 --
 
@@ -112,8 +124,28 @@ A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years b
 __Svante Paabo__ represents the field of _evolutionary genetics_ and/or _population genetics!!!_
 
 ---
-# A job for Google X
+# A job description in X
 
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="X.png" height=200&gt;
+&lt;/div&gt;
+&gt; Google X, the Moonshot Factory
+]
+
+.pull-right[
+### What you should have
+
+- Experience working with biological data, with an emphasis on NGS.
+
+- Understanding of molecular biology, field trial design, or population genetics.
+
+- Experience in the agriculture industry.
+
+- Knowledge of statistical methods and applied machine learning.
+
+...
+]
 
 ---
 
@@ -144,7 +176,7 @@ __Svante Paabo__ represents the field of _evolutionary genetics_ and/or _populat
 
 
 &lt;div align="center"&gt;
-&lt;img src="ca.png" height=150&gt;
+&lt;img src="ca.png" height=200&gt;
 &lt;/div&gt;
 
 
@@ -192,7 +224,7 @@ __Plant domestication__ is the process whereby wild plants have been evolved int
 
 --
 
-Fitness are different between wild ancestors and domesticated crops
+__Fitness__ are different between wild ancestors and domesticated crops
 
 - Fitness describes individual __reproductive__ success.
 
@@ -245,6 +277,37 @@ Compared to their progenitors, crops typically have:
 ### Design a selection scan experiment
 - Sampling wild and domesticated populations
 - DNA sequencing and data analysis
+
+
+---
+# Basic sequence terminology
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
+
+- An alignment of three sequences sampled from 3 plants of a population
+
+- Each of the sequences has 10 nucleotides, from the same locus on a chromosome.
+]
+
+--
+
+.pull-right[
+There are two __polymorphisms__ (or segregating sites)
+- Single nucleotide polymorphisms (SNPs)
+  - In the 3rd position, we have T/C alleles
+  - In the 8th position, we have G/T alleles
+
+The set of alleles found on a single sequence is referred to as a __haplotype__.
+- __TG__ haplotype and __CT__ haplotype
+
+Allele frequency
+In the 3rd position, Major allele is T and Minor allele is C
+Minor allele frequency is 1/3
+]
+
 
 
 ---
