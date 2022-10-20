@@ -355,6 +355,107 @@ __Allele frequency__:
 - Minor allele frequency is 1/3
 
 ---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
+We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
+
+### Allele frequency ( `\(p\)` and `\(q\)` ) 
+Frequency/proportion of alleles of a particular identity at one locus
+
+### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
+Proportion of individuals with a specific genotype (combination of alleles)
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
+
+
+```r
+n = 5
+n11 = 1
+f11 = n11/n
+f11
+```
+
+```
+## [1] 0.2
+```
+
+--
+
+The frequency of minor allele `\(A_1\)` in the population is then given by
+
+`\begin{align*}
+p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
+\end{align*}`
+
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+#### A population is in HWE if it has constant allele and genotype frequencies __from generation to generation__
+
+- Allele frequencies in parents predict allele and genotype frequencies in offspring
+
+--
+
+### Caveats
+
+- A large, randomly-mating population for diploid species
+
+- No selection, no mutation, no migration, etc.
+  
+---
+
+# In Hardy-Weinberg Equilibrium
+
+If allele frequencies in parent population = `\(p\)` &amp; `\(q\)`, 
+then, genotype frequencies in progeny after random mating are:
+
+`\begin{align*}
+(p + q)^2 = p^2 + 2pq + q^2
+\end{align*}`
+
+- The array of genotypes in progeny equals the square of the parental gametic array. 
+
+- (sum of allele frequencies) `\(^2\)` = (sum of genotype frequencies)
+
+
+---
 # Allele effects relative to fitness
 
 
@@ -660,7 +761,7 @@ plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|"
 lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -726,7 +827,7 @@ plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1
     }
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -744,7 +845,7 @@ plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1
     }
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
