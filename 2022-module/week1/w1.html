@@ -78,7 +78,9 @@ class: center, middle, inverse, title-slide
 # Goals and Objectives
 
 ### Overall goal: 
+
 - Understand the basic principles of population genomics
+
 - Apply the knowledge for study crop domestication and its implication for crop improvement
 
 --
@@ -124,14 +126,18 @@ A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years b
 __Svante Paabo__ represents the field of _evolutionary genetics_ and/or _population genetics!!!_
 
 ---
-# A job description in X
+# Future jobs
 
 .pull-left[
 &lt;div align="center"&gt;
 &lt;img src="X.png" height=200&gt;
 &lt;/div&gt;
 &gt; Google X, the Moonshot Factory
+
+A job description __Data Scientist, Plant Biology__ in [Google X](https://x.company/careers-at-x/6434423002/)
 ]
+
+--
 
 .pull-right[
 ### What you should have
@@ -153,15 +159,15 @@ __Svante Paabo__ represents the field of _evolutionary genetics_ and/or _populat
 
 ### Module 1: Introduction and popgen terminology
 - Introduction of population genomics
-- 2. something
+- Basic principles of evolutionary processes
 
 ### Module 2: Diversity measurement
-- topic 1
-- topic 2
+- NGS and diversity measurement
+- Population differentiation
 
 ### Module 3: Scan for direct and linked selection
-- topic 1
-- topic 2
+- Direct selection
+- Linked selection
 
 
 ---
@@ -407,6 +413,8 @@ Keep both alleles
 
 ##### Refers to a history of a locus in which advantageous mutations have arisen and fixed or are in the process of fixing.
 
+--
+
 - Advantageous mutations __much rarer__ than deleterious mutations.
 
 - Advantageous mutation can rapidly increase in frequency.
@@ -434,6 +442,8 @@ Keep both alleles
 -----------
 
 #### Refers to a history of a locus in which the vast majority of mutations that have arisen and been removed due to their deleterious effects.
+
+--
 
 - A gene or noncoding region under negative selection is often conserved.
 
@@ -478,12 +488,13 @@ Factors lead  to changes of allele frequency
 Predictable both in amount and in direction
 
 - _Migration_
-  - not a concern in plant breeding
+  - not a major concern in plant breeding
 
 - _Mutation_
+  - Mutation is the ultimate source of genetic variation
   - Mutation alone produces slow change in allele frequency
-  - And, mutation is the ultimate source of genetic variation
 
+--
 
 - __Selection__
   - An important forces in shaping the allele frequency changes
@@ -499,14 +510,14 @@ Factors lead  to changes of allele frequency
 
 Arises in small populations from the effect of sampling.
 
-- __genetic drift__
+- __Genetic drift__
 
   - Predictable in amount but not in direction
 
 
 ---
 
-# Selection (and Fitness)
+# Selection (on Fitness)
 
 
 - Selection coefficient ( `\(s\)` ) 
@@ -537,6 +548,7 @@ Arises in small populations from the effect of sampling.
 - The degree of dominance influences the relative fitness of alleles. 
 
 - Here dominance is with respect to fitness only.
+
 
 &lt;div align="center"&gt;
 &lt;img src="dominance.png" width=350&gt;
@@ -773,288 +785,6 @@ Allele frequencies are subject to __random fluctuations__ arsing from the sampli
 ### Increased homozygosity
 
 - Reduces heterozygotes and results in inbreeding
-
-
-
----
-
-# Two different perspectives
-
-## Sampling process
-
-- Describe it in terms of sampling variance
-
-- Focus on understanding the binomial sampling
-
---
-
-## Inbreeding process
-
-- Describe it in terms of the genotypic changes resulting from matings between related individuals
-
-- Understand the causes and consequences of inbreeding
-
----
-
-# Sampling: the idealized population
-
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="week2_c3_files/figure-html/unnamed-chunk-3-1.png" height=350&gt;
-&lt;/div&gt;
-]
-
-.pull-right[
-&lt;div align="center"&gt;
-&lt;img src="drift.png" height=300&gt;
-&lt;/div&gt;
-]
-
---------------------
-
-Several random drawn sets of gametes to form several sub-populations
-
-- Each line is distinct and of size `\(N\)`
-- Generations do not overlap
-- Random mating within each line, including self-fertilization, no selection, disregard mutation
-
----
-
-# Sampling: the idealized population
-
-- For each sub-population with N individuals =&gt; `\(2N\)` alleles
-
-- If they segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ) at a given locus, you can think of sampling one allele ( `\(A_1\)` ) like flipping a coin (to get head). 
-  - Need to update the freq ( `\(p_t\)` ) of each generation
-  
-Therefore, this approximates a binomial sampling process
-
----
-
-# Binomial distribution
-
-A binomial distribution can be thought of as simply the probability of a __SUCCESS__ or __FAILURE__ outcome in an experiment that is repeated multiple times. 
-
-### Distribution function
-
-`\begin{align*}
-Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
-\end{align*}`
-
-- `\(n\)`, number of trials
-- `\(x\)`, number of successes
-- `\(p\)`, probability of success
-
-
-#### Expected value (mean)
-
-`\begin{align*}
-E(X) = np
-\end{align*}`
-
-#### Variance
-
-`\begin{align*}
-V(X) = np(1-p)
-\end{align*}`
-
----
-
-# Binomial Distribution
-
-__Flipping a coin to get heads__
-
-### Distribution function
-
-
-`\begin{align*}
-Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
-\end{align*}`
-
-- `\(n\)`, number of trials -  __total times we flip the coin__
-- `\(x\)`, number of successes - __# of flips when we get heads__
-- `\(p\)`, probability of success - __fair coin = 0.5__
-
---
-
-Mean: __Number of flips `\(\times\)` probability of heads__
-`\begin{align*}
-E(X) = np
-\end{align*}`
-
-Variance: __Number of flips `\(\times\)` prob of heads `\(\times\)` prob of tails__
-
-`\begin{align*}
-V(X) = np(1-p)
-\end{align*}`
-
----
-
-# Binomial Distribution
-
-__Get `\(A_1\)` allele__
-
-### Distribution function
-
-
-`\begin{align*}
-Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
-\end{align*}`
-
-- `\(n\)`, number of trials -  __total number of gametes ( `\(2N\)` )__
-- `\(x\)`, number of successes - __# of sampling when we get `\(A_1\)`__
-- `\(p\)`, probability of success - __Allele freq of `\(A_1\)` ( `\(p_0\)` )__
-
-
----
-
-# Variance of allele frequencies
-
-`\begin{align*}
-Pr(X=x) &amp; = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
-\end{align*}`
-
-- Let `\(X=\)` number of `\(A_1\)` alleles in the sample 
-
-- `\(2N\)` = number of gametes
-
-- `\(p_0\)` = probability of getting the `\(A_1\)` allele (or the allele freq)
-
-
---
-
-### Variance
-
-
-
-`\begin{align*}
-V(X) &amp; = np(1-p) \\
- &amp; = 2Np_0(1-p_0)
-\end{align*}`
-
-__Number of gametes `\(\times\)` prob of `\(A_1\)` `\(\times\)` prob of `\(A_2\)`__
-
-
----
-
-# Variance of allele frequencies
-
-### Variance
-
-`\begin{align*}
-V(X) &amp; = 2Np_0(1-p_0)
-\end{align*}`
-
-#### Describe variance in terms of `\(p\)` in the sample
-
-- Freq of `\(A_1 = p = \frac{X = n_{A_1}}{2N}\)`
-
-
-`\begin{align*}
-V(p) &amp; = V(\frac{X}{2N}) = \frac{V(X)}{4N^2} = \frac{p_0(1-p_0)}{2N} \\
-\end{align*}`
-
---
-
-#### Change in allele freq to generation 1
-
-`\(\Delta p = p_1 - p_0\)`, because `\(p_0\)` is constant (no variance), so:
-
---
-
-`\begin{align*}
-V(\Delta p)  = V(p) &amp; = \frac{p_0(1-p_0)}{2N} \\
-&amp; = V(q) = V(\Delta q)
-\end{align*}`
-
----
-
-# Variance of allele frequencies
-
-`\begin{align*}
-V(\Delta p)  = V(\Delta q) &amp; = \frac{p_0(1-p_0)}{2N} \\
-&amp; = \frac{p_0q_0}{2N} \\
-\end{align*}`
-
-- Variance in `\(\Delta p\)` expresses the __magnitude of change in allele freq__
-
-- With the assumption that the mean of __total__ population is unchanged, it measures:
-
-  - Expected change in any one individual
-  
-  - Variance of allele freq across individuals at generation 1
-
---
-
-# Variance at generation t
-
-`\begin{align*}
-V(q)  =  p_0q_0(1-(1-\frac{1}{2N})^t) \\
-\end{align*}`
-
-
-
----
-
-
-
-
-```r
-set.seed(12347)
-N=2000; A1=2000; t=50
-frq1 &lt;- frq2 &lt;- frq3 &lt;- c()
-for(u in 1:1000){
-  ft1 &lt;- wright_fisher(N=N, A1=A1, t=N/10)
-  frq1 &lt;- c(frq1, ft1)
-  ft2 &lt;- wright_fisher(N=N, A1=A1, t=N/2)
-  frq2 &lt;- c(frq2, ft2)
-  ft3 &lt;- wright_fisher(N=N, A1=A1, t=3*N)
-  frq3 &lt;- c(frq3, ft3)
-}
-
-plot(density(frq1),  xlim=c(0,1), col="blue", lwd=3, xlab="p", ylab= "", main="Fig 3.4")
-lines(density(frq2), col="red", lwd=3)
-lines(density(frq3), col="green", lwd=3)
-```
-
-&lt;div align="center"&gt;
-&lt;img src="f_var.png" height=300&gt;
-&lt;/div&gt;
-
----
-# Fixation
-
-&lt;div align="center"&gt;
-&lt;img src="f_var.png" height=300&gt;
-&lt;/div&gt;
-
-- Over time, each sub-population fluctuates in allele freq and they become more spread apart
-
-- Eventually, each line will become fixed
-  - But, the mean allele freq of the lines is still `\(p_0\)` and `\(q_0\)`
-  - So, `\(p_0\)` is the fraction of lines expected to be fixed for `\(A_1\)` and `\(q_0\)` the fraction fixed for `\(A_2\)`
-
----
-
-# Genotype frequencies
-
-&lt;div align="center"&gt;
-&lt;img src="sim_drift.png" height=300&gt;
-&lt;/div&gt;
-
---
-
-- Dispersion via drift leads to increased variation among lines and less within each line
-
---
-
-- For the population as a whole, this leads to __increased homozygosity__
-(decreased heterozygosity)
-  - Homozygotes are gained at the expense of heterozygotes
-
-
-
 
 
 
