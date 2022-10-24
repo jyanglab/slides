@@ -142,30 +142,40 @@ Var(P) &amp; =  Var(G + E + I_{GE}) \\
 \end{align*}`
 
 #### `\(Cov(G, E)\)` or `\(\sigma_{G,E}\)`
+
 - Refers to **genotype-environment covariance**
+
 - A measure of the physical association of particular genotypes with particular environmental general effects
+
 - If individuals are __randomly distributed__ with respect to macroenvironments, then `\(\sigma_{G,E}=0\)`
 
 --
 
 #### `\(\sigma^2_{I_{GE}}\)`
 - Refers to **variation of genotype-environment interaction**
-- If G and E are nonadditive, it measures how large the variation is.
+
+- If G and E are __nonadditive__, it measures how large the variation is.
 
 ---
 
-## Example: salt marsh cord grass
+# Example: salt marsh cordgrass
+
+&lt;div align="center"&gt;
+&lt;img src="cordgrass.png" height=200&gt;
+&lt;/div&gt;
 
 - An experiment was conducted using a __clonal plant__ (Silander,1985) in three sites --- dune, swale, marsh.
+
+--
 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:left;"&gt; Trait &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Var_G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Va_E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Var_I &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Var_e &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_I &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_e &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -188,13 +198,52 @@ Var(P) &amp; =  Var(G + E + I_{GE}) \\
 
 The observed components of variance in above table as percentages of the total phenotypic variance.
 
---
+---
+
+# Example: salt marsh cordgrass
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Trait &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_I &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V_e &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tillers per plant &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Plant hight &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 - `\(Var(G)\)`: the among-clone variance 
   - is an estimate of the total genetic variance
+
+--
+
 - `\(Var(E)\)`: the variance among the three sites 
   - is an estimate of the general environmental variance
+
+--
+
 - `\(Var(I)\)`: the clone `\(\times\)` site variance
+
+--
+
 - `\(Var(e)\)`: the variance within sites 
   - more specifically, among members of the same clones within sites
 
@@ -210,22 +259,34 @@ Here, because individual plants were __distributed randomly__ within sites, `\(\
 Several sources of variation that reduce the precision of the experiment:
 
 --
-- Environmental factors (among sites)
-  - climatic, nutritional, etc
+
+### Environmental factors (among sites)
+
+- climatic, nutritional, etc
 
 --
 
-- Measurement error (within site, among clones)
-  - microenvironment
-  - unrecognized causes (developmental accidents)
+### Measurement error (within site, among clones)
+
+- microenvironment
+  
+- unrecognized causes (developmental accidents)
+
+---
+
+# Two types of non-genetic variance
+
+### 1. General environmental variance `\(\sigma_{Eg}^2\)`: 
+
+Non-genetic variance contributing to the __between-individual variation__ that is permanent. 
+- Maternal effect, barn effect
 
 --
 
-### Two types of non-genetic variance
+### 2. Special environmental variance `\(\sigma_{Es}^2\)`: 
 
-1. **General environmental variance `\(\sigma_{Eg}^2\)`**: non-genetic variance contributing to the between-individual variation that is permanent. (Maternal effect, barn effect)
-
-2. **Special environmental variance `\(\sigma_{Es}^2\)`**: within individual variation arising from temporary or localized circumstances. (Measurement error, developmental accidents, temporary climactic effects, etc.)
+__Within individual variation__ arising from temporary or localized circumstances. 
+- Measurement error, developmental accidents, temporary climactic effects, etc.
 
 
 
@@ -242,7 +303,7 @@ The __repeatability__ is the proportion of total variance of single measurements
 --
 
 
-### Broad sense heritability ( `\(H^2\)` )
+# Broad sense heritability ( `\(H^2\)` )
 
 `\begin{align*}
 &amp; H^2 = \frac{\sigma_G^2}{\sigma_P^2} \\
@@ -295,7 +356,7 @@ Repeatability sets an upper limit to **heritability**.
 
 # Repeatability of measurements
 
-One way to increase the accuracy of measurements is to use the average of multiple measurements instead of just one.
+One way to increase the accuracy of measurements is to use the average of __multiple measurements__ instead of just one.
 
 According to F&amp;M, formula [8.14]
 `\begin{align*}
@@ -324,7 +385,7 @@ If repeatability is low, taking multiple measurements and avaraging them can rea
 
 However,
 
-- Repeated measurement may not suitable for behavioral and physiological traits because of the temporal organismal changes.
+- Repeated measurement may not suitable for __behavioral and physiological traits__ because of the temporal organismal changes.
 
 
 
@@ -349,7 +410,7 @@ However,
 | :-----------------------------  | :-------: | :-----------: | :---: |
 | Relatives   | `\({V_A}:({V_{NA} + V_{Eg} + V_{Es}})\)`     | `\(\frac{V_A}{V_{P}}\)`     | `\(h^2\)` |
 | Genetically uniform group       | `\(({V_A} + V_{NA}):(V_{Eg} + V_{Es})\)`     | `\(\frac{V_G}{V_{P}}\)` |  `\(H^2\)` |
-| Multiple measurements           | `\((V_G + V_{Eg}):V_{Es}\)`     | `\(\frac{V_G + V_{Eg}}{V_{P}}\)`   |   `\(r\)` |
+| Multiple measurements           | `\(({V_A} + V_{NA} + V_{Eg}):V_{Es}\)`     | `\(\frac{V_G + V_{Eg}}{V_{P}}\)`   |   `\(r\)` |
 
 
 
