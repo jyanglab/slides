@@ -1,0 +1,338 @@
+---
+title: "Heritability and repeatability"
+author: "Jinliang Yang"
+date: "Oct. 24, 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | $A^2$  | Dominance Deviation  | $D^2$ |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    | $(2q\alpha)^2$  |  $-2q^2d$   | $(-2q^2d)^2$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ | $(q-p)^2\alpha^2$ |  $2pqd$   | $(2pqd)^2$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   | $(-2p\alpha)^2$ |  $-2p^2d$   | $(-2p^2d)^2$ |
+
+
+
+The additive and dominance genetic variance in a HWE population is:
+
+\begin{align*}
+\sigma_A^2 & = 2pq(a + d(q-p))^2 \\
+\sigma_D^2 & = (2pqd)^2 \\
+\end{align*}
+  
+--
+
+Because $G = A + D$ for single locus, 
+
+\begin{align*}
+\sigma_G^2 & = \sigma_A^2 + \sigma_D^2 +  2\sigma_{A, D}
+\end{align*}
+
+Then $\sigma_{A, D}=?$
+
+---
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | $A^2$  | Dominance Deviation  | $D^2$ |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    | $(2q\alpha)^2$  |  $-2q^2d$   | $(-2q^2d)^2$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ | $(q-p)^2\alpha^2$ |  $2pqd$   | $(2pqd)^2$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   | $(-2p\alpha)^2$ |  $-2p^2d$   | $(-2p^2d)^2$ |
+
+### $\sigma_{A, D}=?$
+
+$$
+\begin{aligned}
+Cov(X, Y) & = \sigma_{XY} \\
+& = E([X - E(X)][Y - E(Y)]) \\
+& = E(XY) - E(X)E(Y) \\
+\end{aligned}
+$$
+
+where,
+
+$$
+\begin{aligned}
+E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
+\end{aligned}
+$$
+
+---
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | $A^2$  | Dominance Deviation  | $D^2$ |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    | $(2q\alpha)^2$  |  $-2q^2d$   | $(-2q^2d)^2$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ | $(q-p)^2\alpha^2$ |  $2pqd$   | $(2pqd)^2$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   | $(-2p\alpha)^2$ |  $-2p^2d$   | $(-2p^2d)^2$ |
+
+### $\sigma_{A, D}=0$  
+
+
+\begin{align*}
+E(XY) & = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j) \\
+E(AD) &= p^2\times (2q\alpha)\times (-2q^2d) + 2pq \times (q-p)\alpha \times 2pqd + q^2 \times (-2p\alpha) \times (-2p^2d) \\
+      &= 4\alpha d p^2q^2(-q + q -p +p) \\
+      &=0
+\end{align*}
+
+---
+
+# Variance due to GxE interaction
+
+In this case, 
+
+\begin{align*}
+& P = G + E + I_{GE} \\
+\end{align*}
+
+where $I_{GE}$ is the interaction effect between genotype and environment.
+
+--
+
+And the variance is,
+
+\begin{align*}
+Var(P) & =  Var(G + E + I_{GE}) \\
+       & =  Var((G + E) + I_{GE}) \\
+\end{align*}
+
+--
+
+\begin{align*}
+\sigma_P^2 & = \sigma^2_G + \sigma^2_E + 2Cov(G, E) + \sigma^2_{I_{GE}} \\
+\end{align*}
+
+- The covariance between genetic and non-genetic effects is often zero except in special circumstances.
+
+---
+# Variance due to GxE interaction
+
+\begin{align*}
+\sigma_P^2 & = \sigma^2_G + \sigma^2_E + 2Cov(G, E) + \sigma^2_{I_{GE}} \\
+\end{align*}
+
+#### $Cov(G, E)$ or $\sigma_{G,E}$
+- Refers to **genotype-environment covariance**
+- A measure of the physical association of particular genotypes with particular environmental general effects
+- If individuals are __randomly distributed__ with respect to macroenvironments, then $\sigma_{G,E}=0$
+
+--
+
+#### $\sigma^2_{I_{GE}}$
+- Refers to **variation of genotype-environment interaction**
+- If G and E are nonadditive, it measures how large the variation is.
+
+---
+
+## Example: salt marsh cord grass
+
+- An experiment was conducted using a __clonal plant__ (Silander,1985) in three sites --- dune, swale, marsh.
+
+```{r table1, echo=FALSE, warning=FALSE, warnings=FALSE}
+library(knitr)
+library(kableExtra)
+f1 <- data.frame(Trait=c("Tillers per plant", "Plant hight"),
+                 Var_G= c(1, 13),
+                 Va_E=c(34, 57),
+                 Var_I=c(20, 7),
+                 Var_e=c(45, 23))
+kable(f1)
+```
+
+The observed components of variance in above table as percentages of the total phenotypic variance.
+
+--
+
+- $Var(G)$: the among-clone variance 
+  - is an estimate of the total genetic variance
+- $Var(E)$: the variance among the three sites 
+  - is an estimate of the general environmental variance
+- $Var(I)$: the clone $\times$ site variance
+- $Var(e)$: the variance within sites 
+  - more specifically, among members of the same clones within sites
+
+--
+
+Here, because individual plants were __distributed randomly__ within sites, $\sigma_{G,E}=0$.
+
+
+
+---
+# Sources of variation
+
+Several sources of variation that reduce the precision of the experiment:
+
+--
+- Environmental factors (among sites)
+  - climatic, nutritional, etc
+
+--
+
+- Measurement error (within site, among clones)
+  - microenvironment
+  - unrecognized causes (developmental accidents)
+
+--
+
+### Two types of non-genetic variance
+
+1. **General environmental variance $\sigma_{Eg}^2$**: non-genetic variance contributing to the between-individual variation that is permanent. (Maternal effect, barn effect)
+
+2. **Special environmental variance $\sigma_{Es}^2$**: within individual variation arising from temporary or localized circumstances. (Measurement error, developmental accidents, temporary climactic effects, etc.)
+
+
+
+---
+
+# Repeatability of measurements
+
+The __repeatability__ is the proportion of total variance of single measurements that is due to __permanent differences between individuals__.
+
+\begin{align*}
+& r = \frac{\sigma_G^2 + \sigma_{Eg}^2}{\sigma_P^2} \\
+\end{align*}
+
+--
+
+
+### Broad sense heritability ( $H^2$ )
+
+\begin{align*}
+& H^2 = \frac{\sigma_G^2}{\sigma_P^2} \\
+\end{align*}
+
+--
+
+Repeatability sets an upper limit to **heritability**.
+
+---
+
+# Introduction to heritability
+
+### Broad sense heritability ( $H^2$ )
+
+\begin{align*}
+& H^2 = \frac{\sigma_G^2}{\sigma_P^2} \\
+\end{align*}
+
+
+
+- Proportion of variation due to genotypic effects.
+
+- This represents __nature__ versus __nurture__.
+
+--
+
+- In a breeding program, this measure of heritability is useful when all forms of genetic variation can be exploited
+  - such as selecting among a set of clones to propagate a cultivar.
+
+---
+
+# Introduction to heritability
+
+### Narrow sense heritability ( $h^2$ )
+
+\begin{align*}
+& h^2 = \frac{\sigma_A^2}{\sigma_P^2} \\
+\end{align*}
+
+- Proportion of phenotypic variation due to variation in __breeding values__.
+
+--
+
+- Since parents pass on alleles, not genotypes, $h^2$ is more meaningful in determining amount of genetic progress from generation to generation due to selection and intermating
+
+
+
+---
+
+# Repeatability of measurements
+
+One way to increase the accuracy of measurements is to use the average of multiple measurements instead of just one.
+
+According to F&M, formula [8.14]
+\begin{align*}
+& \sigma_{P(n)}^2 = \sigma_G^2 + \sigma_{Eg}^2 + \frac{1}{n}\sigma_{Es}^2 \\
+\end{align*}
+
+The contribution of $\sigma_{Es}^2$ to the total variance is reduced proportionally by the number of measurements taken.
+
+This means that averages of multiple measurements are more accurate indicators of the underlying genetic value than single measurements.
+
+---
+
+# Repeatability of measurements
+
+The repeatability of the average of multiple measurements is:
+
+\begin{align*}
+r_n & = \frac{\sigma_G^2 + \sigma_{Eg}^2}{\sigma_{P(n)}^2} \\
+& = 1- \frac{\frac{1}{n}\sigma_{Es}^2}{\sigma_{P(n)}^2} \\
+\end{align*}
+
+If repeatability is low, taking multiple measurements and avaraging them can really improve accuracy.
+
+
+--
+
+However,
+
+- Repeated measurement may not suitable for behavioral and physiological traits because of the temporal organismal changes.
+
+
+
+
+---
+
+# Summary of variance partitioning
+
+### Phenotypic variance
+
+- Genetic componenents
+  1. Additive
+  2. Non-additive
+
+- Environmental componenents
+  1. General
+  2. Special
+  
+--
+
+| Data                            | Parition      | Ratio | Definition |
+| :-----------------------------  | :-------: | :-----------: | :---: |
+| Relatives   | ${V_A}:({V_{NA} + V_{Eg} + V_{Es}})$     | $\frac{V_A}{V_{P}}$     | $h^2$ |
+| Genetically uniform group       | $({V_A} + V_{NA}):(V_{Eg} + V_{Es})$     | $\frac{V_G}{V_{P}}$ |  $H^2$ |
+| Multiple measurements           | $(V_G + V_{Eg}):V_{Es}$     | $\frac{V_G + V_{Eg}}{V_{P}}$   |   $r$ |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

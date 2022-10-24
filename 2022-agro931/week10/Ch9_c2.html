@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Resemblance between relatives</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Resemblance between relatives
+### Jinliang Yang
+### Nov. 11th, 2019
+
+---
+
+
+
+
+# Announcements
+
+
+
+### Next Exam date: __Nov. 15th (F) at 7:30am__
+
+
+
+---
+# Parent-offspring
+
+### From Breeding value
+
+- Parent genotypic value: `\(G = A + D\)`.
+- Offspring (half the breeding value of the parents) : `\(G=1/2A\)`
+
+`\begin{align*}
+Cov(P, O) &amp; = Cov(A + D, 1/2A) \\
+&amp; = 1/2Cov(A, A) + 1/2Cov(A, D) = \frac{1}{2}\sigma_A^2 \\
+\end{align*}`
+
+Because `\(Cov(A, D) = 0\)`.
+
+--
+
+#### Assumptions
+1. Diploidy
+2. Autosomal loci
+3. Linkage equilibrium
+4. No maternal effects
+5. No GxE interactions
+6. No selection
+
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | ? |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | ? |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | ? |
+
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
+
+--
+
+$$
+`\begin{aligned}
+Cov(X, Y) &amp; = E(XY) - E(X)E(Y) \\
+\end{aligned}`
+$$
+
+where,
+
+$$
+`\begin{aligned}
+E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
+\end{aligned}`
+$$
+
+--
+$$
+`\begin{aligned}
+E(PO) = &amp; p^2 \times 2q(\alpha-qd) \times q\alpha + 2pq \times ((q-p)\alpha+2pqd) \times 1/2(q-p)\alpha \\
+        &amp; + q^2 \times (-2p(\alpha+pd)) \times (-p\alpha) \\
+      = &amp; [2p^2q^2\alpha^2 - 2p^2q^3d\alpha] + [pq\alpha^2(q^2-2pq+p^2) + 2p^2q^2d\alpha(q-p)] \\
+        &amp; + [2p^2q^2\alpha^2 + 2p^3q^2d\alpha] \\
+      = &amp; pq\alpha^2(2pq + q^2 -2pq +p^2 + 2pq) + 2p^2q^2d\alpha(-q+q-p+p) \\
+      = &amp; pq\alpha^2
+\end{aligned}`
+$$
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
+
+
+$$
+`\begin{aligned}
+Cov(P, O) &amp; = E(PO) - E(P)E(O) \\
+\end{aligned}`
+$$
+
+--
+$$
+`\begin{aligned}
+E(PO) = &amp; pq\alpha^2 \\
+E(O) = &amp; 0
+\end{aligned}`
+$$
+--
+Therefore,
+
+$$
+`\begin{aligned}
+Cov(P, O) &amp; = E(PO) - E(P)E(O) \\
+          &amp; = pq\alpha^2 \\
+          &amp; = 1/2 V_A
+\end{aligned}`
+$$
+Because `\(V_A = 2pq\alpha^2\)`.
+
+
+---
+# Offspring and mid-parent
+
+The covariance of the mean of the offsrping and the mean of both parents (commonly called the __mid-parent__)
+
+
+Let `\(P\)` and `\(P'\)` be the values of the two parents,
+therefore `\(\bar{P}=1/2(P + P')\)`
+
+--
+
+$$
+`\begin{aligned}
+Cov(\bar{P}, O) &amp; = Cov(1/2(P + P'), O) \\
+          &amp; = 1/2(Cov(P,O) + Cov(P', O))\\
+          &amp; = 1/2 V_A
+\end{aligned}`
+$$
+If `\(P\)` and `\(P'\)` have the same variance.
+
+See _P149 of F&amp;M_ for the algebraic reduction.
+
+
+
+---
+# What is the genetic covariance for half sibs?
+
+&lt;div align="center"&gt;
+&lt;img src="hs-covar.png" height=400&gt;
+&lt;/div&gt;
+
+---
+# Genetic covariance for half sibs?
+
+`\begin{align*}
+Cov(1/2A, 1/2A) &amp; = 1/4V_A\\
+\end{align*}`
+
+--
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
+
+--
+
+`\begin{align*}
+Cov_{HS} = &amp; p^2(q\alpha)^2 + 2pq \times 1/4(q-p)^2\alpha^2  + q^2 \times p^2\alpha^2 \\
+=&amp; pq\alpha^2[pq + 1/2(q-p)^2 + pq] \\
+=&amp; pq\alpha^2[1/2(p+q)^2] \\
+=&amp; 1/2pq\alpha^2 \\
+= &amp; 1/4V_A
+\end{align*}`
+
+---
+# Genetic covariance for full sibs?
+
+### Additive genetic covariance
+
+- Genotypic value for full sibs:
+`\begin{align*}
+G_{o1} &amp; = \frac{1}{2}A + \frac{1}{2}A'\\
+G_{o2} &amp; = \frac{1}{2}A + \frac{1}{2}A'\\
+\end{align*}`
+
+--
+
+- The genetic covariance for full sibs:
+`\begin{align*}
+Cov(G_{o1}, G_{o2}) = &amp; Cov(\frac{1}{2}A + \frac{1}{2}A', \frac{1}{2}A + \frac{1}{2}A') \\
+= &amp; Var(\frac{1}{2}(A + A')) \\
+= &amp; \frac{1}{4}(\sigma_A^2 + \sigma^2_{A'}) \\
+= &amp; \frac{1}{2}\sigma_A^2 \\
+\end{align*}`
+
+---
+# Genetic covariance for full sibs?
+
+
+&lt;div align="center"&gt;
+&lt;img src="fs_covar.png" height=200&gt;
+&lt;/div&gt;
+
+--
+
+- Among the progeny, only __four possible genotypes__, each with a frequency of 1/4.
+  - `\(A_1A_3\)`, `\(A_1A_4\)`, `\(A_2A_3\)`, `\(A_2A_4\)`
+  
+--
+
+- Let the first sib has any of these genotypes. The 2nd has the same genotype is 1/4.
+  - Thus one-quarter of all sib-pairs have the same genotype and consequently the same dominance deviation, `\(D\)`.
+  
+--
+
+- Thus, the cross-product of the dominance deviation is `\(\sigma_D^2\)`, times frequency 1/4 = `\(1/4\sigma_D^2\)`
+
+---
+# Genetic covariance for full sibs?
+
+### The genetic covariance of full sibs is therefore,
+
+`\begin{align*}
+Cov_{FS} = \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2
+\end{align*}`
+
+--
+
+### Covariance of half sibs
+
+`\begin{align*}
+Cov_{HS} = \frac{1}{4}\sigma_A^2
+\end{align*}`
+
+--
+
+In priciple, dominance variance can be calculated using full sibs and half sibs:
+
+`\begin{align*}
+Cov_{FS} - 2Cov_{HS} = &amp; \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2 - 2 \times \frac{1}{4}\sigma_A^2 \\
+= &amp; \frac{1}{4}\sigma_D^2
+\end{align*}`
+
+---
+# Twins
+
+
+### Monozygotic (identical) twins 
+
+$$
+Cov_{MZ} = V_G
+$$
+
+--
+
+### Dizygotic (fraternal) twins
+- Not identical twins
+- = Full sibs
+
+---
+# Summary
+
+
+| Relationship  |       | r (of `\(\sigma^2_A\)`) | u (of `\(\sigma^2_D\)`)  | 
+| :-------: | :-------: | :-----------: | :-------: | :-------: | 
+| Identical twins |  | 1 | 1|
+| First degree  | Parent-offspring   | 1/2    |  0  |  
+| Second degree  | Half sibs    | 1/4 |  0 |  
+|                | Full sibs     | 1/2 |  1/4 |  
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

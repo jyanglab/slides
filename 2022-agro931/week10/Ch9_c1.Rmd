@@ -1,0 +1,461 @@
+---
+title: "Resemblance between relatives"
+author: "Jinliang Yang"
+date: "Oct. 26, 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Why we study resemblance?
+
+Resemblance (=covariance) between related individuals.
+
+--
+
+__Heritability__ is the central concept in quantitative genetics
+ - Proportion of variation due to additive genetic values (__Breeding values__)
+
+\begin{align*}
+h^2 = \frac{\sigma^2_A}{\sigma^2_P}
+\end{align*}
+
+--
+
+### Phenotypes (and $\sigma^2_P$) can be directly measured.
+
+--
+
+### How about $\sigma^2_A$ ?
+
+
+Estimates of $\sigma^2_A$ require __known collections of relatives__.
+
+
+---
+# Types of Relatives
+
+### Ancestral relatives
+- Parent and offspring
+- Grandparent and offspring
+
+### Collateral relatives
+- Half sibs: have one parent in common
+- Full sibs: have both parents in common
+- Twins
+
+---
+
+# Relatives (full sib families)
+
+<div align="center">
+<img src="relatives.png" height=300>
+</div>
+
+
+#### Full sibs
+
+- have both parents in common
+
+---
+# Relatives (half sib families)
+
+<div align="center">
+<img src="sibs.png" height=300>
+</div>
+
+
+#### Half sibs
+
+- have one parent in common
+
+---
+# Relatives (half sib families)
+
+<div align="center">
+<img src="sibs.png" height=300>
+</div>
+
+
+### A thought experiment
+- Body weight of newborn piglets
+  - In the 1st half family $O_{11}$ ... $O_{3k}$, mean $=3 \pm 0.1$ lb 
+  - In the 2nd half sib family $O_{n1}$ ... $O_{nk}$, mean $=4 \pm 0.1$ lb 
+
+
+---
+
+# Two key observations
+
+
+
+### Obs. One:
+If trait variation has a significant genetic basis, the __closer the relatives__, the __more similar their phenotypic values__.
+
+
+
+### Obs. Two:
+The amount of __phenotypic resemblance__ among relatives for the trait provides an indication of the amount of __genetic variation__ for the trait. 
+
+
+
+
+---
+# Resemblance and genetic covariance
+
+
+###  Genetic covariance
+
+- Resemblance between relatives has the genetics basis
+- Genetic covariances arise because __two related individuals are more likely to share alleles__ than are two unrelated individuals
+
+--
+
+### Identical by descent (IBD)
+
+- Sharing alleles means having alleles that are __identical by descent (IBD)__. 
+- If two alleles are __IBD__, then both copies of alleles can be traced back to a single copy in a recent common ancestor. 
+
+
+
+---
+# Genetic covariance between relatives
+
+<div align="center">
+<img src="ibd-2.png" height=250>
+</div>
+
+--
+
+### Identify types of IBD?
+- No allele IBD
+- one allele IBD
+- two alleles IBD
+
+---
+
+# Identical by descent (IBD)
+
+<div align="center">
+<img src="ibd-2.png" height=250>
+</div>
+
+If allele $x_i$ carried by individual X is IBD to allele $y_k$ in Y, then the covariance due to this allele is:
+
+\begin{align*}
+Cov(\alpha_i, \alpha_k) & =  E[(\alpha_i - \mu_{\alpha})(\alpha_k - \mu_{\alpha})] \\
+& = E[(\alpha_i - \mu_{\alpha})^2] \\
+& = \sigma_{\alpha}^2
+\end{align*}
+
+Because $\alpha_i = \alpha_k$ if alleles $x_i$ and $y_k$ are IBD.
+
+---
+# Covariance due to additive genetic covariance
+
+The additive genetic covariance between relatives is generated through individuals sharing average effects of alleles.
+
+--
+
+Alleles in individuals $X (x_ix_j)$ and $Y (y_ky_l)$ can be IBD through four possible events:
+  
+--
+
+\begin{align*}
+& x_i \equiv y_k \\
+& x_i \equiv y_l \\
+& x_j \equiv y_k \\
+& x_j \equiv y_l \\
+\end{align*}
+
+--
+
+\begin{align*}
+Cov_\alpha(X, Y) = & P(x_i \equiv y_k)Cov(\alpha_i, \alpha_k) + P(x_i \equiv y_l)Cov(\alpha_i, \alpha_l) \\
+ & + P(x_j \equiv y_k)Cov(\alpha_j, \alpha_k) + P(x_j \equiv y_l)Cov(\alpha_j, \alpha_l) \\
+ = & 4f_{XY}\sigma_\alpha^2 \\
+ = & 2f_{XY}\sigma_A^2 \\
+\end{align*}
+
+Because $\sigma_A^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 = 2\sigma_\alpha^2$ and $\alpha_i = \alpha_j$ when alleles $i$ and $j$ are IBD.
+
+---
+# Parent-offspring
+
+Recall that the __coefficient of co-ancestry ( $f_{XY}$ from Ch.5)__ between a non-inbred parent and non-inbred offspring is 1/4. Thus, the coefficient for $\sigma_A^2$ is 1/2.
+
+Consider the convariance between parent (P) and offspring (O), if we assume the two alleles of the parent are unrelated, then all offspring can't share a common dominance deviation ( $\sigma^2_D$ =0 ). Therefore,
+
+\begin{align*}
+Cov(P, O) = \frac{1}{2}\sigma_A^2
+\end{align*}
+
+--
+
+### From Breeding value
+
+- Parent genotypic value: $G = A + D$.
+- Offspring (half the breeding value of the parents from Ch.7) : $G=1/2A$
+
+--
+
+\begin{align*}
+Cov(P, O) & = Cov(A + D, 1/2A) \\
+& = 1/2Cov(A, A) + 1/2Cov(A, D) = \frac{1}{2}\sigma_A^2 \\
+\end{align*}
+
+Because $Cov(A, D) = 0$ from Ch.8.
+
+
+
+
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( $\mu_G$ ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    |   $-2q^2d$   |  $2q(\alpha - qd)$ | ? |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ |  $2pqd$   | $(q-p)\alpha + 2pqd$  | ? |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   |  $-2p^2d$   |  $-2p(\alpha + pd)$ | ? |
+
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( $\mu_G$ ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    |   $-2q^2d$   |  $2q(\alpha - qd)$ | $q\alpha$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ |  $2pqd$   | $(q-p)\alpha + 2pqd$  | $1/2(q-p)\alpha$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   |  $-2p^2d$   |  $-2p(\alpha + pd)$ | $-p\alpha$ |
+
+--
+
+$$
+\begin{aligned}
+Cov(X, Y) & = E(XY) - E(X)E(Y) \\
+\end{aligned}
+$$
+
+where,
+
+$$
+\begin{aligned}
+E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
+\end{aligned}
+$$
+
+--
+$$
+\begin{aligned}
+E(PO) = & p^2 \times 2q(\alpha-qd) \times q\alpha + 2pq \times ((q-p)\alpha+2pqd) \times 1/2(q-p)\alpha \\
+        & + q^2 \times (-2p(\alpha+pd)) \times (-p\alpha) \\
+      = & [2p^2q^2\alpha^2 - 2p^2q^3d\alpha] + [pq\alpha^2(q^2-2pq+p^2) + 2p^2q^2d\alpha(q-p)] \\
+        & + [2p^2q^2\alpha^2 + 2p^3q^2d\alpha] \\
+      = & pq\alpha^2(2pq + q^2 -2pq +p^2 + 2pq) + 2p^2q^2d\alpha(-q+q-p+p) \\
+      = & pq\alpha^2
+\end{aligned}
+$$
+---
+# Parent-offspring
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( $\mu_G$ ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    |   $-2q^2d$   |  $2q(\alpha - qd)$ | $q\alpha$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ |  $2pqd$   | $(q-p)\alpha + 2pqd$  | $1/2(q-p)\alpha$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   |  $-2p^2d$   |  $-2p(\alpha + pd)$ | $-p\alpha$ |
+
+
+$$
+\begin{aligned}
+Cov(P, O) & = E(PO) - E(P)E(O) \\
+\end{aligned}
+$$
+
+--
+$$
+\begin{aligned}
+E(PO) = & pq\alpha^2 \\
+E(O) = & 0
+\end{aligned}
+$$
+--
+Therefore,
+
+$$
+\begin{aligned}
+Cov(P, O) & = E(PO) - E(P)E(O) \\
+          & = pq\alpha^2 \\
+          & = 1/2 V_A
+\end{aligned}
+$$
+Because $V_A = 2pq\alpha^2$.
+
+
+---
+# Offspring and mid-parent
+
+The covariance of the mean of the offspring and the mean of both parents (commonly called the __mid-parent__)
+
+
+Let $P$ and $P'$ be the values of the two parents,
+therefore $\bar{P}=1/2(P + P')$
+
+--
+
+$$
+\begin{aligned}
+Cov(\bar{P}, O) & = Cov(1/2(P + P'), O) \\
+          & = 1/2(Cov(P,O) + Cov(P', O))\\
+          & = 1/2 V_A
+\end{aligned}
+$$
+If $P$ and $P'$ have the same variance.
+
+See _P149 of F&M_ for the algebraic reduction.
+
+
+
+---
+# What is the genetic covariance for half sibs?
+
+<div align="center">
+<img src="hs-covar.png" height=400>
+</div>
+
+---
+# Genetic covariance for half sibs?
+
+\begin{align*}
+Cov(1/2A, 1/2A) & = 1/4V_A\\
+\end{align*}
+
+--
+
+
+| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( $\mu_G$ ) |
+| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
+| $A_1A_1$  | $p^2$     | $2q\alpha$    |   $-2q^2d$   |  $2q(\alpha - qd)$ | $q\alpha$ |
+| $A_1A_2$  | $2pq$     | $(q-p)\alpha$ |  $2pqd$   | $(q-p)\alpha + 2pqd$  | $1/2(q-p)\alpha$ |
+| $A_2A_2$  | $q^2$     | $-2p\alpha$   |  $-2p^2d$   |  $-2p(\alpha + pd)$ | $-p\alpha$ |
+
+--
+
+\begin{align*}
+Cov_{HS} = & p^2(q\alpha)^2 + 2pq \times 1/4(q-p)^2\alpha^2  + q^2 \times p^2\alpha^2 \\
+=& pq\alpha^2[pq + 1/2(q-p)^2 + pq] \\
+=& pq\alpha^2[1/2(p+q)^2] \\
+=& 1/2pq\alpha^2 \\
+= & 1/4V_A
+\end{align*}
+
+---
+# Additive genetic covariance for full sibs?
+
+
+- Additive value for full sibs:
+\begin{align*}
+G_{o1} & = \frac{1}{2}A + \frac{1}{2}A'\\
+G_{o2} & = \frac{1}{2}A + \frac{1}{2}A'\\
+\end{align*}
+
+--
+
+- The additive genetic covariance for full sibs:
+\begin{align*}
+Cov(G_{o1}, G_{o2}) = & Cov(\frac{1}{2}A + \frac{1}{2}A', \frac{1}{2}A + \frac{1}{2}A') \\
+= & Var(\frac{1}{2}(A + A')) \\
+= & \frac{1}{4}(\sigma_A^2 + \sigma^2_{A'}) \\
+= & \frac{1}{2}\sigma_A^2 \\
+\end{align*}
+
+---
+# Dominance genetic covariance for full sibs?
+
+
+- Among the progeny, only __four possible genotypes__, each with a frequency of 1/4.
+  - $A_1A_3$, $A_1A_4$, $A_2A_3$, $A_2A_4$
+  
+--
+
+- Let the first sib has any of these genotypes. The 2nd has the same genotype is 1/4.
+  - Thus one-quarter of all sib-pairs have the same genotype and consequently the same dominance deviation, $D$.
+  
+--
+
+- Thus, the cross-product of the dominance deviation is $\sigma_D^2$, times frequency 1/4 = $1/4\sigma_D^2$
+
+---
+# Genetic covariance for full sibs?
+
+### The genetic covariance of full sibs is therefore,
+
+\begin{align*}
+Cov_{FS} = \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2
+\end{align*}
+
+--
+
+### Covariance of half sibs
+
+\begin{align*}
+Cov_{HS} = \frac{1}{4}\sigma_A^2
+\end{align*}
+
+--
+
+In principle, dominance variance can be calculated using full sibs and half sibs:
+
+\begin{align*}
+Cov_{FS} - 2Cov_{HS} = & \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2 - 2 \times \frac{1}{4}\sigma_A^2 \\
+= & \frac{1}{4}\sigma_D^2
+\end{align*}
+
+---
+# Twins
+
+
+### Monozygotic (identical) twins 
+
+$$
+Cov_{MZ} = V_G
+$$
+
+
+### Dizygotic (fraternal) twins
+- Not identical twins
+- = Full sibs
+
+---
+# Summary
+
+
+| Relationship  |       | r (of $\sigma^2_A$) | u (of $\sigma^2_D$)  | 
+| :-------: | :-------: | :-----------: | :-------: | :-------: | 
+| Identical twins |  | 1 | 1|
+| First degree  | Parent-offspring   | 1/2    |  0  |  
+| Second degree  | Half sibs    | 1/4 |  0 |  
+|                | Full sibs     | 1/2 |  1/4 |  
+
+
+--
+### General framework for calculating resemblance
+
+
+
+Alleles shared between relatives that are __identical by descent (IBD)__ contribute to the covariance between relatives.
+
+For example, if $\sigma_A^2 = 0$, meaning no variation in breeding values exists in the population for the trait of interest, then shared average allelic effects will not contribute to resemblance.
+
+$u \neq 0$ only if the relatives having the same genotype through two alleles IBD.
+
