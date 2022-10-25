@@ -31,25 +31,29 @@ h^2 = \frac{\sigma^2_A}{\sigma^2_P}
 
 --
 
-### Phenotypes (and $\sigma^2_P$) can be directly measured.
+#### Phenotypes (and $\sigma^2_P$) can be directly measured.
 
 --
 
-### How about $\sigma^2_A$ ?
+#### How about $\sigma^2_A$ ?
 
 
-Estimates of $\sigma^2_A$ require __known collections of relatives__.
+- Estimates of $\sigma^2_A$ require __known collections of relatives__.
 
 
 ---
 # Types of Relatives
 
 ### Ancestral relatives
+
 - Parent and offspring
+
 - Grandparent and offspring
 
 ### Collateral relatives
+
 - Half sibs: have one parent in common
+
 - Full sibs: have both parents in common
 - Twins
 
@@ -87,7 +91,8 @@ Estimates of $\sigma^2_A$ require __known collections of relatives__.
 
 
 ### A thought experiment
-- Body weight of newborn piglets
+
+Body weight of newborn piglets
   - In the 1st half family $O_{11}$ ... $O_{3k}$, mean $=3 \pm 0.1$ lb 
   - In the 2nd half sib family $O_{n1}$ ... $O_{nk}$, mean $=4 \pm 0.1$ lb 
 
@@ -96,12 +101,17 @@ Estimates of $\sigma^2_A$ require __known collections of relatives__.
 
 # Two key observations
 
+### A thought experiment
+
+Body weight of newborn piglets
+  - In the 1st half family $O_{11}$ ... $O_{3k}$, mean $=3 \pm 0.1$ lb 
+  - In the 2nd half sib family $O_{n1}$ ... $O_{nk}$, mean $=4 \pm 0.1$ lb 
 
 
 ### Obs. One:
 If trait variation has a significant genetic basis, the __closer the relatives__, the __more similar their phenotypic values__.
 
-
+--
 
 ### Obs. Two:
 The amount of __phenotypic resemblance__ among relatives for the trait provides an indication of the amount of __genetic variation__ for the trait. 
@@ -160,7 +170,7 @@ Cov(\alpha_i, \alpha_k) & =  E[(\alpha_i - \mu_{\alpha})(\alpha_k - \mu_{\alpha}
 Because $\alpha_i = \alpha_k$ if alleles $x_i$ and $y_k$ are IBD.
 
 ---
-# Covariance due to additive genetic covariance
+# Additive genetic covariance
 
 The additive genetic covariance between relatives is generated through individuals sharing average effects of alleles.
 
@@ -191,29 +201,41 @@ Because $\sigma_A^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 = 2\sigma_\alpha
 ---
 # Parent-offspring
 
-Recall that the __coefficient of co-ancestry ( $f_{XY}$ from Ch.5)__ between a non-inbred parent and non-inbred offspring is 1/4. Thus, the coefficient for $\sigma_A^2$ is 1/2.
+Recall that the __coefficient of co-ancestry ( $f_{XY}$ from Ch.5)__ between a non-inbred parent and non-inbred offspring is 1/4. 
+- Thus, the coefficient for $\sigma_A^2$ is 1/2.
 
-Consider the convariance between parent (P) and offspring (O), if we assume the two alleles of the parent are unrelated, then all offspring can't share a common dominance deviation ( $\sigma^2_D$ =0 ). Therefore,
+--
+
+Consider the convariance between parent (P) and offspring (O), 
+
+- If we assume the two alleles of the parent are unrelated,
+
+- Then all offspring can't share a common dominance deviation ( $\sigma^2_D =0$ ). 
+
+Therefore,
 
 \begin{align*}
 Cov(P, O) = \frac{1}{2}\sigma_A^2
 \end{align*}
 
---
+---
+# Parent-offspring
 
 ### From Breeding value
 
 - Parent genotypic value: $G = A + D$.
-- Offspring (half the breeding value of the parents from Ch.7) : $G=1/2A$
+
+- Offspring (half the breeding value of the parents from __Ch.7__): $G=1/2A$
 
 --
 
 \begin{align*}
-Cov(P, O) & = Cov(A + D, 1/2A) \\
-& = 1/2Cov(A, A) + 1/2Cov(A, D) = \frac{1}{2}\sigma_A^2 \\
+Cov(P, O) & = Cov(A + D, \frac{1}{2}A) \\
+& = \frac{1}{2}Cov(A, A) + \frac{1}{2}Cov(A, D) \\
+ & = \frac{1}{2}\sigma_A^2 \\
 \end{align*}
 
-Because $Cov(A, D) = 0$ from Ch.8.
+Because $Cov(A, D) = 0$ from __Ch.8__.
 
 
 
@@ -327,7 +349,7 @@ See _P149 of F&M_ for the algebraic reduction.
 
 
 ---
-# What is the genetic covariance for half sibs?
+# The genetic covariance for half sibs?
 
 <div align="center">
 <img src="hs-covar.png" height=400>
@@ -384,6 +406,7 @@ Cov(G_{o1}, G_{o2}) = & Cov(\frac{1}{2}A + \frac{1}{2}A', \frac{1}{2}A + \frac{1
 
 
 - Among the progeny, only __four possible genotypes__, each with a frequency of 1/4.
+
   - $A_1A_3$, $A_1A_4$, $A_2A_3$, $A_2A_4$
   
 --
