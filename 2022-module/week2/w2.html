@@ -22,26 +22,6 @@ class: center, middle, inverse, title-slide
 
 
 
----
-
-# Syllabus
-
-### Module 1: Introduction and popgen terminology
-- Introduction of population genomics
-- Basic principles of evolutionary processes
-
---
-
-### __Module 2: Diversity measurement__
-- __NGS and diversity measurement__
-- __Population differentiation__
-
-### Module 3: Scan for direct and linked selection
-- Direct selection
-- Linked selection
-
----
-
 # Slides for today's class module
 
 - Scan QR code to view the HTML slides: 
@@ -50,12 +30,13 @@ class: center, middle, inverse, title-slide
 &lt;img src="qr-code.png" height=300&gt;
 &lt;/div&gt; 
 
---
 
 - Lab website: https://jyanglab.com/
   - TEACHING: Courses
     - __Module 2__: [[HTML](https://jyanglab.com/slides/2022-module/week2/w2.html)]
-      
+
+
+
 ---
 
 # A recent paper on Nature Genetics
@@ -93,11 +74,28 @@ class: center, middle, inverse, title-slide
   - Using `\(F_{ST}\)`, XP-CLR
   
 
+---
+
+# Syllabus
+
+### Module 1: Introduction and popgen terminology
+- Introduction of population genomics
+- Basic principles of evolutionary processes
+
+--
+
+### __Module 2: Diversity measurement__
+- __Heterozygosity and diversity__
+- __Population differentiation ( `\(F_{ST}\)` )__
+
+### Module 3: Scan for direct and linked selection
+- Direct selection
+- Linked selection (XP-CLR)
 
 
 ---
 
-# Polymorphism and Neutral Theory
+# Polymorphism
 
 Polymorphism is not always maintained by selection
 &gt; Kimura, 1962
@@ -112,31 +110,21 @@ Polymorphism is not always maintained by selection
 
 - Eventually, equilibrium is reached with respect to the inbreeding coefficient ( `\(F\)` )
 
+--
+
+### Inbreeding coefficient ( `\(F\)` )
+
+Is the probability that the two alleles at any locus in an individual are identical by descent (IBD).
+  - `\(F=0\)`, no inbreeding and `\(F=1\)`, completely inbreeding
+
+
+
 
 ---
 
 # Mutation-drift equilibrium
 
-- Probability two alleles are homozygous
-
-`\begin{align*}
-F_t = \frac{1}{N_e} + (1 - \frac{1}{2N_e})F_{t-1}
-\end{align*}`
-
---
-
-- With mutation occurring at rate `\(\mu\)`, the probability two alleles are IBD is `\(F_t \times (1-\mu)^2\)`
-  
-  - `\((1 - \mu)^2\)` is the probability both alleles don't mutate to another allele
-
-  
-`\begin{align*}
-F_t = [\frac{1}{N_e} + (1 - \frac{1}{2N_e})F_{t-1}] (1 - \mu )^2
-\end{align*}`
-
---
-
-- At equilibrium ( `\(F_e\)` ), `\(F_t = F_{t-1}\)`, through rearrangement:
+- At equilibrium ( `\(F_e\)` ), `\(F_t = F_{t-1}\)`, with mutation rate of `\(\mu\)` and effective population size of `\(N_e\)`:
 
 `\begin{align*}
 F_e = \frac{(1 - \mu )^2}{2N_e - (2N_e -1)(1 - \mu)^2}
@@ -151,30 +139,17 @@ F_e \approx \frac{1}{4N_e\mu + 1}
 \end{align*}`
 
 
----
-
-# Mutation-drift equilibrium
-
-`\begin{align*}
-F_e \approx \frac{1}{4N_e\mu + 1}
-\end{align*}`
+--
 
 
-- `\(F_e\)` is identify (or homozygosity)
+- `\(F_e\)` is identity (or homozygosity)
 
-- So, the expected heterozygosity at equilibrium is ( `\(1 - F_e\)` ) or
+- So, the __expected heterozygosity__ at equilibrium is ( `\(1 - F_e\)` ) or
 
 `\begin{align*}
 1- F_e &amp; \approx 1- \frac{1}{4N_e\mu + 1} \\
 H_e  &amp; \approx \frac{4N_e \mu}{4N_e\mu + 1}
 \end{align*}`
-
---
-
-- Only the __probability of homozygosity__ remains constant at equilibrium
-
-- The actual alleles are constantly changing, mutating, and drifting
-
 
 ---
 
@@ -201,7 +176,8 @@ fe &lt;- function(ne, mu){
 
 ```r
 ne &lt;- seq(1, 50000, by=10)
-plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="F")
+plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", 
+     xlab="Effective population size (Ne)", ylab="F")
 lines(ne, fe(ne, mu=10^-5), lty=2, lwd=3, col="blue")
 lines(ne, fe(ne, mu=10^-6), lty=2, lwd=3, col="black")
 ```
@@ -227,17 +203,18 @@ H_e  &amp; \approx \frac{4N_e \mu}{4N_e\mu + 1}
 
 --
 
-- #### When the mutation rate is low (black line, `\(10^{-6}\)`), `\(F\)` is high even at very large Ne
+.pull-right[
+#### When the mutation rate is low (black line, `\(10^{-6}\)`), `\(F\)` is high even at very large Ne
 
   - Mutations happen very infrequently and do not contribute much to the heterozygosity
   
   - Mutated alleles are easily lost through drift
 
 
-- #### When the mutation rate is relative high (__red line__, `\(10^{-4}\)`)
+#### When the mutation rate is relative high (__red line__, `\(10^{-4}\)`)
 
   - Mutation counteracts drift through introducing new alleles at a high rate
-
+]
 
 ---
 
@@ -247,6 +224,8 @@ H_e  &amp; \approx \frac{4N_e \mu}{4N_e\mu + 1}
 ### Expected Heterozygosity ( `\(H_{exp}\)` )
 
 - Probability that two randomly chosen copies of a locus are different alleles
+
+--
 
 - `\(H_{exp}\)` is often reported to __compare populations__
 
@@ -271,12 +250,12 @@ H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
 # Expected Heterozygosity
 
 
-| Loci | Allele   | Frq   | 
+| Loci | Allele   | Freq   | 
 | :-------: | : ------ : | :-------: | 
-| locus A   | `\(A_1\)`    | `\(0.2\)`    | 
-|           | `\(A_2\)`    | `\(0.8\)`    |
-| locus B   |  `\(B_1\)`        |  `\(0.3\)`        |  
-|           |  `\(B_2\)`        |  `\(0.7\)`        |  
+| locus A   | `\(A_1\)`    | `\(p_1=0.2\)`    | 
+|           | `\(A_2\)`    | `\(q_1=0.8\)`    |
+| locus B   |  `\(B_1\)`        |  `\(p_2=0.3\)`        |  
+|           |  `\(B_2\)`        |  `\(q_2=0.7\)`        |  
 
 --
 
@@ -301,7 +280,7 @@ H_{exp} &amp; = 1 - \frac{1}{2}\sum_{k=1}^{2} \sum_{i=1}^{2} p_{ki}^2 \\
 # Expected Heterozygosity
 
 
-- If `\(H_e\)` is high, it does not mean that there are a lot of heterozygotes.
+- If `\(H_e\)` (or `\(H_{exp}\)`) is high, it does not mean that there are a lot of heterozygotes.
 
 - It reflects potential diversity 
 
@@ -450,7 +429,7 @@ h = \frac{n}{n-1}(1- p^2 - q^2)
 
 --
 
-then the sum of site heterozygosities is:
+Then the sum of site heterozygosities is:
 
 `\begin{align*}
 \sum_{i=1}^S h_i
@@ -514,7 +493,7 @@ What if you did not know population boundaries before sampling?
 ### Wahlund Effect
 
 - Unknown (cryptic) population structure can appear as __a deficiency of heterozygotes__
-  - Add this to the list of forces that can created reduced heterozygosity and increased homozygosity in your sample
+  - Created reduced heterozygosity and increased homozygosity in your sample
 
 ---
 
@@ -617,7 +596,7 @@ Even if subpopulations are __partially isolated__, the Wahlund effect is held tr
   
 ---
 
-# Heterozygosity to describe Populations 
+# Heterozygosity to describe populations 
 
 In a subdivided population, the overall deviation from HWE heterozygosity:
 
@@ -669,7 +648,7 @@ F = \frac{H_e - H_o}{H_e}
 
 ---
 
-# Heirarchical F-statistics
+# Hierarchical F-statistics
 
 
 .pull-left[
@@ -695,7 +674,7 @@ F_{IS} = \frac{H_S - H_I}{H_S}
 
 ---
 
-# Heirarchical F-statistics
+# Hierarchical F-statistics
 
 
 .pull-left[
@@ -724,7 +703,7 @@ F_{ST} = \frac{H_T - H_S}{H_T}
 
 ---
 
-# Heirarchical F-statistics
+# Hierarchical F-statistics
 
 .pull-left[
 &lt;div align="center"&gt;
@@ -751,15 +730,15 @@ F_{IT} = \frac{H_T - H_I}{H_T}
 
 ---
 
-# Summary of Heirarchical F-statistics
+# Summary of Hierarchical F-statistics
 
 ### `\(F_{ST}\)`
 
-- Measures how different the subpopulations are.
+- Measures how different the subpopulations are
 
 - It can be interpreted as the proportion of the total heterozygosity that is due to differences in allele frequencies among subpopulations
 
-- `\(F_{ST}\)` can be calculated from allele frequencies lone
+- `\(F_{ST}\)` can be calculated from allele frequencies alone
 
 --
 
@@ -856,7 +835,7 @@ H_{IT} &amp; = \frac{H_T - H_I}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
 
 - But clear evidence of population subdivision
 
-- And population subdivision accounts for all the genetic variation.
+- And population subdivision accounts for all the genetic variation
 
 
 
@@ -923,7 +902,7 @@ CANNOT compare `\(F_{ST}\)` between studies or samples if they are not based upo
 
 
 
-- Like `\(D'\)` you can express `\(F_{ST}\)` as `\(F_{ST}'\)`
+- You can express `\(F_{ST}\)` as `\(F_{ST}'\)` --- a normalized version
 &gt; Hedrick, 2005
 
 - Jost’s D uses number of effective alleles instead of heterozygosity
