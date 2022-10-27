@@ -1,7 +1,7 @@
 ---
 title: "Genetic and Environmental covariance"
 author: "Jinliang Yang"
-date: "Oct. 28th, 2020"
+date: "Oct. 28th, 2022"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -86,7 +86,7 @@ Because $\sigma_A^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 = 2\sigma_\alpha
 
 ---
 
-## Covariance due to dominance deviations
+# Covariance due to dominance deviations
 
 To get dominance deviations, must be two alleles IBD:
 
@@ -159,7 +159,7 @@ for example, full sibs and double first cousins.
 --
 
 | Relationship  |       | Coancestry | r (of $\sigma^2_A$) | u (of $\sigma^2_D$)  | 
-| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| :-------: | :-------: | :------: | :-----------: | :----------: | :-----------: | 
 | First degree  | Parent:offspring   |  1/4  | ?    |  0  |  
 | Second degree  | Half sibs    |    1/8     | ? |  0 |  
 |                | Full sibs     |   1/4    | ? |  __1/4__ |  
@@ -249,7 +249,7 @@ When epistasis is present, alleles that are IBD across multiple loci:
 
 
 ---
-### Additive by additive epistasis $\sigma_{AA}^2$
+# Additive by additive epistasis $\sigma_{AA}^2$
 
 <div align="center">
 <img src="epistasis.png" height=200>

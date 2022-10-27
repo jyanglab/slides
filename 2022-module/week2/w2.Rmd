@@ -38,7 +38,7 @@ options(htmltools.dir.version = FALSE)
 <img src="ng1.png" height=200>
 </div> 
 
-> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the gene _Zea_
+> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the genus _Zea_
 
 --
 
@@ -56,7 +56,7 @@ options(htmltools.dir.version = FALSE)
 <div align="center">
 <img src="ng2.png" height=200>
 </div> 
-> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the gene _Zea_
+> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the genus _Zea_
 
 --
 
@@ -105,7 +105,7 @@ Polymorphism is not always maintained by selection
 
 --
 
-### Inbreeding coefficient ( $F$ )
+#### Inbreeding coefficient ( $F$ )
 
 Is the probability that the two alleles at any locus in an individual are identical by descent (IBD).
   - $F=0$, no inbreeding and $F=1$, completely inbreeding
@@ -170,7 +170,7 @@ ne <- seq(1, 50000, by=10)
 plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", 
      xlab="Effective population size (Ne)", ylab="F")
 lines(ne, fe(ne, mu=10^-5), lty=2, lwd=3, col="blue")
-lines(ne, fe(ne, mu=10^-6), lty=2, lwd=3, col="black")
+lines(ne, fe(ne, mu=10^-8), lty=2, lwd=3, col="black")
 ```
 
 
