@@ -193,7 +193,7 @@ H_e  & \approx \frac{4N_e \mu}{4N_e\mu + 1}
 --
 
 .pull-right[
-#### When the mutation rate is low (black line, $10^{-6}$), $F$ is high even at very large Ne
+#### When the mutation rate is low (black line, $10^{-8}$), $F$ is high even at very large Ne
 
   - Mutations happen very infrequently and do not contribute much to the heterozygosity
   
@@ -241,10 +241,10 @@ H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
 
 | Loci | Allele   | Freq   | 
 | :-------: | : ------ : | :-------: | 
-| locus A   | $A_1$    | $p_1=0.2$    | 
-|           | $A_2$    | $q_1=0.8$    |
-| locus B   |  $B_1$        |  $p_2=0.3$        |  
-|           |  $B_2$        |  $q_2=0.7$        |  
+| locus A   | $A_1$    | $p_{11}=0.2$    | 
+|           | $A_2$    | $p_{12}=0.8$    |
+| locus B   |  $B_1$        |  $p_{21}=0.3$        |  
+|           |  $B_2$        |  $p_{22}=0.7$        |  
 
 --
 
@@ -457,24 +457,6 @@ This estimate of heterozygosity gives us the average number of pairwise necleoti
 
 ---
 
-# Population structure
-
-What if you did not know population boundaries before sampling?
-
-
-<div align="center">
-<img src="pops.png" width=300>
-</div>
-
---
-
-### Wahlund Effect
-
-- Unknown (cryptic) population structure can appear as __a deficiency of heterozygotes__
-  - Created reduced heterozygosity and increased homozygosity in your sample
-
----
-
 # Population subdivision
 
 .pull-left[
@@ -492,10 +474,31 @@ What if you did not know population boundaries before sampling?
 
 --
 
+What if you did not know population boundaries before sampling?
+
 ### Cryptic population structure
 
 Unknown (cryptic) population structure can appear as a __deficiency of heterozygotes__
-- Just one more way to get reduced heterozygosity and increased homozygosity in your sample
+
+---
+
+# Population structure
+
+
+
+
+<div align="center">
+<img src="pops.png" width=300>
+</div>
+
+--
+
+### Wahlund Effect
+
+- Unknown (cryptic) population structure can appear as __a deficiency of heterozygotes__
+
+  - Created reduced heterozygosity and increased homozygosity in your sample
+
 
 
 ---
@@ -806,28 +809,28 @@ H_T & = 0.5 \\
 --------------
 
 \begin{align*}
-H_{IS} & = \frac{H_S - H_I}{H_S}  = \frac{0.32 - 0.32}{0.32} =0 \\
-\end{align*}
-
---
-
-\begin{align*}
-H_{ST} & = \frac{H_T - H_S}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
-\end{align*}
-
-\begin{align*}
-H_{IT} & = \frac{H_T - H_I}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
+F_{IS} & = \frac{H_S - H_I}{H_S}  = \frac{0.32 - 0.32}{0.32} =0 \\
 \end{align*}
 
 --
 
 - There is no evidence of inbreeding within each subpopulations
 
+--
+
+\begin{align*}
+F_{ST} & = \frac{H_T - H_S}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
+\end{align*}
+
+\begin{align*}
+F_{IT} & = \frac{H_T - H_I}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
+\end{align*}
+
+--
+
 - But clear evidence of population subdivision
 
 - And population subdivision accounts for all the genetic variation
-
-
 
 ---
 # More on the Hierarchical F-statistics
