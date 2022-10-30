@@ -1,0 +1,188 @@
+---
+title: "Chapter 9: Example"
+date: "10-26-2018"
+author: "Jinliang Yang"
+output:
+   rmdformats::material:
+      highlight: kate
+      self_contained: no
+      code_folding: hide
+---
+
+
+
+
+# A sib analysis
+
+A set of maize hybrids (N=345) crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
+
+The hybrids were planted in four environments, each with three replication.
+
+## Read in data
+
+```{r, eval=TRUE}
+pigData <- read.csv('https://jyanglab.com/AGRO-931/data/pigsibs.csv')
+
+p <- pigData
+table(p)
+
+length(table(p$Sire))
+
+p <- pigData[, c(1,3,4,5)]
+names(p)[3:4] <- c("dam", "sire")
+p$dam <- paste0("d", p$dam)
+p$sire <- paste0("s", p$sire)
+p$cross <- paste(p$sire, p$dam, sep="x")
+
+
+p$kid <- 1
+c <- unique(p$cross)
+df <- data.frame()
+for(i in 1:length(c)){
+  sub <- subset(p, cross %in% c[i])
+  if(nrow(sub) > 4){
+    sub <- sub[1:4, ]
+  }
+  sub$kid <- 1:nrow(sub)
+  df <- rbind(df, sub)
+}
+
+names(df)[2] <- "weight"
+
+write.table(df, "swine_sib.csv", sep=",", row.names = FALSE, quote=FALSE)
+
+fit <- lm(weight ~ sire + dam, data=df)
+summary(aov(fit))
+
+```
+
+```{r}
+vw <- 352
+n=4 # number of kids per full-sib family
+vd <- (734 - vw)/n 
+d=33
+vs <- (6331 - 734)/(d*n)
+
+vp <- vd + vs + vw
+```
+
+$\sigma_s^2 = Cov(HS) = 1/4 \sigma_A^2$
+
+```{r}
+va <- 4*vs
+```
+
+$h^2 = V_A/V_P$
+
+```{r}
+va/vp
+```
+
+Vd
+
+$\sigma_d^2 = Cov(FS) - Cov(HS) = 1/4 \sigma_A^2 + 1/4 \sigma_D^2$
+
+```{r}
+Vd = 4*vd  - va
+```
+
+
+## Phenotypic distribution
+```{r}
+hist(corn$Yld, main="Yield", xlab="Value", breaks=50, col="#458b74")
+```
+
+## Across environments
+
+- To learn about how to do [data visulization](https://www.rstudio.com/resources/cheatsheets/) and other in R.
+
+- Many other [R statistics resources](https://docs.google.com/document/d/1766U2u4LTw19IMSX79XE1on4gRWp6vyN7TGwyOoMOKY/edit)
+
+
+```{r}
+library(ggplot2)
+
+corn$geno <- paste(corn$Male, corn$Female, sep="x")
+
+fsize=18
+p1 <- ggplot(data=corn, aes(x=REP, y=Yld, fill= as.factor(REP)) ) +
+    geom_violin() +
+    facet_wrap(~ ENV) +
+    #guides(fill=FALSE) + factor(trait, levels=out$trait)
+    labs(y=NULL, fill="Rep") + 
+    xlab("") + 
+    ylab("") + 
+    theme_bw() +
+    theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+          axis.text=element_text(size=fsize),
+          axis.title=element_text(size=fsize, face="bold"),
+          legend.title = element_text(size=fsize, face="bold"),
+          legend.text = element_text(size=fsize))
+p1
+```
+
+
+# Half-sibs
+
+One parent in common.
+
+```{r}
+hs1 <- subset(corn, Male %in% c("M1", "M2"))
+
+fit <- lm(Yld ~ Male + ENV + ENV:REP, data=hs1)
+summary(aov(fit))
+```
+
+What is the among-families and within-families variance?
+
+The intraclass correlation is `1.9/(1.9 + 3.2)`
+
+### The covariance between two individuals
+
+The covariance between two individuals in the same group is equal to the variance between groups.
+
+Cov(HS) = Var(between)
+
+# Full-sibs
+
+Both parents in common.
+
+```{r}
+fs1 <- subset(corn, geno %in% c("M1xF1", "M2xF2"))
+fs1
+
+fit <- lm(Yld ~ geno + ENV + ENV:REP, data=fs1)
+summary(aov(fit))
+```
+
+Again, Cov(FS) = var(between)
+
+# Variance Components
+
+```{r}
+corn$REP <- as.factor(corn$REP)
+
+fit <- lm(Yld ~ ENV + ENV:REP + Male + Female + Male*Female + Male*ENV + Female*ENV + Male*Female*ENV, data=corn)
+
+##Perform simple ANOVA
+aovResult <- aov(fit)
+
+
+##Extract table of mean squares
+summary(aovResult)[[1]]
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
