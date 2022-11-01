@@ -37,7 +37,9 @@ class: center, middle, inverse, title-slide
 
 ### __Module 3: Scan for direct and linked selection__
 - __Direct selection__
+  - The effects of selection on these mutation themselves
 - __Linked selection__
+  - SNPs themselves have no effect on fitness ( `\(s=0\)` ) but are affected by selection occurring nearby.
 
 ---
 
@@ -78,6 +80,7 @@ but by _random drift of selectively neutral or nearly neutral mutants_."
 - #### Most changes that are fixed over time are selectively neutral (fixed by drift)
 
    - Drift rather than selection predominates
+   
 ---
 
 # Neutral Theory
@@ -639,7 +642,8 @@ Originally designed to fit a normal distribution, however, none of these test st
 
 ### Calculation
 
-- Only variable sites at each locus are needed
+- __Only variable sites__ at each locus are needed
+
 - The number of invariant sites do not figure into any calculations.
 
 ---
@@ -710,79 +714,339 @@ Power also determined by the distance between our studied loci and the location 
 - Move far away enough and there will be no signal of selection at all.
 
 
+
 ---
+class: center, middle
 
-# The Hudson, Kreitman, Aguadé (HKA) Test
+# Direct Selection
 
-#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
 
---
-
-Teases apart what is responsible for `\(\theta = 4N_e \mu\)`, testing for selection
-
-Under a neutral model:
-
-- All loci share the same `\(N_e\)`
-  
-- Neutral mutation rate `\(\mu\)` varies for different loci, but should be constant for the same locus in different species
-
---
-  - High neutral mutation rate = high polymorphism and greater divergence between species
-  
-  -  Low rate = low polymorphism and less divergence
-  
 ---
-
-# The Hudson, Kreitman, Aguadé (HKA) Test
-
-#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
+# The accumulation of sequence divergence
 
 
-To determine level of divergence
-- Examine fixed differences between species
-- Then look at number of polymorphisms between species
+## Necleotide substituion rate ( `\(k\)` )
 
---
-
-### The _Adh_ locus example
-
-|  | _Adh_   | Control locus    | 
-| :-------: | : ------ : | :-------: | 
-| Polymorphism within species (S)  | 0.101    | 0.022   | 
-| Divergence between species (D)  | 0.056     | 0.052   | 
-| Ratio S/D (within/between)    | 1.80    | 0.42    | 
-| `\(\chi^2\)` P-value | 0.016 |     |     |
+The variable `\(k\)` is defined as the substitution rate of __new alleles__
+  - The rate of alleles that are fixed over long periods of time.
+  - It determines how quickly two squences are expected to diverge over time.
 
 --
 
-Conclusion: Excess polymorphism at _Adh_ may be due to balancing selection, but HKA can’t determine the true cause
+## Sequence divergence ( `\(d\)` )
+
+We define `\(d\)` as the genetic distance between two orthologous sequences. 
+- We generally calculate `\(d\)` by taking a single sequence from each species and counting the number of positions that differ between them, divided by the total number of aligned necleotides.
 
 
 ---
 
-# Cautions and Prospects
+# The accumulation of sequence divergence
 
-- A review paper: [Detecting Natural Selection in Genomic Data](https://www.annualreviews.org/doi/abs/10.1146/annurev-genet-111212-133526) by Vitti, Grossman, and Sabeti, 2013.
+The contribution of the __rate of substitution ( `\(k\)` )__ to the expected amount of __divergence ( `\(d\)` )__ can be seen in the following equation:
 
-  - Frequency-based methods (i.e., Tajima's D, Fay &amp; Wu's H, Ewens-Watterson test)
-  - Gene-based methods (i.e., Ka/Ks, MKT)
-  - Mutation rate-based methods (i.e., HKA test)
+`\begin{align*}
+E(d) = k2t + \theta_{Anc}
+\end{align*}`
 
---
-
-Rejection of the null hypothesis (H0: neutral theory) is not necessarily the same as demonstrating natural selection!
-Because we have strong assumptions:
-1. Constant Ne
-2. Populations are at mutation-drift equilibrium
-3. No gene flow
-4. No recombination
-...
+- Where `\(k\)` represents the allele substitution rate.
+- `\(t\)` is the time since the species split
+  - We use `\(2t\)` because substitutions can occur on both branches of the phylogenetic tree.
+- `\(\theta_{Anc}\)`: average amount of nucleotide variation expected between two sequences in the ancestor.
+  - Because at the time of speciation there differences have already accumulated along the two linages.
 
 --
 
-Most of these tests are weak! They have little power to detect deviation unless these deviations are large.
+Simplified as below if assuming divergence levels are much greater than the expected levels of polymorphism in the ancestral species,
+
+`\begin{align*}
+E(d) = k2t
+\end{align*}`
 
 
+---
+
+# What affects `\(k\)`?
+
+Two quantities determine the rate of substitution ( `\(k\)` ).
+
+### The probability of fixation of any mutation ( `\(u\)` ).
+
+### The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# Fixation rate of new mutation
+
+
+#### Neutral mutation ( `\(u_0\)` )
+
+If a mutation has no effect on fitness, the probability of fixing is equal to __its current frequency__. 
+
+--
+
+New mutations always begin at frequency `\(\frac{1}{2N}\)`, therefore,
+
+`\begin{align*}
+u_0 = \frac{1}{2N}
+\end{align*}`
+
+--
+
+#### Advantageous mutations ( `\(u_a\)` )
+
+For new, advantageous mutations ( `\(s &gt; 0\)` ) and large effective population sizes, the probability of fixation is
+
+`\begin{align*}
+u_a \approx 2s_a
+\end{align*}`
+
+according to Haldane 1927; Fisher 1930; Wright 1931.
+
+- `\(s_a\)` is the __selective advantage of the new allele in a heterozygote__ and `\(2s_a\)` in a homozygote.
+
+---
+
+# Fixation rate of new mutation
+
+#### Deleterious mutations ( `\(u_d\)` )
+
+For new, deleterious mutations ( `\(s &lt; 0\)` ) that don't have large effects, the probability of fixation is (Kimura 1957):
+
+`\begin{align*}
+u_d \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+- Here `\(s_d\)` is the __deleterious effect of the new allele in a heterozygote__ and `\(2s_d\)` is the effect in a homozygote.
+
+
+
+---
+# Fixation rate of new mutation
+
+Probability of fixation, relative to a neutral allele, of new, selected mutations:
+
+`\begin{align*}
+u/u_0 \approx \frac{2s}{1 - e^{(-4N s)}} / \frac{1}{2N} = \frac{4Ns}{1 - e^{(-4N s)}}
+\end{align*}`
+
+.pull-left[
+
+```r
+ns &lt;- seq(from = -1, to =1, by=0.01)
+plot(ns, 4*ns/(1 - exp(-4*ns)), xlab="Ns", ylab="")
+abline(v=0, lty=2, lwd=2)
+```
+
+&lt;img src="w3_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+
+--
+
+.pull-right[
+- `\(Ns=0\)`, neutral mutations
+- `\(Ns &gt; 0\)`, slightly advantageous mutations are not that much more likely to fix than neutral mutations.
+- `\(Ns &lt; 0\)`, slightly deleterious mutations have some probability of fixing.
+]
+
+
+---
+
+# What affects `\(k\)`?
+
+Two quantities determine the rate of substitution ( `\(k\)` ).
+
+### The probability of fixation of any mutation ( `\(u\)` ).
+
+`\begin{align*}
+u_0 &amp; = \frac{1}{2N} \\
+u_a &amp; \approx 2s_a \\
+u_d &amp; \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+
+### The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# The total number of mutations 
+
+If the probability of a mutation at a nucleotide in each generation is `\(\nu\)`, then in a population of `\(N\)` diploid individuals, there will be __ `\(2N\nu\)` new mutations per generation at a single site__.
+
+--
+
+- with `\(f_0\)` representing the fraction of neutral mutations.
+  - __ `\(2N \nu f_0\)`__ will be neutral
+
+--
+
+- The remaining will be advantageous (__ `\(f_a\)` fraction__) and deleterious (__ `\(f_d\)` fraction__).
+  - __ `\(2N \nu f_a\)`__ new advantageous mutations
+  - __ `\(2N \nu f_d\)`__ new deleterious mutations
+
+
+--
+
+If advantageous and deleterious mutations have no contribution, then the subsitution rate is a function of only _the total number_ of neutral mutations that arise and the _probability that each of them fixes_.
+
+
+`\begin{align*}
+k = (2N \nu f_0) \frac{1}{2N} = \nu f_0
+\end{align*}`
+
+---
+
+# The total number of mutations 
+
+`\begin{align*}
+k = (2N \nu f_0) \frac{1}{2N} = \nu f_0
+\end{align*}`
+
+
+Substitute the symbol `\(\mu\)` for the total rate at which neutral mutations arise, `\(\mu = \nu f_0\)`, the rate of neutral mutations is:
+
+`\begin{align*}
+k = \mu
+\end{align*}`
+
+--
+
+When considering only neutral mutations, __the substitution rate is equal to the neutral mutation rate ( `\(\mu\)` )__, regardless of population size.
+
+- While more mutations arise in large populations, each of them has a smaller chance of eventually going to fixation
+
+- Likewise, it is more likely that any single new mutation will fix in a small population, but there are fewer mutations overall.
+
+---
+
+# Advantageous and deleterious mutations
+
+The rate of substitution for advantageous mutations:
+
+`\begin{align*}
+k = (2N \nu f_a) 2s_a = 4N \nu f_as_a
+\end{align*}`
+
+--
+
+The rate of substitution for deleterious mutations:
+
+`\begin{align*}
+k &amp; = (2N \nu f_d) \times \frac{2s_d}{1 - e^{(-4N s_d)}} \\
+&amp; = \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}
+\end{align*}`
+
+--
+
+----------------
+
+- The population size ( `\(N\)` ) plays an important role in the rate of substitution of selected mutations.
+
+- More advantageous mutations will fix in larger populations than in smaller populations
+
+- More deleterious mutation will fix in smaller populations relative to larger populations.
+
+
+
+
+
+
+
+---
+
+# Detecting direct selection using divergence
+
+In coding regions, we measure divergenece that is due to nonsynonymous and synonymous changes.
+
+- `\(d_N\)` as the number of nonsynonymous difference per nonsynonymous site
+
+- `\(d_S\)` as the number of synonymous differences per synonymous site
+
+--
+
+Note that natural selection has __a profound effect__ on the number of nonsynonymous mutations that are fixed.
+
+`\begin{align*}
+E(d_N) &amp; = k2t \\
+ &amp; = 2t (\nu f_0 + 4N \nu f_as_a + \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}) \\
+ &amp; = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+\end{align*}`
+
+The total nonsynonymous divergence in a region is due to all three types of mutations, therefore, our expression for `\(d_N\)` includes all three terms.
+
+---
+
+# Detecting selection using divergence
+
+`\begin{align*}
+E(d_N) &amp; = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+\end{align*}`
+
+- A higher underlying mutation rate, `\(\nu\)`, and longer divergence times, `\(t\)`, will increase the amount of divergence
+
+- The proportion of advantageous mutations fixed will be a function of the frequency at which they arise and their average selective effect
+
+- The deleterious mutations can also contribute to divergence if selection is weak enough.
+
+
+---
+
+# Synonymous mutations
+
+Here we assume all synonymous changes are neutral.
+- That is, `\(f_0 =1\)` and `\(f_a = f_d =0\)`
+
+--
+
+The total expected amount of synonymous divergence between two sequences is:
+
+`\begin{align*}
+E(d_S) &amp; = \nu 2t \\
+\end{align*}`
+
+For neutral mutations, the substitution rate is simply equal to the mutation rate.
+
+---
+
+# The ratio of nonsynonymous to synonymous divergence
+
+Because both `\(\nu\)` and `\(t\)` will be approximately the same of nonsynonymous and synonymous sites in the same gene, dividing above equations gives
+
+
+`\begin{align*}
+\frac{E(d_N)}{E(d_S)} &amp; = f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}} \\
+\end{align*}`
+
+--
+
+- Relative to synonymous divergence, the level of nonsynonymous divergence is again due to the fractions of mutations that are __neutral__, __advantageous__, and __deleterious__.
+
+- Note that here, `\(f_0\)` represents only the __nonsynonymous mutations__.
+
+
+---
+# Some general guidelines
+
+__ `\(d_N/d_S &lt;&lt; 1\)`__
+The vast majority of nonsynonymous mutations are deleterious, and negative (purifying) selection is predominant.
+
+--
+
+__ `\(d_N/d_S &lt; 1\)`__
+The majority of nonsynonymous mutations are deleterious, but here may be some unknown fraction of advantageous mutations.
+
+--
+
+__ `\(d_N/d_S = 1\)`__
+This situation can occur in two cases:
+- First, there is no selection and all nonsynoymous mutations are neutral.
+- Second, there is simply a large number of neutral and advantageous mutations (as well as deleterious mutations).
+
+--
+
+__  `\(d_N/d_S &gt; 1\)`__
+There are many advantageous nonsynonymous mutations and positive selection is predominant, but there are still many deleterious mutations.
 
 
 
