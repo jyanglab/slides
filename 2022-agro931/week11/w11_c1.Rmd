@@ -426,7 +426,7 @@ So the between-dam component is estimated as:
 
 \begin{align*}
 & \sigma_D^2 = \frac{1}{n}(MS_d - MS_w) \\
-& MS_d = \sigma^2_W + n\sigma_D^2 =  MS_w + n\sigma_D^2\\
+& MS_d  =  MS_w + n\sigma_D^2 = \sigma^2_W + n\sigma_D^2 \\
 \end{align*}
 
 --
@@ -448,7 +448,7 @@ Between-sire component is estimated as:
 
 \begin{align*}
 & \sigma_s^2 = \frac{1}{dn}(MS_s - MS_d) \\
-& MS_s = \sigma^2_W + n\sigma_D^2 + dn\sigma_S^2  = MS_d + dn\sigma_S^2 \\
+& MS_s   = MS_d + dn\sigma_S^2 = \sigma^2_W + n\sigma_D^2 + dn\sigma_S^2 \\
 \end{align*}
 
 --

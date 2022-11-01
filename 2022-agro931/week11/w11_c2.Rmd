@@ -54,7 +54,7 @@ This is the __variance between the means of half-sib families__
 --
 
 - A key concept in the __analysis of variance (ANOVA)__ is that:
-  - the variance between groups is equal to the covariance within groups.
+  - The variance between groups is equal to the covariance within groups.
 - It therefore estimates the phenotypic __covariance of half sibs__.
 
 --
@@ -70,11 +70,12 @@ This is the __variance between the means of half-sib families__
 
 ### Within-progeny component $\sigma_w^2$
 - Another key concept in the __analysis of variance (ANOVA)__ is:
-  - the total variance = between-group variance + within-group variance
+
+  - The total variance = between-group variance + within-group variance
 
 --
 
-- It follows that __a within-group variance = total variance - covariance of members of the groups__.
+- It follows that the  __within-group variance = total variance - covariance of members of the groups__.
 
 --
 
@@ -113,13 +114,13 @@ Alternatively,
 
 ---
 
-# Summary
+# Summary of the variance components
 
 <div align="center">
 <img src="sdkids.png" height=200>
 </div>
 
-| Observational  | Covariance and causal components  |  estimated values  |
+| Observational  | Covariance and causal components  |  Estimated values  |
 | :------------: | :-------: | :----:  | 
 | Sires | $\sigma_s^2 = Cov(HS)$  | ?    |
 | Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | ? | 
@@ -129,9 +130,9 @@ Alternatively,
 
 ---
 
-# Summary
+# Summary of the variance components
 
-| Observational  | Covariance and causal components  |  estimated values  |
+| Observational  | Covariance and causal components  |  Estimated values  |
 | :------------: | :-------: |  | 
 | Sires | $\sigma_s^2 = Cov(HS)$  | $=\frac{1}{4}\sigma_A^2$    |
 | Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | $=\frac{1}{4}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ | 
@@ -155,8 +156,8 @@ Alternatively,
 ---
 # Example: a sib experiment
 
-- A balanced experimental data collected from 100 sires each mated to 2 dams.
-- Have body length records of 3 male and 3 female offspring from each dam.
+- A balanced experimental data collected from 100 sires each mated to 4 dams.
+- Have body length records of 5 male and 5 female offspring from each dam.
 - Get $h^2$ for body length?
 
 --
@@ -186,9 +187,9 @@ Alternatively,
 First get $V_P$:  
 \begin{align*}
 & \sigma_w^2 = MS_w = 1.27 \\
-& \sigma_d^2 = (MS_d - \sigma_w^2)/n = (4.51-1.27)/6 = 0.54 \\
-& \sigma_s^2 = (MS_s - MS_d)/(dn) = (7.83-4.51)/(2 \times 6) = 0.277 \\
-& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.54 + 0.277 = 2.087 \\
+& \sigma_d^2 = (MS_d - \sigma_w^2)/n = (4.51-1.27)/10 = 0.324 \\
+& \sigma_s^2 = (MS_s - MS_d)/(dn) = (7.83-4.51)/(4 \times 10) = 0.083 \\
+& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.324 + 0.083 = 1.677 \\
 \end{align*}
 
 --
@@ -196,7 +197,7 @@ First get $V_P$:
 Then get $V_A$:  
 \begin{align*}
 & \sigma^2_s = \sigma_A^2/4\\
-& \sigma_A^2 = 0.277 \times 4 = 1.108 \\
+& \sigma_A^2 = 0.083 \times 4 = 0.332 \\
 \end{align*}
 
 
@@ -211,24 +212,22 @@ Then get $V_A$:
 | Between Dams   | 4.51      |    $MS_d$     | $= \sigma_w^2 + n\sigma_d^2$ | 
 | Within progenies | 1.27    |    $MS_w$     | $= \sigma_w^2$ |
 
---
 
 First get $V_P$:  
 \begin{align*}
-& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.54 + 0.277 = 2.087 \\
+& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.324 + 0.083 = 1.677 \\
 \end{align*}
 
---
 
 Then get $V_A$:  
 \begin{align*}
-& \sigma_A^2 = 0.277 \times 4 = 1.108 \\
+& \sigma_A^2 = 0.083 \times 4 = 0.332 \\
 \end{align*}
 
 --
 Finally $h^2$
 \begin{align*}
-& h^2 =  \frac{\sigma^2_A}{\sigma^2_P} =  1.108/2.087 = 0.53\\
+& h^2 =  \frac{\sigma^2_A}{\sigma^2_P} =  0.332/1.677 = 0.198\\
 \end{align*}
 
 ---
@@ -291,7 +290,7 @@ Sampling variance is minimal when $n=1$, i.e. $(n-1)t=0$.
 --
 
 The most efficient design:
-1. as many as families as possible
+1. as many families as possible
 2. measure only one offspring per family
 
 ---
