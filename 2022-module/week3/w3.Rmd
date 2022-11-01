@@ -15,7 +15,6 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
----
 
 # Syllabus
 
@@ -23,11 +22,9 @@ options(htmltools.dir.version = FALSE)
 - Introduction of population genomics
 - Basic principles of evolutionary processes
 
-
-
 ### Module 2: Diversity measurement
-- NGS and diversity measurement
-- Population differentiation
+- Heterozygosity and diversity
+- Population differentiation ( $F_{ST}$ )
 
 --
 
@@ -49,7 +46,7 @@ options(htmltools.dir.version = FALSE)
 
 - Lab website: https://jyanglab.com/
   - TEACHING: Courses
-    - __Module 2__: [[HTML](https://jyanglab.com/slides/2022-module/week2/w2.html)]
+    - __Module 3__: [[HTML](https://jyanglab.com/slides/2022-module/week3/w3.html)]
       
 ---
 
