@@ -91,7 +91,7 @@ Vd = 4*vd  - va
 
 # A maize experiment
 
-A set of maize hybrids (N=345) crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
+A set of maize hybrids crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
 
 The hybrids were planted in four environments, each with three replications.
 
