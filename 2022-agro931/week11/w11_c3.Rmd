@@ -26,7 +26,7 @@ output:
 # Danish landrace pigs
 
 ```{r}
-p <- read.csv('swine_sib.csv')
+p <- read.csv('https://jyanglab.com/slides/swine_sib.csv')
 dim(p)
 table(p$sire)
 ```
