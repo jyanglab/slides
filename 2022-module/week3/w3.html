@@ -51,7 +51,6 @@ class: center, middle, inverse, title-slide
 &lt;img src="qr-code.png" height=300&gt;
 &lt;/div&gt; 
 
---
 
 - Lab website: https://jyanglab.com/
   - TEACHING: Courses
@@ -156,6 +155,27 @@ f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}
 
 ---
 
+# Types of selection
+
+
+
+### Purifying selection: `\(N_e \times s &lt; -1\)`
+  - Deleterious mutations are eliminated
+
+
+### Positive selection:   `\(N_e \times s &gt; 1\)`
+  - Opposite of purifying
+  - Favorable mutations are selected
+
+### Effectively netural: `\(-1 &lt; N_e \times s &lt; 1\)`
+
+--
+
+To find loci that are under selection we test for departures from the neutral theory
+
+
+---
+
 # The expected frequency spectra
 
 `\begin{align*}
@@ -190,6 +210,8 @@ legend(0.6, 200, title="Ne*s", legend=c("-50", "5", "0", "-5", "50"),
 f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
 \end{align*}`
 
+--
+
 .pull-left[
 &lt;img src="w3_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
@@ -205,205 +227,14 @@ f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}
   - most strongly advantageous mutations fix very rapidly.
 ]
 
-
-
----
-
-# Types of selection
-
-To find loci that are under selection we test for departures from the neutral theory
-
---
-
-### Purifying selection: 
-  - Deleterious mutations are eliminated
-
-### Positive selection: 
-  - Opposite of purifying
-  - Favorable mutations are selected
-
-### Balancing selection: 
-  - Maintains two or more variants at a locus
-
-
----
-
-# Genetic diversity within pops
-
-### Expected diversity 
-- Number of alleles/locus (allelic richness) 
-- Polymorphism (loci with &gt; 1 allele)
-- Theta ( `\(\theta\)` ) = `\(4N_e \mu\)`
-  - `\(N_e\)` = effective population size
-  - `\(\mu\)` = mutation rate per generation
-
---
-
-### Expected heterozygosity
-
-`\(H_{exp}\)` = 1 - (avg expected __homozygosity__ over all loci)
-
-`\begin{align*}
-H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
-\end{align*}`
-  - `\(m\)` is the number of loci
-  - `\(k\)` is the number of alleles at a particular locus
-  - `\(p_{ki}\)` is the frq of `\(i^{th}\)` allele at `\(k^{th}\)` locus
-
-# Common estimators of `\(\theta\)` under the infinite sites model
-
-For an individual SNP, one allele has sample frequency `\(p\)`, alternative allele frequency is `\(q\)`, such that `\(p +q =1\)`.
-
---
-
-__Heterozygosity__ at this SNP site is:
-
-`\begin{align*}
-h = \frac{n}{n-1}(1 - p^2 - q^2)
-\end{align*}`
-
-- where `\(n\)` is the number of sequences in the sample. 
-
----
-
-# Under the infinite sites model
-
-`\begin{align*}
-\pi = &amp; \sum_{j=1}^{S}h_j \\
-\end{align*}`
-
-- Where `\(S\)` is the number of segregating sites
-- `\(h_j\)` is the heterozygosity at the `\(j\)`th SNP site.
-
---
-
-Under the __infinite sites model__ for a diploid population at HWE,
-
-`\begin{align*}
-E(\pi) = &amp; \theta = 4N_e \mu\\
-\end{align*}`
-
-Which is why this statistic is sometimes called `\(\theta_\pi\)`.
-
-
----
-# An alternative method: Watterson' theta
-
-In this method, we summarize SNPs using the total number of segregating sites, `\(S\)`, in the sample.
-
-However, because larger sample sizes will result in larger values of `\(S\)`, we must adjust the statistic to be
-
-`\begin{align*}
-\theta_W = &amp; \frac{S}{a} \\
-\end{align*}`
-
-Where `\(a\)` is,
-
-`\begin{align*}
-a=\sum_{i=1}^{n-1}\frac{1}{i}
-\end{align*}`
-  - `\(n\)` is the number of samples
-
-Or, combine them together
-
-`\begin{align*}
-\theta_W = &amp; \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
-\end{align*}`
-
----
-
-# An Alternative method: Watterson' theta
-
-&lt;div align="center"&gt;
-&lt;img src="p4.png" height=150&gt;
-&lt;/div&gt;
-
-
-`\begin{align*}
-\theta_W = &amp; \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
-= &amp; 2/(1/1 + 1/2 + 1/3) \\
-= &amp; 1.09
-\end{align*}`
-
-The per site measure would be `\(1.09/10=0.109\)`, which is very similar to `\(\theta_\pi\)`
-
-
----
-# The frequency spectrum of alleles
-
-&lt;div align="center"&gt;
-&lt;img src="p10.png" height=200&gt;
-&lt;/div&gt;
-
-
-In this case, among these 10 haplotypes are 10 segregating sites, each of which can have a frequency between `\(1/n\)` and `\((n-1)/n\)`
-
---
-
-Visually summarize the MAF of all segregating sites using the __allele frequency spectrum__
-  
-
----
-# The frequency spectrum of alleles
-
-The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="p10.png" height=300&gt;
-&lt;/div&gt;
-]
-
---
-
-.pull-left[
-
-```r
-maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
-         0.2, 0.1, 0.4, 0.1, 0.1)
-sfs &lt;- table(maf)
-barplot(sfs, col="#cdc0b0", xlab="Minor allele frequency", 
-        ylab="No. of segregating sites", 
-        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
-```
-
-&lt;img src="w3_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /&gt;
-]
-
----
-# The frequency spectrum of alleles
-
-- The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
-- Use the sequences of one or more closely related species, we can get the ancestral state.
-- Therefore, we can describe variation at each site using the __derived allele frequency (DAF)__.
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="daf.png" height=300&gt;
-&lt;/div&gt;
-]
-
---
-
-.pull-left[
-
-```r
-maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
-         0.2, 0.1, 0.6, 0.9, 0.9)
-sfs &lt;- table(maf)
-barplot(sfs, col="#cdc0b0", xlab="Derived allele frequency", ylab="No. of segregating sites", 
-        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
-```
-
-&lt;img src="w3_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /&gt;
-]
-
 ---
 
 # Signature of negative selection
 
 
 .pull-left[
+### Site Freq Spectrum (SFS)
+
 &lt;div align="center"&gt;
 &lt;img src="negsel.png" height=300&gt;
 &lt;/div&gt;
@@ -427,6 +258,8 @@ barplot(sfs, col="#cdc0b0", xlab="Derived allele frequency", ylab="No. of segreg
 
 
 .pull-left[
+### Site Freq Spectrum (SFS)
+
 &lt;div align="center"&gt;
 &lt;img src="possel.png" height=300&gt;
 &lt;/div&gt;
@@ -483,23 +316,6 @@ A second summary statistic of diversity that uses ancestral state information is
 
 - Where `\(S_i\)` is again the number of segregating sites where `\(i\)` haplotypes carry the derived allele (Fay and Wu, 2000).
 
---
-
-.pull-left[
-&lt;div align="center"&gt;
-&lt;img src="daf.png" height=300&gt;
-&lt;/div&gt;
-]
-
---
-
-.pull-left[
-`\begin{align*}
-\theta_H = &amp; \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
-= &amp; \frac{(1^2 \times 4 + 2^2 \times 1 + 3^2 \times 2 + 6^2 \times 1 + 9^2 \times 2)}{10(10-1)/2} \\
-= &amp; 4.98
-\end{align*}`
-]
 
 ---
 
@@ -519,7 +335,6 @@ E(\epsilon_1) = E(\eta_1) = E(\theta_H)
 \end{align*}`
 
 These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
-
 
 
 ---
@@ -656,9 +471,9 @@ Tajima's `\(D\)`, Fu and Li's `\(D, F, D^*, F^*\)`:
 D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
 \end{align*}`
 
-After a sweep, all SNPs are low in frequency, `\(\theta_\pi\)` will be much lower than expected.
+- After a sweep, all SNPs are low in frequency, `\(\theta_\pi\)` will be much lower than expected.
 
-While statistics based on counts of segregating sites (like `\(\theta_W\)`) will be much closer to their expected values.
+- While statistics based on counts of segregating sites (like `\(\theta_W\)`) will be much closer to their expected values.
 
 --
 
@@ -713,8 +528,6 @@ Power also determined by the distance between our studied loci and the location 
 - Because of the effect of the recombination.
 - Move far away enough and there will be no signal of selection at all.
 
-
-
 ---
 class: center, middle
 
@@ -750,9 +563,11 @@ E(d) = k2t + \theta_{Anc}
 \end{align*}`
 
 - Where `\(k\)` represents the allele substitution rate.
+
 - `\(t\)` is the time since the species split
   - We use `\(2t\)` because substitutions can occur on both branches of the phylogenetic tree.
 - `\(\theta_{Anc}\)`: average amount of nucleotide variation expected between two sequences in the ancestor.
+
   - Because at the time of speciation there differences have already accumulated along the two linages.
 
 --
@@ -770,9 +585,9 @@ E(d) = k2t
 
 Two quantities determine the rate of substitution ( `\(k\)` ).
 
-### The probability of fixation of any mutation ( `\(u\)` ).
+- The probability of fixation of any mutation ( `\(u\)` ).
 
-### The total number of mutations that arise and can possibly be fixed.
+- The total number of mutations that arise and can possibly be fixed.
 
 ---
 
@@ -827,7 +642,7 @@ u_d \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
 Probability of fixation, relative to a neutral allele, of new, selected mutations:
 
 `\begin{align*}
-u/u_0 \approx \frac{2s}{1 - e^{(-4N s)}} / \frac{1}{2N} = \frac{4Ns}{1 - e^{(-4N s)}}
+u/u_0 \approx \frac{2s}{1 - e^{(-4N_e s)}} / \frac{1}{2N_e} = \frac{4N_e s}{1 - e^{(-4N_e s)}}
 \end{align*}`
 
 .pull-left[
@@ -838,16 +653,18 @@ plot(ns, 4*ns/(1 - exp(-4*ns)), xlab="Ns", ylab="")
 abline(v=0, lty=2, lwd=2)
 ```
 
-&lt;img src="w3_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w3_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 
 --
 
 .pull-right[
-- `\(Ns=0\)`, neutral mutations
-- `\(Ns &gt; 0\)`, slightly advantageous mutations are not that much more likely to fix than neutral mutations.
-- `\(Ns &lt; 0\)`, slightly deleterious mutations have some probability of fixing.
+- `\(N_es=0\)`, neutral mutations
+
+- `\(N_es &gt; 0\)`, slightly advantageous mutations are not that much more likely to fix than neutral mutations
+
+- `\(N_es &lt; 0\)`, slightly deleterious mutations have some probability of fixing
 ]
 
 
@@ -860,9 +677,9 @@ Two quantities determine the rate of substitution ( `\(k\)` ).
 ### The probability of fixation of any mutation ( `\(u\)` ).
 
 `\begin{align*}
-u_0 &amp; = \frac{1}{2N} \\
+u_0 &amp; = \frac{1}{2N_e} \\
 u_a &amp; \approx 2s_a \\
-u_d &amp; \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+u_d &amp; \approx \frac{2s_d}{1 - e^{(-4N_e s_d)}}
 \end{align*}`
 
 
@@ -888,7 +705,7 @@ If the probability of a mutation at a nucleotide in each generation is `\(\nu\)`
 
 --
 
-If advantageous and deleterious mutations have no contribution, then the subsitution rate is a function of only _the total number_ of neutral mutations that arise and the _probability that each of them fixes_.
+If advantageous and deleterious mutations have no contribution, then the substitution rate is a function of only _the total number_ of neutral mutations that arise and the _probability that each of them fixes_.
 
 
 `\begin{align*}
@@ -925,7 +742,7 @@ When considering only neutral mutations, __the substitution rate is equal to the
 The rate of substitution for advantageous mutations:
 
 `\begin{align*}
-k = (2N \nu f_a) 2s_a = 4N \nu f_as_a
+k = (2N_e \nu f_a) 2s_a = 4N_e \nu f_as_a
 \end{align*}`
 
 --
@@ -933,17 +750,17 @@ k = (2N \nu f_a) 2s_a = 4N \nu f_as_a
 The rate of substitution for deleterious mutations:
 
 `\begin{align*}
-k &amp; = (2N \nu f_d) \times \frac{2s_d}{1 - e^{(-4N s_d)}} \\
-&amp; = \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}
+k &amp; = (2N_e \nu f_d) \times \frac{2s_d}{1 - e^{(-4N_e s_d)}} \\
+&amp; = \frac{4N_e \nu f_d s_d}{1 - e^{(-4N_e s_d)}}
 \end{align*}`
 
 --
 
 ----------------
 
-- The population size ( `\(N\)` ) plays an important role in the rate of substitution of selected mutations.
+- The effective population size ( `\(N_e\)` ) plays an important role in the rate of substitution of selected mutations.
 
-- More advantageous mutations will fix in larger populations than in smaller populations
+- More advantageous mutations will fix in larger populations than in smaller populations.
 
 - More deleterious mutation will fix in smaller populations relative to larger populations.
 
@@ -969,8 +786,8 @@ Note that natural selection has __a profound effect__ on the number of nonsynony
 
 `\begin{align*}
 E(d_N) &amp; = k2t \\
- &amp; = 2t (\nu f_0 + 4N \nu f_as_a + \frac{4N \nu f_d s_d}{1 - e^{(-4N s_d)}}) \\
- &amp; = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+ &amp; = 2t (\nu f_0 + 4N \nu f_as_a + \frac{4N_e \nu f_d s_d}{1 - e^{(-4N_e s_d)}}) \\
+ &amp; = \nu 2t  (f_0 + 4N_e f_as_a + \frac{4N_e f_d s_d}{1 - e^{(-4N_e s_d)}}) \\
 \end{align*}`
 
 The total nonsynonymous divergence in a region is due to all three types of mutations, therefore, our expression for `\(d_N\)` includes all three terms.
@@ -1015,7 +832,7 @@ Because both `\(\nu\)` and `\(t\)` will be approximately the same of nonsynonymo
 
 
 `\begin{align*}
-\frac{E(d_N)}{E(d_S)} &amp; = f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}} \\
+\frac{E(d_N)}{E(d_S)} &amp; = f_0 + 4N f_as_a + \frac{4N_e f_d s_d}{1 - e^{(-4N_e s_d)}} \\
 \end{align*}`
 
 --
@@ -1049,8 +866,79 @@ __  `\(d_N/d_S &gt; 1\)`__
 There are many advantageous nonsynonymous mutations and positive selection is predominant, but there are still many deleterious mutations.
 
 
+---
+# `\(\pi_N/\pi_S\)`
 
 
+Within a species, by analogy with the logic of the comparison of `\(d_N\)` and `\(d_S\)`, we can compare the average number of non-synonymous differences per nonsynoymous site ( `\(\pi_N\)` ) to the average number of synonymous differences per synonymous site ( `\(\pi_S\)` ).
+
+- Combining the methods for calculating `\(\pi\)`
+- With the methods for calculating nonsynonymous and synonymous changes.
+
+--
+
+### Interpretation of the ratio
+
+- Values of `\(\pi_N/\pi_S\)` below 1 are again evidence for the predominance of purifying selection, and the vast majority of all coding loci show `\(\pi_N/\pi_S &lt; 1\)`
+- However, interpretation of `\(\pi_N/\pi_S &gt; 1\)` is different.
+
+---
+# `\(\pi_N/\pi_S\)`
+
+### Interpretation of the ratio
+
+- Since positive selction will rapidly fix advantageous mutations, these adaptive changes will rarely be found in studies of polymorphism
+
+- Instead, balancing selection will result in `\(\pi_N/\pi_S &gt; 1\)`
+
+  - heterozygote advantage (heterosis)
+  
+  - Therefore `\(d_N/d_S &gt; 1\)` for strong evidence of positive selection
+  
+  - `\(\pi_N/\pi_S &gt; 1\)` is a very strict criterion for detecting balancing selection.
+  
+  - Single sites under very strong selection will never contribute enough to values of `\(\pi_N\)` to push `\(\pi_N/\pi_S\)` greater than 1.
+
+
+---
+
+# The _tb1_ gene example
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="tb1.png" height=250&gt;
+&lt;/div&gt; 
+
+&gt; [Studer et al., 2011, Nature Genetics](https://www.nature.com/articles/ng.942)
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="hka.png" height=250&gt;
+&lt;/div&gt; 
+]
+
+---
+
+# Join my lab as a PhD or a PostDoc
+
+### Who we are looing for
+- A master or PhD in plant genetics, genomics, or related field
+- Be familiar with at least one coding language, R or python
+- Can work independently and also a team player
+- Have excellent communication skills
+
+--
+
+### What we can provide
+
+- A stimulating and supportive international research environment
+- Access to state-of-the art research infrastructure
+- Living in a lovely city with a low cost and high life quality
+
+### Learn more about us
+
+https://jyanglab.com
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
