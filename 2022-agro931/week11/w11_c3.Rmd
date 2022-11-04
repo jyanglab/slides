@@ -47,8 +47,8 @@ summary(aov(fit))
 
 | Source         |  df    |    Mean Sq    |  Expectation of MS |
 | :------------: | :-------: | :-------:     | :-------: |
-| Between Sires  | 33     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
-| Between Dams   | 1      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Between Sires  | 1     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
+| Between Dams   | 33      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
 | Within progenies | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
 
 ---
