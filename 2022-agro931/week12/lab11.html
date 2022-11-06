@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Jinliang Yang" />
+
+
+<title>Chapter 11: Selection</title>
+<!-- Material Design fonts -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="lab11_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lab11_files/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<script src="lab11_files/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+<script src="lab11_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="lab11_files/navigation-1.1/tabsets.js"></script>
+<script src="lab11_files/navigation-1.1/codefolding.js"></script>
+<link href="lab11_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+<script src="lab11_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+<link href="lab11_files/bootstrap_material-0.1/bootstrap-material-design.min.css" rel="stylesheet" />
+<link href="lab11_files/bootstrap_material-0.1/ripples.min.css" rel="stylesheet" />
+<script src="lab11_files/bootstrap_material-0.1/material.min.js"></script>
+<script src="lab11_files/bootstrap_material-0.1/ripples.min.js"></script>
+<link href="lab11_files/material-0.1/material.css" rel="stylesheet" />
+<script src="lab11_files/material-0.1/material.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #ffffff; color: #1f1c1b; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #ffffff; color: #a0a0a0; border-right: 1px solid #a0a0a0; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #1f1c1b; background-color: #ffffff; }
+code > span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code > span.dt { color: #0057ae; } /* DataType */
+code > span.dv { color: #b08000; } /* DecVal */
+code > span.bn { color: #b08000; } /* BaseN */
+code > span.fl { color: #b08000; } /* Float */
+code > span.cn { color: #aa5500; } /* Constant */
+code > span.ch { color: #924c9d; } /* Char */
+code > span.sc { color: #3daee9; } /* SpecialChar */
+code > span.st { color: #bf0303; } /* String */
+code > span.vs { color: #bf0303; } /* VerbatimString */
+code > span.ss { color: #ff5500; } /* SpecialString */
+code > span.im { color: #ff5500; } /* Import */
+code > span.co { color: #898887; } /* Comment */
+code > span.do { color: #607880; } /* Documentation */
+code > span.an { color: #ca60ca; } /* Annotation */
+code > span.cv { color: #0095ff; } /* CommentVar */
+code > span.ot { color: #006e28; } /* Other */
+code > span.fu { color: #644a9b; } /* Function */
+code > span.va { color: #0057ae; } /* Variable */
+code > span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #1f1c1b; } /* Operator */
+code > span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code > span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code > span.pp { color: #006e28; } /* Preprocessor */
+code > span.at { color: #0057ae; } /* Attribute */
+code > span.re { color: #0057ae; } /* RegionMarker */
+code > span.in { color: #b08000; } /* Information */
+code > span.wa { color: #bf0303; } /* Warning */
+code > span.al { color: #bf0303; font-weight: bold; } /* Alert */
+code > span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code > span. { color: #1f1c1b; } /* Normal */
+</style>
+
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+</head>
+
+<body>
+
+<div class="header-panel shadow z-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+        <div id="header">
+    <h1 class="title">Chapter 11: Selection</h1>
+                <h4 class="author"><em>Jinliang Yang</em></h4>
+                <h4 class="date"><em>11-12-2018</em></h4>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<div class="container-fluid main-container">
+    <div class="row">
+      <nav class="col-xs-3 menu" id="toc">
+        <ul>
+        <li><a href="#a-chicken-selection-example">A chicken selection example:</a></li>
+        <li><a href="#simulation">Simulation</a></li>
+        <li><a href="#conduct-the-selection">Conduct the selection</a></li>
+        </ul>
+      </nav>
+     <div class="pages col-xs-9">
+     <div class="row">
+       <div class="col-xs-10">
+
+
+
+<div id="a-chicken-selection-example" class="section level1">
+<h1>A chicken selection example:</h1>
+<p>In a chicken breeding program, the breeders aim to increase the 56-day body weight. They plan to conduct 40 discrete generations of selection.</p>
+<div id="breeding-scheme" class="section level2">
+<h2>Breeding scheme:</h2>
+<p>The base population consists of 100 animals, of which 50 are male and 50 are female. In each generation, the best 5 males are selected on the basis of their phenotypic value for a single polygenic trait (56-day body weight) and mated to the females (N=50) to produce 100 replacement animals.</p>
+<div id="assumptions" class="section level3">
+<h3>Assumptions:</h3>
+<ol style="list-style-type: decimal">
+<li>The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs).</li>
+<li>These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="simulation" class="section level1">
+<h1>Simulation</h1>
+<div id="simulate-a-founder-population-with-genomic-data" class="section level3">
+<h3>Simulate a founder population with genomic data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;AlphaSimR&quot;)</span>
+<span class="kw">library</span>(AlphaSimR)</code></pre></div>
+<pre><code>## Warning: package &#39;AlphaSimR&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## Loading required package: R6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating Founder population</span>
+founderPop =<span class="st"> </span><span class="kw">runMacs</span>(<span class="dt">nInd=</span><span class="dv">1000</span>, <span class="dt">nChr=</span><span class="dv">10</span>, <span class="dt">segSites=</span><span class="dv">5000</span>)</code></pre></div>
+</div>
+<div id="simulate-the-phenotype" class="section level3">
+<h3>Simulate the phenotype</h3>
+<ol style="list-style-type: decimal">
+<li>The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs).</li>
+<li>These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome.</li>
+<li>h2=0.5</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting Simulation Parameters</span>
+SP =<span class="st"> </span>SimParam<span class="op">$</span><span class="kw">new</span>(founderPop)
+SP<span class="op">$</span><span class="kw">addTraitA</span>(<span class="dt">nQtlPerChr=</span><span class="dv">100</span>)
+SP<span class="op">$</span><span class="kw">setGender</span>(<span class="st">&quot;yes_sys&quot;</span>)
+SP<span class="op">$</span><span class="kw">setVarE</span>(<span class="dt">h2=</span><span class="fl">0.5</span>)</code></pre></div>
+</div>
+</div>
+<div id="conduct-the-selection" class="section level1">
+<h1>Conduct the selection</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Modeling the Breeding Program</span>
+pop =<span class="st"> </span><span class="kw">newPop</span>(founderPop)
+genMean =<span class="st"> </span><span class="kw">meanG</span>(pop)
+<span class="cf">for</span>(generation <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">40</span>){
+  pop =<span class="st"> </span><span class="kw">selectCross</span>(<span class="dt">pop=</span>pop, <span class="dt">nFemale=</span><span class="dv">50</span>, <span class="dt">nMale=</span><span class="dv">5</span>, <span class="dt">use=</span><span class="st">&quot;pheno&quot;</span>, <span class="dt">nCrosses=</span><span class="dv">100</span>)
+  genMean =<span class="st"> </span><span class="kw">c</span>(genMean, <span class="kw">meanG</span>(pop))
+}</code></pre></div>
+<div id="examining-the-results" class="section level3">
+<h3>Examining the Results</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">40</span>, genMean, <span class="dt">type=</span><span class="st">&quot;p&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Generation&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Genetic Value&quot;</span>)</code></pre></div>
+<p><img src="lab11_files/figure-html/unnamed-chunk-4-1.png" width="576" /></p>
+</div>
+</div>
+
+    </div>
+    <div class="col-xs-2">
+        <div class="btn-toolbar">
+    <div class="btn-group">
+    <a href="#" class="btn btn-raised btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted">Code</span> <span class="text-muted caret"></span></a>
+    <ul class="dropdown-menu" style="min-width: 50px;">
+    <li><a id="rmd-show-all-code" href="#">Show All</a></li>
+    <li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+    </ul>
+    </div>
+    </div>
+        </div>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+    </div>
+  </div>
+
+<script>
+$(document).ready(function () {
+  // add bootstrap table styles to pandoc tables
+  $('tr.header').parent('thead').parent('table').addClass('table table-striped table-hover');
+
+    var images = $('.pages img');
+  images.filter(function() {
+      if ($(this).parent().attr("class") == "figure") {
+          return(false)
+      } else {
+          return(true);
+      }
+  }).wrap("<div class='figure'></div>");
+  images.addClass("image-thumb").wrap("<div class='panel-body'></div>");
+  $('.figure p.caption').wrap("<div class='panel-footer'></div>");
+  $('.figure').addClass('panel panel-default');
+  
+    $('.pages img')
+ 	  .addClass("image-lb");
+  $('.pages').magnificPopup({
+	      type:'image',
+	      closeOnContentClick: false,
+	      delegate: 'img',
+	      gallery: {enabled: false },
+          removalDelay: 500,
+          callbacks: {
+              beforeOpen: function() {
+                // just a hack that adds mfp-anim class to markup
+                this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
+              }
+          },
+          mainClass: 'mfp-move-from-top',
+	      image: {
+	        verticalFit: true,
+            titleSrc: 'alt'
+	      }
+ 	    });
+ 	
+    window.page = window.location.hash;
+    if (window.page != "") {
+      $(".menu").find("li[data-target=" + window.page + "]").trigger("click");
+    }
+
+    /* init material bootstrap js */
+    $.material.init();
+});
+</script>
+
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

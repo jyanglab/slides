@@ -1,0 +1,83 @@
+---
+title: "Chapter 11: Selection"
+date: "11-12-2018"
+author: "Jinliang Yang"
+output:
+   rmdformats::material:
+      highlight: kate
+      self_contained: no
+      code_folding: hide
+---
+
+# A chicken selection example:
+
+In a chicken breeding program, the breeders aim to increase the 56-day body weight.
+They plan to conduct 40 discrete generations of selection.
+
+## Breeding scheme:
+
+The base population consists of 100 animals, of which 50 are male and 50 are female. In each generation, the best 5 males are selected on the basis of their phenotypic value for a single polygenic trait (56-day body weight) and mated to the females (N=50) to produce 100 replacement animals. 
+
+### Assumptions:
+
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs). 
+2. These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome. 
+
+
+# Simulation
+
+### Simulate a founder population with genomic data
+
+```{r, eval=TRUE}
+# install.packages("AlphaSimR")
+library(AlphaSimR)
+
+# Creating Founder population
+founderPop = runMacs(nInd=1000, nChr=10, segSites=5000)
+```
+
+
+### Simulate the phenotype
+
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs). 
+2. These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome. 
+3. h2=0.5
+
+```{r, eval=TRUE}
+# Setting Simulation Parameters
+SP = SimParam$new(founderPop)
+SP$addTraitA(nQtlPerChr=100)
+SP$setGender("yes_sys")
+SP$setVarE(h2=0.5)
+```
+
+
+
+# Conduct the selection
+
+```{r, eval=TRUE}
+# Modeling the Breeding Program
+pop = newPop(founderPop)
+genMean = meanG(pop)
+for(generation in 1:40){
+  pop = selectCross(pop=pop, nFemale=50, nMale=5, use="pheno", nCrosses=100)
+  genMean = c(genMean, meanG(pop))
+}
+```
+
+### Examining the Results
+
+```{r, eval=TRUE}
+plot(0:40, genMean, type="p", xlab="Generation", ylab="Mean Genetic Value")
+```
+
+
+
+
+
+
+
+
+
+
+
