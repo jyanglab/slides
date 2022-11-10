@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Asymmetry of responses</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-12-11" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Asymmetry of responses
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Dec. 11, 2022
+]
+
+---
+
+
+
+
+
+# Illinois long-term selection experiment
+
+
+.pull-left[
+- The experiment started in 1896 by C.G. Hopkins and is [still active](http://mooselab.cropsci.illinois.edu/longterm.html)!
+- They are selecting lines for higher or lower concentration of protein or oil in the maize kernel.
+- __Mass selection__ was used with a selection intensity of approximately 1 out of 5 for most of the experiment
+
+&gt; Selected on the basis of phenotype from a mixed population, their seeds are bulked and used to grow next generation.
+]
+
+--
+
+.pull-right[
+
+```r
+d &lt;- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c("IHP", "ILP", "IHO", "ILO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col=c("#8b2323","#8b2323","#458b74","#458b74"), lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+```
+
+&lt;img src="w12_c3_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Illinois long-term selection experiment
+
+### Variability of the responses
+
+.pull-left[
+&lt;img src="w12_c3_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+### Possible reasons?
+
+.pull-right[
+
+1. __Random drift__ due to the restricted number of parents
+
+2. __Sampling error__ in estimating the generation mean
+
+3. Variation of __selection differentials__
+
+4. __Environmental factors__
+]
+
+---
+
+# Illinois long-term selection experiment
+
+### Asymmetry of responses
+.pull-left[
+&lt;img src="w12_c3_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+### Discussion for possible reasons?
+
+whether it is real (need replications)
+
+--
+
+.pull-right[
+
+1. Random drift?
+2. Selection differentials?
+3. Inbreeding depression?
+  - reduce the rate in the upward and increase it in the downward direction
+4. Others?
+]
+
+---
+
+# Asymmetry of responses
+
+### Discussion for possible reasons?
+
+- Genetic asymmetry
+- Genes with large effects
+
+--
+
+#### Other reasons (F&amp;M p211-215):
+
+- Scalar asymmetry
+- Indirect selection
+- Maternal effects
+
+
+---
+
+# Consequences of selection
+
+### 1. For __how long__ does the response continue?
+
+### 2. By __how much__ the population mean can be changed?
+
+### 3. What is the __genetic nature__ of the limit to further progress?
+
+
+
+---
+
+# Selection limits
+
+## Long-term results
+
+- __Selection limits__, or where response seems to stop, are usually unpredictable.
+
+--
+
+But they are very interesting from a biological point of view.
+
+--
+
+## Total response:
+
+__Total response ( `\(R_T\)` )__ = selection limit in high direction - selection limit in low direction
+
+---
+
+# Total response
+
+### Genetic architecture
+- Total response depends on __number of loci__ contributing to a given amount of variation.
+- For a given amount of variation, the number of loci is inversely related to __average size of effects__.
+
+--
+
+### Mutation
+Long term results become unpredictable, because __mutation__ produces new variation whose nature we cannot predict.
+
+---
+
+# Theoretical maximum limit
+
+### Two assumptions:
+1. All the loci have the same magnitude of additive effect: `\(a\)`
+2. All alleles start at the frequencies of 0.5.
+
+--
+
+Then the range between two homozygotes is 2a for one locus. For more than one loci:
+
+`\begin{align*}
+R_T &amp; = \sum\limits_{i=1}^n2a = 2na\\
+\end{align*}`
+
+--
+
+The additive variance, assuming all alleles start at a frequency of 0.50, then
+
+`\begin{align*}
+\sigma_A^2 &amp; = 1/2\sum\limits_{i=1}^na^2 = 1/2na^2\\
+\end{align*}`
+
+--
+
+The relationship between the range and the additive variance is obtained as
+
+`\begin{align*}
+\frac{R_T^2}{\sigma_A^2} = \frac{4n^2a^2}{1/2na^2} = 8n \\
+\end{align*}`
+
+---
+# Example:
+
+| Observation | Exp1      | Exp2 | Exp3  | 
+| :-------: | :-------: | :--------: | :-------: |
+| `\(R_T/\sigma_A\)`  | 100 | 50 | 10 |
+| `\(n\)`  | ? | ? | ? |
+
+---
+# Example:
+
+| Observation | Exp1      | Exp2 | Exp3  | 
+| :-------: | :-------: | :--------: | :-------: |
+| `\(R_T/\sigma_A\)`  | 100 | 50 | 10 |
+| `\(n=R_T^2/8\sigma_A^2\)`  | 1250 | 312.5 | 12.5 |
+
+--
+
+### Theory of limits:
+The total response relative to the initial genetic variation, depends primarily on __the number of loci__.
+
+Addressed the third question:
+&gt; What is the __genetic nature__ of the limit to further progress?
+
+
+---
+
+# Theoretical maximum limit
+
+`\begin{align*}
+R_T &amp; = \sum\limits_{i=1}^n2a = 2na\\
+\end{align*}`
+
+Only could be achieved if the effective population size being very large.
+
+--
+
+### In practice
+
+Limited parents used =&gt; unfavorable alleles are fixed by genetic drift.
+
+---
+
+# Theoretical maximum limit
+
+The chance of fixation of a favorable allele:
+
+`\begin{align*}
+&amp; N_es \\
+\end{align*}`
+
+- `\(s\)`: selection coefficient. `\(s = i(2a/\sigma_P)\)` given by F&amp;M eq. 11.8.
+  - Selection coefficient refers to the reduced fitness of the genotype selected against.
+- `\(N_e\)`: effective population size
+
+--
+
+Therefore, the chance of fixation is a function of __ `\(N_ei\)`__.
+
+--
+
+The total response should be greater:
+1. with larger population size ( `\(N_e\)` )
+2. with more intense selection ( `\(i\)` )
+
+
+---
+
+# Theoretical maximum limit
+
+### Breeder's equation:
+
+`\begin{align*}
+&amp; R = ih^2\sigma_P \\
+\end{align*}`
+
+This is the predicted response in one generation.
+
+--
+
+
+### The theoretical half-life of response:
+
+Up to about `\(2N_e\)` generations. (Ne is the number of individuals that would give rise to the calculated sampling variance.)
+
+--
+
+`\begin{align*}
+&amp; R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}`
+
+&gt; Robertson 1960
+
+--
+
+Addressed the first and second question:
+&gt; For __how long__ does the response continue?
+&gt; By __how much__ the population mean can be changed?
+
+---
+
+# The theoretical half-life of response:
+
+
+`\begin{align*}
+&amp; R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}`
+
+- The theoretical maximum response is the total response attained if the trait were controlled by an infinite number of loci.
+
+- For maximum response to divergent selection (i.e. range between high and low lines), selection intensity, `\(i\)`, is the sum of selection intensities in the two directions.
+
+- This does no more than set an upper limit to what can be expected.
+
+---
+
+# Illinois long-term selection experiment
+
+
+
+.pull-left[
+
+### Predict the theoretical limit?
+
+&lt;img src="w12_c3_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+.pull-right[
+#### From Moose et al., 2004 and Dudley and Lambert, 2004:
+
+- In 1896, 163 ears from the open-pollinated variety Burr's White, 24 highest ears formed the Illinois high oil strain (IHO) (__Ne ~ 4-12__)
+- Later, 300-500 kernels =&gt; __Ne raised to a maximum of 96__
+- About 20% selected in each generation
+- Realized `\(h^2 = 0.25\)`
+- `\(\sigma_P\)` about 0.9
+
+
+
+
+```r
+ifun(0.2)
+```
+
+```
+## [1] 1.39981
+```
+]
+
+---
+
+# Illinois long-term selection experiment
+
+.pull-left[
+
+### Predict the theoretical limit?
+
+&lt;img src="w12_c3_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+.pull-right[
+`\begin{align*}
+&amp; R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}`
+
+
+```r
+2*12*ifun(0.2)*0.25*0.9
+```
+
+```
+## [1] 7.558972
+```
+
+```r
+2*96*ifun(0.2)*0.25*0.9
+```
+
+```
+## [1] 60.47177
+```
+
+]
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

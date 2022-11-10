@@ -1,0 +1,395 @@
+---
+title: "Asymmetry of responses"
+author: "Jinliang Yang"
+date: "Dec. 11, 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Illinois long-term selection experiment
+
+
+.pull-left[
+- The experiment started in 1896 by C.G. Hopkins and is [still active](http://mooselab.cropsci.illinois.edu/longterm.html)!
+- They are selecting lines for higher or lower concentration of protein or oil in the maize kernel.
+- __Mass selection__ was used with a selection intensity of approximately 1 out of 5 for most of the experiment
+
+> Selected on the basis of phenotype from a mixed population, their seeds are bulked and used to grow next generation.
+]
+
+--
+
+.pull-right[
+```{r, out.width='100%', fig.align='center', echo=TRUE}
+
+d <- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c("IHP", "ILP", "IHO", "ILO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col=c("#8b2323","#8b2323","#458b74","#458b74"), lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+
+```
+]
+
+---
+
+# Illinois long-term selection experiment
+
+### Variability of the responses
+
+.pull-left[
+```{r, out.width='100%', fig.align='center', echo=FALSE}
+
+d <- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c("IHP", "ILP", "IHO", "ILO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col=c("#8b2323","#8b2323","#458b74","#458b74"), lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+
+```
+]
+
+--
+
+### Possible reasons?
+
+.pull-right[
+
+1. __Random drift__ due to the restricted number of parents
+
+2. __Sampling error__ in estimating the generation mean
+
+3. Variation of __selection differentials__
+
+4. __Environmental factors__
+]
+
+---
+
+# Illinois long-term selection experiment
+
+### Asymmetry of responses
+.pull-left[
+```{r, out.width='100%', fig.align='center', echo=FALSE}
+
+d <- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c("IHP", "ILP", "IHO", "ILO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col=c("#8b2323","#8b2323","#458b74","#458b74"), lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+
+```
+]
+
+--
+
+### Discussion for possible reasons?
+
+whether it is real (need replications)
+
+--
+
+.pull-right[
+
+1. Random drift?
+2. Selection differentials?
+3. Inbreeding depression?
+  - reduce the rate in the upward and increase it in the downward direction
+4. Others?
+]
+
+---
+
+# Asymmetry of responses
+
+### Discussion for possible reasons?
+
+- Genetic asymmetry
+- Genes with large effects
+
+--
+
+#### Other reasons (F&M p211-215):
+
+- Scalar asymmetry
+- Indirect selection
+- Maternal effects
+
+
+---
+
+# Consequences of selection
+
+### 1. For __how long__ does the response continue?
+
+### 2. By __how much__ the population mean can be changed?
+
+### 3. What is the __genetic nature__ of the limit to further progress?
+
+
+
+---
+
+# Selection limits
+
+## Long-term results
+
+- __Selection limits__, or where response seems to stop, are usually unpredictable.
+
+--
+
+But they are very interesting from a biological point of view.
+
+--
+
+## Total response:
+
+__Total response ( $R_T$ )__ = selection limit in high direction - selection limit in low direction
+
+---
+
+# Total response
+
+### Genetic architecture
+- Total response depends on __number of loci__ contributing to a given amount of variation.
+- For a given amount of variation, the number of loci is inversely related to __average size of effects__.
+
+--
+
+### Mutation
+Long term results become unpredictable, because __mutation__ produces new variation whose nature we cannot predict.
+
+---
+
+# Theoretical maximum limit
+
+### Two assumptions:
+1. All the loci have the same magnitude of additive effect: $a$
+2. All alleles start at the frequencies of 0.5.
+
+--
+
+Then the range between two homozygotes is 2a for one locus. For more than one loci:
+
+\begin{align*}
+R_T & = \sum\limits_{i=1}^n2a = 2na\\
+\end{align*}
+
+--
+
+The additive variance, assuming all alleles start at a frequency of 0.50, then
+
+\begin{align*}
+\sigma_A^2 & = 1/2\sum\limits_{i=1}^na^2 = 1/2na^2\\
+\end{align*}
+
+--
+
+The relationship between the range and the additive variance is obtained as
+
+\begin{align*}
+\frac{R_T^2}{\sigma_A^2} = \frac{4n^2a^2}{1/2na^2} = 8n \\
+\end{align*}
+
+---
+# Example:
+
+| Observation | Exp1      | Exp2 | Exp3  | 
+| :-------: | :-------: | :--------: | :-------: |
+| $R_T/\sigma_A$  | 100 | 50 | 10 |
+| $n$  | ? | ? | ? |
+
+---
+# Example:
+
+| Observation | Exp1      | Exp2 | Exp3  | 
+| :-------: | :-------: | :--------: | :-------: |
+| $R_T/\sigma_A$  | 100 | 50 | 10 |
+| $n=R_T^2/8\sigma_A^2$  | 1250 | 312.5 | 12.5 |
+
+--
+
+### Theory of limits:
+The total response relative to the initial genetic variation, depends primarily on __the number of loci__.
+
+Addressed the third question:
+> What is the __genetic nature__ of the limit to further progress?
+
+
+---
+
+# Theoretical maximum limit
+
+\begin{align*}
+R_T & = \sum\limits_{i=1}^n2a = 2na\\
+\end{align*}
+
+Only could be achieved if the effective population size being very large.
+
+--
+
+### In practice
+
+Limited parents used => unfavorable alleles are fixed by genetic drift.
+
+---
+
+# Theoretical maximum limit
+
+The chance of fixation of a favorable allele:
+
+\begin{align*}
+& N_es \\
+\end{align*}
+
+- $s$: selection coefficient. $s = i(2a/\sigma_P)$ given by F&M eq. 11.8.
+  - Selection coefficient refers to the reduced fitness of the genotype selected against.
+- $N_e$: effective population size
+
+--
+
+Therefore, the chance of fixation is a function of __ $N_ei$__.
+
+--
+
+The total response should be greater:
+1. with larger population size ( $N_e$ )
+2. with more intense selection ( $i$ )
+
+
+---
+
+# Theoretical maximum limit
+
+### Breeder's equation:
+
+\begin{align*}
+& R = ih^2\sigma_P \\
+\end{align*}
+
+This is the predicted response in one generation.
+
+--
+
+
+### The theoretical half-life of response:
+
+Up to about $2N_e$ generations. (Ne is the number of individuals that would give rise to the calculated sampling variance.)
+
+--
+
+\begin{align*}
+& R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}
+
+> Robertson 1960
+
+--
+
+Addressed the first and second question:
+> For __how long__ does the response continue?
+> By __how much__ the population mean can be changed?
+
+---
+
+# The theoretical half-life of response:
+
+
+\begin{align*}
+& R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}
+
+- The theoretical maximum response is the total response attained if the trait were controlled by an infinite number of loci.
+
+- For maximum response to divergent selection (i.e. range between high and low lines), selection intensity, $i$, is the sum of selection intensities in the two directions.
+
+- This does no more than set an upper limit to what can be expected.
+
+---
+
+# Illinois long-term selection experiment
+
+
+
+.pull-left[
+
+### Predict the theoretical limit?
+
+```{r, out.width='100%', fig.align='center', echo=FALSE}
+
+d <- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c( "IHO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col="#458b74", lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+
+```
+]
+
+
+.pull-right[
+#### From Moose et al., 2004 and Dudley and Lambert, 2004:
+
+- In 1896, 163 ears from the open-pollinated variety Burr's White, 24 highest ears formed the Illinois high oil strain (IHO) (__Ne ~ 4-12__)
+- Later, 300-500 kernels => __Ne raised to a maximum of 96__
+- About 20% selected in each generation
+- Realized $h^2 = 0.25$
+- $\sigma_P$ about 0.9
+
+```{r, out.width='80%', fig.align='center', echo=FALSE}
+
+ifun <- function(p=0.5){
+  x=qnorm(p=(1-p)) # get the truncation point
+  z=dnorm(x) # get z
+  return(z/p) # get i
+}
+```
+
+```{r}
+ifun(0.2)
+```
+]
+
+---
+
+# Illinois long-term selection experiment
+
+.pull-left[
+
+### Predict the theoretical limit?
+
+```{r, out.width='100%', fig.align='center', echo=FALSE}
+
+d <- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
+par(bty="l", pty="m", mar=c(5, 4, 1, 1))
+matplot(x=d$YR, y=d[, c( "IHO")], type="l", lty=1,
+        xlab="Year", ylab="Concentration (%)", col="#458b74", lwd=4)
+legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"), bty="n")
+
+```
+]
+
+
+.pull-right[
+\begin{align*}
+& R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}
+
+```{r}
+2*12*ifun(0.2)*0.25*0.9
+2*96*ifun(0.2)*0.25*0.9
+```
+
+]
+
+
