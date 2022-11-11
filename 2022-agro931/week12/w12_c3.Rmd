@@ -187,22 +187,43 @@ R_T & = \sum\limits_{i=1}^n2a = 2na\\
 
 --
 
-The additive variance, assuming all alleles start at a frequency of 0.50, then
+The additive variance, assuming all alleles start at a frequency of 0.50, for one locu
 
 \begin{align*}
-\sigma_A^2 & = 1/2\sum\limits_{i=1}^na^2 = 1/2na^2\\
+\sigma_A^2 & = 2pq(a + d(q-p))^2 = \frac{1}{2}a^2 \\
 \end{align*}
 
 --
 
-The relationship between the range and the additive variance is obtained as
+For more than more loci:
 
 \begin{align*}
-\frac{R_T^2}{\sigma_A^2} = \frac{4n^2a^2}{1/2na^2} = 8n \\
+\sigma_A^2 &= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
 \end{align*}
 
 ---
-# Example:
+
+# Theoretical maximum limit
+
+### Two assumptions:
+1. All the loci have the same magnitude of additive effect: $a$
+2. All alleles start at the frequencies of 0.5.
+
+\begin{align*}
+R_T & = \sum\limits_{i=1}^n2a = 2na\\
+\sigma_A^2 &= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
+\end{align*}
+
+--
+
+The relationship between the range of response and the additive variance is obtained as:
+
+\begin{align*}
+\frac{R_T^2}{\sigma_A^2} = \frac{4n^2a^2}{\frac{1}{2} na^2} = 8n \\
+\end{align*}
+
+---
+# For example:
 
 | Observation | Exp1      | Exp2 | Exp3  | 
 | :-------: | :-------: | :--------: | :-------: |
@@ -210,7 +231,7 @@ The relationship between the range and the additive variance is obtained as
 | $n$  | ? | ? | ? |
 
 ---
-# Example:
+# For example:
 
 | Observation | Exp1      | Exp2 | Exp3  | 
 | :-------: | :-------: | :--------: | :-------: |
@@ -222,8 +243,10 @@ The relationship between the range and the additive variance is obtained as
 ### Theory of limits:
 The total response relative to the initial genetic variation, depends primarily on __the number of loci__.
 
-Addressed the third question:
-> What is the __genetic nature__ of the limit to further progress?
+Addressed the third question to some degree:
+- What is the __genetic nature__ of the limit to further progress?
+
+- i.e., the polygenicity --- how many genetic loci in determining the trait variation
 
 
 ---
@@ -253,17 +276,19 @@ The chance of fixation of a favorable allele:
 \end{align*}
 
 - $s$: selection coefficient. $s = i(2a/\sigma_P)$ given by F&M eq. 11.8.
-  - Selection coefficient refers to the reduced fitness of the genotype selected against.
+  - Selection coefficient refers to the reduced fitness of the genotype being selected against.
+  
 - $N_e$: effective population size
 
 --
 
-Therefore, the chance of fixation is a function of __ $N_ei$__.
+Therefore, the chance of fixation of a favorable is a function of __ $N_ei$__.
 
 --
 
 The total response should be greater:
 1. with larger population size ( $N_e$ )
+
 2. with more intense selection ( $i$ )
 
 
@@ -284,7 +309,8 @@ This is the predicted response in one generation.
 
 ### The theoretical half-life of response:
 
-Up to about $2N_e$ generations. (Ne is the number of individuals that would give rise to the calculated sampling variance.)
+Up to about $2N_e$ generations. 
+- $N_e$ is the number of individuals that would give rise to the calculated sampling variance.
 
 --
 
@@ -294,11 +320,6 @@ Up to about $2N_e$ generations. (Ne is the number of individuals that would give
 
 > Robertson 1960
 
---
-
-Addressed the first and second question:
-> For __how long__ does the response continue?
-> By __how much__ the population mean can be changed?
 
 ---
 
@@ -311,15 +332,14 @@ Addressed the first and second question:
 
 - The theoretical maximum response is the total response attained if the trait were controlled by an infinite number of loci.
 
-- For maximum response to divergent selection (i.e. range between high and low lines), selection intensity, $i$, is the sum of selection intensities in the two directions.
+- For maximum response to divergent selection (i.e. range between high and low lines)
+ - selection intensity, $i$, is the sum of selection intensities in the two directions.
 
 - This does no more than set an upper limit to what can be expected.
 
 ---
 
 # Illinois long-term selection experiment
-
-
 
 .pull-left[
 
@@ -392,4 +412,30 @@ legend("topleft", c("Protein", "Oil"), lty=1, lwd=4, col=c("#8b2323","#458b74"),
 
 ]
 
+
+---
+
+# Summary of the long-term selection
+
+### 1. For __how long__ does the response continue?
+
+\begin{align*}
+& 2N_e \\
+\end{align*}
+
+--
+
+### 2. By __how much__ the population mean can be changed?
+
+\begin{align*}
+& R_{max} = 2N_eih^2\sigma_P \\
+\end{align*}
+
+--
+
+### 3. What is the __genetic nature__ of the limit to further progress?
+
+\begin{align*}
+& n= \frac{R_T^2}{8\sigma_A^2}\\
+\end{align*}
 
