@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Correlated traits: Index selection</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-12-28" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Correlated traits: Index selection
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Dec. 28, 2022
+]
+
+---
+
+
+
+
+
+# The correlation between two traits
+
+`\begin{align*}
+&amp; r_P = r_Ah_Xh_Y + r_Ee_Xe_Y \\
+\end{align*}`
+
+- __ `\(r_P\)`__: the phenotypic correlation between two traits X and Y
+- __ `\(r_A\)`__: the genetic correlation due to breeding values between X and Y
+- __ `\(r_E\)`__: the environmental correlation between X and Y, including non-additive genetic effects
+- __ `\(h^2\)`__: heritability
+- __ `\(e^2\)`__: `\(1-h^2\)`
+
+
+----
+  
+This proof generally shows that the genetic and environmental correlation come together to create the phenotypic correlation.
+
+- If both traits have __low heritabilites__: 
+  - then phenotypic correlation is determined mainly be the environmental correlations.
+  
+- If they have __high heritabilities__:
+  - genetic correlation is more important.
+
+---
+# Correlated response to selection
+
+
+`\begin{align*}
+&amp; CR_Y = ih_Xh_Yr_A\sigma_{P_Y} \\
+\end{align*}`
+
+- Here `\(i\)` is the selection intensity for trait X, or `\(i_X\)`.
+
+-----
+
+In the formula:
+
+- `\(h_Xh_Yr_A\)` is referred to as the __coheritability__, as it takes the place of the heritability in the direct response equation.
+
+- If `\(h_Xh_Yr_A\)` is larger than `\(h^2\)` of trait Y, then selection on a correlated trait should be used.
+
+
+---
+
+# Indirect selection
+
+The trade-off between selection on a correlated trait and direct selection on a trait can also be seen:
+
+`\begin{align*}
+\frac{CR_Y}{R_Y}  &amp; =  \frac{i_Xh_Xr_A\sigma_{A_Y}}{i_Yh_Y\sigma_{A_Y}} \\
+&amp; = \frac{i_Xh_Xr_A}{i_Yh_Y}\\
+\end{align*}`
+
+--
+
+### Assuming selection intensity is the same
+
+- When __ `\(h_Xr_A &gt; h_Y\)`__, a correlated response from selection on a secondary trait (X) is greater than response to direct selection on Y .
+
+--
+
+- Note that this exact same property applies to usefulness of molecular markers for __marker-assisted selection__
+
+---
+
+# Indirect selection
+
+The trade-off between selection on a correlated trait and direct selection on a trait can also be seen:
+
+`\begin{align*}
+\frac{CR_Y}{R_Y}  &amp; =  \frac{i_Xh_Xr_A\sigma_{A_Y}}{i_Yh_Y\sigma_{A_Y}} \\
+&amp; = \frac{i_Xh_Xr_A}{i_Yh_Y}\\
+\end{align*}`
+
+
+### Practical considerations
+
+- If trait Y is very __expensive__ and __difficult__ to measure, but trait X is very cheap and easy to measure.
+  - e.g. high-throughput phenotyping technologies
+
+--
+
+- Or the desired traits is measurable __in one sex__ only, but the secondary traits is measurable in both.
+  - e.g. milk yield and body weight in dairy cow
+
+---
+
+
+# Indirect selection
+
+The trade-off between selection on a correlated trait and direct selection on a trait can also be seen:
+
+`\begin{align*}
+\frac{CR_Y}{R_Y}  &amp; =  \frac{i_Xh_Xr_A\sigma_{A_Y}}{i_Yh_Y\sigma_{A_Y}} \\
+&amp; = \frac{i_Xh_Xr_A}{i_Yh_Y}\\
+\end{align*}`
+
+
+### Genotype-by-environment interaction
+
+- Performance in different environments can be regarded as __two separate, but correlated traits__.
+
+- Improvement in one environment by selection in another environment can be predicted by knowing the heritability in each environment and the genetic correlation between them.
+ 
+
+---
+
+# Selection on multiple traits
+
+Total economic value is a composite of many traits. How does one __maximize response for many traits__ simultaneously?
+
+
+--
+
+#### Options for multiple trait selection
+
+- __Tandom selection__: 
+
+  - Selection for one trait at a time until that trait is improved to a desired level.
+  - After that, selection proceeds for another trait.
+
+--
+
+- __Independent culling levels__: 
+  - Only individuals that meet the minimum standard for each trait are selected.
+
+--
+
+- __Index selection__: 
+  - Select for multiple traits simultaneously by constructing an index value.
+  - Index value is then treated as a single economic trait.
+
+---
+
+# Genetic merit
+
+- Any individual has a genetic value for what we'll call as __genetic merit__, or simply, __merit__.
+
+--
+
+  - Merit is the summation of all traits contributing to an individual's worth, fitness, economic value, etc.
+
+--
+
+#### The __true value of merit__ is represented as:
+
+`\begin{align*}
+T &amp; = a_1G_1 + a_2G_2 + ... + a_mGm \\
+&amp; = \sum_{i=1}^ma_iG_i \\
+\end{align*}`
+
+- `\(G_i\)` is the genetic value for trait `\(i\)`
+
+- `\(a_i\)` is the economic weight placed on trait `\(i\)`
+  - The economic weights are set by the breeder according to production needs and value. 
+
+
+---
+# Index trait
+
+To accurately predict genentic merit `\(T\)`, we want to combine the values of multiple traits into one value, denoted `\(I\)`. 
+
+--
+
+`\begin{align*}
+I &amp; = b_1P_1 + b_2P_2 + ... + b_mPm \\
+&amp; = \sum_{i=1}^mb_iP_i \\
+\end{align*}`
+
+- `\(P_i\)` is the phenotypic value for trait `\(i\)` that goes into the index
+
+- `\(b_i\)` is the weighting factor on trait `\(i\)`
+
+--
+
+### Correlation between T and I
+
+The goal is to __find the values of the `\(b_i\)`s__ that could __maximize the correlations__ between `\(T\)` and `\(I\)`, or `\(r_{TI}\)`.
+
+`\begin{align*}
+r_{TI} = \frac{Cov(T, I)}{\sigma_T\sigma_I}
+\end{align*}`
+
+
+---
+
+# Correlation between T and I
+
+`\begin{align*}
+r_{TI} = \frac{Cov(T, I)}{\sigma_T\sigma_I}
+\end{align*}`
+
+Obtaining the maximum value of the correlation involves taking the derivative and setting to zero. 
+
+
+--
+### Optimum index
+
+The vector of weights, which is called the __Smith-Hazel index__, or __optimum index__:
+  - It is the most widely used set of weights for a linear selection index
+  - See [here](ch37_index-selection.pdf) Page 411 for the proof
+
+`\begin{align*}
+&amp; \mathbf{b} = \mathbf{P^{-1}}\mathbf{G^Ta}  \\
+\end{align*}`
+
+- `\(\mathbf{P}\)` is the phenotypic variance-covariance matrix
+- `\(\mathbf{G}\)` is the genetic variance-covariance matrix
+- `\(\mathbf{a}\)` is the vector of __known__ economic weights
+- `\(\mathbf{b}\)` is the vector of __unknow__ weights, or the weights to be applied to the phenotypic values of the different traits composing the index, `\(I\)`.
+
+---
+
+# Optimum index
+
+The vector of weights, which is called the __Smith-Hazel index__, or __optimum index__:
+
+`\begin{align*}
+&amp; \mathbf{b} = \mathbf{P^{-1}}\mathbf{G^Ta}  \\
+\end{align*}`
+
+--
+
+- The vector of `\(\mathbf{b}\)` can be estimated if we know the __phenotypic and genetic variances__ and the __phenotypic and genetic covariances__
+
+--
+
+- This assumes that we have good information on the economic weights, which can be hard to determine.
+
+--
+
+- Then the resulting vector of weights will give a selection index that maximized genetic gain in `\(T\)`, the true genetic merit.
+
+
+--
+
+- The drawback of this index is that the genetic variance and covariances are often estimated with large amounts error, which may reduce the correlation between I and T.
+
+
+---
+# A problem
+
+This litter size of mice could be increased: 
+- 1) by selection of females for their little size
+- 2) by selection of both parents for body weight
+
+Which would be the better of these two simple procedures, given the following parameters?
+
+- `\(h^2\)` of litter size: 0.22
+- `\(h^2\)` of body weight: 0.35
+- Genetic correlation `\(r_A\)`: 0.43
+- Proportion of selection:
+  - Females: 25% ( `\(i_f\)` =1.271)
+  - Males: 10% ( `\(i_m\)` =1.755)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

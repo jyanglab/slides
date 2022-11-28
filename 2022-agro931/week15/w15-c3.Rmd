@@ -1,0 +1,429 @@
+---
+title: "QTL Interval Mapping"
+author: "Jinliang Yang"
+date: "Dec. 2, 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Interval Mapping
+
+Consider a QTL flanked by two markers segregating in __an F2 population__.
+
+<div align="center">
+<img src="fig21-c4.2.png" height=120>
+</div>
+
+--
+
+### Basics for interval mapping
+
+To fully understand interval mapping, first we need to cover some basics:
+
+- Conditional probabilities
+- Likehood inference and maximum likelihood
+
+---
+
+# Conditional probabilities of QTL genotypes
+
+Consider a QTL flanked by two markers segregating in an F2 population.
+
+<div align="center">
+<img src="fig21-c4.2.png" height=120>
+</div>
+
+
+The recombination frequency between __M1 and Q is 0.05__ or 5cM and between __Q and M2 is 0.20__ or 20cM.
+Assume no interference. 
+
+- What are the probabilities of the three QTL genotypes given a marker genotype of $M_1M_1M_2M_2$?
+
+\begin{align*}
+& P(QQ|M_1M_1M_2M_2) \\
+& P(Qq|M_1M_1M_2M_2) \\
+& P(qq|M_1M_1M_2M_2) \\
+\end{align*}
+
+
+---
+# Conditional probabilities of QTL genotypes
+
+Consider a QTL flanked by two markers segregating in an F2 population.
+
+<div align="center">
+<img src="fig21-c4.2.png" height=120>
+</div>
+
+\begin{align*}
+& P(QQ | M_1M_1M_2M_2) = \frac{P(M_1M_1QQM_2M_2)}{P(M_1M_1M_2M_2)} \\
+\end{align*}
+
+--
+
+\begin{align*}
+& P(M_1M_1M_2M_2) = P(M_1M_2)^2 = (\frac{1- c_{12}}{2})^2 \\
+\end{align*}
+
+--
+
+\begin{align*}
+& P(M_1M_1QQM_2M_2) = P(M_1QM_2)^2 = (\frac{(1- c_{1Q})(1 - c_{2Q})}{2})^2 \\
+\end{align*}
+
+--
+
+\begin{align*}
+& P(QQ | M_1M_1M_2M_2) = \frac{(\frac{(1- c_{1Q})(1 - c_{2Q})}{2})^2}{(\frac{1- c_{12}}{2})^2} = 0.973\\
+\end{align*}
+
+---
+# Conditional probabilities
+
+Consider a QTL flanked by two markers segregating in an F2 population.
+
+<div align="center">
+<img src="fig21-c4.2.png" height=120>
+</div>
+
+\begin{align*}
+& P(QQ | M_1M_1M_2M_2) = \frac{(\frac{(1- c_{1Q})(1 - c_{2Q})}{2})^2}{(\frac{1- c_{12}}{2})^2} = 0.973\\
+\end{align*}
+
+--
+
+------
+
+\begin{align*}
+P(Qq | M_1M_1M_2M_2) & = \frac{P(M_1M_1QqM_2M_2)}{P(M_1M_1M_2M_2)} \\
+P(M_1M_1QqM_2M_2) & = P(M_1 Q M_2)P(M_1 q M_2) + P(M_1 q M_2)P(M_1 Q M_2) \\
+  & = 2(\frac{(1- c_{1Q})(1 - c_{2Q})}{2})(\frac{c_{1Q}c_{2Q}}{2}) \\& = 0.0038
+\end{align*}
+
+Here, $c_{1Q} = 0.05$ and $c_{2Q} = 0.2$
+
+???
+Therefore, 
+\begin{align*}
+P(Qq | M_1M_1M_2M_2) & = \frac{P(M_1M_1QqM_2M_2)}{P(M_1M_1M_2M_2)} \\
+  & = 0.026 \\
+\end{align*}
+
+---
+# Conditional probabilities
+
+Consider a QTL flanked by two markers segregating in an F2 population.
+
+<div align="center">
+<img src="fig21-c4.2.png" height=120>
+</div>
+
+\begin{align*}
+& P(QQ | M_1M_1M_2M_2) = \frac{(\frac{(1- c_{1Q})(1 - c_{2Q})}{2})^2}{(\frac{1- c_{12}}{2})^2} = 0.973\\
+& P(Qq | M_1M_1M_2M_2) = \frac{2(\frac{(1- c_{1Q})(1 - c_{2Q})}{2})(\frac{c_{1Q}c_{2Q}}{2})}{(\frac{1- c_{12}}{2})^2} = 0.026\\
+& P(qq | M_1M_1M_2M_2) = \frac{(\frac{c_{1Q}c_{2Q}}{2})^2}{(\frac{1- c_{12}}{2})^2} = 1.7 \times 10^{-4}\\
+\end{align*}
+
+  
+---
+# Conditional probabilities
+
+If the genotypic values for each of the QTL genotypes were given as below:
+
+| Genotype | Value      | Probability |
+| :-------: | :-------: | :--------: | 
+| $QQ$  | 7 | $P(QQ/M_1M_1M_2M_2) = 0.973$ |
+| $Qq$  | 5 | $P(Qq/M_1M_1M_2M_2) = 0.026$ |
+| $qq$  | 0 | $P(qq/M_1M_1M_2M_2) = 1.7\times 10^{-4}$ |
+
+- What is the expected value of individuals with the $M_1M_1M_2M_2$?
+
+--
+
+\begin{align*}
+& E(M_1M_1M_2M_2) = 0.973 \times 7 + 0.026 \times 5 + 1.7\times 10^{-4} \times 0 = 6.94 \\
+\end{align*}
+
+
+---
+# Maximum likelihood
+
+What does it mean to calcuate the likelihood of somethings?
+
+The likelihood funcion is represented as __ $L(\theta|s) = f_{\theta}(s)$ __.
+
+This function represents the likelihood of a certain parameter value ( $\theta$ ) given a data vector ( $s$ ).
+
+--
+
+### Interpretation of the likelihood function
+
+- The $f_{\theta}(s)$ represents the __probability density function__ with $\theta$ set as the parameter and $s$ set as the observations.
+
+- The value of $L(\theta|s)$ is called the likelihood of $\theta$.
+
+---
+# Maximum likelihood
+
+What does it mean to calculate the likelihood of somethings?
+
+The likelihood function is represented as __ $L(\theta|s) = f_{\theta}(s)$ __.
+
+This function represents the likelihood of a certain parameter value ( $\theta$ ) given a data vector ( $s$ ).
+
+
+### Estimation
+
+To find the value of $\theta$ with the maximum likelihood, a range of theta values is tested against the observed data, and the $\theta$ giving the __highest__ likelihood is determined to be the __maximum likelihood estimator of $\theta$__.
+
+Note: we are fixing the data and varying the parameter.
+
+---
+
+# Example: Binomial distribution
+
+You tossed a coin ten times and observed four heads.
+
+What is the maximum likelihood estimator of $p$, the probability of obtaining a head?
+
+--
+
+- Substitute the observation into the binomial probability density function (pdf) and vary the value of $p$. 
+
+\begin{align*}
+& L(p | k) = \binom{n}{k}p^kq^{n-k} \\
+& L(p | 4) = \binom{10}{4}p^4q^{10-4} \\
+\end{align*}
+
+--
+
+- Vary $p$ from 0 to 1, with step size 0.1. 
+- Each $p$ is assumed to be the true value, then the likelihood of the data is calculated.
+
+\begin{align*}
+& L(0 | 4) = 0; L(0.1 | 4) = 0.01; L(0.2 | 4) = 0.09; ... \\
+& L(0.4 | 4) = 0.25; ... \\
+& L(0.7 | 4) = 0.04; ... ; L(1.0 | 4) = 0 \\
+\end{align*}
+
+$p=0.4$ is our maximum likelihood (ML) estimator for $p$.
+
+---
+# Construction of QTL likelihood functions?
+
+When a major bi-allelic locus is segregating in a population. 
+The distribution of the entire population can be broken into three underlying distributions:
+
+- The distribution of the $QQ$ individuals,
+- $Qq$ individuals,
+- $qq$ individuals.
+
+--
+
+The likelihood of the genotypic parameters given phenotypic value z is:
+
+\begin{align*}
+L(z) & = L(\mu_{QQ}, \mu_{Qq}, \mu_{qq}, \sigma^2 | z) \\
+& = P(QQ)f(z, \mu_{QQ}, \sigma^2) + P(Qq)f(z, \mu_{Qq}, \sigma^2) + P(qq)f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+
+- Where $P(Q_k)$ equals the __probability of a particular genotype__ 
+  - e.g. 1/4 in an F2 population for $QQ$
+  
+- $f(z, \mu_k, \sigma^2)$ is the __probability density function__ for a normally distributed random variable with mean $\mu_k$ and variance $\sigma^2$.
+  - The mean value of $QQ = a$, $Qq=d$ and $qq = -a$.
+
+---
+# Construction of QTL likelihood functions?
+
+When a major bi-allelic locus is segregating in a population. 
+The distribution of the entire population can be broken into three underlying distributions:
+
+- The distribution of the $QQ$ individuals,
+- $Qq$ individuals,
+- $qq$ individuals.
+
+
+The likelihood of the genotypic parameters given phenotypic value z is:
+
+\begin{align*}
+L(z) & = L(\mu_{QQ}, \mu_{Qq}, \mu_{qq}, \sigma^2 | z) \\
+& = P(QQ)f(z, \mu_{QQ}, \sigma^2) + P(Qq)f(z, \mu_{Qq}, \sigma^2) + P(qq)f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+-------
+
+For $n$ random (unrelated) individuals, the overall likelihood is the product of the $n$ individual likelihoods
+
+\begin{align*}
+L(z_1, z_2, .., z_n) & = L(\mathbf{z}) = \prod_{j=1}^{n}{L(z_j)}\\
+\end{align*}
+
+---
+# Construction of QTL likelihood functions?
+
+Now, let's return to our conditional probabilities, specifically the probability of a QTL genotype given a marker genotype. 
+
+The likelihood of an individual with phenotypic value $z$ given a marker genotype $M_i$ is represented as:
+
+\begin{align*}
+L(z|M_i) &  = P(QQ|M_i)f(z, \mu_{QQ}, \sigma^2) + P(Qq|M_i)f(z, \mu_{Qq}, \sigma^2) + P(qq|M_i)f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+--
+
+-------
+
+For example, the likelihood for __genotype MM__ is:
+\begin{align*}
+L(z|MM) &  = P(QQ|MM)f(z, \mu_{QQ}, \sigma^2) + P(Qq|MM)f(z, \mu_{Qq}, \sigma^2) + P(qq|MM)f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+
+- The $P(Q_k|M_j)$ parts are a function of the __map positions and experimental design__, so that
+
+\begin{align*}
+L(z|MM) &  = (1-c)^2f(z, \mu_{QQ}, \sigma^2) + 2c(1-c)f(z, \mu_{Qq}, \sigma^2) + c^2f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+- And the QTL effects enter through the means and variances of the underlying normal distrutions $f_{\theta}(z)$ or $f(z, \mu_{Q_k}, \sigma^2)$.
+
+---
+# Back to interval mapping
+
+To calculate the likelihoods for an interval, we simply insert the probabilities of a QTL genotype given a marker interval genotype. 
+
+
+For example,
+
+\begin{align*}
+L(z|M_1M_1M_2M_2)  = & \frac{(1-c_1)^2(1-c_2)^2}{(1-c_{12})^2}f(z, \mu_{QQ}, \sigma^2) \\
+& + \frac{2c_1c_2(1-c_1)(1-c_2)}{(1-c_{12})^2}f(z, \mu_{Qq}, \sigma^2) \\
+& + \frac{c_1^2c_2^2}{(1-c_{12})^2}f(z, \mu_{qq}, \sigma^2)\\
+\end{align*}
+
+--
+
+- This likelihood value is calculated for each genetic position in between the two flanking markers by varying value of __recombination rate (c)__.
+
+- The span of the __entire interval ( $c_{12}$ )__ is calculated using a mapping function.
+
+- The values of __ $\mu_{QQ}, \mu_{Qq}, \mu_{qq}, \sigma^2$__ are estimated at each genetic position.
+
+---
+# Back to interval mapping
+
+#### Step 1: Calculate the likelihood with a QTL
+  - __Given $c_1, c_2, c_{12}$ and the phenotypic data__ 
+
+
+#### Step 2: Calculate the likelihood that no underlying QTL exists (the data arose in the absence of a QTL).
+
+- That is, there are __no underlying QTL genotypes__ and the distribution of individuals with the $M_1M_1M_2M_2$ genotype consists of a single distribution.
+
+#### Step 3: Finally, compute the ratio.
+  - This ratio is what provides the likelihood ratio.
+
+
+---
+# LOD score
+
+The ratio is converted to the famous  __logarithm of odds (LOD)__ score
+
+\begin{align*}
+LOD = log_{10}(\frac{L_{full}}{L_{reduced}})
+\end{align*}
+
+- Where $L_{full}$ is the __likelihood of a QTL__ at assumed genetic position given the data.
+- $L_{reduced}$ is the __likelihood of no QTL__ present given the data. 
+
+--
+
+If the __LOD score is 3__, for example, this means that the likelihood for a model including a QTL at the given genetic position is __1,000 times higher__ than no QTL at that position!
+
+
+---
+# Statistical significance
+
+QTL mapping involves a large number of tests, which requires adjustments for multiple testing to keep __the experiment-wise error rate__ low.
+
+### Bonferroni correction
+  - Assume __all tests are independent__, which is not the case in QTL mapping because markers are linked.
+  - Overly conservative for QTL mapping.
+
+---
+# Statistical significance
+
+QTL mapping involves a large number of tests, which requires adjustments for multiple testing to keep __the experiment-wise error rate__ low.
+
+
+### Permutation test
+A commonly used technique for QTL mapping.
+
+--
+
+  - Basically, the phenotypic data is __randomized__ relative to the marker data so that the null hypothesis is established.
+  
+  - Then, the test statistic for each QTL is calculated and the __largest test statistic__ across the genome is tabulated.
+  - This is __repeated 1,000 or more times__ in order to establish an empirical distribution of the test statistic under the null hypothesis.
+  - The test statistics calculated for the real data are compared to this distribution to determine the significance level.
+
+
+
+---
+# Simulating a QTL mapping experiment
+
+.pull-left[
+```{r, out.width='70%', fig.align='center', echo=TRUE}
+library(qtl)
+set.seed(12347)
+# Five autosomes of cM length 50, 75, 100, 125, 60
+L <- c(50, 75, 100, 125, 60)
+map <- sim.map(L, L/5+1, eq.spacing=FALSE, include.x=FALSE)
+
+# Simulate a backcross with two QTL
+a <- 0.7
+mymodel <- rbind(c(1, 40, a),
+                 c(4, 100, a))
+pop <- sim.cross(map, type="bc", n.ind=500, model=mymodel)
+plot.map(pop)
+```
+]
+
+
+.pull-left[
+
+#### Checking pheno distribution
+
+```{r, out.width='80%', fig.align='center', echo=TRUE}
+hist(pop$pheno$phenotype, main="simulated phenotype", 
+     breaks=50, xlab="Pheno", col="#cdb79e")
+```
+]
+
+---
+# Haley-knott Regression
+
+This is a version of interval mapping which is a very good approximation to interval mapping via maximum likelihood.
+
+
+```{r, out.width='50%', fig.align='center', echo=TRUE, warning=FALSE}
+# single-QTL scan using Haley-knott Regression approach
+out.hk <- scanone(pop, method="hk")
+
+# plot of marker regression results for chr 4 and 12
+plot(out.hk, chr=c(1,2,3,4,5), ylab="LOD score")
+```
+
+
