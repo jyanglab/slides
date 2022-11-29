@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>QTL: Single-marker analysis</title>
+    <title>QTL: single-marker analysis</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
     <meta name="date" content="2022-11-30" />
@@ -14,7 +14,7 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# QTL: Single-marker analysis
+# QTL: single-marker analysis
 ]
 .author[
 ### Jinliang Yang
@@ -30,7 +30,7 @@ class: center, middle, inverse, title-slide
 
 # Mapping quantitative trait loci
 
-In past chapters dealing with breeding value and statistics like heritability and genetic correlation, we lumped all the QTL for a trait together into a total, aggregate genotypic value.
+In past chapters dealing with breeding value and statistics like heritability and genetic correlation, we lumped all the QTLs for a trait together into a total, aggregate genotypic value.
 
 --
 
@@ -50,21 +50,31 @@ A __quantitative trait locus (QTL)__ is a genomic region generating variation fo
 ---
 # QTL mapping or linkage mapping
 
-Crosses between inbred lines offer an ideal situation for mapping QTL.
-
-  - The linkage disequilibrium is maximized in an F1 between two inbred lines, and is reduced slowly with subsequent generations of intermating.
+Crosses between individuals that differ genetically for the trait offer an ideal situation for mapping QTL.
 
 --
+
+.pull-left[
+- The __linkage disequilibrium__ is maximized in an F1 between two parental lines
   
-  - This generation of linkage between loci that different between the two inbred lines is exploited for QTL mapping, and is therefore referred to as __linkage mapping__.
-  
+- LD is reduced slowly with subsequent generations of intermating.
+  - Using F2 or recombinant inbred lines (RIL)
+
+- This generation of linkage between loci that different between the two parental lines is exploited for QTL mapping. Therefore, QTL Mapping is also referred to as __linkage mapping__.
+]  
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="qtl.png" height=450&gt;
+&lt;/div&gt;
+]
 
 ---
 # Linkage Mapping
 
 Linkage mapping refers to a set of steps taken to associate chromosomal intervals, and ultimately genes to genetic variation of traits.
 
- - but is very unlikely to map to gene level due to the low mapping resolution 
+ - But is very unlikely to map to gene level due to the low mapping resolution 
 
 --
 
@@ -84,10 +94,10 @@ The statistical approaches range from simple techniques such as __ANOVA__ to com
 
 .pull-left[
 &lt;div align="center"&gt;
-&lt;img src="figure21-c2.2.png" height=350&gt;
+&lt;img src="figure21-c2.2.png" height=400&gt;
 &lt;/div&gt;
 
-- here, `\(c\)` is the recombination rate.
+- Here, `\(c\)` is the recombination rate.
 ]
 
 --
@@ -118,8 +128,9 @@ The statistical approaches range from simple techniques such as __ANOVA__ to com
 
 # BC1 example
 
-Conduct __t-test__ to test the null hypothesis that the mean values of genotype __AC__ and __CC__ are the same.
+Conduct __ `\(t\)`-test__ to test the null hypothesis that the mean values of genotype __AC__ and __CC__ are the same.
 
+--
 ### A `\(t\)`-test would be
 
 `\begin{align*}
@@ -127,14 +138,14 @@ t = \frac{\hat{u}_{AC} - \hat{u}_{CC}}{\sqrt{\frac{\sigma_{AC}^2}{N_{AC}} + \fra
 \end{align*}`
 
 - where `\(\sigma^2\)` is equal to the within sample variance for each genotype
-- `\(N\)` is equal to the number of individuals in each genotype class.
+- `\(N\)` is equal to the number of individuals in each genotype class
 
 --
 
 #### If we get a __p-value &lt; 0.05__: 
   - Reject the null hypothesis that the two genotypes means are the same.
-  - Or the means are different. 
-  - In the other words, the marker is __linked with a QTL__.
+  
+  - Or the means are different; in the other words, the marker is __linked with a QTL__.
 
 ---
 
@@ -161,7 +172,8 @@ Assume no dominance at this locus:
 \end{align*}`
 
 - It is important to note that these single-marker tests confound __the QTL effect__ and __the recombination frequency__ between the marker and QTL.
-  - For this reason, the calculated marker effects and significance do not really tell you how far or how close a marker is to QTL.
+
+- For this reason, the calculated marker effects and significance do not really tell you how far or how close a marker is to a QTL.
   
 --
 
@@ -170,18 +182,18 @@ Assume no dominance at this locus:
 
 ---
 
-# Pearl millet example (F2 population)
+# Sorghum example (F2 population)
 
 .pull-left[
 &lt;div align="center"&gt;
-&lt;img src="figure21-c3.1.png" height=300&gt;
+&lt;img src="figure21-c3.1.png" height=320&gt;
 &lt;/div&gt;
 
 ]
 
 ---
 
-# Pearl millet example (F2 population)
+# Sorghum example (F2 population)
 
 
 &lt;div align="center"&gt;
@@ -190,11 +202,11 @@ Assume no dominance at this locus:
 
 ---
 
-# Pearl millet example (F2 population)
+# Sorghum example (F2 population)
 
 
 &lt;div align="center"&gt;
-&lt;img src="figure21-c3.3.png" height=410&gt;
+&lt;img src="figure21-c3.3.png" height=420&gt;
 &lt;/div&gt;
 
 ---
@@ -254,9 +266,9 @@ Markers are tested one by one for their effects on a trait.
 
 This can be done by:
 
-- A __t-test__ contrasting the mean values of two genotypes.
+- A __ `\(t\)`-test__ contrasting the mean values of two genotypes.
 
-- An __F-test__ on all three genotypes to determine if difference in trait values exist among the genotypes.
+- An __ `\(F\)`-test__ on all three genotypes to determine if difference in trait values exist among the genotypes.
 
 - __Regression__ of the trait value on the number (dosage) of marker alleles.
 
@@ -274,7 +286,7 @@ y_j = \mu + bx_j + e_j
 - where `\(y_j\)` is the phenotypic value for individual `\(j\)`,
 - `\(\mu\)` is the population mean,
 - `\(b\)` is the regression coefficient,
-- `\(x_j\)` represents the number of a particular allele. For example, if `\(x_j\)` was set to represent the number of M alleles at a marker locus: 
+- `\(x_j\)` represents the number of a particular allele. For example, if `\(x_j\)` was set to represent the number of __ `\(M\)` allele__ at a marker locus: 
   - `\(x_j =0\)` for an `\(mm\)` individual,
   - `\(x_j =1\)` for an `\(Mm\)` individual,
   - `\(x_j =2\)` for an `\(MM\)` individual.
@@ -287,7 +299,7 @@ If the regression coefficient is __significantly different from zero__, there is
 ---
 # Simulating a QTL mapping experiment
 
-.pull-left[
+
 
 ```r
 library(qtl)
@@ -295,32 +307,30 @@ set.seed(12347)
 # Five autosomes of cM length 50, 75, 100, 125, 60
 L &lt;- c(50, 75, 100, 125, 60)
 map &lt;- sim.map(L, L/5+1, eq.spacing=FALSE, include.x=FALSE)
-
 # Simulate a backcross with two QTL
 a &lt;- 0.7
-mymodel &lt;- rbind(c(1, 40, a),
-                 c(4, 100, a))
+mymodel &lt;- rbind(c(1, 40, a), c(4, 100, a))
 pop &lt;- sim.cross(map, type="bc", n.ind=200, model=mymodel)
 plot.map(pop)
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" /&gt;
-]
+&lt;img src="w15-c2_files/figure-html/unnamed-chunk-1-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
---
 
-.pull-left[
+---
 
-#### Checking pheno distribution
+# Simulating a QTL mapping experiment
+
+#### Checking phenotypic distribution
 
 
 ```r
 hist(pop$pheno$phenotype, main="simulated phenotype", 
-     breaks=50, xlab="Pheno", col="#cdb79e")
+     breaks=50, xlab="Phenotype", col="#cdb79e")
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /&gt;
-]
+&lt;img src="w15-c2_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
 
 ---
 # Single-marker analysis
@@ -331,7 +341,7 @@ hist(pop$pheno$phenotype, main="simulated phenotype",
 out.mr &lt;- scanone(pop, method="mr")
 
 # plot of marker regression results for chr 4 and 12
-plot(out.mr, chr=c(1,2,3,4,5), ylab="LOD score")
+plot(out.mr, chr=c(1,2,3,4,5), ylab="LOD Score")
 ```
 
 &lt;img src="w15-c2_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
@@ -383,26 +393,6 @@ Also, there is no way to tell if a significant difference is due to
   - several smaller QTLs cluster together
   
 
----
-
-# Interval Mapping
-
-Interval mapping is able to more __precisely locate the putative QTL within a marker interval__.
-
-Interval mapping was introduced to remedy the deficiencies of single marker analysis (Lander and Botstein, 1989)
-
-- By taking advantage of information from __flanking markers__, 
-
-- It can achieve the __same power with fewer progenies__ compared to single marker analysis (Haley and Knott, 1992)
-
---
-
-### Basics for interval mapping
-
-To fully understand interval mapping, first we need to cover some basics:
-
-- Conditional probabilities
-- Likehood inference and maximum likelihood
 
 
     </textarea>
