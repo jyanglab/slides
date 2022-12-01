@@ -1,5 +1,5 @@
 ---
-title: "QTL Interval Mapping"
+title: "QTL: Interval Mapping"
 author: "Jinliang Yang"
 date: "Dec. 2, 2022"
 output:
@@ -384,33 +384,44 @@ A commonly used technique for QTL mapping.
 ---
 # Simulating a QTL mapping experiment
 
-.pull-left[
-```{r, out.width='70%', fig.align='center', echo=TRUE}
+
+```{r, out.width='50%', fig.align='center', echo=TRUE}
 library(qtl)
 set.seed(12347)
 # Five autosomes of cM length 50, 75, 100, 125, 60
 L <- c(50, 75, 100, 125, 60)
 map <- sim.map(L, L/5+1, eq.spacing=FALSE, include.x=FALSE)
-
 # Simulate a backcross with two QTL
 a <- 0.7
-mymodel <- rbind(c(1, 40, a),
-                 c(4, 100, a))
-pop <- sim.cross(map, type="bc", n.ind=500, model=mymodel)
+mymodel <- rbind(c(1, 40, a), c(4, 100, a))
+pop <- sim.cross(map, type="bc", n.ind=200, model=mymodel)
 plot.map(pop)
 ```
-]
 
 
-.pull-left[
+---
 
-#### Checking pheno distribution
+# Simulating a QTL mapping experiment
 
-```{r, out.width='80%', fig.align='center', echo=TRUE}
+#### Checking phenotypic distribution
+
+```{r, out.width='50%', fig.align='center', echo=TRUE}
 hist(pop$pheno$phenotype, main="simulated phenotype", 
-     breaks=50, xlab="Pheno", col="#cdb79e")
+     breaks=50, xlab="Phenotype", col="#cdb79e")
 ```
-]
+
+
+---
+# Single-marker analysis
+
+```{r, out.width='50%', fig.align='center', echo=TRUE}
+# single-QTL scan by marker regression with the simulated data
+out.mr <- scanone(pop, method="mr")
+
+# plot of marker regression results for chr 4 and 12
+plot(out.mr, chr=c(1,2,3,4,5), ylab="LOD Score")
+```
+
 
 ---
 # Haley-knott Regression
@@ -426,4 +437,13 @@ out.hk <- scanone(pop, method="hk")
 plot(out.hk, chr=c(1,2,3,4,5), ylab="LOD score")
 ```
 
+---
+# Plot QTL effect
+
+```{r, out.width='50%', fig.align='center', echo=TRUE, warning=FALSE}
+# summary of out.mr
+summary(out.mr, threshold=3)
+
+effectplot(pop, mname1="D1M4", main="Chr1")
+```
 
