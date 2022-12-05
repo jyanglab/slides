@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genome-wide association study</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-12-05" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Genome-wide association study
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Dec. 5, 2022
+]
+
+---
+
+
+
+
+# GWAS --- 15 years and on
+
+The very first GWAS was published in 2015 about age-related macular degeneration.
+&gt; Klein, et al., 2005, Science
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="1gwas.png" height=400&gt;
+&lt;/div&gt;
+
+---
+
+# GWAS --- 15 years and on
+
+- More than 4,300 papers have reported on 4,500 GWAS studies
+
+- Over 55,000 unique loci for nearly 5,000 diseases and traits
+
+--
+
+## User-friendly data portals to query GWAS results
+
+- [GWAS catalog](https://www.ebi.ac.uk/gwas/): a searchable database of SNP-trait association
+
+- [PhenoScanner](http://www.phenoscanner.medschl.cam.ac.uk/): a curated database holding publicly available GWAS results
+
+- [GTex](https://gtexportal.org/home/) (Genotype-Tissue Expression) eQTL Browser: is a resource to study human gene expression and regulation and its relationship to genetic variation
+
+- [ENCODE](https://www.encodeproject.org/): Encyclopedia of DNA elements, including elements that act at the protein and RNA levels, and regulatory elements.
+
+&gt; Loos, 2020, Nature Communications
+
+---
+# The driving forces for GWAS
+
+- The decreasing cost of genome-wide gentoyping
+  - Now &gt; 20 times less expensive than 15 years ago
+
+--
+
+- The number of variants tested has increased
+  - In human study, from ~500k variants in the early days to nearly 10 million in the lastest GWAS
+
+--
+
+- More refined phenotypes
+  - Such as imaging-derived traits and multi-Omics outcomes (i.e., gene expression as a trait for GWAS)
+
+--
+
+- Advanced statistical analyses and sophisticated modeling
+  - Multivariate GWAS to identify loci that affect multiple traits simultaneously
+  - Integrate intermeidate Omics data to conduct causal inference 
+    &gt; [Z. Yang et al., 2022](https://doi.org/10.1093/genetics/iyac057)
+  
+
+---
+# Validation of GWAS results
+
+Identifying GWAS loci is only the first step of a long journey
+
+--
+
+### Translation of genetic loci into new biological insights
+
+- Integrate multi-Omcis data
+
+- Targeted molecular experiments is critical to establish the role of the prioritized genes.
+
+--
+
+### Implement the knowledge into breeding practice
+
+- Marker assistant selection (using large effect markers only)
+
+- Genomic selection (using all genome-wide markers)
+
+
+---
+# Steps for conducting GWAS
+
+&lt;div align="center"&gt;
+&lt;img src="gwas.png" height=480&gt;
+&lt;/div&gt;
+&gt; [Uffelmann et al., 2021](https://www.nature.com/articles/s43586-021-00056-9)
+
+
+---
+# Testing for associations
+
+A quantitative trait is sometimes controlled jointly by
+- __major QTLs__ with large effects 
+- __minor QTLs__ with small effects
+
+--
+
+### Prevent Shrinkage
+
+If markers that correspond to the major QTLs are known 
+- Then these markers can be treated as having fixed effects
+  - It will prevents _shrinkage of their estimates_
+  
+- The remaining markers can be treated as having random effects
+  - Their effects can still be estimated through RR-BLUP or other approaches.
+
+---
+
+# Major QTL
+
+Simulation results have suggested that a major QTL should have an __ `\(R^2 &gt; 10%\)`__ for it to be considered as having a fixed effects.
+&gt; Bernardo, 2014
+
+
+--
+
+Fitting major QTL as having fixed effects has been shown to improve the prediction accuracy in genomic selection
+&gt; Rutkoski et al., 2014; Herter et al., 2019; etc.
+
+--
+
+### Molecular Function
+
+- Identify two major QTLs conferring upright plant architecture, _UPA1_ ( _Upright Plant Architecture1_ ) and _UPA2_ ( _Upright Plant Architecture2_ )
+
+- Altering endogenous brassinosteroid content and leaf angle.
+&gt; Tian et al., 2019
+
+---
+
+# Linear Mixed Model (LMM)
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{Zm} + \mathbf{e} \\
+\end{align*}`
+
+`\begin{align*}
+V(\mathbf{m}) &amp;= \mathbf{I}V_{M_i} \\
+ &amp; = \mathbf{I}(V_{G}/N_M) 
+\end{align*}`
+
+
+--
+
+### Fit a marker as a fixed effect
+
+With some modification of the above LMM model, a mixed-model approach can be used for association mapping:
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{w_i}m_i + \mathbf{Zm^*} + \mathbf{e} \\
+\end{align*}`
+
+- Where `\(\mathbf{m_i}\)` is the fixed effect due to the `\(i\)`th SNP marker
+- `\(\mathbf{w_i}\)` is an incidence vector for the SNP marker
+
+---
+
+# G Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{w_i}m_i + \mathbf{Zm^*} + \mathbf{e} \\
+\end{align*}`
+
+- Where `\(\mathbf{m_i}\)` is the fixed effect due to the `\(i\)`th SNP marker
+- `\(\mathbf{w_i}\)` is an incidence vector for the SNP marker
+
+---------------
+
+This G model utilizes marker effects to account for variation due to QTL found on the background chromosomes.
+&gt; Bernardo, 2013
+
+- Like the QTL Composite interval mapping approach
+
+- The disadvantage of this type of approach is the uncertainty in how many background markers should be included.
+ - If two few, the background variation will be underestimated
+ 
+ - If two many, overfitting the model.
+
+
+---
+
+# K model for GWAS
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{w_i}m_i + \mathbf{Zu} + \mathbf{e} \\
+\end{align*}`
+
+In GBLUP, the covariance matrix of `\(\mathbf{u}\)` becomes equal to `\(\mathbf{A}V_A'\)`
+- Where `\(\mathbf{A}\)` is the additive relationship matrix, or kinship ( `\(\mathbf{K}\)` ) matrix
+- And `\(V_A'\)` is the portion of the additive variance that is not accounted for by `\(\mathbf{m_i}\)`
+
+--
+
+In practive, `\(V_A'\)` will need to be estimated by an iteractive procedure.
+
+--
+
+### Mulitple marker model
+
+With multiple SNP markers
+- `\(\mathbf{w_i}\)` =&gt; an incidence matrix `\(\mathbf{W}\)`
+
+- `\(m_i\)` =&gt; a vector of `\(\mathbf{m}\)`
+
+---
+
+# Multiple marker GWAS model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{Wm} + \mathbf{Zu} + \mathbf{e} \\
+\end{align*}`
+
+### A two-step approach
+
+- First, a single marker is included at a time
+  - The significance of individual marker effects is then tested by z-tests
+  
+--
+
+- Second, the markers found signficant in the single-marker analyses are included in a multiple-marker model.
+  - A stardard model-selection procedure, such as __backward elimination__, maybe used to determine which markers should be incorporated in the final multiple-marker model.
+
+
+---
+# Multiple subpopulations
+
+In breeding context, we define each germplasm group or heterotic pattern as a __subpopulation__ of the larger pool of inbred, hybrids, or clones.
+
+- In maize, dent (Iowa Stiff Stalk Synthetic, BSSS) and flint (non-BSSS)
+
+- Barley inbreds comprise six-row and two-row types
+
+--
+
+### Population structure
+
+- Separate analysis: 
+One-subpopulation-at-a-time approach
+
+- Joint analysis to account for the differences between the subpopulations
+
+
+---
+# QK model for multiple subpopulations
+
+### K model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{w_i}m_i + \mathbf{Zu} + \mathbf{e} \\
+\end{align*}`
+
+--
+
+### QK model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{Xb} + \mathbf{Qv} + \mathbf{w_i}m_i + \mathbf{Zu} + \mathbf{e} \\
+\end{align*}`
+
+- In this model, the effects due to different subpopulations are captured by `\(\mathbf{Qv}\)`
+
+- The relatedness among lines within each subpopulation is specified by the covariance matrix of `\(\mathbf{u}\)`.
+
+---
+# Use PCA method to construct Q matrix
+
+&gt; Price et al., 2006
+
+Proposed a method to use principal components analysis (PCA) of marker-allele frequencies and the use of PCA scores as the `\(\mathbf{Qv}\)` matrix.
+
+--
+
+### What is in the Q matrix:
+
+1. The columns in Q correspond to different PCA axes
+2. The rows in Q correspond to PCA scores of the lines in `\(\mathbf{y}\)`
+
+--
+
+### How many PCs?
+
+The first PC captures the largest amount of variation, and the 2nd captures the second-largest amount of variaiton, and so on.
+
+No fixed rule, but knowing the number of germplasm groups will help.
+
+---
+# GWAS methods summary
+
+#### K model
+Account for relatedness using either pedigree records or marker data.
+- Mainly `\(\mathbf{A}\)` matrix (only considering additive relationship)
+- `\(\mathbf{AD}\)` matrix might be better
+
+#### QK model 
+Account for effects of subpopulations and the relatedness within each subpopulation
+- K matrix estimated from marker better than from pedigres
+&gt; Stich et al., 2008; Yu et al., 2006
+
+--
+
+-------------------
+
+#### G model or QG model
+
+Utilizes RR-BLUP marker effects to account for variation due to QTL found on the background chromosomes.
+
+---
+# GWAS methods summary
+
+&lt;div align="center"&gt;
+&lt;img src="qg.png" height=300&gt;
+&lt;/div&gt;
+&gt; Bernardo, 2013
+
+Through simulation,
+- different genetic architecture (15 or 30 QTLs)
+- population size (N=384, 768, and 1,536)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
