@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Sept. 20, 2023
+### Sept. 21, 2023
 ]
 
 ---
@@ -27,6 +27,145 @@ class: center, middle, inverse, title-slide
 
 
 
+# About Me
+
+- Bachelor's and Master's degrees from CAU (2001-2008)
+
+--
+
+### Professional Experience
+
+- 2008-2014: __Ph.D.__ @ Iowa State University 
+  - Genetics and Genomics
+  
+- 2014-2017: __PostDoc__ @ University of California, Davis 
+  - Evolutionary Genetics
+
+- 2017-2023: __Assistant Professor__ @ University of Nebraska-Lincoln
+  - Quantitative Genetics and Statistical Genomics
+
+- 2023-now: __Associate Professor__ @ University of Nebraska-Lincoln
+  - Quantitative Genetics and Statistical Genomics
+
+
+---
+
+# About my lab
+
+- [My lab](https://jyanglab.com/people/) focuses on __quantitative genetics__ and __statistical genomics__ of maize and its wild relatives
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="study.png" height=300&gt;
+&lt;/div&gt; 
+
+- From historical __domestication__ to future __improvement__
+- Other cereal crops:  __Sorghum__ and __Pearl Millet__
+
+
+---
+
+# Slides for this class module
+
+
+- Lab website: https://jyanglab.com/
+    - __Module 1__: [[HTML](https://jyanglab.com/slides/2023-module/week1/w1v1.html)]
+    - __Module 2__: [[HTML](https://jyanglab.com/slides/2023-module/week2/w2v1.html)]
+    - __Module 3__: [[HTML](https://jyanglab.com/slides/2023-module/week3/w3v1.html)]
+       
+--
+
+### If you know someone who is going to graduate
+
+- __Heuermann Postdoctoral Fellow @UNL__
+  - Starting annual salary: $60,000
+  - Working with two PIs
+  - Develop research projects of your design
+  - Deadline: Oct. 31, 2023
+  - [To learn more](https://jobs.sciencecareers.org/job/649741/heuermann-postdoctoral-fellow/?TrackID=3)
+  
+---
+
+# Goals and Objectives
+
+### Overall goal: 
+
+- Understand the basic principles of population genomics
+
+- Apply the knowledge for study crop domestication and its implication for crop improvement
+
+--
+
+### Objectives:
+
+- 1) Learn basic population genomics terminology
+
+- 2) Learn how to measure diversity using sequencing data
+
+- 3) Understand the statistics for measuring population differentiation
+
+- 4) Be able to scan for direct and linked selection to detect selective sweeps
+
+---
+
+# A timely and hot topic
+
+### __Nobel Prize in Physiology or Medicine 2022__
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="paabo.png" height=350&gt;
+&lt;/div&gt;
+]
+
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="ancientcorn.png" height=100&gt;
+&lt;/div&gt;
+A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years before the present. Length, 47 mm. 
+&gt; from Paabo's 2003 Science paper
+]
+
+--
+
+-----------
+
+__Svante Paabo__ represents the field of _evolutionary genetics_ and/or _population genetics!!!_
+
+---
+# Future (or Current) jobs
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="X.png" height=200&gt;
+&lt;/div&gt;
+&gt; Google X, the Moonshot Factory
+
+A job description __Data Scientist, Plant Biology__ in [Google X](https://x.company/careers-at-x/6434423002/)
+]
+
+--
+
+.pull-right[
+### What you should have
+
+- Experience working with biological data, with an emphasis on NGS.
+
+- Understanding of molecular biology, field trial design, or population genetics.
+
+- Experience in the agriculture industry.
+
+- Knowledge of statistical methods and applied machine learning.
+
+...
+]
+
+---
 
 # Syllabus
 
@@ -144,12 +283,16 @@ Compared to their progenitors, crops typically have:
 # Population genomics for domestication
 
 ### Understand the popgen
+
 - To identify the selective sweeps 
-  - [Hufford et al., 2012](https://www.nature.com/articles/ng.2309) Nature Genetics
+  - [Hufford et al., 2012](https://www.nature.com/articles/ng.2309) _Nature Genetics_
+  
 - To infer the history of populations
-  - [Beissinger et al., 2016](https://www.nature.com/articles/nplants201684) Nature Plants
+  - [Beissinger et al., 2016](https://www.nature.com/articles/nplants201684) _Nature Plants_
+  
 - To examine the relative effects of evolutionary forces across the genome 
-  - [Xu et al., 2020](https://www.nature.com/articles/s41467-020-19333-4) Nature Communications
+  - [Xu et al., 2020](https://www.nature.com/articles/s41467-020-19333-4) _Nature Communications_
+  - [Meier et al., 2022](https://elifesciences.org/articles/75790) _eLife_
   
 --
 
@@ -273,19 +416,8 @@ Proportion of individuals with a specific genotype (combination of alleles)
 - dog 5: AA AA __CC__ CC GG
 ]
 
-Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is: 1/5
 
-
-```r
-n = 5
-n11 = 1
-f11 = n11/n
-f11
-```
-
-```
-## [1] 0.2
-```
 
 --
 
@@ -294,6 +426,20 @@ The frequency of minor allele `\(A_1\)` in the population is then given by
 `\begin{align*}
 p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
 \end{align*}`
+
+
+```r
+n = 5
+n11 = 1
+f11 = n11/n
+n12 = 2
+p = f11 + 1/2*2/n
+p ### allele freq of minor allele T
+```
+
+```
+## [1] 0.4
+```
 
 
 ---
@@ -511,7 +657,6 @@ Arises in small populations from the effect of sampling.
 
 - Then, the relative fitness is 1.0, 1.0, and 0.67 (0.5/0.75)
 
---
 
 ---
 
@@ -634,7 +779,7 @@ plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|"
 lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -700,7 +845,7 @@ plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1
     }
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -718,7 +863,7 @@ plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1
     }
 ```
 
-&lt;img src="w1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
