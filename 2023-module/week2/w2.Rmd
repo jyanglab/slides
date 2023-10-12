@@ -1,7 +1,7 @@
 ---
 title: "Population Genomics Module 2"
 author: "Jinliang Yang"
-date: "Oct. 27, 2022"
+date: "Oct. 12, 2023"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -20,13 +20,13 @@ options(htmltools.dir.version = FALSE)
 - Scan QR code to view the HTML slides: 
 
 <div align="center">
-<img src="qr-code.png" height=300>
+<img src="frame.png" height=300>
 </div> 
 
 
 - Lab website: https://jyanglab.com/
   - TEACHING: Courses
-    - __Module 2__: [[HTML](https://jyanglab.com/slides/2022-module/week2/w2.html)]
+    - __Module 2__: [[HTML](https://jyanglab.com/slides/2023-module/week2/w2.html)]
 
 
 
@@ -555,9 +555,9 @@ lines(c(0, 0.2), c(geth(p=0.2), geth(p=0.2)), lty=2, lwd=3)
 lines(c(0.4, 0.4), c(0, geth(p=0.4)), lty=2, lwd=3) # add a line segment
 lines(c(0, 0.4), c(geth(p=0.4), geth(p=0.4)), lty=2, lwd=3)
 lines(c(0.3, 0.3), c(0, geth(p=0.3)), lty=2, lwd=3) 
-lines(c(0, 0.3), c(geth(p=0.3), geth(p=0.3)), lty=2, lwd=3, col="blue")
+lines(c(0, 0.3), c(geth(p=0.3), geth(p=0.3)), lty=2, lwd=3, col="red")
 lines(c(0.2, 0.4), c(geth(p=0.2), geth(p=0.4)), lty=1, lwd=3, col="blue")
-lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p=0.4)))), lty=2, lwd=3, col="red")
+lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p=0.4)))), lty=2, lwd=3, col="blue")
 ```
 
 ---
@@ -573,9 +573,9 @@ lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p
 
 .pull-right[
 
-- The blue dashed horizontal segment is the $H_{exp} = 2 \bar{p}\bar{q}$
+- The red dashed horizontal segment is the $H_{exp} = 2 \bar{p}\bar{q}$
 
-- The red dashed horizontal segment is the $H_{obs}$ 
+- The blue dashed horizontal segment is the $H_{obs}$ 
   - mean value of the $H_1$ and $H_2$
 
 - Because the curve is concave downward, $H_{obs}$ is always less than $H_{exp}$
@@ -586,7 +586,7 @@ lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p
 
 Even if subpopulations are __partially isolated__, the Wahlund effect is held true.
 
-  
+ 
 ---
 
 # Heterozygosity to describe populations 
@@ -613,7 +613,7 @@ F = \frac{H_e - H_o}{H_e}
 --
 
 - This measures the proportionate reduction in heterozygosity compared to HWE
-  - If $H_o < H_e$, what does it mean and how can we use this?
+ 
 
 ---
 
