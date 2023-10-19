@@ -1,7 +1,7 @@
 ---
 title: "Population Genomics Module 3"
 author: "Jinliang Yang"
-date: "Nov. 3, 2022"
+date: "Oct. 19, 2023"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -126,12 +126,11 @@ Ne=20; A1=1; t=4*Ne
 frq <- wright_fisher(N=Ne, A1=A1, t=t)
 plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations", ylab="Freq")
     for(u in 1:100){
-      frq <- wright_fisher(N=N, A1=A1, t=t)
+      frq <- wright_fisher(N=Ne, A1=A1, t=t)
       random <- sample(1:1000,1,replace=F)
       randomcolor <- colors()[random] 
       lines(frq, type="l", lwd=3, col=(randomcolor))
     }
-
 ```
 
 ---

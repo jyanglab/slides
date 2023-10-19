@@ -4,7 +4,7 @@
     <title>Population Genomics Module 3</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2022-11-03" />
+    <meta name="date" content="2023-10-19" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -13,9 +13,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Population Genomics Module 3
+]
+.author[
 ### Jinliang Yang
-### Nov. 3, 2022
+]
+.date[
+### Oct. 19, 2023
+]
 
 ---
 
@@ -121,7 +127,7 @@ Ne=20; A1=1; t=4*Ne
 frq &lt;- wright_fisher(N=Ne, A1=A1, t=t)
 plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations", ylab="Freq")
     for(u in 1:100){
-      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      frq &lt;- wright_fisher(N=Ne, A1=A1, t=t)
       random &lt;- sample(1:1000,1,replace=F)
       randomcolor &lt;- colors()[random] 
       lines(frq, type="l", lwd=3, col=(randomcolor))
@@ -962,6 +968,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
