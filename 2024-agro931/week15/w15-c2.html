@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>QTL: single-marker analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-11-30" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# QTL: single-marker analysis
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Nov. 30, 2022
+]
+
+---
+
+
+
+
+# Mapping quantitative trait loci
+
+In past chapters dealing with breeding value and statistics like heritability and genetic correlation, we lumped all the QTLs for a trait together into a total, aggregate genotypic value.
+
+--
+
+A __quantitative trait locus (QTL)__ is a genomic region generating variation for a quantitative trait.
+  - All loci affecting a quantitative trait are “quantitative trait loci”.
+  
+--
+
+### Identifying QTL brings in new opportunities for applications:
+
+  - To produce the preferred genotype
+  
+  - To understand the molecular mechanism at gene level
+  
+  - To locate the direct target for gene editing
+
+---
+# QTL mapping or linkage mapping
+
+Crosses between individuals that differ genetically for the trait offer an ideal situation for mapping QTL.
+
+--
+
+.pull-left[
+- The __linkage disequilibrium__ is maximized in an F1 between two parental lines
+  
+- LD is reduced slowly with subsequent generations of intermating.
+  - Using F2 or recombinant inbred lines (RIL)
+
+- This generation of linkage between loci that different between the two parental lines is exploited for QTL mapping. Therefore, QTL Mapping is also referred to as __linkage mapping__.
+]  
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="qtl.png" height=450&gt;
+&lt;/div&gt;
+]
+
+---
+# Linkage Mapping
+
+Linkage mapping refers to a set of steps taken to associate chromosomal intervals, and ultimately genes to genetic variation of traits.
+
+ - But is very unlikely to map to gene level due to the low mapping resolution 
+
+--
+
+### Steps for QTL mapping include:
+  - 1) Create a segregating population
+  - 2) Genotype individuals within this population with molecular markers
+  - 3) Phenotype the individuals
+  - 4) Apply statistical models to associate the markers to the phenotypic variation
+
+--
+
+The statistical approaches range from simple techniques such as __ANOVA__ to complex __Bayesian models__ capable of zeroing in on QTL-by-QTL interactions.
+  
+
+---
+# Single marker analysis
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="figure21-c2.2.png" height=400&gt;
+&lt;/div&gt;
+
+- Here, `\(c\)` is the recombination rate.
+]
+
+--
+
+.pull-right[
+
+#### Mean of the __AC__ genotype:
+`\begin{align*}
+&amp; \frac{1/2(1-c)\times d + 1/2c \times a}{1/2}\\
+&amp; = d(1-c) + ca \\
+\end{align*}`
+
+#### Mean of the __CC__ genotype:
+`\begin{align*}
+&amp; \frac{1/2(1-c)\times a + 1/2c \times d}{1/2}\\
+&amp; = a(1-c) + cd \\
+\end{align*}`
+
+#### Difference between __AC__ and __CC__ value:
+`\begin{align*}
+&amp; d(1-c) + ca - (a(1-c) + cd)\\
+&amp; = (d-a)(1-2c) \\
+\end{align*}`
+
+]
+
+---
+
+# BC1 example
+
+Conduct __ `\(t\)`-test__ to test the null hypothesis that the mean values of genotype __AC__ and __CC__ are the same.
+
+--
+### A `\(t\)`-test would be
+
+`\begin{align*}
+t = \frac{\hat{u}_{AC} - \hat{u}_{CC}}{\sqrt{\frac{\sigma_{AC}^2}{N_{AC}} + \frac{\sigma_{CC}^2}{N_{CC}} } } \\
+\end{align*}`
+
+- where `\(\sigma^2\)` is equal to the within sample variance for each genotype
+- `\(N\)` is equal to the number of individuals in each genotype class
+
+--
+
+#### If we get a __p-value &lt; 0.05__: 
+  - Reject the null hypothesis that the two genotypes means are the same.
+  
+  - Or the means are different; in the other words, the marker is __linked with a QTL__.
+
+---
+
+# What is the QTL effect ( `\(a\)` )?
+
+`\begin{align*}
+&amp; \hat{u}_{AC} - \hat{u}_{CC} = (d-a)(1-2c) \\
+&amp; a = d - \frac{\hat{u}_{AC} - \hat{u}_{CC}}{1-2c} \\
+\end{align*}`
+
+Assume no dominance at this locus:
+
+`\begin{align*}
+&amp; a = \frac{\hat{u}_{CC} - \hat{u}_{AC}}{1-2c} \\
+\end{align*}`
+
+---
+# Shortcomings of the single-marker test
+
+### The QTL effect of `\(a\)`
+
+`\begin{align*}
+&amp; a = \frac{\hat{u}_{CC} - \hat{u}_{AC}}{1-2c} \\
+\end{align*}`
+
+- It is important to note that these single-marker tests confound __the QTL effect__ and __the recombination frequency__ between the marker and QTL.
+
+- For this reason, the calculated marker effects and significance do not really tell you how far or how close a marker is to a QTL.
+  
+--
+
+- This test does not tell you if __one QTL__ is controlling the trait, or __two or more linked QTLs__.
+
+
+---
+
+# Sorghum example (F2 population)
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="figure21-c3.1.png" height=320&gt;
+&lt;/div&gt;
+
+]
+
+---
+
+# Sorghum example (F2 population)
+
+
+&lt;div align="center"&gt;
+&lt;img src="figure21-c3.2.png" height=320&gt;
+&lt;/div&gt;
+
+---
+
+# Sorghum example (F2 population)
+
+
+&lt;div align="center"&gt;
+&lt;img src="figure21-c3.3.png" height=420&gt;
+&lt;/div&gt;
+
+---
+
+# Frequencies in F2
+
+The frequencies of the resulting F2 individuals are simply calculated by multiplying together the frequencies of the gametes united to form those individuals.
+
+Here we use __M__ and __m__ represent molecular marker and __Q__ and __q__ represent QTL.
+
+| Genotype | Value      | Frequency |
+| :-------: | :-------: | :--------: | 
+| `\(MMQQ\)`  | a | `\(\frac{1}{4}(1-c)^2\)` |
+| `\(MMQq\)`  | d | `\(\frac{1}{2}c(1-c)\)` |
+| `\(MMqq\)`  | -a | `\(\frac{1}{4}c^2\)` |
+| `\(MmQQ\)`  | a | `\(\frac{1}{2}c(1-c)\)` |
+| `\(MmQq\)`  | d | `\(\frac{1}{2}((1-c)^2+c^2)\)` |
+| `\(Mmqq\)`  | -a | `\(\frac{1}{2}c(1-c)\)` |
+| `\(mmQQ\)`  | a | `\(\frac{1}{4}c^2\)` |
+| `\(mmQq\)`  | d | `\(\frac{1}{2}c(1-c)\)` |
+| `\(mmqq\)`  | -a | `\(\frac{1}{4}(1-c)^2\)` |
+
+---
+
+# Frequencies in F2
+
+
+- Because we only see the marker genotypes and not the QTL genotypes, the expected means of the different genotypes are only relevant.
+
+- The expected values are calculated simply by taking the __weighted average of the genotypic values__ of the underlying QTL genotypes.
+
+
+| Genotype  | Expected value |
+| :-------: | :-------: | 
+| `\(MM\)`  |  `\(a(1-2c) + 2dc(1-c)\)` |
+| `\(Mm\)`  |  `\(d((1-c)^2 + c^2)\)` |
+| `\(mm\)`  |  `\(-a(1-2c) + 2dc(1-c)\)` |
+
+--
+
+After some algebra, it can be shown that the differences between the genotypic means in an F2 population are as follows:
+
+
+`\begin{align*}
+&amp; \mu_{MM} - \mu_{mm} = 2a(1-2c) \\
+&amp; \mu_{Mm} - \frac{\mu_{MM} - \mu_{mm}}{2} = d(1-2c)^2 \\ 
+&amp; \mu_{Mm} - \mu_{mm} = (a+d)(1-2c) \\ 
+\end{align*}`
+
+
+---
+# More on single-marker analysis
+
+Markers are tested one by one for their effects on a trait.
+
+--
+
+This can be done by:
+
+- A __ `\(t\)`-test__ contrasting the mean values of two genotypes.
+
+- An __ `\(F\)`-test__ on all three genotypes to determine if difference in trait values exist among the genotypes.
+
+- __Regression__ of the trait value on the number (dosage) of marker alleles.
+
+---
+# Regression approach
+
+The __regression of phenotypic values on allele dosage__ can be represented as:
+
+`\begin{align*}
+y_j = \mu + bx_j + e_j
+\end{align*}`
+
+--
+
+- where `\(y_j\)` is the phenotypic value for individual `\(j\)`,
+- `\(\mu\)` is the population mean,
+- `\(b\)` is the regression coefficient,
+- `\(x_j\)` represents the number of a particular allele. For example, if `\(x_j\)` was set to represent the number of __ `\(M\)` allele__ at a marker locus: 
+  - `\(x_j =0\)` for an `\(mm\)` individual,
+  - `\(x_j =1\)` for an `\(Mm\)` individual,
+  - `\(x_j =2\)` for an `\(MM\)` individual.
+- `\(e_j\)` is the residual error for individual `\(j\)`.
+
+--
+
+If the regression coefficient is __significantly different from zero__, there is evidence for QTL near this marker.
+
+---
+# Limitation of single marker analysis
+
+The problem with above analysis is that QTL effect is completely __confounded with QTL position__.
+
+`\begin{align*}
+\mu_{Mm} - \mu_{mm} = (a+d)(1-2c) \\ 
+\end{align*}`
+
+
+--
+For example, the expected difference between two genotypes is the function of `\(c\)`.
+
+Therefore, we do not know if a significant difference is 
+  - Due to a small QTL right next to the marker
+  
+  - Or a large QTL further away from the marker
+
+--
+
+Also, there is no way to tell if a significant difference is due to
+  - One large QTL
+  - several smaller QTLs cluster together
+  
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

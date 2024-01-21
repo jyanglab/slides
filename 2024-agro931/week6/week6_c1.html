@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Pedigreed Population</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Pedigreed Population
+### Jinliang Yang
+### Sept. 26, 2022
+
+---
+
+
+
+
+
+# Inbreeding coefficient
+
+- The probability of any individual being an identical homozygous
+
+- Or the probability that a pair of haplotypes within an individual are IBD
+
+--
+
+### Inbreeding coefficent at generation `\(t\)`
+
+`\begin{align*}
+F_{t} =\frac{1}{2N_e} + (1 - \frac{1}{2N_e})F_{t-1}
+\end{align*}`
+&gt; From F&amp;M Ch3 without considering mutation
+
+This equation estimates the average inbreeding coefficient of __all individuals__ of a generation!
+
+--
+
+### How about the inbreeding coefficient for a given individual `\(F_X\)`?
+
+- The above calculation is just an approximation
+
+- Pedigree information can be leveraged to get more accurate results
+
+
+---
+
+# Pedigreed population
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped.png" width=400&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- A “common ancestor” is an individual who could pass copies of haplotypes through both sides of the pedigree to some future offspring.
+
+- Letters for the haplotypes reflect the parent source.
+
+]
+
+---
+
+# Pedigreed population
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped2.png" width=400&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+- A “common ancestor” is an individual who could pass copies of haplotypes through both sides of the pedigree to some future offspring.
+
+- Letters for the haplotypes reflect the parent source.
+
+- Haplotypes in genotypes ( `\(a_1a_1\)` ) and ( `\(a_2a_2\)` ) are identical copies of haplotypes from A.
+
+- Haplotypes in genotypes ( `\(a_1a_2\)` ) may be identical by descent if parents of A are related.
+  - The probability that `\(a_1 \equiv a_2 = F_A\)`.
+  - here, `\(\equiv\)` means IBD
+]
+
+---
+
+# Pedigreed population
+
+Question: what is the inbreeding of individual dog X?
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped2.png" width=400&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+`\begin{align*}
+F_X  = &amp; Pr_X(a_1a_1) +  Pr_X(a_2a_2) \\
+&amp; + Pr_X(a_1a_2)Pr(a_1 \equiv a_2) \\
+\end{align*}`
+]
+
+---
+
+# Pedigreed population
+
+Question: what is the inbreeding of individual dog X?
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped3.png" width=400&gt;
+&lt;/div&gt;
+]
+
+
+
+.pull-right[
+`\begin{align*}
+F_x  = &amp; Pr_X(a_1a_1) +  Pr_X(a_2a_2) \\
+&amp; + Pr_X(a_1a_2)Pr(a_1 \equiv a_2) \\
+= &amp; (\frac{1}{2})^4 + (\frac{1}{2})^4 + 2(\frac{1}{2})^4F_A \\
+= &amp; (\frac{1}{2})^3 + (\frac{1}{2})^3F_A \\
+= &amp; (\frac{1}{2})^3(1 + F_A)
+\end{align*}`
+]
+
+---
+
+# Pedigreed population
+
+Question: what is the inbreeding of individual dog X?
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped3.png" width=400&gt;
+&lt;/div&gt;
+]
+
+
+
+.pull-right[
+`\begin{align*}
+F_x  = &amp; Pr_X(a_1a_1) +  Pr_X(a_2a_2) \\
+&amp; + Pr_X(a_1a_2)Pr(a_1 \equiv a_2) \\
+= &amp; (\frac{1}{2})^4 + (\frac{1}{2})^4 + 2(\frac{1}{2})^4F_A \\
+= &amp; (\frac{1}{2})^3 + (\frac{1}{2})^3F_A \\
+= &amp; (\frac{1}{2})^3(1 + F_A)
+\end{align*}`
+- Look for “paths” connecting the parents and the common ancestor
+- Or for example, __C A D = 3__ individuals (let this be n)
+]
+
+
+---
+
+# Individual Inbreeding
+
+Now we can write an expression for `\(F_X\)`:
+
+`\begin{align*}
+F_X  = (\frac{1}{2})^n(1 + F_A)
+\end{align*}`
+
+--
+
+- In the previous example, `\(F_X  = (\frac{1}{2})^3(1 + F_A) = 1/8(1 + F_A)\)`
+
+--
+
+- If there are more generations between the common ancestor and parents – change `\(n\)`.
+
+--
+--------------
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ped4.png" width=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- Path: D B __A__ C E
+
+- `\(F_X  = (\frac{1}{2})^5(1 + F_A)\)`
+]
+
+
+
+---
+
+# It is never be that simple ...
+
+.pull-left[
+#### Inbreeding of X if `\(F_A=F_B=F_E=0\)`?
+&lt;div align="center"&gt;
+&lt;img src="ped5.png" width=400&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+### Paths for `\(F_X\)`
+- M K __G__ N
+- M K G D __B__ E H L N
+- M K C __A__ D G N
+- M J C __A__ D G N
+- M K G __E__ H L N
+]
+
+---
+
+# It is never be that simple ...
+
+.pull-left[
+#### Inbreeding of X if `\(F_A=F_B=F_E=0\)`?
+&lt;div align="center"&gt;
+&lt;img src="ped5.png" width=400&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+### Paths for `\(F_X\)`
+- M K __G__ N (n=4)
+- M K G D __B__ E H L N (n=9)
+- M K C __A__ D G N (n=7)
+- M J C __A__ D G N (n=7)
+- M K G __E__ H L N (n=7)
+
+#### Summing all these:
+- Note: `\(F_G=1/8\)`
+- `\(F_{X}=49/512 = 0.096\)` or `\(9.6\%\)`
+]
+
+--
+
+X is expected to have __9.6% fewer heterozygous loci__ than a non-inbreeding individual in the same population.
+
+
+---
+
+# What does it mean for `\(F_X=9.6\%\)`?
+
+### Assuming 4 loci segregating in the population
+
+#### The frequencies: 
+- `\(p_{A1}=0.05\)`, `\(p_{B1}=0.1\)`, `\(p_{C1}=0.15\)`, `\(p_{D1}=0.45\)`
+
+--
+
+#### `\(H_{exp}\)` in the population = `\(\frac{1}{m}\sum2pq\)`
+
+
+```r
+h &lt;- function(p){return(2*p*(1-p))}
+(h(p=0.05)+h(p=0.1)+h(p=0.15)+h(p=0.45))/4
+```
+
+```
+## [1] 0.25625
+```
+- Avg across 4 loci = 0.26
+
+--
+
+- A non-inbreeding individual is expected to be heterozygous at 26% of its loci
+
+- Individual X ( `\(F_X = 0.096\)` ) is expected to be heterozygous at `\((1-0.096) \times 0.26 = 23.5\%\)` of the loci
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

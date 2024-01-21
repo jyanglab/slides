@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Heterosis and Inbreeding Depression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-12-18" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Heterosis and Inbreeding Depression
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Dec. 18, 2022
+]
+
+---
+
+
+
+
+
+# Heterosis
+
+In the absence of selection, the heterosis on crossing a set of random lines is the same as the depression upon inbreeding.
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="figure14.2_het.png" height=380&gt;
+&lt;/div&gt;
+&gt; Springer and Stupar, 2007
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="figure14.3_yield.png" height=300&gt;
+&lt;/div&gt;
+&gt; Crow 1998
+]
+
+---
+
+# Heterosis
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="figure14.4_m1.png" height=300&gt;
+&lt;/div&gt;
+&gt; East, 1936; Shull, 1948; Crow, 1998; Charlesworth and Charlesworth, 1999
+
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="figure14.5_m2.png" height=300&gt;
+&lt;/div&gt;
+&gt; Crow 1948; Gowen, 1952
+]
+
+--
+
+ ----------
+
+- __Pseudo-overdominance__: _Cockerham and Zeng, 1996_
+- __Dosage__: _Birchler et al., 2003_
+
+---
+
+# Measurement of heterosis
+
+The theoretical conclusion depends upon crossing a large number of random lines from the base population.
+
+--
+
+Here, let's turn from the average consequences of crossing to the specific crossing of two lines.
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="figure14.6_f1.png" height=250&gt;
+&lt;/div&gt;
+]
+
+--
+
+### High-parental heterosis
+`\begin{align*}
+&amp; F_1 - Max(P_1, P_2) \\
+\end{align*}`
+
+### Mid-parental heterosis
+
+`\begin{align*}
+&amp; F_1 - mean(P_1, P_2) \\
+\end{align*}`
+
+
+---
+
+# Mid-parental heterosis
+
+
+
+|  | Freq ( `\(A_1\)` )      | Freq ( `\(A_2\)` ) |
+| :-------: | :-------: | :--------: |
+| `\(P_1\)`  | `\(p\)` | `\(q\)` |
+| `\(P_2\)`  | `\(p'\)` | `\(q'\)` |
+| `\(P_1 - P_2\)`  | `\(y=p-p'\)` | `\(y=q'-q\)` |
+| `\(P_2\)` re-written | `\(p'=p-y\)` | `\(q'=q+y\)` |
+
+--
+
+#### Population Mean
+
+`\begin{align*}
+&amp; M = a(p-q) + 2dpq \\
+\end{align*}`
+
+--
+
+Therefore,
+
+`\begin{align*}
+M_{P_1} &amp;  = a(p-q) + 2dpq \\
+M_{P_2} &amp;  = a(p'-q') + 2dp'q' \\
+&amp; = a(p-y - q -y ) + 2d(p-y)(q+y) \\
+\end{align*}`
+
+--
+
+The mid-parent genotypic value:
+
+`\begin{align*}
+ M_\bar{P} &amp; = 1/2(M_{P_1} + M_{P_2}) \\
+&amp; = a(p-q-y) +d[2pq + y(p-q) -y^2] \\
+\end{align*}`
+
+---
+
+# Genotypic value for F1
+
+Frequencies:
+
+|           | __pop1 ( `\(p\)` )__     |  __pop1 ( `\(q\)` )__ |
+| :-------: | :-------: | :--------: |
+| __pop2 ( `\(p-y\)` )__ | `\(p(p-y)\)`  | `\(q(p-y)\)` |
+| __pop2 ( `\(q+y\)` )__ | `\(p(q+y)\)`  | `\(q(q+y)\)` |
+
+--
+
+Genotypic values:
+
+|           | __A1__     |  __A2__ |
+| :-------: | :-------: | :--------: |
+| __A1__ | `\(A_1A_1=a\)`  | `\(A_1A_2=d\)` |
+| __A2__ | `\(A_1A_2=d\)`  | `\(A_2A_2=-a\)` |
+
+
+--
+
+The mean genotypic value of the F1:
+
+`\begin{align*}
+M_{F_1} &amp; = ap(p-y) + dq(p-y) + dp(q+y) -aq(q+y) \\
+&amp; = a(p-q-y) +d[2pq + y(p-q)] \\
+\end{align*}`
+
+
+---
+
+# Mid-parental heterosis
+
+`\begin{align*}
+&amp; H_{F_1} = M_{F_1} - M_\bar{P} \\
+\end{align*}`
+
+--
+
+`\begin{align*}
+&amp; M_{F_1} = a(p-q-y) +d[2pq + y(p-q)] \\
+&amp; M_\bar{P}  =  a(p-q-y) +d[2pq + y(p-q) -y^2] \\
+\end{align*}`
+
+--
+
+--------
+
+`\begin{align*}
+&amp; H_{F_1} = M_{F_1} - M_\bar{P} = dy^2\\
+\end{align*}`
+
+Remember, `\(y\)` is the difference in allele frequency between populations.
+
+--
+
+### Extending across all loci
+
+
+`\begin{align*}
+&amp; H_{F_1} = \sum_{i=1}^n dy^2\\
+\end{align*}`
+
+---
+
+# About MPH
+
+`\begin{align*}
+&amp; H_{F_1} = \sum_{i=1}^n dy^2\\
+\end{align*}`
+
+- `\(y\)` is the difference in allele frequency between populations.
+- `\(n\)` is the number of loci in contributing to heterosis.
+
+--
+
+### Three conclusions:
+
+- __Directional dominance__ is required for heterosis
+
+--
+
+- Amount of heterosis __specific to each individual cross__
+
+--
+
+- If lines with `\(F=1\)` crossed, then `\(y^2\)` can be only 1 or 0. If that is the case, then `\(H\)` is the summation of `\(d\)`s across loci with different alleles at each locus.
+  - Recall that `\(F\)` here is the inbreeding coefficient.
+
+
+---
+
+# Heterosis in F2 generation
+
+F2 being made by random mating among the individuals of the F1.
+
+  - Because of the random mating, allele freq in F2 will be the HW freq of the F1
+  
+  - Allele freq in F1, being the mean of the allele freq in the two parental popl.s `\(=\frac{p + p'}{2}=(p -\frac{1}{2}y)\)`
+  
+  - Similarly, another allele freq `\(=(q + \frac{1}{2}y)\)`
+  
+  - Plug these values in to the function to calculate population mean `\(M = a(p-q) + 2dpq\)`
+
+--
+
+### Population Mean and heterosis
+
+`\begin{align*}
+&amp; M_{F_2} = a(p-q-y) + d[2pq + y(p-q) - \frac{1}{2} y^2] \\
+\end{align*}`
+
+--
+
+`\begin{align*}
+H_{F_2} &amp; = M_{F_2} - M_{\bar{P}} \\
+&amp; = \frac{1}{2}dy^2 = \frac{1}{2}H_{F_1} \\
+\end{align*}`
+
+---
+# Inbreeding decreases population mean
+
+The change of mean from F1 to F2 may therefore be regarded as __inbreeding depression__
+
+--
+
+.pull-left[
+Reduction of the __mean phenotypic value__ displayed by characters associated with reproductive capacity or physiological efficiency.
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="table14.1.png" height=350&gt;
+&lt;/div&gt;
+]
+
+---
+
+# Inbreeding decreases population mean
+
+The change of mean from F1 to F2 may therefore be regarded as __inbreeding depression__
+
+.pull-left[
+Reduction of the __mean phenotypic value__ displayed by characters associated with reproductive capacity or physiological efficiency.
+- Tends to affect traits related to __fitness and viability__ more than other traits.
+]
+
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="table14.1.png" height=350&gt;
+&lt;/div&gt;
+]
+
+---
+
+# Inbreeding coefficient (F)
+ 
+.pull-left[
+- Average allele frequency across entire population does not change, they only change within each line.
+
+- Any change in mean value must be caused by changes in __genotype frequencies__.
+- As inbreeding coefficient (F) increases:
+ - frequency of __heterozygotes goes down__ 
+ - frequency of __homozygotes goes up__
+] 
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="figure14.1_basepop.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--
+
+What we want to know is __the change in mean value__ across all lines derived from a base population.
+
+
+---
+
+# Inbreeding depression
+
+From Chapter 3 that the genotype frequencies after inbreeding are
+
+| Genotype | Freq      | Value | 
+| :-------: | :-------: | :--------: | 
+| `\(A_1A_1\)`  | `\(\bar{p}^2 + \bar{p}\bar{q}F\)` | `\(a\)` | 
+| `\(A_1A_2\)`  | `\(2\bar{pq} - 2\bar{p}\bar{q}F\)` | `\(d\)` | 
+| `\(A_2A_2\)`  | `\(\bar{q}^2 + \bar{p}\bar{q}F\)` | `\(-a\)` | 
+
+where, `\(\bar{p}\)` and `\(\bar{q}\)` are the allele frequencies in the whole population.
+
+---
+
+# Inbreeding depression
+
+From Chapter 3 that the genotype frequencies after inbreeding are
+
+| Genotype | Freq      | Value |  Freq `\(\times\)` value |
+| :-------: | :-------: | :--------: | :------------:|
+| `\(A_1A_1\)`  | `\(\bar{p}^2 + \bar{p}\bar{q}F\)` | `\(a\)` | `\(\bar{p}^2a + \bar{p}\bar{q}Fa\)` |
+| `\(A_1A_2\)`  | `\(2\bar{pq} - 2\bar{p}\bar{q}F\)` | `\(d\)` | `\(2\bar{pq}d - 2\bar{p}\bar{q}Fd\)` |
+| `\(A_2A_2\)`  | `\(\bar{q}^2 + \bar{p}\bar{q}F\)` | `\(-a\)` | `\(-\bar{q}^2a - \bar{p}\bar{q}Fa\)` |
+
+where, `\(\bar{p}\)` and `\(\bar{q}\)` are the allele frequencies in the whole population.
+
+--
+
+### The population mean after inbreeding is then
+
+`\begin{align*}
+M_F &amp;  =  \bar{p}^2a + \bar{p}\bar{q}Fa + 2\bar{pq}d - 2\bar{p}\bar{q}Fd -\bar{q}^2a - \bar{p}\bar{q}Fa  \\
+&amp; = a(\bar{p}^2 - \bar{q}^2) + 2d\bar{p}\bar{q}(1-F) \\
+&amp; = a(\bar{p} - \bar{q}) + 2d\bar{p}\bar{q}(1-F) \\
+\end{align*}`
+
+--
+
+Note that `\(M_0\)` is the population mean before inbreeding.
+`\begin{align*}
+M_0  = a(\bar{p} - \bar{q}) + 2d\bar{p}\bar{q} \\
+\end{align*}`
+
+---
+
+# The population mean after inbreeding
+
+`\begin{align*}
+&amp; M_F   =  a(\bar{p} - \bar{q}) + 2d\bar{p}\bar{q}(1-F) \\
+&amp; M_0  = a(\bar{p} - \bar{q}) + 2d\bar{p}\bar{q} \\
+\end{align*}`
+
+--
+
+Therefore,
+
+`\begin{align*}
+M_F  = M_0 - 2d\bar{p}\bar{q}F \\
+\end{align*}`
+
+where `\(M_0\)` here is the population mean before inbreeding.
+
+--
+
+### Equation about inbreeding depression
+This equation brings two important points:
+
+- Change in population mean __only occurs when `\(d \neq 0\)`__.
+
+- A locus contributes to inbreeding depression most __when `\(p = q = 0.5\)`__.
+
+---
+
+# Combined effects of all loci
+
+`\begin{align*}
+M_F &amp; = \sum a(\bar{p} - \bar{q}) + 2\sum d\bar{p}\bar{q}(1-F) \\
+ &amp; = \sum a(\bar{p} - \bar{q}) + 2\sum d\bar{p}\bar{q} - 2F\sum d\bar{p}\bar{q} \\
+\end{align*}`
+
+### Equation interpretation
+
+- This means that a preponderance of dominance in one direction is needed.
+ - e.g., the alleles that increase the trait value need to be dominant more than recessive.
+
+- In the absence of epistasis, `\(M_F\)` declines linearly with increasing `\(F\)`.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

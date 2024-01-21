@@ -1,0 +1,385 @@
+---
+title: "Examples for heritability estimation"
+author: "Jinliang Yang"
+date: "Nov. 4, 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+# A sib analysis
+
+### Danish Landrace pigs
+> Data based on the $n=198$ Danish pig progeny testing records
+
+--
+
+- 2 sires each mated to 34 dams ( $s=2, d=34$ )
+
+- Recorded body weight of 2 male and 2 female offspring $n=4$ from each dam
+
+---
+# Danish landrace pigs
+
+```{r}
+p <- read.csv('https://jyanglab.com/slides/swine_sib.csv')
+dim(p)
+table(p$sire)
+```
+
+```{r}
+table(p$dam)
+```
+
+---
+# ANOVA
+
+```{r}
+fit <- lm(weight ~ sire + dam, data=p)
+summary(aov(fit))
+```
+
+#### __ANOVA__ table for body length:
+
+| Source         |  df    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Between Sires  | 1     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
+| Between Dams   | 33      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Within progenies | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
+
+---
+
+# Components of variance
+
+#### __ANOVA__ table for body length:
+
+| Source         |  df    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Between Sires  | 1     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
+| Between Dams   | 33      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Within progenies | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
+
+
+Because $d=34$ and $n=4$ as we designed
+
+\begin{align*}
+& \sigma_w^2 = 352 \\
+\end{align*}
+
+--
+
+\begin{align*}
+& \sigma_d^2 = (734 - 352)/4 = 95.5 \\
+\end{align*}
+
+--
+
+
+\begin{align*}
+& \sigma_s^2 = (6331 - 734)/(34 \times 4) = 41.15 \\
+\end{align*}
+
+
+
+---
+
+# Summary of the variance components
+
+| Observational  | Covariance and causal components  |  Estimated values  |
+| :------------: | :-------: |  | 
+| Sires | $\sigma_s^2 = Cov(HS)$  | $=\frac{1}{4}\sigma_A^2$    |
+| Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | $=\frac{1}{4}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ | 
+| Progeny | $\sigma_w^2 = V_P - Cov(FS)$  | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2$ |
+| Total | $\sigma_T^2 = V_P = \sigma_s^2 + \sigma_d^2 + \sigma_w^2$ | $=\sigma_A^2 + \sigma_D^2 + \sigma_E^2$ |
+| Sires + Dams   | $\sigma_s^2 + \sigma_d^2 = Cov(FS)$       | $=\frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ |
+
+--
+
+\begin{align*}
+V_P = \sigma_T^2 & = \sigma^2_s + \sigma^2_d + \sigma^2_w \\
+& = 41.15 + 95.5 + 352 = 488.65 \\
+\end{align*}
+
+--
+
+### Estimates of heritability from Sire-component
+
+\begin{align*}
+h^2 = \frac{V_A}{V_P} = 4 \times \frac{\sigma^2_s}{\sigma_T^2} = 4 \times \frac{41.15}{488.65} = 0.34
+\end{align*}
+
+---
+
+# Summary of the variance components
+
+| Observational  | Covariance and causal components  |  Estimated values  |
+| :------------: | :-------: |  | 
+| Sires | $\sigma_s^2 = Cov(HS)$  | $=\frac{1}{4}\sigma_A^2$    |
+| Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | $=\frac{1}{4}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ | 
+| Progeny | $\sigma_w^2 = V_P - Cov(FS)$  | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2$ |
+| Total | $\sigma_T^2 = V_P = \sigma_s^2 + \sigma_d^2 + \sigma_w^2$ | $=\sigma_A^2 + \sigma_D^2 + \sigma_E^2$ |
+| Sires + Dams   | $\sigma_s^2 + \sigma_d^2 = Cov(FS)$       | $=\frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ |
+
+--
+
+\begin{align*}
+V_P = \sigma_T^2 & = \sigma^2_s + \sigma^2_d + \sigma^2_w \\
+& = 41.15 + 95.5 + 352 = 488.65 \\
+\end{align*}
+
+--
+
+### Estimates of heritability from Dam-component
+
+\begin{align*}
+H^2 = \frac{V_A + V_D}{V_P} = 4 \times \frac{\sigma^2_d}{\sigma_T^2} = 4 \times \frac{95.5}{488.65} = 0.78
+\end{align*}
+
+---
+
+# Calculate sib correlations
+
+### Half-sibs
+
+\begin{align*}
+t_{HS} & = \frac{Cov(HS)}{V_P} = \frac{1/4V_A}{V_P} = 1/4 h^2\\
+  & = \frac{\sigma^2_s}{\sigma_T^2}  =  \frac{41.15}{488.65} = 0.08 \\
+\end{align*}
+
+--
+
+### Full-sibs
+
+\begin{align*}
+t_{FS} & = \frac{Cov(FS)}{V_P} = \frac{1/2V_A + 1/4V_D}{V_P}\\
+&= \frac{\sigma^2_s + \sigma^2_d}{\sigma_T^2}  =  \frac{41.15 + 95.5}{488.65} = 0.28 \\
+\end{align*}
+
+
+---
+
+# Cross-factorial design: a maize example
+
+### North-Carolina Design II
+
+- A set of maize hybrids crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
+  - $m=5$ and $f=6$
+
+- The hybrids were planted in four environments, each with three replications.
+
+--
+
+### Read in data
+
+```{r, eval=TRUE}
+corn <- read.csv('https://jyanglab.com/AGRO-931/data/corn.csv')
+
+head(corn, 3)
+```
+
+---
+
+### Phenotypic distributions across environments
+
+```{r, eval=FALSE}
+library(ggplot2)
+
+corn$geno <- paste(corn$Male, corn$Female, sep="x")
+
+fsize=18
+p1 <- ggplot(data=corn, aes(x=REP, y=Yld, fill= as.factor(REP)) ) +
+    geom_violin() +
+    facet_wrap(~ ENV) +
+    #guides(fill=FALSE) + factor(trait, levels=out$trait)
+    labs(y=NULL, fill="Rep") + 
+    xlab("") + 
+    ylab("") + 
+    theme_bw() +
+    theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+          axis.text=element_text(size=fsize),
+          axis.title=element_text(size=fsize, face="bold"),
+          legend.title = element_text(size=fsize, face="bold"),
+          legend.text = element_text(size=fsize))
+p1
+```
+
+---
+
+### Phenotypic distributions across environments
+
+```{r echo=FALSE, fig.height=5}
+library(ggplot2)
+
+corn$geno <- paste(corn$Male, corn$Female, sep="x")
+
+fsize=18
+p1 <- ggplot(data=corn, aes(x=REP, y=Yld, fill= as.factor(REP)) ) +
+    geom_violin() +
+    facet_wrap(~ ENV) +
+    #guides(fill=FALSE) + factor(trait, levels=out$trait)
+    labs(y=NULL, fill="Rep") + 
+    xlab("") + 
+    ylab("") + 
+    theme_bw() +
+    theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+          axis.text=element_text(size=fsize),
+          axis.title=element_text(size=fsize, face="bold"),
+          legend.title = element_text(size=fsize, face="bold"),
+          legend.text = element_text(size=fsize))
+p1
+```
+
+---
+
+# Cross-factorial design
+
+\begin{align*}
+p_{ijk} = \mu + m_i + f_j + I_{ij} + e_{ijk}
+\end{align*}
+
+- here $I_{ij}$ indicate male and female interaction 
+  - allows for non-additive effect of interactions between alleles that were inherited from both the male and female
+
+```{r}
+fit <- lm(Yld ~ Male + Female + Male:Female + ENV + REP, data=corn)
+summary(aov(fit))
+```
+
+---
+
+
+# ANOVA table for a factorial design
+
+| Source         |  df    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Env  | $v-1$     |      | |
+| Reps in env  | $v(r-1)$     |    | |
+| Between Sires (male)  | $v(m-1)$     |    $MS_f$     | $= \sigma_e^2 + r\sigma_i^2 + rf\sigma_m^2$ |
+| Between Dams (female)   | $v(f-1)$      |    $MS_m$     | $= \sigma_e^2 + r\sigma_i^2 + rm\sigma_f^2$ | 
+| Interaction   | $v(s-1)(f-1)$      |    $MS_i$     | $= \sigma_e^2 + r\sigma_i^2$ | 
+| Plots within rep (error) | $v(mf-1)(r-1)$    |    $MS_e$     | $= \sigma_e^2$ |
+
+- $v$ is the number of environments
+- $r$ is the number of reps per environment
+- $f$ is the number of female lines
+- $m$ is the number of male lines
+
+---
+
+
+# In terms of causal variances
+
+| Source         |  df    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Between Sires (male)  | $v(m-1)$     |    $MS_f$     | $= \sigma_e^2 + r\sigma_i^2 + rf\sigma_m^2$ |
+| Between Dams (female)   | $v(f-1)$      |    $MS_m$     | $= \sigma_e^2 + r\sigma_i^2 + rm\sigma_f^2$ | 
+| Interaction   | $v(s-1)(f-1)$      |    $MS_i$     | $= \sigma_e^2 + r\sigma_i^2$ | 
+| Plots within rep (error) | $v(mf-1)(r-1)$    |    $MS_e$     | $= \sigma_e^2$ |
+
+
+
+#### Estimate from ANOVA
+
+| Observational component        |  Value     |    Resemblance of relatives    |  
+| :------------: | :-------: | :--------------------:     | :-------: |
+| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(MHS)$   |
+| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(FHS)$  | 
+| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(MHS) - Cov(FHS)$    | 
+| Error variance | $MS_e$    |   $= V_P - Cov(FS)$   | 
+
+---
+
+# Back to the maize data
+
+
+```{r}
+summary(aov(fit))
+```
+
+| Source         |  df    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Env  | $v-1$     |      | |
+| Reps in env  | $v(r-1)$     |    | |
+| Between Sires (male)  | $v(m-1)$     |    $MS_f=14.96$     | $= \sigma_e^2 + r\sigma_i^2 + rf\sigma_m^2$ |
+| Between Dams (female)   | $v(f-1)$      |    $MS_m=16.25$     | $= \sigma_e^2 + r\sigma_i^2 + rm\sigma_f^2$ | 
+| Interaction   | $v(s-1)(f-1)$      |    $MS_i=6.60$     | $= \sigma_e^2 + r\sigma_i^2$ | 
+| Plots within rep (error) | $v(mf-1)(r-1)$    |    $MS_e=4.15$     | $= \sigma_e^2$ |
+
+
+---
+
+# Estimate from ANOVA
+
+
+
+| Observational component        |  Value     |    Resemblance of relatives    |  
+| :------------: | :-------: | :--------------------:     | :-------: |
+| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(MHS)$   |
+| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(FHS)$  | 
+| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(MHS) - Cov(FHS)$    | 
+| Error variance | $MS_e$    |   $= V_P - Cov(FS)$   | 
+
+- $v=4, r=3, m=5, f=6$
+- $MS_f=14.96, MS_m=16.25, MS_i=6.60, MS_e=4.15$
+
+\begin{align*}
+& \sigma_m^2 = \frac{1}{3 \times 6}(14.96 - 6.60) = 0.46\\
+\end{align*}
+
+--
+
+\begin{align*}
+& \sigma_f^2 = \frac{1}{3 \times 5}(16.25 - 6.60) = 0.64\\
+\end{align*}
+
+
+--
+
+
+\begin{align*}
+& \sigma_i^2 = \frac{1}{3}(6.60 - 4.15) = 0.81\\
+\end{align*}
+
+
+---
+# Heritablity estimation
+
+\begin{align*}
+p_{ijk} = \mu + m_i + f_j + I_{ij} + e_{ijk}
+\end{align*}
+
+--
+
+\begin{align*}
+V_P & = V_m + V_f +V_I + V_e \\
+& = \sigma_m^2 + \sigma_f^2 + \sigma_i^2 + \sigma_e^2 \\
+&= 0.46+ 0.64 + 0.81 + 4.15 = 6.06 \\
+\end{align*}
+
+--
+
+----------
+
+Heritability among half-sib families can be estimed either the male or female half-sib variance component or the everage of the two.
+
+\begin{align*}
+h^2_{f} & = 4 \times \frac{\sigma_f^2}{\sigma_T^2} \\
+& = 4 \times \frac{0.64}{6.06} = 0.42\\
+\end{align*}
+
+--
+
+\begin{align*}
+h^2_{m} & = 4 \times \frac{\sigma_m^2}{\sigma_T^2} \\
+& = 4 \times \frac{0.46}{6.06} = 0.30\\
+\end{align*}
+
+
+
+
+
+

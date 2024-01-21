@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Hardy-Weinberg Equilibrium</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-08-24" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Hardy-Weinberg Equilibrium
+### Jinliang Yang
+### Aug. 24, 2022
+
+---
+
+
+
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
+We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
+
+### Allele frequency ( `\(p\)` and `\(q\)` ) 
+Frequency/proportion of alleles of a particular identity at one locus
+
+### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
+Proportion of individuals with a specific genotype (combination of alleles)
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
+
+
+```r
+n = 5
+n11 = 1
+f11 = n11/n
+f11
+```
+
+```
+## [1] 0.2
+```
+
+--
+
+The frequency of minor allele `\(A_1\)` in the population is then given by
+
+`\begin{align*}
+p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
+\end{align*}`
+
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+#### A population is in HWE if it has constant allele and genotype frequencies __from generation to generation__
+
+- Allele frequencies in parents predict allele and genotype frequencies in offspring
+
+--
+
+### Caveats
+
+- A large, randomly-mating population for diploid species
+
+- No selection, no mutation, no migration, etc.
+  
+---
+
+# In Hardy-Weinberg Equilibrium
+
+If allele frequencies in parent population = `\(p\)` &amp; `\(q\)`, 
+then, genotype frequencies in progeny after random mating are:
+
+`\begin{align*}
+(p + q)^2 = p^2 + 2pq + q^2
+\end{align*}`
+
+- The array of genotypes in progeny equals the square of the parental gametic array. 
+
+- (sum of allele frequencies) `\(^2\)` = (sum of genotype frequencies)
+
+
+---
+# For HWE to hold true
+
+### NO
+
+- Migration
+- Mutation 
+- Selection
+
+### YES
+
+- Random Mating
+- Large Population Size
+
+--
+
+--------
+
+- If any condition is not met, allele and genotype frequencies in the population may (will) change.
+
+- With respect to one autosomal locus, __HWE is attained after one generation of random mating__.
+
+
+---
+
+# Proof of HWE
+
+### 1. From allele frequency in parents to allele frequency in gametes
+
+In the parent generation:
+
+| Allele/Genotype | `\(A_1\)`   | `\(A_2\)`   | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)` |
+| :-------: |: ------- :| :-------: | :-------: | :-------: | :-------: |
+| Freq  | `\(p\)`   | `\(q\)`    | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`    | 
+
+---
+
+# Proof of HWE
+
+### 2. From allele frequency in gametes to genotype frequencies in zygotes
+
+Random union among their gametes:
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="hwe.png" height=250&gt;
+&lt;/div&gt;
+]
+
+### For heterozygotes
+
+
+The union of A1 eegs with A2 sperms need to be distinguished from that of A2 eggs with A1 sperms.
+
+---
+
+# Proof of HWE
+
+### 3. From zygotes to adults
+
+Genotype frequencies would be observable unless the zygotes survive equally well.
+
+
+- Equal viability
+- Same fitness and no selection
+
+--
+
+### 4. From genotype freq to allele freq in progeny
+
+Given above genotype freq, allele freq for A1 allele in progeny can be calculated as:
+
+`\begin{align*}
+f_1 = &amp; \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12} \\
+= &amp; p^2 + pq = p(p+q) =p \\
+\end{align*}`
+
+
+---
+
+# Relationship between allele and genotype frequencies
+
+
+```r
+p = seq(0, 1, by=0.01)
+q = 1 - p
+f11 &lt;- p^2
+f12 &lt;- 2*p*q
+f22 &lt;- q^2
+
+plot(f11, type="l", col="black", xlab="p", ylab="Genotype Frequency")
+lines(f12, col="red")
+lines(f22, col="blue")
+```
+
+![](week1_c2_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+
+# Relationship between allele and genotype frequencies
+
+![](week1_c2_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+- Maximum frequency of heterozygotes occurs when p = q = 0.50
+
+- Frequency of heterozygotes cannot be greater than 0.50
+
+- When allele frequency is low, that allele occurs predominantly in heterozygotes
+
+---
+
+# How do we determine if a locus is in HWE?
+
+### First, why do we care?
+
+- One Locus?
+
+- Across multiple Loci?
+
+--
+
+### Is your answer different if it is just one locus vs multiple loci?
+
+- One Locus --- Estimate freq of recessive alleles 
+  - How many people carry a disease
+
+- Across multiple Loci
+  - Which locus is affected by selection (or something else)?
+
+---
+
+# Chi-squared test of HWE
+
+`\begin{align*}
+\chi^2 = \sum{\frac{(Obs - Exp)^2}{Exp}}
+\end{align*}`
+
+--
+
+### Example: M-N blood groups
+
+| Genotype | `\(MM\)`   | `\(MN\)`   | `\(NN\)`   | Total  |
+| :-------: |: ------- :| :-------: | :-------: | :-------: | 
+| Observed  | `\(84\)`   | `\(131\)`    | `\(216\)`    | `\(431\)`    | 
+
+--
+
+#### Using HWE to calculate expected values
+
+`\begin{align*}
+f_M = &amp; \frac{2n_{MM}+n_{MN}}{2n} = \frac{2 \times 84 + 131}{2 \times 431} = 0.35 = p \\
+f_N = &amp; 0.65 = q \\
+\end{align*}`
+
+--
+
+| Genotype | `\(MM\)`   | `\(MN\)`   | `\(NN\)`   | Total  |
+| :-------: |: ------- :| :-------: | :-------: | :-------: | 
+| Observed  | `\(84\)`   | `\(131\)`    | `\(216\)`    | `\(431\)`    | 
+| Expected  | `\(p^2 \times 431=53\)`   | `\(2pq \times 431=196\)`    | `\(q^2 \times 431=182\)`    | `\(431\)`    | 
+
+---
+
+# Chi-squared test of HWE
+
+
+| Genotype | `\(MM\)`   | `\(MN\)`   | `\(NN\)`   | Total  |
+| :-------: |: ------- :| :-------: | :-------: | :-------: | 
+| Observed  | `\(84\)`   | `\(131\)`    | `\(216\)`    | `\(431\)`    | 
+| Expected  | `\(p^2 \times 431=53\)`   | `\(2pq \times 431=196\)`    | `\(q^2 \times 431=182\)`    | `\(431\)`    | 
+
+--
+
+### Null hypothesis (H0): population is in HWE
+
+`\begin{align*}
+\chi^2 = &amp; \sum{\frac{(Obs - Exp)^2}{Exp}} \\
+= &amp; \frac{(84-53)^2}{53} + \frac{(131-196)^2}{196} + \frac{(216-182)^2}{182} \\
+= &amp; 46 \\
+\end{align*}`
+
+- Degrees of freedom (df) = n-k (#genotype - #alleles) =1
+- Critical values of `\(\chi^2\)` with 1 df is `\(3.84\)` at `\(\alpha=0.05\)` and `\(6.63\)` at `\(\alpha=0.01\)`.
+
+--
+
+Our value of `\(\chi^2 &gt; 3.84\)`, therefore, we reject H0 and conclude that the population is NOT in HWE.
+
+
+---
+
+# Chi-squared test of HWE
+
+
+| Genotype | `\(MM\)`   | `\(MN\)`   | `\(NN\)`   | Total  |
+| :-------: |: ------- :| :-------: | :-------: | :-------: | 
+| Observed  | `\(84\)`   | `\(131\)`    | `\(216\)`    | `\(431\)`    | 
+| Expected  | `\(p^2 \times 431=53\)`   | `\(2pq \times 431=196\)`    | `\(q^2 \times 431=182\)`    | `\(431\)`    | 
+
+
+```r
+nMM = 84; nMN = 131; nNN = 216
+n = nMM + nMN + nNN
+p = (2*nMM + nMN)/(2*n) # M allele freq
+q = 1- p # N allele freq
+
+obs = c(nMM, nMN, nNN)
+exp = c(p^2, 2*p*q, q^2)*n
+stat &lt;- sum(((obs-exp)^2)/exp)
+stat
+```
+
+```
+## [1] 46.70601
+```
+
+```r
+# pchisq gives the distribution function
+1 - pchisq(stat, df=1)
+```
+
+```
+## [1] 8.247514e-12
+```
+
+#### Note that chisq.test is not suitable for HWE as it computes the df as 2
+
+---
+
+# Test for HWE
+
+### Chi-squared test
+- Expected count should be `\(≥5\)` per category
+
+- If allele frequencies are low and/or sample size is small results may be erroneous
+
+--
+
+### Exact Test for HWE
+
+Using the multinomial probability equation:
+
+
+`\begin{align*}
+p(data) = \frac{n!}{n_{11}!n_{12}!n_{22}!}p^{2n_{11}}q^{2n_{22}}(2pq)^{n_{12}}
+\end{align*}`
+
+
+```r
+exact.t &lt;- function(n11, n12, n22){
+  n &lt;- n11 + n12 + n22
+  p &lt;- (2*n11 + n12)/(2*n)
+  q = 1 - p
+  prob1 &lt;- factorial(n)/(factorial(n11) * factorial(n12) * factorial(n22))
+  prob2 &lt;- p^(2*n11)*q^(2*n22)*(2*p*q)^n12
+  return(prob1*prob2)
+}
+
+exact.t(n11=2, n12=40, n22=2)
+```
+
+```
+## [1] 2.893707e-09
+```
+---
+# Wigginton et al, 2005
+
+[Am J Hum Genet 76:887-883](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1199378/)
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="extest.png" height=400&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- Type1 error for Chi-squared (blue) and extact test (red) for HWE
+
+- Both tests are better with higher minor allele freq and larger sample
+
+- Chi-squared test has inflated type I error
+
+- Exact test is always conservative while Chi-squared can be conservative or __anti-conservative__
+]
+
+---
+# Work with your own data
+
+
+```r
+# This code implements an exact SNP test of Hardy-Weinberg Equilibrium as described in
+# Wigginton, JE, Cutler, DJ, and Abecasis, GR (2005) A Note on Exact Tests of 
+# Hardy-Weinberg Equilibrium. American Journal of Human Genetics. 76: 000 - 000  
+
+# NOTE: return code of -1.0 signals an error condition
+
+source("http://csg.sph.umich.edu/abecasis/Exact/snp_hwe.r")
+
+data &lt;- data.frame(HET=c(100, 57, 31), 
+                   HOM1=c(3, 14,32), 
+                   HOM2=c(5, 50,51))               
+
+test_markers &lt;- function(data){
+  data$pval &lt;- -9
+  for (i in 1:nrow(data)){
+    data$pval[i] &lt;- SNPHWE(data[i, 1], data[i, 2], data[i, 3])
+  }
+  return(data)
+}
+test_markers(data)
+```
+
+```
+##   HET HOM1 HOM2         pval
+## 1 100    3    5 6.195094e-21
+## 2  57   14   50 8.422798e-01
+## 3  31   32   51 2.563773e-06
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

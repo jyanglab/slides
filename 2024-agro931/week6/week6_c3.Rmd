@@ -1,0 +1,531 @@
+---
+title: "Relationship Matrix"
+author: "Jinliang Yang"
+date: "Sept. 30, 2022"
+output:
+  xaringan::moon_reader: 
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Individual Inbreeding: $F_X$
+
+
+\begin{align*}
+F_{X} = (\frac{1}{2})^n(1 + F_{A})
+\end{align*}
+
+- Where $n$ is the number of individuals in the path from the individual’s sire (dad), through the common ancestor, to the dam (mom).
+
+- If multiple common ancestors, must sum the individual estimates.
+
+------------
+
+# Coancestry (Kinship): $f_{XY}$
+
+Coancestry between X and Y depends on relationship among parents
+
+\begin{align*}
+f_{XY} & = Pr(x \equiv y) \\
+& = Pr(a 	\equiv c) + Pr(a 	\equiv d)  + Pr(b 	\equiv c)  + Pr(b 	\equiv d ) \\
+& = \frac{1}{4}(f_{AC} + f_{AD} + f_{BC}+ f_{BD})
+\end{align*}
+
+
+---
+# How about the relationships for all individuals?
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+--
+
+.pull-right[
+|  | B  | C | E | A | D | F |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+| B  | __ $d_B$__ |  x | x | x  | x | x  |  
+| C  |   | __ $d_C$__  | x | x  | x |  x |  
+| E    |  |   | __ $d_E$__ | x  | x | x  |  
+| A    |  |   |  | __ $d_A$__  | x | x  |  
+| D    |  |   |  |   | __ $d_D$__ |  x |  
+| F    |  |   |  |   |  | __ $d_F$__  |  
+]
+
+When complete the table will contain: 
+
+- All additive relationships among individuals (determined at the intersection of each row and column) 
+
+- All inbreeding coefficients (on the diagonal of the table).
+
+---
+# The Tabular Method of Relationships
+
+The method will permit you to easily calculate the _additive_ relationship and _inbreeding coefficient_ among all individuals in a given pedigree.
+
+--
+
+- The method requires individuals to be __sorted chronologically__
+
+  - Those individuals without known parents are assumed to not be inbred and unrelated. 
+
+
+
+--
+
+# Relationship vs Coancestry
+
+|  | Coancestry   | Relationship    | 
+| :-------: | : ------ : | :-------: | 
+| selfing | 0.5 | 1 | 
+| Parent-offspring  | 0.25    | 0.5    | 
+| Full-siblings     | 0.25    | 0.5    |
+| Half-siblings     | 0.125   | 0.25    |
+
+
+---
+
+# The Tabular Method of Relationships
+
+Example: Consider the following pedigree of Individuals A through F
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+.pull-right[
+| Individual | Father   | Mother    | 
+| :-------: | : ------ : | :-------: | 
+| B  | NA    | NA    | 
+| C  | NA    | NA    |
+| E    | NA   | NA   |
+| A    | B   | C    |
+| D    | B   | E    |
+| F    | A   | D    |
+- NA means data not available.
+]
+
+
+This simple pedigree will let us calculate the relationship among all individuals. 
+- Note: some inbreeding is present.
+
+---
+# The Tabular Method of Relationships
+
+#### Step 1/9. Determine which individuals will go into the table. 
+Place them in chronological order (oldest to youngest). 
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+.pull-right[
+- Use birth dates!
+
+- If you don’t have birth dates, individuals "higher" in the pedigree are older than those "lower" in the pedigree. 
+
+  - Here the list could be __{B,C,E,A,D,F}__ 
+  
+  - or an equivalent could be __{C,E,B,D,A,F}__.
+]
+
+---
+# The Tabular Method of Relationships
+
+#### Step 2/9. Write the ID into the table.
+Write the ID of each individual in order of age across the top of the table (the columns) and then down the side of the table.
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+|  | B  | C | E | A | D | F |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+| B  |  |   |  |   |  |   |  
+| C  |   |   |  |   |  |   |  
+| E    |  |   |  |   |  |   |  
+| A    |  |   |  |   |  |   |  
+| D    |  |   |  |   |  |   |  
+| F    |  |   |  |   |  |   |  
+
+---
+# The Tabular Method of Relationships
+
+#### Step 3/9. Write the name or number of the parents of an individual above that individual’s name – if known.
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  |  |   |  |   |  |   |  
+| C  |   |   |  |   |  |   |  
+| E    |  |   |  |   |  |   |  
+| A    |  |   |  |   |  |   |  
+| D    |  |   |  |   |  |   |  
+| F    |  |   |  |   |  |   |  
+
+---
+# The Tabular Method of Relationships
+
+#### Step 4/9. Put a 1.0 in each diagonal cell.
+
+- This is an individual’s basic relationship to itself ( $2 \times f_{XX}$), unless inbred (which we calculate later). 
+
+- For those individuals in the base population (the oldest animals with no known parents) enter a zero (0.0) in the off-diagonal elements between them. 
+  - For our example, individuals B, C, and E, are the base population, and the table would look like this.
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+--
+
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 |   |  |   |  
+| C  |   |  1 | 0 |   |  |   |  
+| E    |  |  | 1 |   |  |   |  
+| A    |  |   |  |  1 |  |   |  
+| D    |  |   |  |   | 1 |   |  
+| F    |  |   |  |   |  |  1 |  
+
+---
+# The Tabular Method of Relationships
+
+
+
+#### Step 5/9. Now, go to the upper diagonal. 
+
+
+- This is zero for individuals which have parents that are unknown. 
+
+.pull-left[
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+]
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | ?  | ? |  ? |  
+| C  |    |  1 | 0 |   |  |   |  
+| E    |   |   | 1 |   |  |   |  
+| A    |   |   |  |  1 |  |   |  
+| D    |   |   |  |   | 1 |   |  
+| F    |   |   |  |   |  |  1 |  
+
+---
+# The Tabular Method of Relationships
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | __?__  | ? |  ? |  
+| C  |    |  1 | 0 |   |  |   |  
+| E    |   |   | 1 |   |  |   |  
+| A    |   |   |  |  1 |  |   |  
+| D    |   |   |  |   | 1 |   |  
+| F    |   |   |  |   |  |  1 |  
+
+#### Step 6/9. Start in the first row. Go to the first unknown element (in this example, between individual B and A). 
+- Stay in the row, and find the element in this row for the first parent (B, the value is 1) and the second parent (C, the value is 0). 
+
+- Add these together (1 + 0 = 1) and divide by 2 (1⁄2). Enter this value in the table. 
+
+---
+# The Tabular Method of Relationships
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | 1/2  | 1/2 |  __?__ |  
+| C  |    |  1 | 0 |   |  |   |  
+| E    |   |   | 1 |   |  |   |  
+| A    |   |   |  |  1 |  |   |  
+| D    |   |   |  |   | 1 |   |  
+| F    |   |   |  |   |  |  1 |  
+
+#### Step 6/9. Start in the first row. Go to the first unknown element (in this example, between individual B and A. 
+- Stay in the row, and find the element in this row for the first parent (B, the value is 1) and the second parent (C, the value is 0). 
+
+- Add these together (1 + 0 = 1) and divide by 2 (1⁄2). Enter this value in the table. 
+
+- Move to the next column in the same row, find parent 1 and parent 2, in that row. Add those values together and divide by 2. Continue until the end of the row. If a parent is unknown, put in a zero.
+
+---
+# The Tabular Method of Relationships
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | 1/2  | 1/2 |  1/2 |  
+| C  |  0  |  1 | 0 |   |  |   |  
+| E    |  0 | 0  | 1 |   |  |   |  
+| A    | 1/2 |   |  |  1 |  |   |  
+| D    | 1/2  |   |  |   | 1 |   |  
+| F    | 1/2  |   |  |   |  |  1 |  
+
+#### Step 7/9. When the row is finished, copy the elements down the column.
+
+--
+
+#### Step 8/9. Continue to the next row. Complete Rules 6 and 7.
+
+---
+# The Tabular Method of Relationships
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | 1/2  | 1/2 |  1/2 |  
+| C  |  0  |  1 | 0 | 1/2  | 0 | 1/4  |  
+| E    |  0 | 0  | 1 | 0  | 1/2 |  1/4 |  
+| A    | 1/2 | 1/2  | 0 |  1 | 1/4 | 5/8  |  
+| D    | 1/2  | 0  | 1/2 | 1/4  | 1 | 5/8  |  
+| F    | 1/2  | 1/4  | 1/4 | 5/8  | 5/8 |  1 |  
+
+#### Step 8/9. Continue to the next row. Complete Rules 6 and 7.
+
+--
+
+#### Step 9/9. Update the diagonal.
+
+- To update the inbreeding coefficient in the diagonal, simply find the relationship between the two parents, divide by two, and add this to the 1.
+
+---
+# The Tabular Method of Relationships
+
+In our example, the final table would look like this:
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | 1/2  | 1/2 |  1/2 |  
+| C  | 0  |  1 | 0 | 1/2  | 0 | 1/4  |  
+| E    | 0 | 0 | 1 | 0  | 1/2 | 1/4  |  
+| A    | 1/2 | 1/2  | 0 |  1 | 1/4 | 5/8   |  
+| D    | 1/2 | 0  | 1/2 | 1/4  | 1 | 5/8  |  
+| F    | 1/2 | 1/4  | 1/4 | 5/8   | 5/8 |  __1 + 1/8__ |  
+
+--
+
+### Additive relationship
+
+To find the additive relationship between any pair of individuals simply go the appropriate row and column cell for that pair. 
+
+- For example, the additive relationship between individuals F and C is $\frac{1}{4}$.
+
+---
+# The Tabular Method of Relationships
+
+In our example, the final table would look like this:
+
+|  |   |  |  | B-C | B-E | A-D |
+| :--: | : --: | :--: | :--: | :--: | :--: | :--: |  
+|  | B  | C | E | A | D | F | 
+| B  | 1 | 0  | 0 | 1/2  | 1/2 |  1/2 |  
+| C  | 0  |  1 | 0 | 1/2  | 0 | 1/4  |  
+| E    | 0 | 0 | 1 | 0  | 1/2 | 1/4  |  
+| A    | 1/2 | 1/2  | 0 |  1 | 1/4 | 5/8   |  
+| D    | 1/2 | 0  | 1/2 | 1/4  | 1 | 5/8  |  
+| F    | 1/2 | 1/4  | 1/4 | 5/8   | 5/8 |  __1 + 1/8__ |  
+
+--
+
+### Inbreeding coefficient
+
+To find the inbreeding coefficient for any individual, simply go to the diagonal element for that individual and subtract 1. 
+- The only inbred individual in this pedigree is F, with a value of $1+1/8 -1 = 1/8$ 
+- This is the half-siblings!
+
+---
+
+# Inbreeding coefficient for half-siblings 
+
+<div align="center">
+<img src="tab_ped.png" width=350>
+</div>
+
+
+\begin{align*}
+F_{X=F} = f_{AD} & = \frac{1}{4}(f_{EB} + f_{EC} + f_{BB} + f_{BC}) \\
+& = \frac{1}{4}(0 + 0 + \frac{1}{2} + 0) \\
+& = \frac{1}{8}
+\end{align*}
+
+---
+
+# Genomic relationship
+
+- SNPs give clues on family relationships
+ -  For example two individuals sharing lots of genotypes are likely because they belong to the same family (or genetically related)
+
+  - Genomic relationships is usually more accurate than the one estimated from pedigree
+
+
+--
+
+### Genetic values = sum of SNP effects
+
+\begin{align*}
+\mathbf{g} = \mathbf{Z}\mathbf{a}
+\end{align*}
+Here we use matrix notation
+- $\mathbf{g}$, a vector of genetic values
+- $\mathbf{Z}$, genotype matrix
+- $\mathbf{g}$, a vector of SNP effects
+> [VanRaden (2008)](https://pubmed.ncbi.nlm.nih.gov/18946147/) 
+
+---
+
+# Genomic relationship
+
+The first way to calculate G matrix:
+
+\begin{align*}
+\mathbf{G} = \frac{\mathbf{ZZ'}}{2\sum p_i(1-p_i)}
+\end{align*}
+
+--
+
+The 2nd way to calculate G matrix:
+
+\begin{align*}
+\mathbf{G} = \mathbf{ZDZ'}
+\end{align*}
+
+where D is diagonal with
+
+\begin{align*}
+D_{ii} = \frac{1}{m[2p_i(1-p_i)]}
+\end{align*}
+
+> [VanRaden (2008)](https://pubmed.ncbi.nlm.nih.gov/18946147/) 
+
+---
+
+# Genomic relationship
+
+### SNP-based coancestry
+
+|  |   |  |  |
+| :--: | : --: | :--: |
+|  | Ind. A  | Ind. B | $f_{AB}$ |
+| Locus1  | AA | AT  | 0.5 | 
+| Locus2  | CG  |  CG | 0.5 | 
+| Locus 3  | TT | CC | 0 | 
+
+--
+
+The probability that two alleles taken at random, one form each individual, is
+
+\begin{align*}
+f_{AB} = \frac{\sum f_{l_i, l_j}}{L} = \frac{0.5 + 0.5}{3} = 0.33
+\end{align*}
+
+---
+
+# SNP-based coancestry
+
+In more formal terms, if $g_{A_k}$ and $g_{B_k}$ is the frequency of an allele (i.e., the minor allele) in individuals A and B.
+
+
+|  |   |  |  | |  |  |
+| :--: | : --: | :--: |:--: |:--: |
+|  | Ind. A  | Ind. B | $f_{l_{AB}}$ | Minor allele | $g_{A_k}$ | $g_{B_k}$
+| Locus1  | AA | AT  | 1 | T| 0 | 0.5 | 
+| Locus2  | CG  |  CG | 0.5 | C| 0.5 | 0.5|
+| Locus 3  | TT | CC | 0 | T | 1 | 0 |
+
+--
+
+Note that if SNP coding is __0, 1, 2__, the $g$s here are half of $\mathbf{Z}$ matrix
+- 2 for homozygous minor alleles
+- 1 for heterozygous
+- 0 for homozygous major alleles
+
+|  |   |  |  | |  |  |
+| :--: | : --: | :--: |:--: |:--: |
+|  | Ind. A  | Ind. B | $f_{l_{AB}}$ | Minor allele | $g_{A_k}$ | $g_{B_k}$
+| Locus1  | 0 | 1  | 1 | A| 0 | 0.5 | 
+| Locus2  | 1  |  1 | 0.5 | C| 0.5 | 0.5|
+| Locus 3  | 2 | 0 | 0 | T | 1 | 0 |
+
+---
+
+# SNP-based coancestry
+
+|  |   |  |  | |  |  |
+| :--: | : --: | :--: |:--: |:--: |
+|  | Ind. A  | Ind. B | $f_{l_{AB}}$ | Minor allele | $g_{A_k}$ | $g_{B_k}$
+| Locus1  | 0 | 1  | 1 | A| 0 | 0.5 | 
+| Locus2  | 1  |  1 | 0.5 | C| 0.5 | 0.5|
+| Locus 3  | 2 | 0 | 0 | T | 1 | 0 |
+
+\begin{align*}
+f_{AB} & = \frac{\sum g_{A_k}g_{B_k} + (1-g_{A_k})(1-g_{B_k})}{L} \\
+& = \frac{(0 \times 0.5 + 1 \times 0.5) + (0.5 \times 0.5 + 0.5 \times 0.5) + (1 \times 0 + 0 \times 1)}{3} \\
+& = 0.33
+\end{align*}
+
+--
+
+```{r}
+# row is the ind.s and col is the SNP loci
+Z <- matrix(c(0,1,1,1,2,0), ncol=3)
+Z
+```
+
+---
+
+# Genomic relationship
+
+\begin{align*}
+\mathbf{G} = \mathbf{ZDZ'}
+\end{align*}
+
+where D is diagonal with
+
+\begin{align*}
+D_{ii} = \frac{1}{m[2p_i(1-p_i)]}
+\end{align*}
+
+or simply the number of marker:
+
+\begin{align*}
+D_{ii} = \frac{1}{m}
+\end{align*}
+
+
+```{r}
+Z <- matrix(c(0,1,1,1,2,0), ncol=3)
+num <- Z %*% t(Z)
+
+G <- (Z %*% t(Z)) / ncol(Z)
+G
+```

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Breeding value interpretation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-10-14" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Breeding value interpretation
+### Jinliang Yang
+### Oct. 14, 2022
+
+---
+
+
+
+
+# Breeding value and dominance deviation
+
+
+| Genotype  |  Value as deviated from `\(M\)`      | Breeding Value  | Dominance Deviation  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| `\(A_1A_1\)`  |   `\(2q(\alpha - qd)\)`   | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  
+| `\(A_1A_2\)`  |   `\((q-p)\alpha + 2pqd\)`  | `\((q-p)\alpha\)` |    `\(2pqd\)`   |  
+| `\(A_2A_2\)`  |   `\(-2p(\alpha + pd)\)`  | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |   
+
+--
+### G = A + D
+
+- The mean of the BV is **zero**
+
+- It follows that the mean dominance deviation is **zero**.
+
+
+
+---
+# A Linear Regression Perspective
+
+### G = A + D
+
+- **A** repsents the breeding value (i.e., A = `\(\alpha_i + \alpha_j\)`)
+- **D** represents the dominance deviation
+
+--
+
+### Further breakdown __A__:
+
+`\begin{align*}
+ G = &amp; \alpha_1N_1 + \alpha_2N_2 + \delta
+\end{align*}`
+
+--
+
+- `\(\alpha_i\)` is the average effect of allele `\(i\)` and `\(\alpha = \alpha_1 - \alpha_2\)`
+- `\(N_i\)` is the number of allele `\(i\)` carried by the genotype
+- `\(N \in \{0, 1, 2\}\)` for a bi-allelic locus and `\(N_1 + N_2 = 2\)` 
+
+--
+
+Therefore,
+
+`\begin{align*}
+ G = &amp; \alpha_1N_1 + \alpha_2N_2 + \delta =  \alpha_1N_1 + \alpha_2(2 - N_1) + \delta  \\
+   = &amp; 2\alpha_2 + (\alpha_1 - \alpha_2)N_1 + \delta \\
+   = &amp; (2\alpha_2 + \delta) + \alpha N_1
+\end{align*}`
+
+
+
+---
+# Graphical Representation
+
+
+| Genotype  |  Value as deviated from `\(M\)`      | Breeding Value  | Dominance Deviation  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| `\(A_1A_1\)`  |   `\(2q(\alpha - qd)\)`   | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  
+| `\(A_1A_2\)`  |   `\((q-p)\alpha + 2pqd\)`  | `\((q-p)\alpha\)` |    `\(2pqd\)`   |  
+| `\(A_2A_2\)`  |   `\(-2p(\alpha + pd)\)`  | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |   
+
+An R function to calculate genotypic values
+
+
+```r
+gfunction &lt;- function(a=1, d=0, p=1/2){
+   # a: additive effect
+   # d: dominance effect
+   # p: allele frequency for the A1 allele
+   
+   q = 1-p
+   # allele sub effect
+   alpha &lt;- a + d*(q-p)
+   a1a1 &lt;- 2*alpha*q
+   a1a2 &lt;- (q-p)*alpha
+   a2a2 &lt;- -2*p*alpha
+   
+   # population mean
+   M &lt;- a*(p-q) + 2*d*p*q
+   # return a data.frame with genotype values and breeding values
+   return(data.frame(N1=c(0,1,2), gv=c(-a-M,d-M,a-M), bv=c(a2a2, a1a2, a1a1)))
+}
+```
+
+---
+# Graphical Representation
+
+### Apply the R function
+
+
+```r
+out &lt;- gfunction(a=1, d=-1, p=1/3)
+#out
+out$dd &lt;- out$gv - out$bv
+out
+```
+
+```
+##   N1         gv         bv         dd
+## 1  0 -0.2222222 -0.4444444  0.2222222
+## 2  1 -0.2222222  0.2222222 -0.4444444
+## 3  2  1.7777778  0.8888889  0.8888889
+```
+
+---
+# Plot the results
+
+
+```r
+plot(out$N1, out$gv, xlab="Genotype", ylab="", ylim=c(-1, 2), cex.lab=1.5, xaxt="n", pch=17, cex=2, col="red"); 
+# add the axis and labels
+axis(1, at=c(0, 1, 2), labels=c("A2A2", "A1A2", "A1A1")); 
+# add y-axis title on the right side
+mtext("Breeding Value", side = 4, line = 1, cex=1.5, col="blue"); 
+# add y-axis title on the left side
+mtext("Genotypic Value", side = 2, line = 2, cex=1.5, col="red")
+# add breeding values
+points(out$N1, out$bv, cex=2, col="blue")
+# join the points by a line
+lines(out$N1, out$bv, lwd=2, col="blue")
+```
+
+&lt;img src="week8_c3_files/figure-html/unnamed-chunk-3-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# Graphical Representation
+
+The relationship between genotypic values, breeding values and dominance deviations.
+
+`\begin{align*}
+G = &amp; 2\alpha_2  + \alpha N_1 + \delta
+\end{align*}`
+
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="linear.png" height=350&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+- The __slope__ is the average effect of allele substitution. 
+  - As `\(A_1\)` is substituted by `\(A_2\)`, the breeding value increaes at a rate equal to `\(\alpha\)`.
+
+- Dominance can be seen as __residuals__ from the fitted regression line.
+  - Dominance deviation are the differences between the genotypic values and breeding values.
+  
+]
+
+---
+# Predicting BV: a real-world data
+
+
+```r
+# read phenotype and genotype data
+flowering &lt;- read.table("https://jyanglab.com/slides/flowering.csv", 
+                        sep=",", header=TRUE)
+dim(flowering)
+```
+
+```
+## [1] 413   7
+```
+
+```r
+head(flowering)
+```
+
+```
+##   FID IID Flowering_time snp1 snp2 snp3     type
+## 1  F1   1       85.08333    2    2    1 training
+## 2  F2   3      101.50000    2    2    2 training
+## 3  F3   4      106.50000    2    2    2 training
+## 4  F4   5       99.50000    2    2    2 training
+## 5  F5   6       95.08333    1    1    1 training
+## 6  F6   7      111.00000    1    1    1 training
+```
+
+```r
+table(flowering$type)
+```
+
+```
+## 
+##     test training 
+##       63      350
+```
+
+```r
+f &lt;- subset(flowering, type == "training")
+```
+
+---
+# Visualize the phenotypic data
+
+
+```r
+library(ggplot2)
+p &lt;- ggplot(f, aes(x=Flowering_time, fill=as.factor(snp1))) +
+  geom_histogram(position="dodge")+
+  # Use brewer color palettes
+  scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) +
+  guides(fill=guide_legend(title="Genotype")) +
+  theme_classic() +
+  theme(legend.position=c(0.8, 0.8), axis.text=element_text(size=20),
+              axis.title=element_text(size=20))
+p
+```
+
+&lt;img src="week8_c3_files/figure-html/unnamed-chunk-5-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+# A real-world data
+
+Let's find out the breeding value for each individual.
+
+--
+
+###  Training
+
+- #### Step1: For each SNP, find out `\(a, d, -p\)`, and `\(M\)`
+
+- #### Step2: Compute average effect for A1 and A2
+
+--
+
+###  Prediction
+
+- #### Step3: Sum up the BV of all SNPs
+
+---
+#  Training
+
+#### Step1: For each SNP, find out __ `\(a\)`__, __ `\(d\)`__, `\(p\)`, and `\(M\)`
+
+The number of copies of the A1 allele:
+- A1A1 -&gt; 2 
+- A1A2 -&gt; 1
+- A2A2 -&gt; 0
+
+
+```r
+A1A1 &lt;- mean(subset(f, snp1 == 2)$Flowering_time, na.rm=TRUE)
+A1A2 &lt;- mean(subset(f, snp1 == 1)$Flowering_time, na.rm=TRUE)
+A2A2 &lt;- mean(subset(f, snp1 == 0)$Flowering_time, na.rm=TRUE)
+A1A1
+```
+
+```
+## [1] 99.13419
+```
+
+```r
+A1A2
+```
+
+```
+## [1] 96.27799
+```
+
+```r
+A2A2
+```
+
+```
+## [1] 92.94753
+```
+
+---
+
+#  Training
+
+#### Step1: For each SNP, find out __ `\(a\)`__, __ `\(d\)`__, `\(p\)`, and `\(M\)`
+
+
+```r
+### mid point
+m &lt;- (A1A1 + A2A2)/2
+a &lt;- A1A1 - m
+d &lt;- A1A2 - m
+```
+
+---
+#  Training
+
+#### Step1: For each SNP, find out `\(a, d\)`, __ `\(p\)`__, and `\(M\)`
+
+
+Allele freq for __A1__ (Note it is in __`2`__ coding)
+
+
+```r
+table(f$snp1)
+```
+
+```
+## 
+##   0   1   2 
+##  10 124 216
+```
+
+--
+
+
+```r
+getp &lt;- function(df=f$snp1){
+  t &lt;- as.data.frame(table(df))
+  c11 &lt;- subset(t, df==2)$Freq
+  c12 &lt;- subset(t, df==1)$Freq
+  c22 &lt;- subset(t, df==0)$Freq
+  return((2*c11+c12)/(2*c11+2*c12 +2*c22))
+}
+p &lt;- getp(df=f$snp1)
+p
+```
+
+```
+## [1] 0.7942857
+```
+
+```r
+q &lt;- 1 -p
+```
+
+---
+# Get population mean
+
+#### Step1: For each SNP, find out `\(a, d\)`, `\(p\)`, and __ `\(M\)`__
+
+
+```r
+M1 &lt;- mean(f$Flowering_time, na.rm=T)
+M1
+```
+
+```
+## [1] 97.96743
+```
+
+```r
+M2 &lt;- a*(p-q) + 2*d*p*q
+M2
+```
+
+```
+## [1] 1.898136
+```
+
+```r
+M1 - M2
+```
+
+```
+## [1] 96.0693
+```
+
+```r
+m
+```
+
+```
+## [1] 96.04086
+```
+
+
+---
+#  Training
+
+#### Step2: Average effect for A1 and A2
+
+| Genotype  |  Value as deviated from `\(M\)`      | Breeding Value  | Dominance Deviation  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| `\(A_1A_1\)`  |   `\(2q(\alpha - qd)\)`   | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  
+| `\(A_1A_2\)`  |   `\((q-p)\alpha + 2pqd\)`  | `\((q-p)\alpha\)` |    `\(2pqd\)`   |  
+| `\(A_2A_2\)`  |   `\(-2p(\alpha + pd)\)`  | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |   
+
+--
+
+
+```r
+# allele sub effect
+alpha &lt;- a + d*(q-p) 
+a1a1 &lt;- 2*alpha*q 
+a1a2 &lt;- (q-p)*alpha 
+a2a2 &lt;- -2*p*alpha 
+```
+
+--
+
+Apply the previous `gfunction` to get BV for snp1
+
+
+```r
+out2 &lt;- gfunction(a=a, d=d, p=p)
+out2
+```
+
+```
+##   N1        gv        bv
+## 1  0 -4.991466 -4.692268
+## 2  1 -1.661012 -1.738502
+## 3  2  1.195194  1.215264
+```
+
+---
+
+### Repeat the process for snp2 and snp3
+
+
+```r
+bv &lt;- function(f, snpid="snp1", trait="Flowering_time"){
+  A1A1 &lt;- mean(f[f[, snpid]==0, trait], na.rm=TRUE)
+  A1A2 &lt;- mean(f[f[, snpid]==1, trait], na.rm=TRUE)
+  A2A2 &lt;- mean(f[f[, snpid]==2, trait], na.rm=TRUE)
+  m &lt;- (A1A1 + A2A2)/2
+  a &lt;- A1A1 - m
+  d &lt;- A1A2 - m
+  p &lt;- getp(df=f[, snpid])
+  q &lt;- 1 -p
+  alpha &lt;- a + d*(q-p) 
+  a1a1 &lt;- 2*alpha*q
+  a1a2 &lt;- (q-p)*alpha
+  a2a2 &lt;- -2*p*alpha
+  out &lt;- data.frame(N1=c(0,1,2), bv=c(a2a2, a1a2, a1a1))
+  return(out)
+}
+
+bv(f, snpid="snp1", trait="Flowering_time")
+```
+
+```
+##   N1        bv
+## 1  0  5.135684
+## 2  1  1.902789
+## 3  2 -1.330105
+```
+
+---
+
+# Prediction
+
+### Step3: Sum up the BV of all SNPs
+
+
+BV is the sum of the average effects of the alleles an individual carries.
+
+`\begin{align*}
+BV =  \sum_{i=1}^k\sum_{j=1}^2\alpha_{ij}
+\end{align*}`
+
+Where summation occurs across the number of loci ( `\(k\)` ) and the two alleles present at each locus.
+
+--
+
+
+```r
+b1 &lt;- bv(f, snpid="snp1", trait="Flowering_time")
+b2 &lt;- bv(f, snpid="snp2", trait="Flowering_time")
+b3 &lt;- bv(f, snpid="snp3", trait="Flowering_time")
+b3
+```
+
+```
+##   N1        bv
+## 1  0  2.405023
+## 2  1  0.640331
+## 3  2 -1.124361
+```
+
+---
+
+# Prediction
+
+### Step3: Sum up the BV of all SNPs
+
+
+```r
+t &lt;- subset(flowering, type=="test")
+dim(t)
+```
+
+```
+## [1] 63  7
+```
+
+```r
+head(t)
+```
+
+```
+##      FID IID Flowering_time snp1 snp2 snp3 type
+## 351 F351  52             NA    2    2    0 test
+## 352 F352  54       118.8333    1    2    2 test
+## 353 F353  62             NA    2    1    2 test
+## 354 F354  64             NA    2    2    2 test
+## 355 F355  91             NA    2    2    0 test
+## 356 F356 104        89.5000    2    2    2 test
+```
+
+--
+
+BV for individual `F356`:
+
+
+```r
+b1[b1$N1 ==2, ]$bv + b2[b2$N1 ==2, ]$bv + b3[b3$N1 ==2, ]$bv + M1
+```
+
+```
+## [1] 95.48984
+```
+
+---
+
+# Prediction
+
+### Step3: Sum up the BV of all SNPs
+
+
+```r
+mygs &lt;- function(t, b1, b2, b3){
+  t$yhat &lt;- -9
+  for(i in 1:nrow(t)){
+    t$yhat[i] &lt;- b1[b1$N1 == t$snp1[i], ]$bv + b2[b2$N1 == t$snp2[i], ]$bv + b3[b3$N1 == t$snp3[i], ]$bv
+  }
+  return(t)
+}
+
+out &lt;- mygs(t, b1, b2, b3)
+
+out &lt;- subset(out, !is.na(Flowering_time))
+cor.test(out$Flowering_time, out$yhat+M1)
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  out$Flowering_time and out$yhat + M1
+## t = -1.1976, df = 55, p-value = 0.2362
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.4032380  0.1055306
+## sample estimates:
+##        cor 
+## -0.1594208
+```
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Response to selection</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-11-07" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Response to selection
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Nov. 7, 2022
+]
+
+---
+
+
+
+
+
+
+# The improvement through breeding
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="yield.png" height=300&gt;
+&lt;/div&gt;
+
+&lt;div align="center"&gt;
+&lt;img src="milk-per-cow.jpg" height=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+
+## Response to selection
+### 1. Why has a character changed over generations?
+### 2. Can we predict a change?
+
+Especially one that we wish for in a direction, through actions such as imposing artificial selection?
+
+]
+
+
+---
+
+# Response to selection
+
+Change, or response ( `\(R\)` ), is given by the basic equation:
+
+`\begin{align*}
+R = h^2S
+\end{align*}`
+
+- Here `\(S\)` is the __selection differential__
+
+- Is equal to the mean value of the selected parents ( `\(\mu_S\)` ) minus the population mean ( `\(\mu\)` ).
+
+ ------
+ 
+--
+
+&lt;div align="center"&gt;
+&lt;img src="fig11.png" height=300&gt;
+&lt;/div&gt;
+
+---
+
+# Response to selection
+
+Change, or response ( `\(R\)` ), is given by the basic equation:
+
+`\begin{align*}
+R = h^2S
+\end{align*}`
+
+- Here `\(S\)` is the __selection differential__
+
+- Is equal to the mean value of the selected parents ( `\(\mu_S\)` ) minus the population mean ( `\(\mu\)` ).
+
+------
+ 
+The regression of offspring on mid-parent is equal to the heritability
+  - No non-genetic cause of resemblance
+  - No natural selection, i.e. same fertility and viability
+  
+--
+
+Therefore,
+
+`\begin{align*}
+R = b_{O\bar{P}}S \\
+R = h^2S
+\end{align*}`
+
+
+---
+
+# Response to selection
+
+Change, or response ( `\(R\)` ), is given by the basic equation:
+
+`\begin{align*}
+R = h^2S
+\end{align*}`
+
+Here S is the __selection differential__, which is equal to the mean value of the selected parents ( `\(\mu_S\)` ) minus the population mean ( `\(\mu\)` ).
+
+ ------
+ 
+
+.pull-left[
+Improve the body weight
+&lt;div align="center"&gt;
+&lt;img src="poultry.jpg" height=180&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+1. Base population ( `\(N=100\)` ) mean = 1,000g
+
+2. Selected 5 chicken as the parents, with mean =1,050g.
+
+What is `\(S\)`?
+]
+
+---
+
+# Response to selection
+
+Change, or response ( `\(R\)` ), is given by the basic equation:
+
+`\begin{align*}
+R = h^2S
+\end{align*}`
+
+Here S is the __selection differential__, which is equal to the mean value of the selected parents ( `\(\mu_S\)` ) minus the population mean ( `\(\mu\)` ).
+
+ ------
+ 
+
+.pull-left[
+Improve the body weight
+&lt;div align="center"&gt;
+&lt;img src="poultry.jpg" height=180&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+1. Base population ( `\(N=100\)` ) mean = 1,000g
+
+2. Selected 5 chicken as the parents, with mean =1,050g.
+
+If `\(b_{OP}\)` = 0.25.
+
+What is `\(R\)`?
+]
+
+---
+
+# Standardized selection differential
+
+With the assumption that the phenotypic distributions are normal.
+
+- Same `\(S\)` means different selection pressure if the variances of the normal distributions are different
+
+--
+
+#### Selection differential in standard deviation units:
+
+`\begin{align*}
+\frac{S}{\sigma_P}
+\end{align*}`
+
+--
+
+### __Intensity of selection ( `\(i\)` )__
+
+`\begin{align*}
+i = \frac{S}{\sigma_P}
+\end{align*}`
+
+- `\(i\)` is the "standarized selection differential"
+
+- it better reflects the selection effort
+
+---
+
+# Intensity of selection ( `\(i\)` )
+
+.pull-left[
+- With the assumption that the phenotypic distributions are normal.
+
+- And standardize the selection differential:
+`\begin{align*}
+&amp;i= \frac{S}{\sigma_P} \\
+\end{align*}`
+]
+
+
+.pull-right[
+
+```r
+curve(dnorm(x,0,1), xlim=c(-3,3), xaxt="n", xlab="Trait Value", main="", ylab="Density", lwd=3)
+fromd &lt;- qnorm(.95); tod &lt;- 3
+S.x  &lt;- c(fromd, seq(fromd, tod, 0.01), tod)
+S.y  &lt;- c(0, dnorm(seq(fromd, tod, 0.01)), 0)
+polygon(S.x,S.y, col="grey")
+abline(v=mean(S.x**S.y)*2, col="blue", lwd=3); abline(v=0, col="red", lwd=3)
+```
+
+&lt;img src="w12_c1_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Intensity of selection ( `\(i\)` )
+
+.pull-left[
+
+`\begin{align*}
+&amp;i= \frac{S}{\sigma_P} \\
+\end{align*}`
+
+
+- If `\(p\)` is __the proportion selected__, i.e. the proportion of the population falling beyond the point of truncation.
+
+- And `\(z\)` is the __height of the ordinate__ at the point of truncation.
+
+`\begin{align*}
+i = \frac{z}{p}
+\end{align*}`
+]
+
+
+.pull-right[
+
+```r
+curve(dnorm(x,0,1), xlim=c(-3,3), xaxt="n", xlab="Trait Value", main="", ylab="Density", lwd=3)
+fromd &lt;- qnorm(.95); tod &lt;- 3
+S.x  &lt;- c(fromd, seq(fromd, tod, 0.01), tod)
+S.y  &lt;- c(0, dnorm(seq(fromd, tod, 0.01)), 0)
+polygon(S.x,S.y, col="grey")
+abline(v=mean(S.x**S.y)*2, col="blue", lwd=3); 
+abline(v=0, col="red", lwd=3)
+```
+
+&lt;img src="w12_c1_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Intensity of selection ( `\(i\)` )
+
+A table of these values is found in Appendix A of the F&amp;M book.
+
+.pull-left[
+
+```r
+ifun &lt;- function(p=0.5){
+  x=qnorm(p=(1-p)) # get the truncation point
+  z=dnorm(x) # get z
+  return(z/p) # get i
+}
+
+p &lt;- seq(0.005, 1, by=0.005)
+i &lt;- ifun(p)
+plot(p, i)
+```
+
+&lt;img src="w12_c1_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+head(data.frame(p, i), 20)
+```
+
+```
+##        p        i
+## 1  0.005 2.891949
+## 2  0.010 2.665214
+## 3  0.015 2.524695
+## 4  0.020 2.420907
+## 5  0.025 2.337803
+## 6  0.030 2.268065
+## 7  0.035 2.207716
+## 8  0.040 2.154344
+## 9  0.045 2.106373
+## 10 0.050 2.062713
+## 11 0.055 2.022578
+## 12 0.060 1.985383
+## 13 0.065 1.950678
+## 14 0.070 1.918113
+## 15 0.075 1.887406
+## 16 0.080 1.858328
+## 17 0.085 1.830692
+## 18 0.090 1.804340
+## 19 0.095 1.779142
+## 20 0.100 1.754983
+```
+]
+
+---
+
+# Breeder's equation
+
+Given:
+`\begin{align*}
+&amp;R = h^2S\\
+&amp;S = i\sigma_P&amp;
+\end{align*}`
+
+--
+
+So now, we have, as a prediction:
+
+`\begin{align*}
+&amp;R = h^2i\sigma_P\\
+\end{align*}`
+
+where `\(i = \frac{z}{p}\)`.
+
+---
+
+# Breeder's equation
+
+`\begin{align*}
+&amp;R = h^2i\sigma_P\\
+&amp;i = \frac{z}{p}&amp;
+\end{align*}`
+
+
+.pull-left[
+### Genders
+
+With differential selection opportunities between genders in sexual reproduction, we need to account for this in our predictions:
+
+`\begin{align*}
+&amp;i = \frac{1}{2}(i_m + i_f)&amp;
+\end{align*}`
+
+]
+
+--
+
+.pull-right[
+### Generation interval
+
+Generation interval ( `\(L\)` ) is the __"average age of the parents at the birth of their selected offspring"__.
+- it is when they effectively leave the next generation that is then sampled to repeat the selection process.
+
+`\begin{align*}
+&amp;L = \frac{1}{2}(L_m + L_f)&amp;
+\end{align*}`
+
+]
+
+
+---
+# Breeder's equation
+
+Now, on a time-constant basis to allow comparisons of alternatives:
+
+`\begin{align*}
+R &amp; = \frac{i}{L}h^2\sigma_P\\
+&amp; = \frac{i_m + i_f}{L_m + L_f}h^2\sigma_P\\
+\end{align*}`
+
+With the `\(h^2\)` and `\(\sigma_P\)` terms possibly constant, we can simply compare the `\(\frac{i}{L}\)` portions under different scenarios of selection and reproduction.
+
+---
+
+# Example: selection for body weight
+
+A poultry breeder is selecting for 56-day body weight in chicken.
+
+- __Base population__: a random mating population of 154 males and 155 females. Mean value = 1,000g; sd = 50g.
+
+- __Selection scheme__: 8 males and 48 females with the highest body weight to found the next generation.
+- __h2__: from previous parent-offspring regression and half-sib analysis, `\(h^2=0.45\)`.
+
+--
+
+#### What is the predicted response to selection in next generation?
+
+
+`\begin{align*}
+&amp; R = \frac{i_m + i_f}{2}h^2\sigma_P\\
+\end{align*}`
+
+--
+
+
+```r
+i_m &lt;- ifun(p= 8/154) #2.05
+i_f &lt;- ifun(p= 48/155) # 1.14
+(i_m + i_f)/2*0.45*50
+```
+
+```
+## [1] 35.8358
+```
+
+
+---
+
+# Example: selection for body weight in chicken
+
+A poultry breeder is selecting for 56-day body weight in chicken.
+
+- __Base population__: a random mating population of 154 males and 155 females. Mean value = 1,000g; sd = 50g.
+
+- __Selection scheme__: 8 males and 48 females with the highest body weight to found the next generation.
+- __h2__: from previous parent-offspring regression and half-sib analysis, `\(h^2=0.45\)`.
+
+
+#### What is the selection differential for the male and female?
+
+`\begin{align*}
+&amp;S = i\sigma_P&amp;
+\end{align*}`
+
+--
+
+
+```r
+Sm &lt;- i_m*50 #102
+Sf &lt;- i_f*50 # 57
+```
+
+--
+
+Why response 36g not equal to average value of the `\(S_m\)` and `\(S_f\)`?
+
+
+---
+
+# Example: selection for body weight
+
+
+&lt;div align="center"&gt;
+&lt;img src="fig11.png" height=300&gt;
+&lt;/div&gt;
+
+- `\(S_m =102\)` and `\(S_f=57\)` are the means of the selected parents
+- `\(R=36\)` is the mean of the offspring.
+
+--
+
+Not equal because the heritability is less than one, which means that the phenotypes of the parents was less than a perfect indictor of their breeding values.
+
+
+---
+
+# Improvement of response
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+The form of the breeder's equation allows us to clearly see how to maximize response to selection per unit of time.
+
+--
+
+### 1. Reduce the generation interval
+This factor is bound by the biology of the organisms, but ways to reduce the generation interval are possible.
+
+--
+
+ - Selection during the off-season in plants
+ 
+  - winter nursery
+  - [speed breeding](https://youtu.be/Zwk1IGYPJiA) (Watson et al., 2018), up to 6 six generations per year
+
+--
+
+ - __Genomic selection__
+  - Selection without phenotyping
+ 
+
+---
+
+# Improvement of response
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+
+### 2. Increase the heritability of the trait
+Depends on the genetic architecture, not always under the control of the breeder.
+
+--
+
+ - Maximizing the repeatability of trait evaluation.
+ 
+ - Sound measurement methods and proper experimental design
+ 
+---
+
+# Improvement of response
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+
+### 3. Increase the selection intensity
+
+- Reduce the number of individuals selected to serve as parents of the next generation
+
+--
+  - __Be cautious__: increase the inbreeding coefficient and hence loss of alleles through genetic drift.
+  
+  - __Increase `\(i\)` is likely not the most efficient path!__
+    i.e. p from 10% to 5% =&gt; i from 1.755 to 2.063.
+
+--
+
+- Increase the population size from which selections are made
+
+ 
+---
+
+# Improvement of response
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+
+### 4. Increase additive genetic variance
+
+`\begin{align*}
+&amp; h^2 = \frac{\sigma_A^2}{\sigma^2_P}; &amp; h = \frac{\sigma_A}{\sigma_P} \\
+\end{align*}`
+
+--
+
+`\begin{align*}
+&amp; R =  i h\sigma_A/L\\
+\end{align*}`
+
+--
+
+- The breeding population needs to contain adequate additive genetic variation for the trait of interest.
+
+- If no difference in breeding values exist between individuals within the population, genetic gain through selection is not possible.
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
