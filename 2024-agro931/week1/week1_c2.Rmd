@@ -1,7 +1,7 @@
 ---
 title: "Hardy-Weinberg Equilibrium"
 author: "Jinliang Yang"
-date: "Aug. 24, 2022"
+date: "Jan. 24, 2024"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]
