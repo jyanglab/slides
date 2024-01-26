@@ -1,7 +1,7 @@
 ---
 title: "Changes in allele frequency"
 author: "Jinliang Yang"
-date: "Aug. 29, 2022"
+date: "Jan. 29, 2024"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]
@@ -31,7 +31,7 @@ Predictable both in amount and in direction
 
 ### Stochastic process
 
-Arises in small populations from the effect of sampling.
+Arises in small populations from the effect of sampling
 
 - Predictable in amount but not in direction
 
@@ -104,7 +104,7 @@ plot(x=n, y=(1-1/2)^n, type="l", lwd=3)
 - Viruses
   - $1 \times 10^{-3}$ to $1 \times 10^{-5}$ per base/generation
   
-  - SARS-CoV-2: spontaneous mutation rate of $1.3 \times 10^{-6}$ (this study found spike protein accumulated five times more mutations => consistent with the action of positive selection)
+  - SARS-CoV-2: spontaneous mutation rate of $1.3 \times 10^{-6}$ (the below study found spike protein accumulated five times more mutations)
    > Amicone et al 2022
 
 
@@ -112,8 +112,8 @@ plot(x=n, y=(1-1/2)^n, type="l", lwd=3)
 
 # Recurrent Mutation
 
-- Forward mutation rate __ $\mu$__ from $A_1$ -> $A_2$
-- Backward mutation rate __ $\nu$__ from $A_1$ <- $A_2$
+- Forward mutation rate __ $\mu$__ from $A_1$ $\rightarrow$ $A_2$
+- Backward mutation rate __ $\nu$__ from $A_1$ $\leftarrow$ $A_2$
 
 - Given the initial allele freq $p_0$ for $A_1$ and $q_0$ for $A_2$
 

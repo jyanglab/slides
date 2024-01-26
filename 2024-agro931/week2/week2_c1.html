@@ -4,7 +4,7 @@
     <title>Changes in allele frequency</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2022-08-29" />
+    <meta name="date" content="2024-01-29" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -13,9 +13,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Changes in allele frequency
+]
+.author[
 ### Jinliang Yang
-### Aug. 29, 2022
+]
+.date[
+### Jan. 29, 2024
+]
 
 ---
 
@@ -38,7 +44,7 @@ Predictable both in amount and in direction
 
 ### Stochastic process
 
-Arises in small populations from the effect of sampling.
+Arises in small populations from the effect of sampling
 
 - Predictable in amount but not in direction
 
@@ -108,7 +114,7 @@ Change in allele freq:
 - Viruses
   - `\(1 \times 10^{-3}\)` to `\(1 \times 10^{-5}\)` per base/generation
   
-  - SARS-CoV-2: spontaneous mutation rate of `\(1.3 \times 10^{-6}\)` (this study found spike protein accumulated five times more mutations =&gt; consistent with the action of positive selection)
+  - SARS-CoV-2: spontaneous mutation rate of `\(1.3 \times 10^{-6}\)` (the below study found spike protein accumulated five times more mutations)
    &gt; Amicone et al 2022
 
 
@@ -116,8 +122,8 @@ Change in allele freq:
 
 # Recurrent Mutation
 
-- Forward mutation rate __ `\(\mu\)`__ from `\(A_1\)` -&gt; `\(A_2\)`
-- Backward mutation rate __ `\(\nu\)`__ from `\(A_1\)` &lt;- `\(A_2\)`
+- Forward mutation rate __ `\(\mu\)`__ from `\(A_1\)` `\(\rightarrow\)` `\(A_2\)`
+- Backward mutation rate __ `\(\nu\)`__ from `\(A_1\)` `\(\leftarrow\)` `\(A_2\)`
 
 - Given the initial allele freq `\(p_0\)` for `\(A_1\)` and `\(q_0\)` for `\(A_2\)`
 
@@ -206,6 +212,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
