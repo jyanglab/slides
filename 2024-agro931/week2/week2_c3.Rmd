@@ -176,7 +176,7 @@ A binomial distribution can be thought of as simply the probability of a __SUCCE
 ### Distribution function
 
 \begin{align*}
-Pr(X=x) & = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+Pr(X=x) & = \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}
 \end{align*}
 
 - $n$, number of trials
@@ -206,7 +206,7 @@ __Flipping a coin to get heads__
 
 
 \begin{align*}
-Pr(X=x) & = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+Pr(X=x) & = \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}
 \end{align*}
 
 - $n$, number of trials -  __total times we flip the coin__
@@ -236,7 +236,7 @@ __Get $A_1$ allele__
 
 
 \begin{align*}
-Pr(X=x) & = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+Pr(X=x) & = \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}
 \end{align*}
 
 - $n$, number of trials -  __total number of gametes ( $2N$ )__
@@ -249,7 +249,7 @@ Pr(X=x) & = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
 # Variance of allele frequencies
 
 \begin{align*}
-Pr(X=x) & = \frac{n!}{x!(n=x)!}p^x(1-p)^{n-x}
+Pr(X=x) & = \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}
 \end{align*}
 
 - Let $X=$ number of $A_1$ alleles in the sample 
