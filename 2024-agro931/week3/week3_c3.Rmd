@@ -1,7 +1,7 @@
 ---
 title: "Heterozygosity and Diversity"
 author: "Jinliang Yang"
-date: "Sept. 14, 2022"
+date: "Feb. 9, 2024"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]
