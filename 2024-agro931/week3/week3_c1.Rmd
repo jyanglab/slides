@@ -70,24 +70,6 @@ In the absence of migration, mutation, or selection, what is the allele freq ove
 
 # Genotype frequencies
 
-<div align="center">
-<img src="sim_drift.png" height=300>
-</div>
-
---
-
-- Dispersion via drift leads to increased variation among lines and less within each line
-
---
-
-- For the population as a whole, this leads to __increased homozygosity__
-(decreased heterozygosity)
-  - Homozygotes are gained at the expense of heterozygotes
-
----
-
-# Genotype frequencies
-
 - Genotype frequencies can be deduced from the variance in allele frequencies
 
 | Genotype | Frequency in whole population   |
@@ -248,13 +230,13 @@ Using a symbol $P$ for the complement of the inbreeding coefficient $1-F$
 & \frac{P_t}{P_{t-1}} = 1 - \Delta F \\
 \end{align*}
   
-Thus, the P index is reduced by a constant proportion each generation.  
+Thus, the $P$ index is reduced by a constant proportion each generation.  
 
 ---
 
 # Panmictic (random mating) index
 
-The P index is reduced by a constant proportion each generation.  
+The $P$ index is reduced by a constant proportion each generation.  
 \begin{align*}
 & \frac{P_t}{P_{t-1}} = 1 - \Delta F \\
 \end{align*}
@@ -267,7 +249,7 @@ The P index is reduced by a constant proportion each generation.
 & \frac{P_t}{P_{t-2}} = (1 - \Delta F)^2 \\
 \end{align*}
 
-- From gen 0 to gen t:
+- From gen $0$ to gen $t$:
 
 \begin{align*}
 & \frac{P_t}{P_0} = (1 - \Delta F)^t \\
@@ -327,7 +309,7 @@ V(p_t) = V(q_t) = p_0q_0 (1 - (1 - \frac{1}{2N})^t)
 ---------------
 
 - $\Delta F$ is the rate of dispersion
-- $F$ is the cumulative effect of drift
+- $F_t$ is the cumulative effect of drift
 
 ---
 
