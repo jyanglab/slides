@@ -1,5 +1,5 @@
 ---
-title: "Heterozygosity and Diversity"
+title: "Diversity"
 author: "Jinliang Yang"
 date: "Feb. 9, 2024"
 output:
@@ -15,82 +15,7 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
-# Systematic and dispersive processes
 
-### Systematic process: mutation, migration, and selection
-
-- Bring the allele frequencies to stable equilibria at particular value
-
-
---
-
-### Dispersive process - drift
-
-- Scatter the allele frequencies away from these equilibrium
-
-- Eventually lead to all alleles being either fixed or lost
-
-
----
-
-# Non-recurrent neutral mutation
-
-### Infinite allele model (IAM) of mutation
-
-  - Probability of the same mutation occurs more than once is very, very, very small
-  
---
-
-### Neutral model (new allele has no effect on fitness)
-
-  - Probability new allele becomes fixed in the absence of selection = $\frac{1}{2N}$
-  
-  - If $\mu$ is mutation rate at the locus, total number of new mutants = $2N\mu$
-  
-  - Probability of a new mutant being fixed $= 2N \mu \times \frac{1}{2N} = \mu$
-
-> Kimura, 1983
-
-
----
-
-# Effective neutral mutation
-
-#### Probability of fixation of new mutation is influenced by selection 
-
-- Favorable (beneficial) or unfavorable (deleterious)
-
---
-
-\begin{align*}
-Pr(fixation) \approx \frac{1}{2N_e}
-\end{align*}
-> Kimura, 1983
-
-- __Effective neutral mutation__ is one  a coefficient of selection $s$ against it
-  - Range from $s=0$ (neutral) to $s=\frac{1}{2N_e}$ or 
-
---
-
-  - $N_es < 1/2$: effectively neutral
-  
-  - $N_es > 1/2$: under selection
-
----
-
-# Effective neutral mutation
-
-### $N_es < 1/2$: effectively neutral
-
-For example, inbred lines of mice resulting from sib matings have $N_e \approx 2.5$
-
-- To keep $N_es < 1/2$, $s$ can be as high as 0.2 and this allele could become fixed due to drift and have a negative effect on fitness
-
---
-
-- The indication: favorable mutants are far too rare to conter balance the loss of fitness in small population!
-
----
 
 # Selection and drift
 
@@ -123,7 +48,7 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{4N_es} = \fra
 # Probability of fixation under selection
 
 \begin{align*}
-Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} = \frac{1}{2N_e}
 \end{align*}
 
 > Moran, 1959
