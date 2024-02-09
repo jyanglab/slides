@@ -1,7 +1,7 @@
 ---
-title: "Diversity"
+title: "Selection-Drift and Diversity"
 author: "Jinliang Yang"
-date: "Feb. 9, 2024"
+date: "Feb. 12, 2024"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]
@@ -48,7 +48,7 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{4N_es} = \fra
 # Probability of fixation under selection
 
 \begin{align*}
-Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} = \frac{1}{2N_e}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{1}{2N_e}
 \end{align*}
 
 > Moran, 1959
@@ -104,11 +104,26 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
 
 --
 
-- Favorable mutations likely be lost
+- Favorable mutations likely be lost (and deleterious mutations can be fixed)
+  - __Genetic costs of domestication__: the increase of the deleterious mutational load of domesticated species
+
+--
 
 - Mutation with a 1% advantage (heterozygous, $s=0.01$), has 2% probability of being fixed
 
 - If 10% advantage $s=0.1$, probability becomes 20%
+
+---
+
+# The genetic load in elite maize
+
+<div align="center">
+<img src="pgen.png" width=400>
+</div>
+
+- Using __GERP (genomic evolutionary rate profiling)__ to measure deleteriousness
+
+> [Yang et al., 2017](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007019)
 
 ---
 
@@ -131,6 +146,17 @@ Pr(fixation) \approx 1.13 \sqrt{\frac{s}{2N_e}}
 - $s$ is the selective advantage of homozygote mutant
 
 > Kimura, 1962
+
+---
+
+# A human genetic study
+
+<div align="center">
+<img src="load.png" width=400>
+</div>
+
+> [Simons et al., 2014](https://www.nature.com/articles/ng.2896)
+
 
 ---
 

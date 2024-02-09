@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Diversity</title>
+    <title>Selection-Drift and Diversity</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-02-09" />
+    <meta name="date" content="2024-02-12" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -14,13 +14,13 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Diversity
+# Selection-Drift and Diversity
 ]
 .author[
 ### Jinliang Yang
 ]
 .date[
-### Feb. 9, 2024
+### Feb. 12, 2024
 ]
 
 ---
@@ -61,7 +61,7 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{4N_es} = \fra
 # Probability of fixation under selection
 
 `\begin{align*}
-Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} = \frac{1}{2N_e}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{1}{2N_e}
 \end{align*}`
 
 &gt; Moran, 1959
@@ -121,11 +121,26 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
 
 --
 
-- Favorable mutations likely be lost
+- Favorable mutations likely be lost (and deleterious mutations can be fixed)
+  - __Genetic costs of domestication__: the increase of the deleterious mutational load of domesticated species
+
+--
 
 - Mutation with a 1% advantage (heterozygous, `\(s=0.01\)`), has 2% probability of being fixed
 
 - If 10% advantage `\(s=0.1\)`, probability becomes 20%
+
+---
+
+# The genetic load in elite maize
+
+&lt;div align="center"&gt;
+&lt;img src="pgen.png" width=400&gt;
+&lt;/div&gt;
+
+- Using __GERP (genomic evolutionary rate profiling)__ to measure deleteriousness
+
+&gt; [Yang et al., 2017](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007019)
 
 ---
 
@@ -148,6 +163,17 @@ Pr(fixation) \approx 1.13 \sqrt{\frac{s}{2N_e}}
 - `\(s\)` is the selective advantage of homozygote mutant
 
 &gt; Kimura, 1962
+
+---
+
+# A human genetic study
+
+&lt;div align="center"&gt;
+&lt;img src="load.png" width=400&gt;
+&lt;/div&gt;
+
+&gt; [Simons et al., 2014](https://www.nature.com/articles/ng.2896)
+
 
 ---
 
