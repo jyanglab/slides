@@ -115,7 +115,7 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}}
 - If $2s$ and $-4N_es$ are small, numerator becomes $\approx 2s$ and denominator $\approx 4N_es$
 
 \begin{align*}
-Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{2N_es} = \frac{1}{2N_e}
+Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{2s}{4N_es} = \frac{1}{2N_e}
 \end{align*}
 
 ---
