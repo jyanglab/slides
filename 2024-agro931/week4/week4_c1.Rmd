@@ -1,5 +1,5 @@
 ---
-title: "Selection-Drift and Diversity"
+title: "Selection-drift and Diversity"
 author: "Jinliang Yang"
 date: "Feb. 12, 2024"
 output:
@@ -244,7 +244,7 @@ H_e  & \approx \frac{4N_e \mu}{4N_e\mu + 1}
 F_e \approx \frac{1}{4N_e\mu + 1}
 \end{align*}
 
-- The relationship between $N_e$, $\mu$, and $F$ at quilibrium.
+- The relationship between $N_e$, $\mu$, and $F$ at equilibrium.
 
 ```{r}
 fe <- function(ne, mu){
@@ -542,21 +542,3 @@ This estimate of heterozygosity gives us the average number of pairwise necleoti
 \begin{align*}
 \Pi = \sum_{i=1}^S h_i
 \end{align*}
-
----
-
-# Population structure
-
-What if you did not know population boundaries before sampling?
-
-
-<div align="center">
-<img src="pops.png" width=300>
-</div>
-
---
-
-### Wahlund Effect
-
-- Unknown (cryptic) population structure can appear as __a deficiency of heterozygotes__
-  - Add this to the list of forces that can created reduced heterozygosity and increased homozygosity in your sample
