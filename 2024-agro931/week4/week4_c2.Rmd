@@ -25,6 +25,8 @@ options(htmltools.dir.version = FALSE)
 - ### Drift (inbreeding)
 ]
 
+--
+
 .pull-right[
 <div align="center">
 <img src="pops.png" width=400>
@@ -33,7 +35,7 @@ options(htmltools.dir.version = FALSE)
 
 --
 
-### Cryptic population structure
+- ### Cryptic population structure
 
 Unknown (cryptic) population structure can appear as a __deficiency of heterozygotes__
 - Just one more way to get reduced heterozygosity and increased homozygosity in your sample
@@ -141,7 +143,7 @@ In a subdivided population, the overall deviation from HWE heterozygosity:
 Assuming HWE, Wright’s F describes the deviation from expected heterozygosity
 
 \begin{align*}
-F = \frac{H_e - H_o}{H_e}
+F\text{-}stat = \frac{H_e - H_o}{H_e}
 \end{align*}
 
 - Expected Heterozygosity ( $H_e$ ) = estimate of diversity
