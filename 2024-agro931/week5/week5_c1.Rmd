@@ -1,7 +1,7 @@
 ---
-title: "Population structure and Fst"
+title: "Neutral theory"
 author: "Jinliang Yang"
-date: "Sept. 19, 2022"
+date: "Feb. 19, 2024"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]
@@ -15,439 +15,409 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
+# Neutral theory of molecular evolution
 
-# Population subdivision
+"The neutral theory asserts that the great majority of evolutionary changes at the molecular level are caused
+NOT by _Darwinian selection_ 
+but by _random drift of selectively neutral or nearly neutral mutants_."
 
-.pull-left[
-- ### Selection
-- ### Migration
-- ### Mutation
-- ### Drift (inbreeding)
-]
+> Motoo Kimura (木村 資生), 1983 
+> - Iowa State with Jay Lush and then University of Wisconsin with James Crow
 
-.pull-right[
-<div align="center">
-<img src="pops.png" width=400>
-</div>
-]
 
 --
 
-### Cryptic population structure
+### Core ideas of neutral theory of molecular evolution:
 
-Unknown (cryptic) population structure can appear as a __deficiency of heterozygotes__
-- Just one more way to get reduced heterozygosity and increased homozygosity in your sample
+- #### Most mutations are not advantageous
+
+  - Selectively (or effectively) neutral if $s < 1/2N_e$
+  
+- #### Most changes that are fixed over time are selectively neutral (fixed by drift)
+
+   - Drift rather than selection predominates
+---
+
+# Neutral Theory
+
+### What the neutral theory does not claim
+
+- __Does NOT claim__ natural selection is unimportant in evolution
+
+  - In fact, most morphological adaptations are the result of natural selection 
+
+--
+
+- It __does NOT deny__ that most mutations are (slightly) deleterious (it claims most of the variation _we see_ is neutral)
+
+  - Most of the deleterious mutations have been eliminated
+  
+  - Rare mutations have been fixed
+
+
+--
+
+### Selection counteracts drift
+
+- $s > 1/2N_e$
+
+\begin{align*}
+Pr(fix) = \frac{1 - e^{-2s}}{1-e^{-4N_es}}
+\end{align*}
 
 
 ---
 
-# Population subdivision
+```{r echo=FALSE}
+wright_fisher <- function(N=1000, A1=100, t=1000){
+  p <- A1/(2*N)
+  ### make a numeric vector to hold the results
+  freq <- as.numeric();
+  ### Use for loop to run over t generations
+  for (i in 1:t){
+    A1 <- rbinom(1, 2*N, p) # samling allele from a binom distribution
+    p <- A1/(2*N)
+    freq[i] <- p
+  }
+  return(freq)
+}
+```
 
+```{r fig.align='center', fig.height=6}
+set.seed(12347)
+Ne=20; A1=1; t=4*Ne
+frq <- wright_fisher(N=Ne, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations", ylab="Freq")
+    for(u in 1:100){
+      frq <- wright_fisher(N=Ne, A1=A1, t=t)
+      random <- sample(1:1000,1,replace=F)
+      randomcolor <- colors()[random] 
+      lines(frq, type="l", lwd=3, col=(randomcolor))
+    }
 
-| Genotype | $A_1A_1$   | $A_1A_2$    | $A_2A_2$ 
-| :-------: | : ------ : | :-------: | :-------: | 
-| sub-pop1  | 64    | 32    | 4    | 
-| sub-pop2  | 4     | 32    | 64    | 
-| Total     | 68    | 64    | 68    | 
-
---
-
-The frequencies of the $A_1$ allele in sub-pop1 and sub-pop2:
-\begin{align*}
-p_1 & = \frac{2 \times 64 + 32}{2 \times 100} = 0.8 \\
-p_2 & = \frac{2 \times 4 + 32}{2 \times 100} = 0.2 \\
-\end{align*}
-
---
-
-The frequency of the $A_1$ allele in the combined population:
-
-\begin{align*}
-\bar{p} & = \frac{2 \times 68 + 64}{2 \times 200} = 0.5 \\
-\end{align*}
-
---
-
-The expected value of heterozygotes for the combined population is:
-
-\begin{align*}
-2\bar{p}\bar{q} \times n = 2 \times 0.5 \times 0.5 \times 200 = 100 \\ 
-\end{align*}
-
----
-
-# Wahlund Effect
-
-The _perceived deficiency_ of heterozygotes due to treating two different populations as one --- the __Wahlund effect__. 
-> Wahlund, 1928
-
-
---
-
-```{r wahlund, echo=FALSE, fig.align='center', fig.height=6}
-geth <- function(p){return(2*p*(1-p))}
-p <- seq(0, 1, by=0.01)
-plot(p, geth(p), type="l", lwd=3, col="red", xlab="Allele freq (p)", ylab="Heterozygosity (H)")
-lines(c(0.2, 0.2), c(0, geth(p=0.2)), lty=2, lwd=3) # add a line segment
-lines(c(0, 0.2), c(geth(p=0.2), geth(p=0.2)), lty=2, lwd=3)
-lines(c(0.4, 0.4), c(0, geth(p=0.4)), lty=2, lwd=3) # add a line segment
-lines(c(0, 0.4), c(geth(p=0.4), geth(p=0.4)), lty=2, lwd=3)
-lines(c(0.3, 0.3), c(0, geth(p=0.3)), lty=2, lwd=3) 
-lines(c(0, 0.3), c(geth(p=0.3), geth(p=0.3)), lty=2, lwd=3, col="blue")
-lines(c(0.2, 0.4), c(geth(p=0.2), geth(p=0.4)), lty=1, lwd=3, col="blue")
-lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p=0.4)))), lty=2, lwd=3, col="red")
 ```
 
 ---
 
-# Wahlund Effect
+# Expected allele frequencies distribution
 
+On timescales shorter than those required for mutations to fix, selection will change the mean frequency of alleles in a population.
+
+--
+
+For new mutations, the density of polymorphisms found at frequency $q$, is
+
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
+
+> Wright, 1969
+
+- Where $\mu$ is the mutation rate.
+- $s$ is the fitness effect. 
+  - Advantageous mutations have $s > 0$ and deleterious mutations have $s <0$
+
+
+
+---
+
+# The expected frequency spectra
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
+
+
+```{r echo=TRUE, eval=FALSE, fig.align='center', out.width='80%'}
+# expected freq spectra
+f <- function(q, ns){
+  frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
+  return(frq)}
+q <- seq(from = 0.01, to =0.99, by=0.01)
+
+## Ploting function
+plot(q, f(q, ns=0.01), type="l", lty=1, lwd=3, xlab="Ns", ylab="No. of polymorhpic sites", cex.lab=2)
+lines(q, f(q, ns=-50), type="l", lty=1, lwd=3, col="red")
+lines(q, f(q, ns=-5), type="l", lty=2, lwd=3, col="red")
+lines(q, f(q, ns=5), type="l", lty=1, lwd=3, col="blue")
+lines(q, f(q, ns=50), type="l", lty=2, lwd=3, col="blue")
+legend(0.6, 200, title="Ne*s", legend=c("-50", "5", "0", "-5", "50"), 
+       col=c("red", "red", "black", "blue", "blue"), 
+       lty=c(1,2,1,1,2), cex=2, lwd=3)
+```
+
+---
+
+# The expected distribution of $f(q)$
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
 
 .pull-left[
-<div align="center">
-<img src="wahlund.png" height=400>
-</div>
+```{r echo=FALSE, fig.align='center', out.width='100%'}
+# expected freq spectra
+f <- function(q, ns){
+  frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
+  return(frq)}
+q <- seq(from = 0.01, to =0.99, by=0.01)
+
+## Ploting function
+plot(q, f(q, ns=0.01), type="l", lty=1, lwd=3, xlab="Frq of allele", ylab="No. of polymorhpic sites", cex.lab=1.5)
+lines(q, f(q, ns=-50), type="l", lty=1, lwd=3, col="red")
+lines(q, f(q, ns=-5), type="l", lty=2, lwd=3, col="red")
+lines(q, f(q, ns=5), type="l", lty=1, lwd=3, col="blue")
+lines(q, f(q, ns=50), type="l", lty=2, lwd=3, col="blue")
+legend(0.6, 200, title="Ne*s", legend=c("-50", "-5", "0", "5", "50"), 
+       col=c("red", "red", "black", "blue", "blue"), 
+       lty=c(1,2,1,1,2), cex=2, lwd=3)
+```
 ]
+
+
+--
 
 .pull-right[
-
-- The blue dashed horizontal segment is the $H_{exp} = 2 \bar{p}\bar{q}$
-
-- The red dashed horizontal segment is the $H_{obs}$ 
-  - mean value of the $H_1$ and $H_2$
-
-- Because the curve is concave downward, $H_{obs}$ is always less than $H_{exp}$
-
+- #### Deleterious alleles => lower frequencies
+ - most strongly deleterious mutations are immediately removed from the population
+ 
+- #### Advantage alleles shifted toward higher frequencies
+  - most strongly advantageous mutations fix very rapidly.
 ]
 
---
 
-Even if subpopulations are __partially isolated__, the Wahlund effect is held true.
 
-  
 ---
 
-# Heterozygosity to describe Populations 
+# Types of selection
 
-In a subdivided population, the overall deviation from HWE heterozygosity:
-
-- Factors acting within subpopulations
-- Simply due to the subdivision itself (the Wahlund effect)
+To find loci that are under selection we test for departures from the neutral theory
 
 --
 
-### Wright's F-statistics
+### Purifying selection: 
+  - Deleterious mutations are eliminated
 
-Assuming HWE, Wright’s F describes the deviation from expected heterozygosity
+### Positive selection: 
+  - Opposite of purifying
+  - Favorable mutations are selected
+
+### Balancing selection: 
+  - Maintains two or more variants at a locus
+
+
+---
+
+# Genetic diversity within pops
+
+### Expected diversity 
+- Number of alleles/locus (allelic richness) 
+- Polymorphism (loci with > 1 allele)
+- Theta ( $\theta$ ) = $4N_e \mu$
+  - $N_e$ = effective population size
+  - $\mu$ = mutation rate per generation
+
+--
+
+### Expected heterozygosity
+
+$H_{exp}$ = 1 - (avg expected __homozygosity__ over all loci)
 
 \begin{align*}
-F = \frac{H_e - H_o}{H_e}
+H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
 \end{align*}
+  - $m$ is the number of loci
+  - $k$ is the number of alleles at a particular locus
+  - $p_{ki}$ is the frq of $i^{th}$ allele at $k^{th}$ locus
 
-- Expected Heterozygosity ( $H_e$ ) = estimate of diversity
+# Common estimators of $\theta$ under the infinite sites model
 
-- Observed Heterozygosity ( $H_o$ )  = current characterization of the sample
+For an individual SNP, one allele has sample frequency $p$, alternative allele frequency is $q$, such that $p +q =1$.
 
 --
 
-- This measures the proportionate reduction in heterozygosity compared to HWE
-  - If $H_o < H_e$, what does it mean and how can we use this?
+__Heterozygosity__ at this SNP site is:
+
+\begin{align*}
+h = \frac{n}{n-1}(1 - p^2 - q^2)
+\end{align*}
+
+- where $n$ is the number of sequences in the sample. 
 
 ---
 
-# Heirarchical F-statistics
+# Under the infinite sites model
 
-.pull-left[
+\begin{align*}
+\pi = & \sum_{j=1}^{S}h_j \\
+\end{align*}
+
+- Where $S$ is the number of segregating sites
+- $h_j$ is the heterozygosity at the $j$th SNP site.
+
+--
+
+Under the __infinite sites model__ for a diploid population at HWE,
+
+\begin{align*}
+E(\pi) = & \theta = 4N_e \mu\\
+\end{align*}
+
+Which is why this statistic is sometimes called $\theta_\pi$.
+
+
+---
+# An alternative method: Watterson' theta
+
+In this method, we summarize SNPs using the total number of segregating sites, $S$, in the sample.
+
+However, because larger sample sizes will result in larger values of $S$, we must adjust the statistic to be
+
+\begin{align*}
+\theta_W = & \frac{S}{a} \\
+\end{align*}
+
+Where $a$ is,
+
+\begin{align*}
+a=\sum_{i=1}^{n-1}\frac{1}{i}
+\end{align*}
+  - $n$ is the number of samples
+
+Or, combine them together
+
+\begin{align*}
+\theta_W = & \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
+\end{align*}
+
+---
+
+# An Alternative method: Watterson' theta
+
 <div align="center">
-<img src="pops.png" width=300>
+<img src="p4.png" height=150>
 </div>
-]
 
-.pull-right[
+
+\begin{align*}
+\theta_W = & \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
+= & 2/(1/1 + 1/2 + 1/3) \\
+= & 1.09
+\end{align*}
+
+The per site measure would be $1.09/10=0.109$, which is very similar to $\theta_\pi$
+
+
+---
+# The frequency spectrum of alleles
+
 <div align="center">
-<img src="wahlund.png" height=280>
+<img src="p10.png" height=200>
 </div>
-]
+
+
+In this case, among these 10 haplotypes are 10 segregating sites, each of which can have a frequency between $1/n$ and $(n-1)/n$
 
 --
 
-- $H_I$ = mean observed heterozygosities over all subpopulations = $\frac{H_1 + H_2}{2}$
-
-- $H_S$ = mean expected heterozygosity within random mating subpopulations = $2p_iq_i$
-
-- $H_T$ = expected heterozygosity in a random mating total population = $2 \bar{p} \bar{q}$
-
----
-
-# Heirarchical F-statistics
-
-
-.pull-left[
-<div align="center">
-<img src="wahlund.png" height=280>
-</div>
-]
-
-.pull-right[
-- $H_I$, the average of the observed heterozygosities
-
-- $H_S$, the average of the expected heterozygosities
-]
-
-
-The average deviation in heterozygosity within subpopulations is
-
-\begin{align*}
-F_{IS} = \frac{H_S - H_I}{H_S}
-\end{align*}
-
-- The subscript $IS$ here indicates deviation among __individuals__ relative to their __subpopulation__
-
----
-
-# Heirarchical F-statistics
-
-
-.pull-left[
-<div align="center">
-<img src="wahlund.png" height=280>
-</div>
-]
-
-.pull-right[
-- $H_I$, the average of the observed heterozygosities
-
-- $H_S$, the average of the expected heterozygosities
-
-- $H_T$, the expected heterozygosity in the toal population
-]
-
---
-
-The deviation in heterozygosity due to subdivision alone is
-
-\begin{align*}
-F_{ST} = \frac{H_T - H_S}{H_T}
-\end{align*}
-
-- The subscript $ST$ here indicates deviation among __subpopulations__ relative to the __total population__
-
----
-
-# Heirarchical F-statistics
-
-.pull-left[
-<div align="center">
-<img src="wahlund.png" height=280>
-</div>
-]
-
-.pull-right[
-- $H_I$, the average of the observed heterozygosities
-
-- $H_S$, the average of the expected heterozygosities
-
-- $H_T$, the expected heterozygosity in the toal population
-]
-
-
-Finally, the overall deviation in heterozygosity in the total pouplation is
-
-\begin{align*}
-F_{IT} = \frac{H_T - H_I}{H_T}
-\end{align*}
-
-- The subscript $IT$ here indicates deviation among __individuals__ relative to the __total population__
-
----
-
-# Summary of Heirarchical F-statistics
-
-### $F_{ST}$
-
-- Measures how different the subpopulations are.
-
-- It can be interpreted as the proportion of the total heterozygosity that is due to differences in allele frequencies among subpopulations
-
-- $F_{ST}$ can be calculated from allele frequencies lone
-
---
-
-### $F_{IS}$ and $F_{IT}$
-
-- $F_{IS}$ is due to factors (selection, drift, mutation) acting within subpopulations
-
-- $F_{IT}$ depends on the values of $F_{ST}$ and $F_{IS}$
-
-- $F_{IS}$ and $F_{IT}$ require observed genotype frequencies
-
-
----
-
-# An example for F-statistics calculation
-
-
-| Genotype | $A_1A_1$   | $A_1A_2$    | $A_2A_2$ 
-| :-------: | : ------ : | :-------: | :-------: | 
-| sub-pop1  | 64    | 32    | 4    | 
-| sub-pop2  | 4     | 32    | 64    | 
-| Total     | 68    | 64    | 68    | 
-
---
-
-
-Heterozygosity indicies (over individuals $H_{I}$, subpopulations $H_{S}$, and total population $H_{T}$)
-
---
-
-- $H_I$ based on __observed__ heterozygosities in __subpopulations__:
-
-\begin{align*}
-H_I & = (H_{osb1} \times N_1 + H_{obs2} \times N_2) \times \frac{1}{N_{total}} \\
-& = (0.32 \times 100 + 0.32 \times 100) \times \frac{1}{200} = 0.32 \\
-\end{align*}
-
----
-
-# An example for F-statistics calculation
-
-The frequencies of the $A_1$ allele in sub-pop1, sub-pop2, and combined population:
-\begin{align*}
-p_1  = 0.8, p_2 = 0.2, \bar{p} = 0.5 \\
-\end{align*}
-
-- $H_S$ based on __expected__ heterozygosities in __subpopulations__:
-
-\begin{align*}
-H_S & = (H_{exp1} \times N_1 + H_{exp2} \times N_2) \times \frac{1}{N_{total}} \\
-& = (2 \times 0.8 \times 0.2 \times 100 + 2 \times 0.8 \times 0.2 \times 100) \times \frac{1}{200} = 0.32 \\
-\end{align*}
-
---
-
-
-- $H_T$ based on __expected__ heterozygosities in __total populations__:
-
-
-\begin{align*}
-H_T & = 2 \bar{p} \bar{q} \\
-& = 2 \times 0.5 \times 0.5 = 0.5 \\
-\end{align*}
-
----
-
-# An example for F-statistics calculation
-
-\begin{align*}
-H_I & = 0.32 \\
-H_S & = 0.32 \\
-H_T & = 0.5 \\
-\end{align*}
-
---------------
-
-\begin{align*}
-H_{IS} & = \frac{H_S - H_I}{H_S}  = \frac{0.32 - 0.32}{0.32} =0 \\
-\end{align*}
-
---
-
-\begin{align*}
-H_{ST} & = \frac{H_T - H_S}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
-\end{align*}
-
-\begin{align*}
-H_{IT} & = \frac{H_T - H_I}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
-\end{align*}
-
---
-
-- There is no evidence of inbreeding within each subpopulations
-
-- But clear evidence of population subdivision
-
-- And population subdivision accounts for all the genetic variation.
-
-
-
----
-# More on the Hierarchical F-statistics
-
-
-### $F_{IS}$ - Inbreeding index
-
-- Reduction in heterozygosity of an individual due to non-random mating in a subpopulation
-
---
-
-### $F_{ST}$  - Fixation index 
-
-- Reduction in heterozygosity of a subpopulation relative to the total population due to drift; 
-
-- Measure of genetic differentiation
-
----
-# More on the Hierarchical F-statistics
-
-### $F_{IT}$ - Overall fixation index
-
-- Mean reduction in heterozygosity of an individual relative to the total population 
-
-- Combined effects of non-random mating ( $F_{IS}$ ) with drift ( $F_{ST}$ )
-
---
-
-### Relationship of $F_{IS}$, $F_{ST}$, and $F_{IT}$ 
-However, it is NOT simple additive relationship 
-
-They are related by the expression
-\begin{align*}
-(1-F_{IT}) = (1-F_{IS})(1-F_{ST})
-\end{align*}
-
-It can be rewritten as
-
-\begin{align*}
-F_{IT} = F_{IS} + F_{ST} - F_{IS}F_{ST}
-\end{align*}
-
-
-
-
-
----
-
-# Of course there are issues...
-
-
-$F_{ST}$ must be adjusted to account for the numbers of individuals in each sub-population (sampling error)
-
-- Unbiased estimators, such as $\hat{F_{ST}}$
-  > Nei and Chesser, 1983
-  
+Visually summarize the MAF of all segregating sites using the __allele frequency spectrum__
   
 
+---
+# The frequency spectrum of alleles
+
+The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
+
+.pull-left[
+<div align="center">
+<img src="p10.png" height=300>
+</div>
+]
+
 --
 
-CANNOT compare $F_{ST}$ between studies or samples if they are not based upon the exact same loci!!
+.pull-left[
+```{r, out.width='80%', fig.align='center', echo=TRUE}
+maf <- c(0.1, 0.1, 0.3, 0.1, 0.3, 
+         0.2, 0.1, 0.4, 0.1, 0.1)
+sfs <- table(maf)
+barplot(sfs, col="#cdc0b0", xlab="Minor allele frequency", 
+        ylab="No. of segregating sites", 
+        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
+```
+]
+
+---
+# The frequency spectrum of alleles
+
+- The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
+- Use the sequences of one or more closely related species, we can get the ancestral state.
+- Therefore, we can describe variation at each site using the __derived allele frequency (DAF)__.
+
+.pull-left[
+<div align="center">
+<img src="daf.png" height=300>
+</div>
+]
+
+--
+
+.pull-left[
+```{r, out.width='50%', fig.align='center', echo=TRUE}
+maf <- c(0.1, 0.1, 0.3, 0.1, 0.3, 
+         0.2, 0.1, 0.6, 0.9, 0.9)
+sfs <- table(maf)
+barplot(sfs, col="#cdc0b0", xlab="Derived allele frequency", ylab="No. of segregating sites", 
+        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
+```
+]
+
+---
+
+# Signature of negative selection
 
 
+.pull-left[
+<div align="center">
+<img src="negsel.png" height=300>
+</div>
+]
 
-- Like $D'$ you can express $F_{ST}$ as $F_{ST}'$
-> Hedrick, 2005
+--
 
-- Jost’s D uses number of effective alleles instead of heterozygosity
-> Jost, 2008
+.pull-left[
+- Comparison of expected and observed is __uneven__
+
+- The rare alleles are at lower freq than expected
+
+- Evidence of __negative selection__ (or __purifying selection__)
+
+- However, confounded by population demographics (i.e., bottleneck effect)
+]
+
+---
+
+# Signature of positive/balancing selection
 
 
+.pull-left[
+<div align="center">
+<img src="possel.png" height=300>
+</div>
+]
 
+--
 
+.pull-left[
+- Comparison of expected and observed is __too even__
 
+- The most common allele is more common than expected
 
+- Evidence of __positive selection__ or __balancing selection__
 
-
-
-
+- However, confounded by population demographics (i.e., population expansion)
+]
 
 
 
