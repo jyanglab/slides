@@ -37,8 +37,6 @@ This equation estimates the average inbreeding coefficient of __all individuals_
 
 ### How about the inbreeding coefficient for a given individual $F_X$?
 
-- The above calculation is just an approximation
-
 - Pedigree information can be leveraged to get more accurate results
 
 
@@ -236,7 +234,12 @@ F_X  = (\frac{1}{2})^n(1 + F_A)
 
 #### Summing all these:
 - Note: $F_G=1/8$
-- $F_{X}=49/512 = 0.096$ or $9.6\%$
+
+\begin{align*}
+F_X  = (\frac{1}{2})^4(1 + F_G) +  (\frac{1}{2})^9 +  (\frac{1}{2})^7 \times 3
+\end{align*}
+
+- $F_{X}= 0.096$ or $9.6\%$
 ]
 
 --
