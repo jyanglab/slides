@@ -12,9 +12,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Continuous Variation
+]
+.author[
 ### Jinliang Yang
-### Oct. 5th, 2022
+]
+.date[
+### Mar. 6th, 2024
+]
 
 ---
 
@@ -233,69 +239,14 @@ Y_{i} = G_i + E_i = \sum\limits_{j=1}^{j=m} X_{ij} \alpha_{j} + E_i
 --
 
 
-```
-## Warning: package 'knitr' was built under R version 4.1.2
-```
-
-```
-## Warning: package 'kableExtra' was built under R version 4.1.2
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+|Variety |  P|  G|  E| Prob|
+|:-------|--:|--:|--:|----:|
+|NE03490 | 30| 28|  2| 0.20|
+|NE03490 | 20| 28| -8| 0.05|
+|Aspen   | 30| 26|  4| 0.30|
+|Aspen   | 20| 26| -6| 0.20|
+|Hawken  | 30| 22|  8| 0.05|
+|Hawken  | 20| 22| -2| 0.20|
 
 
 --
@@ -568,68 +519,16 @@ dt$ghat &lt;- 20.604 + 0.192*dt$P
 kable(dt)
 ```
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; ghat &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+
+|Variety |  P|  G|  E| Prob|   ghat|
+|:-------|--:|--:|--:|----:|------:|
+|NE03490 | 30| 28|  2| 0.20| 26.364|
+|NE03490 | 20| 28| -8| 0.05| 24.444|
+|Aspen   | 30| 26|  4| 0.30| 26.364|
+|Aspen   | 20| 26| -6| 0.20| 24.444|
+|Hawken  | 30| 22|  8| 0.05| 26.364|
+|Hawken  | 20| 22| -2| 0.20| 24.444|
 
 ---
 # Accuracy of prediction
@@ -653,68 +552,16 @@ $$
 kable(dt)
 ```
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Variety &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; P &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; G &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Prob &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; ghat &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NE03490 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Aspen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.364 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Hawken &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.444 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+
+|Variety |  P|  G|  E| Prob|   ghat|
+|:-------|--:|--:|--:|----:|------:|
+|NE03490 | 30| 28|  2| 0.20| 26.364|
+|NE03490 | 20| 28| -8| 0.05| 24.444|
+|Aspen   | 30| 26|  4| 0.30| 26.364|
+|Aspen   | 20| 26| -6| 0.20| 24.444|
+|Hawken  | 30| 22|  8| 0.05| 26.364|
+|Hawken  | 20| 22| -2| 0.20| 24.444|
 
 --
 
@@ -786,6 +633,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
