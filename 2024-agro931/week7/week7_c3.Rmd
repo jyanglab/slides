@@ -17,28 +17,6 @@ options(htmltools.dir.version = FALSE)
 
 
 
-# Nobel Prize in Physiology or Medicine 2022
-
-.pull-left[
-<div align="center">
-<img src="paabo.png" height=350>
-</div>
-]
-
-.pull-right[
-<div align="center">
-<img src="ancientcorn.png" height=100>
-</div>
-A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years before the present. Length, 47 mm. 
-> from Paabo's 2003 Science
-]
-
------------
-
-Svante Paabo represents the field of __evolutionary genetics__ and/or __population genetics!!!__
-
----
-
 # Points to cover in the review:
 
 - ### 1. Novelty
@@ -48,6 +26,18 @@ Svante Paabo represents the field of __evolutionary genetics__ and/or __populati
 - ### 3. Clarity
 
 - ### 4. Reproduciblity
+
+----------
+
+
+#### Muller’s Ratchet in Cassava
+> [Long et al., 2024](https://www.biorxiv.org/content/10.1101/2024.02.14.580345v1)
+
+--
+
+#### Urbanization and reduced genetic diversity in fish
+> [Karachaliou et al., 2024](https://www.biorxiv.org/content/10.1101/2024.02.20.581210v1)
+
 
 ---
 
@@ -98,9 +88,4 @@ Svante Paabo represents the field of __evolutionary genetics__ and/or __populati
 
 --
 
-------
-
-### Paper for discussion
-
-Kielf et al., 2022 [BioRxiv](https://www.biorxiv.org/content/10.1101/2022.03.02.482602v1)
 
