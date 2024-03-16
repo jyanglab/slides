@@ -4,7 +4,7 @@
     <title>Population Values and Means</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2022-10-10" />
+    <meta name="date" content="2024-03-18" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -13,9 +13,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Population Values and Means
+]
+.author[
 ### Jinliang Yang
-### Oct. 10, 2022
+]
+.date[
+### Mar. 18, 2024
+]
 
 ---
 
@@ -172,7 +178,6 @@ Booroola (B) locus influences fecundity in Merino sheep
 - And finally calculate the population mean
   `\(M = a(p-q) + 2pqd = 0.59 \times (0.25 - 0.75) + 2 \times 0.25 \times 0.75 \times 0.39 = -0.149\)`
 
---
 
 Note that this is the __deviation from the midpoint__, 2.07.
 
@@ -259,7 +264,7 @@ What is effect of substituting an `\(A_1\)` allele for `\(A_2\)`?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 
 | Genotype  | Mean litter size   | 
@@ -284,7 +289,7 @@ What is effect of substituting an `\(A_1\)` allele for `\(A_2\)`?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 | Genotype  | Mean litter size   | 
 | :-------: |: ------- :| 
@@ -318,7 +323,7 @@ What is effect of substituting an `\(A_1\)` allele for `\(A_2\)`?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 | Genotype  | Mean litter size   | 
 | :-------: |: ------- :| 
@@ -439,6 +444,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

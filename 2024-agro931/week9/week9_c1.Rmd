@@ -1,7 +1,7 @@
 ---
 title: "Population Values and Means"
 author: "Jinliang Yang"
-date: "Oct. 10, 2022"
+date: "Mar. 18, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -165,7 +165,6 @@ Booroola (B) locus influences fecundity in Merino sheep
 - And finally calculate the population mean
   $M = a(p-q) + 2pqd = 0.59 \times (0.25 - 0.75) + 2 \times 0.25 \times 0.75 \times 0.39 = -0.149$
 
---
 
 Note that this is the __deviation from the midpoint__, 2.07.
 
@@ -252,7 +251,7 @@ What is effect of substituting an $A_1$ allele for $A_2$?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 
 | Genotype  | Mean litter size   | 
@@ -277,7 +276,7 @@ What is effect of substituting an $A_1$ allele for $A_2$?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 | Genotype  | Mean litter size   | 
 | :-------: |: ------- :| 
@@ -311,7 +310,7 @@ What is effect of substituting an $A_1$ allele for $A_2$?
 
 ---
 
-# Revist the Booroola locus example
+# Revisit the Booroola locus example
 
 | Genotype  | Mean litter size   | 
 | :-------: |: ------- :| 
