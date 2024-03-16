@@ -1,7 +1,7 @@
 ---
 title: "Breeding value and dominance"
 author: "Jinliang Yang"
-date: "Oct. 12, 2022"
+date: "Mar. 20, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -74,6 +74,7 @@ therefore,
 
 Breeding value is the "value" of an individual as a parent. 
 - The value of an individual, judged by the mean value of its progeny, is called the *breeding value* (__A__) of the individual.
+
 - Note that breeding value is **population specific**.
 
 --
@@ -109,7 +110,9 @@ The deviation of the value of an individual's offspring from the population mean
 .pull-right[
 ### To get the BV of sire X
 1. mate it to many random dams
+
 2. measure the performance of all the offspring
+
 3. subtract population mean from the offspring mean and multiply by 2
 ]
 
@@ -133,7 +136,9 @@ Consider only one locus using the theoretical definition:
 Returning to our two example populations and looking at breeding values of the three genotypes.
 
 - Recall that $a=0.59$ and $d=0.39$
+
 - In __pop1__, freq of $B_1$ allele is 0.25
+
 - In **pop2**, freq of $B_1$ allele is 0.85
 
 
@@ -153,8 +158,11 @@ Consider only one locus using the theoretical definition:
 Returning to our two example populations and looking at breeding values of the three genotypes.
 
 - Recall that $a=0.59$ and $d=0.39$
+
 - In __pop1__, freq of $B_1$ allele is 0.25
+
 - In **pop2**, freq of $B_1$ allele is 0.85
+
 - $\alpha = a+d(q-p)$, 0.785 for pop1 and 0.317 for pop2
 
 ---
@@ -213,7 +221,7 @@ The expected breeding value of offspring (o) is $1/2$ the sum of the sire and da
 E(A_o) = & 1/2(A_s + A_d)
 \end{align*}
 
-Note here o, s, and d refer to offspring, sire (male), and dam (female) respectively. 
+Note here $o$, $s$, and $d$ refer to offspring, sire (male), and dam (female) respectively. 
 
 --
 
@@ -238,6 +246,7 @@ We can examine the failure of the additive value to reflect the genotypic value 
 ### G = A + D
 
 - Population mean: $M = a(p-q) + 2dpq$
+
 - Avg. allele substitution effect: $\alpha = a+d(q-p)$
 
 | Genotype  | Genotypic Value | Value as deviated from $M$      | 
@@ -259,6 +268,7 @@ We can examine the failure of the additive value to reflect the genotypic value 
 ### G = A + D
 
 - Population mean: $M = a(p-q) + 2dpq$
+
 - Avg. allele substitution effect: $\alpha = a+d(q-p)$
 
 | Genotype  | Genotypic Value | Value as deviated from $M$      | 
@@ -330,6 +340,7 @@ The mean dominance deviation:
 # Interaction deviation (epistasis)
 
 - Epistasis = interaction of alleles at **different** loci
+
 - Also causes deviation of genotypic value from additive genetic value (or BV)
 
 --
@@ -355,7 +366,10 @@ Where
 ---
 # Interaction deviation (epistasis)
 
-- Interaction effect can arise through interaction between the average allele effects at each locus, between average effect and dominance deviation, and between dominance deviations
+- Interaction effect can arise through interaction
+  - Between the average allele effects at each locus ( __A__ $\times$ __A__ )
+  - Between average effect and dominance deviation ( __A__ $\times$ __D__ )
+  - And between dominance deviations ( __D__ $\times$ __D__ )
 
 - As # of loci increases, so does # of interactions (exponentially)
 
@@ -366,8 +380,6 @@ Where
 \begin{align*}
 G = \sum_{i=1}^k(A_i + D_i) + I
 \end{align*}
-
-
 
 
 
