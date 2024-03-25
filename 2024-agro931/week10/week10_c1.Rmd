@@ -84,7 +84,6 @@ gfunction <- function(a=1, d=0, p=1/2){
    # a: additive effect
    # d: dominance effect
    # p: allele frequency for the A1 allele
-   
    q = 1-p
    # allele sub effect
    alpha <- a + d*(q-p)
@@ -199,7 +198,7 @@ Let's find out the breeding value for each individual.
 
 ###  Training
 
-- #### Step1: For each SNP, find out $a, d, -p$, and $M$
+- #### Step1: For each SNP, find out $a, d, p$, and $M$
 
 - #### Step2: Compute average effect for A1 and A2
 
@@ -324,16 +323,19 @@ bv <- function(f, snpid="snp1", trait="Flowering_time"){
   A1A1 <- mean(f[f[, snpid]==0, trait], na.rm=TRUE)
   A1A2 <- mean(f[f[, snpid]==1, trait], na.rm=TRUE)
   A2A2 <- mean(f[f[, snpid]==2, trait], na.rm=TRUE)
+  
   m <- (A1A1 + A2A2)/2
   a <- A1A1 - m
   d <- A1A2 - m
   p <- getp(df=f[, snpid])
   q <- 1 -p
+  
   alpha <- a + d*(q-p) 
   a1a1 <- 2*alpha*q
   a1a2 <- (q-p)*alpha
   a2a2 <- -2*p*alpha
-  out <- data.frame(N1=c(0,1,2), bv=c(a2a2, a1a2, a1a1))
+  M <- a*(p-q) + 2*d*p*q
+  out <- data.frame(N1=c(0,1,2), gv=c(-a-M,d-M,a-M), bv=c(a2a2, a1a2, a1a1))
   return(out)
 }
 
@@ -373,7 +375,7 @@ b3
 ```{r}
 t <- subset(flowering, type=="test")
 dim(t)
-head(t)
+head(t, 4)
 ```
 
 --
@@ -398,9 +400,7 @@ mygs <- function(t, b1, b2, b3){
   }
   return(t)
 }
-
 out <- mygs(t, b1, b2, b3)
-
 out <- subset(out, !is.na(Flowering_time))
 cor.test(out$Flowering_time, out$yhat+M1)
 ```

@@ -98,7 +98,6 @@ gfunction &lt;- function(a=1, d=0, p=1/2){
    # a: additive effect
    # d: dominance effect
    # p: allele frequency for the A1 allele
-   
    q = 1-p
    # allele sub effect
    alpha &lt;- a + d*(q-p)
@@ -256,7 +255,7 @@ Let's find out the breeding value for each individual.
 
 ###  Training
 
-- #### Step1: For each SNP, find out `\(a, d, -p\)`, and `\(M\)`
+- #### Step1: For each SNP, find out `\(a, d, p\)`, and `\(M\)`
 
 - #### Step2: Compute average effect for A1 and A2
 
@@ -450,16 +449,19 @@ bv &lt;- function(f, snpid="snp1", trait="Flowering_time"){
   A1A1 &lt;- mean(f[f[, snpid]==0, trait], na.rm=TRUE)
   A1A2 &lt;- mean(f[f[, snpid]==1, trait], na.rm=TRUE)
   A2A2 &lt;- mean(f[f[, snpid]==2, trait], na.rm=TRUE)
+  
   m &lt;- (A1A1 + A2A2)/2
   a &lt;- A1A1 - m
   d &lt;- A1A2 - m
   p &lt;- getp(df=f[, snpid])
   q &lt;- 1 -p
+  
   alpha &lt;- a + d*(q-p) 
   a1a1 &lt;- 2*alpha*q
   a1a2 &lt;- (q-p)*alpha
   a2a2 &lt;- -2*p*alpha
-  out &lt;- data.frame(N1=c(0,1,2), bv=c(a2a2, a1a2, a1a1))
+  M &lt;- a*(p-q) + 2*d*p*q
+  out &lt;- data.frame(N1=c(0,1,2), gv=c(-a-M,d-M,a-M), bv=c(a2a2, a1a2, a1a1))
   return(out)
 }
 
@@ -467,10 +469,10 @@ bv(f, snpid="snp1", trait="Flowering_time")
 ```
 
 ```
-##   N1        bv
-## 1  0  5.135684
-## 2  1  1.902789
-## 3  2 -1.330105
+##   N1        gv        bv
+## 1  0  4.836486  5.135684
+## 2  1  1.980280  1.902789
+## 3  2 -1.350175 -1.330105
 ```
 
 ---
@@ -499,10 +501,10 @@ b3
 ```
 
 ```
-##   N1        bv
-## 1  0  2.405023
-## 2  1  0.640331
-## 3  2 -1.124361
+##   N1        gv        bv
+## 1  0  1.153707  2.405023
+## 2  1  1.225328  0.640331
+## 3  2 -1.397850 -1.124361
 ```
 
 ---
@@ -522,7 +524,7 @@ dim(t)
 ```
 
 ```r
-head(t)
+head(t, 4)
 ```
 
 ```
@@ -531,8 +533,6 @@ head(t)
 ## 352 F352  54       118.8333    1    2    2 test
 ## 353 F353  62             NA    2    1    2 test
 ## 354 F354  64             NA    2    2    2 test
-## 355 F355  91             NA    2    2    0 test
-## 356 F356 104        89.5000    2    2    2 test
 ```
 
 --
@@ -563,9 +563,7 @@ mygs &lt;- function(t, b1, b2, b3){
   }
   return(t)
 }
-
 out &lt;- mygs(t, b1, b2, b3)
-
 out &lt;- subset(out, !is.na(Flowering_time))
 cor.test(out$Flowering_time, out$yhat+M1)
 ```
