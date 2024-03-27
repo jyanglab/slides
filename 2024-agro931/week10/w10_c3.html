@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Resemblance between relatives</title>
+    <title>Heritability and repeatability</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-03-29" />
+    <meta name="date" content="2024-03-27" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -14,13 +14,13 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Resemblance between relatives
+# Heritability and repeatability
 ]
 .author[
 ### Jinliang Yang
 ]
 .date[
-### March 29, 2024
+### March 27, 2024
 ]
 
 ---
@@ -29,255 +29,51 @@ class: center, middle, inverse, title-slide
 
 
 
-# Why we study resemblance?
-
-Resemblance (=covariance) between related individuals.
-
---
-
-__Heritability__ is the central concept in quantitative genetics
- - Proportion of variation due to additive genetic values (__Breeding values__)
-
-`\begin{align*}
-h^2 = \frac{\sigma^2_A}{\sigma^2_P}
-\end{align*}`
-
---
-
-#### Phenotypes (and `\(\sigma^2_P\)`) can be directly measured.
-
---
-
-#### How about `\(\sigma^2_A\)` ?
+# Additive and dominance variance
 
 
-- Estimates of `\(\sigma^2_A\)` require __known collections of relatives__.
-
-
----
-# Types of Relatives
-
-### Ancestral relatives
-
-- Parent and offspring
-
-- Grandparent and offspring
-
-### Collateral relatives
-
-- Half sibs: have one parent in common
-
-- Full sibs: have both parents in common
-- Twins
-
----
-
-# Relatives (full sib families)
-
-&lt;div align="center"&gt;
-&lt;img src="relatives.png" height=300&gt;
-&lt;/div&gt;
-
-
-#### Full sibs
-
-- have both parents in common
-
----
-# Relatives (half sib families)
-
-&lt;div align="center"&gt;
-&lt;img src="sibs.png" height=300&gt;
-&lt;/div&gt;
-
-
-#### Half sibs
-
-- have one parent in common
-
----
-# Relatives (half sib families)
-
-&lt;div align="center"&gt;
-&lt;img src="sibs.png" height=300&gt;
-&lt;/div&gt;
-
-
-### A thought experiment
-
-Body weight of newborn piglets
-  - In the 1st half family `\(O_{11}\)` ... `\(O_{3k}\)`, mean `\(=3 \pm 0.1\)` lb 
-  - In the 2nd half sib family `\(O_{n1}\)` ... `\(O_{nk}\)`, mean `\(=4 \pm 0.1\)` lb 
-
-
----
-
-# Two key observations
-
-### A thought experiment
-
-Body weight of newborn piglets
-  - In the 1st half family `\(O_{11}\)` ... `\(O_{3k}\)`, mean `\(=3 \pm 0.1\)` lb 
-  - In the 2nd half sib family `\(O_{n1}\)` ... `\(O_{nk}\)`, mean `\(=4 \pm 0.1\)` lb 
-
-
-### Obs. One:
-If trait variation has a significant genetic basis, the __closer the relatives__, the __more similar their phenotypic values__.
-
---
-
-### Obs. Two:
-The amount of __phenotypic resemblance__ among relatives for the trait provides an indication of the amount of __genetic variation__ for the trait. 
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    | `\((2q\alpha)^2\)`  |  `\(-2q^2d\)`   | `\((-2q^2d)^2\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` | `\((q-p)^2\alpha^2\)` |  `\(2pqd\)`   | `\((2pqd)^2\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   | `\((-2p\alpha)^2\)` |  `\(-2p^2d\)`   | `\((-2p^2d)^2\)` |
 
 
 
-
----
-# Resemblance and genetic covariance
-
-
-###  Genetic covariance
-
-- Resemblance between relatives has the genetics basis
-- Genetic covariances arise because __two related individuals are more likely to share alleles__ than are two unrelated individuals
-
---
-
-### Identical by descent (IBD)
-
-- Sharing alleles means having alleles that are __identical by descent (IBD)__. 
-- If two alleles are __IBD__, then both copies of alleles can be traced back to a single copy in a recent common ancestor. 
-
-
-
----
-# Genetic covariance between relatives
-
-&lt;div align="center"&gt;
-&lt;img src="ibd-2.png" height=250&gt;
-&lt;/div&gt;
-
---
-
-### Identify types of IBD?
-- No allele IBD
-- one allele IBD
-- two alleles IBD
-
----
-
-# Identical by descent (IBD)
-
-&lt;div align="center"&gt;
-&lt;img src="ibd-2.png" height=250&gt;
-&lt;/div&gt;
-
-If allele `\(x_i\)` carried by individual X is IBD to allele `\(y_k\)` in Y, then the covariance due to this allele is:
+The additive and dominance genetic variance in a HWE population is:
 
 `\begin{align*}
-Cov(\alpha_i, \alpha_k) &amp; =  E[(\alpha_i - \mu_{\alpha})(\alpha_k - \mu_{\alpha})] \\
-&amp; = E[(\alpha_i - \mu_{\alpha})^2] \\
-&amp; = \sigma_{\alpha}^2
+\sigma_A^2 &amp; = 2pq(a + d(q-p))^2 \\
+\sigma_D^2 &amp; = (2pqd)^2 \\
 \end{align*}`
-
-Because `\(\alpha_i = \alpha_k\)` if alleles `\(x_i\)` and `\(y_k\)` are IBD.
-
----
-# Additive genetic covariance
-
-The additive genetic covariance between relatives is generated through individuals sharing average effects of alleles.
-
---
-
-Alleles in individuals `\(X (x_ix_j)\)` and `\(Y (y_ky_l)\)` can be IBD through four possible events:
   
 --
 
-`\begin{align*}
-&amp; x_i \equiv y_k \\
-&amp; x_i \equiv y_l \\
-&amp; x_j \equiv y_k \\
-&amp; x_j \equiv y_l \\
-\end{align*}`
-
---
+Because `\(G = A + D\)` for single locus, 
 
 `\begin{align*}
-Cov_\alpha(X, Y) = &amp; P(x_i \equiv y_k)Cov(\alpha_i, \alpha_k) + P(x_i \equiv y_l)Cov(\alpha_i, \alpha_l) \\
- &amp; + P(x_j \equiv y_k)Cov(\alpha_j, \alpha_k) + P(x_j \equiv y_l)Cov(\alpha_j, \alpha_l) \\
- = &amp; 4f_{XY}\sigma_\alpha^2 \\
- = &amp; 2f_{XY}\sigma_A^2 \\
+\sigma_G^2 &amp; = \sigma_A^2 + \sigma_D^2 +  2\sigma_{A, D}
 \end{align*}`
 
-Because `\(\sigma_A^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 = 2\sigma_\alpha^2\)` and `\(\alpha_i = \alpha_j\)` when alleles `\(i\)` and `\(j\)` are IBD.
+Then `\(\sigma_{A, D}=?\)`
 
 ---
-# Parent-offspring
-
-Recall that the __coefficient of co-ancestry ( `\(f_{XY}\)` from Ch.5)__ between a non-inbred parent and non-inbred offspring is 1/4. 
-- Thus, the coefficient for `\(\sigma_A^2\)` is 1/2.
-
---
-
-Consider the convariance between parent (P) and offspring (O), 
-
-- If we assume the two alleles of the parent are unrelated,
-
-- Then all offspring can't share a common dominance deviation ( `\(\sigma^2_D =0\)` ). 
-
-Therefore,
-
-`\begin{align*}
-Cov(P, O) = \frac{1}{2}\sigma_A^2
-\end{align*}`
-
----
-# Parent-offspring
-
-### From Breeding value
-
-- Parent genotypic value: `\(G = A + D\)`.
-
-- Offspring (half the breeding value of the parents from __Ch.7__): `\(G=1/2A\)`
-
---
-
-`\begin{align*}
-Cov(P, O) &amp; = Cov(A + D, \frac{1}{2}A) \\
-&amp; = \frac{1}{2}Cov(A, A) + \frac{1}{2}Cov(A, D) \\
- &amp; = \frac{1}{2}\sigma_A^2 \\
-\end{align*}`
-
-Because `\(Cov(A, D) = 0\)` from __Ch.8__.
+# Additive and dominance variance
 
 
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    | `\((2q\alpha)^2\)`  |  `\(-2q^2d\)`   | `\((-2q^2d)^2\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` | `\((q-p)^2\alpha^2\)` |  `\(2pqd\)`   | `\((2pqd)^2\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   | `\((-2p\alpha)^2\)` |  `\(-2p^2d\)`   | `\((-2p^2d)^2\)` |
 
-
----
-# Parent-offspring
-
-
-| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
-| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
-| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | ? |
-| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | ? |
-| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | ? |
-
----
-# Parent-offspring
-
-
-| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
-| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
-| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
-| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
-| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
-
---
+### `\(\sigma_{A, D}=?\)`
 
 $$
 `\begin{aligned}
-Cov(X, Y) &amp; = E(XY) - E(X)E(Y) \\
+Cov(X, Y) &amp; = \sigma_{XY} \\
+&amp; = E([X - E(X)][Y - E(Y)]) \\
+&amp; = E(XY) - E(X)E(Y) \\
 \end{aligned}`
 $$
 
@@ -289,211 +85,303 @@ E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
 \end{aligned}`
 $$
 
---
-$$
-`\begin{aligned}
-E(PO) = &amp; p^2 \times 2q(\alpha-qd) \times q\alpha + 2pq \times ((q-p)\alpha+2pqd) \times 1/2(q-p)\alpha \\
-        &amp; + q^2 \times (-2p(\alpha+pd)) \times (-p\alpha) \\
-      = &amp; [2p^2q^2\alpha^2 - 2p^2q^3d\alpha] + [pq\alpha^2(q^2-2pq+p^2) + 2p^2q^2d\alpha(q-p)] \\
-        &amp; + [2p^2q^2\alpha^2 + 2p^3q^2d\alpha] \\
-      = &amp; pq\alpha^2(2pq + q^2 -2pq +p^2 + 2pq) + 2p^2q^2d\alpha(-q+q-p+p) \\
-      = &amp; pq\alpha^2
-\end{aligned}`
-$$
 ---
-# Parent-offspring
+# Additive and dominance variance
 
 
-| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
-| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
-| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
-| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
-| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    | `\((2q\alpha)^2\)`  |  `\(-2q^2d\)`   | `\((-2q^2d)^2\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` | `\((q-p)^2\alpha^2\)` |  `\(2pqd\)`   | `\((2pqd)^2\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   | `\((-2p\alpha)^2\)` |  `\(-2p^2d\)`   | `\((-2p^2d)^2\)` |
+
+### `\(\sigma_{A, D}=0\)`  
 
 
-$$
-`\begin{aligned}
-Cov(P, O) &amp; = E(PO) - E(P)E(O) \\
-\end{aligned}`
-$$
-
---
-$$
-`\begin{aligned}
-E(PO) = &amp; pq\alpha^2 \\
-E(O) = &amp; 0
-\end{aligned}`
-$$
---
-Therefore,
-
-$$
-`\begin{aligned}
-Cov(P, O) &amp; = E(PO) - E(P)E(O) \\
-          &amp; = pq\alpha^2 \\
-          &amp; = 1/2 V_A
-\end{aligned}`
-$$
-Because `\(V_A = 2pq\alpha^2\)`.
-
+`\begin{align*}
+E(XY) &amp; = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j) \\
+E(AD) &amp;= p^2\times (2q\alpha)\times (-2q^2d) + 2pq \times (q-p)\alpha \times 2pqd + q^2 \times (-2p\alpha) \times (-2p^2d) \\
+      &amp;= 4\alpha d p^2q^2(-q + q -p +p) \\
+      &amp;=0
+\end{align*}`
 
 ---
-# Offspring and mid-parent
 
-The covariance of the mean of the offspring and the mean of both parents (commonly called the __mid-parent__)
+# Variance due to GxE interaction
 
+In this case, 
 
-Let `\(P\)` and `\(P'\)` be the values of the two parents,
-therefore `\(\bar{P}=1/2(P + P')\)`
+`\begin{align*}
+&amp; P = G + E + I_{GE} \\
+\end{align*}`
+
+where `\(I_{GE}\)` is the interaction effect between genotype and environment.
 
 --
 
-$$
-`\begin{aligned}
-Cov(\bar{P}, O) &amp; = Cov(1/2(P + P'), O) \\
-          &amp; = 1/2(Cov(P,O) + Cov(P', O))\\
-          &amp; = 1/2 V_A
-\end{aligned}`
-$$
-If `\(P\)` and `\(P'\)` have the same variance.
+And the variance is,
 
-See _P149 of F&amp;M_ for the algebraic reduction.
+`\begin{align*}
+Var(P) &amp; =  Var(G + E + I_{GE}) \\
+       &amp; =  Var((G + E) + I_{GE}) \\
+\end{align*}`
 
+--
 
+`\begin{align*}
+\sigma_P^2 &amp; = \sigma^2_G + \sigma^2_E + 2Cov(G, E) + \sigma^2_{I_{GE}} \\
+\end{align*}`
+
+- The covariance between genetic and non-genetic effects is often zero except in special circumstances.
 
 ---
-# The genetic covariance for half sibs?
+# Variance due to GxE interaction
+
+`\begin{align*}
+\sigma_P^2 &amp; = \sigma^2_G + \sigma^2_E + 2Cov(G, E) + \sigma^2_{I_{GE}} \\
+\end{align*}`
+
+#### `\(Cov(G, E)\)` or `\(\sigma_{G,E}\)`
+
+- Refers to **genotype-environment covariance**
+
+- A measure of the physical association of particular genotypes with particular environmental general effects
+
+- If individuals are __randomly distributed__ with respect to macroenvironments, then `\(\sigma_{G,E}=0\)`
+
+--
+
+#### `\(\sigma^2_{I_{GE}}\)`
+- Refers to **variation of genotype-environment interaction**
+
+- If G and E are __nonadditive__, it measures how large the variation is.
+
+---
+
+# Example: salt marsh cordgrass
 
 &lt;div align="center"&gt;
-&lt;img src="hs-covar.png" height=400&gt;
+&lt;img src="cordgrass.png" height=200&gt;
 &lt;/div&gt;
 
+- An experiment was conducted using a __clonal plant__ (Silander,1985) in three sites --- dune, swale, marsh.
+
+--
+
+
+|Trait             | V_G| V_E| V_I| V_e|
+|:-----------------|---:|---:|---:|---:|
+|Tillers per plant |   1|  34|  20|  45|
+|Plant hight       |  13|  57|   7|  23|
+
+The observed components of variance in above table as percentages of the total phenotypic variance.
+
 ---
-# Genetic covariance for half sibs?
+
+# Example: salt marsh cordgrass
+
+
+|Trait             | V_G| V_E| V_I| V_e|
+|:-----------------|---:|---:|---:|---:|
+|Tillers per plant |   1|  34|  20|  45|
+|Plant hight       |  13|  57|   7|  23|
+
+- `\(Var(G)\)`: the among-clone variance 
+  - is an estimate of the total genetic variance
+
+--
+
+- `\(Var(E)\)`: the variance among the three sites 
+  - is an estimate of the general environmental variance
+
+--
+
+- `\(Var(I)\)`: the clone `\(\times\)` site variance
+
+--
+
+- `\(Var(e)\)`: the variance within sites 
+  - more specifically, among members of the same clones within sites
+
+--
+
+Here, because individual plants were __distributed randomly__ within sites, `\(\sigma_{G,E}=0\)`.
+
+
+
+---
+# Sources of variation
+
+Several sources of variation that reduce the precision of the experiment:
+
+--
+
+### Environmental factors (among sites)
+
+- climatic, nutritional, etc
+
+--
+
+### Measurement error (within site, among clones)
+
+- microenvironment
+  
+- unrecognized causes (developmental accidents)
+
+---
+
+# Two types of non-genetic variance
+
+### 1. General environmental variance `\(\sigma_{Eg}^2\)`: 
+
+Non-genetic variance contributing to the __between-individual variation__ that is permanent. 
+- Maternal effect, barn effect
+
+--
+
+### 2. Special environmental variance `\(\sigma_{Es}^2\)`: 
+
+__Within individual variation__ arising from temporary or localized circumstances. 
+- Measurement error, developmental accidents, temporary climactic effects, etc.
+
+
+
+---
+
+# Repeatability of measurements
+
+The __repeatability__ is the proportion of total variance of single measurements that is due to __permanent differences between individuals__.
 
 `\begin{align*}
-Cov(1/2A, 1/2A) &amp; = 1/4V_A\\
+&amp; r = \frac{\sigma_G^2 + \sigma_{Eg}^2}{\sigma_P^2} \\
 \end{align*}`
 
 --
 
 
-| Genotype  | Freq      | Breeding Value | Dominance Deviation  | Genotypic value | Offspring ( `\(\mu_G\)` ) |
-| :-------: | :-------: | :-----------: |  :-------: | :-------: | :-------: | :-------: |
-| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |   `\(-2q^2d\)`   |  `\(2q(\alpha - qd)\)` | `\(q\alpha\)` |
-| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |  `\(2pqd\)`   | `\((q-p)\alpha + 2pqd\)`  | `\(1/2(q-p)\alpha\)` |
-| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |  `\(-2p^2d\)`   |  `\(-2p(\alpha + pd)\)` | `\(-p\alpha\)` |
-
---
+# Broad sense heritability ( `\(H^2\)` )
 
 `\begin{align*}
-Cov_{HS} = &amp; p^2(q\alpha)^2 + 2pq \times 1/4(q-p)^2\alpha^2  + q^2 \times p^2\alpha^2 \\
-=&amp; pq\alpha^2[pq + 1/2(q-p)^2 + pq] \\
-=&amp; pq\alpha^2[1/2(p+q)^2] \\
-=&amp; 1/2pq\alpha^2 \\
-= &amp; 1/4V_A
-\end{align*}`
-
----
-# Additive genetic covariance for full sibs?
-
-
-- Additive value for full sibs:
-`\begin{align*}
-G_{o1} &amp; = \frac{1}{2}A + \frac{1}{2}A'\\
-G_{o2} &amp; = \frac{1}{2}A + \frac{1}{2}A'\\
+&amp; H^2 = \frac{\sigma_G^2}{\sigma_P^2} \\
 \end{align*}`
 
 --
 
-- The additive genetic covariance for full sibs:
-`\begin{align*}
-Cov(G_{o1}, G_{o2}) = &amp; Cov(\frac{1}{2}A + \frac{1}{2}A', \frac{1}{2}A + \frac{1}{2}A') \\
-= &amp; Var(\frac{1}{2}(A + A')) \\
-= &amp; \frac{1}{4}(\sigma_A^2 + \sigma^2_{A'}) \\
-= &amp; \frac{1}{2}\sigma_A^2 \\
-\end{align*}`
+Repeatability sets an upper limit to **heritability**.
 
 ---
-# Dominance genetic covariance for full sibs?
+
+# Introduction to heritability
+
+### Broad sense heritability ( `\(H^2\)` )
+
+`\begin{align*}
+&amp; H^2 = \frac{\sigma_G^2}{\sigma_P^2} \\
+\end{align*}`
 
 
-- Among the progeny, only __four possible genotypes__, each with a frequency of 1/4.
 
-  - `\(A_1A_3\)`, `\(A_1A_4\)`, `\(A_2A_3\)`, `\(A_2A_4\)`
+- Proportion of variation due to genotypic effects.
+
+- This represents __nature__ versus __nurture__.
+
+--
+
+- In a breeding program, this measure of heritability is useful when all forms of genetic variation can be exploited
+  - such as selecting among a set of clones to propagate a cultivar.
+
+---
+
+# Introduction to heritability
+
+### Narrow sense heritability ( `\(h^2\)` )
+
+`\begin{align*}
+&amp; h^2 = \frac{\sigma_A^2}{\sigma_P^2} \\
+\end{align*}`
+
+- Proportion of phenotypic variation due to variation in __breeding values__.
+
+--
+
+- Since parents pass on alleles, not genotypes, `\(h^2\)` is more meaningful in determining amount of genetic progress from generation to generation due to selection and intermating
+
+
+
+---
+
+# Repeatability of measurements
+
+One way to increase the accuracy of measurements is to use the average of __multiple measurements__ instead of just one.
+
+According to F&amp;M, formula [8.14]
+`\begin{align*}
+&amp; \sigma_{P(n)}^2 = \sigma_G^2 + \sigma_{Eg}^2 + \frac{1}{n}\sigma_{Es}^2 \\
+\end{align*}`
+
+The contribution of `\(\sigma_{Es}^2\)` to the total variance is reduced proportionally by the number of measurements taken.
+
+This means that averages of multiple measurements are more accurate indicators of the underlying genetic value than single measurements.
+
+---
+
+# Repeatability of measurements
+
+The repeatability of the average of multiple measurements is:
+
+`\begin{align*}
+r_n &amp; = \frac{\sigma_G^2 + \sigma_{Eg}^2}{\sigma_{P(n)}^2} \\
+&amp; = 1- \frac{\frac{1}{n}\sigma_{Es}^2}{\sigma_{P(n)}^2} \\
+\end{align*}`
+
+If repeatability is low, taking multiple measurements and avaraging them can really improve accuracy.
+
+
+--
+
+However,
+
+- Repeated measurement may not suitable for __behavioral and physiological traits__ because of the temporal organismal changes.
+
+
+
+
+---
+
+# Summary of variance partitioning
+
+### Phenotypic variance
+
+- Genetic componenents
+  1. Additive
+  2. Non-additive
+
+- Environmental componenents
+  1. General
+  2. Special
   
 --
 
-- Let the first sib has any of these genotypes. The 2nd has the same genotype is 1/4.
-  - Thus one-quarter of all sib-pairs have the same genotype and consequently the same dominance deviation, `\(D\)`.
-  
---
-
-- Thus, the cross-product of the dominance deviation is `\(\sigma_D^2\)`, times frequency 1/4 = `\(1/4\sigma_D^2\)`
-
----
-# Genetic covariance for full sibs?
-
-### The genetic covariance of full sibs is therefore,
-
-`\begin{align*}
-Cov_{FS} = \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2
-\end{align*}`
-
---
-
-### Covariance of half sibs
-
-`\begin{align*}
-Cov_{HS} = \frac{1}{4}\sigma_A^2
-\end{align*}`
-
---
-
-In principle, dominance variance can be calculated using full sibs and half sibs:
-
-`\begin{align*}
-Cov_{FS} - 2Cov_{HS} = &amp; \frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2 - 2 \times \frac{1}{4}\sigma_A^2 \\
-= &amp; \frac{1}{4}\sigma_D^2
-\end{align*}`
-
----
-# Twins
-
-
-### Monozygotic (identical) twins 
-
-$$
-Cov_{MZ} = V_G
-$$
-
-
-### Dizygotic (fraternal) twins
-- Not identical twins
-- = Full sibs
-
----
-# Summary
-
-
-| Relationship  |       | r (of `\(\sigma^2_A\)`) | u (of `\(\sigma^2_D\)`)  | 
-| :-------: | :-------: | :-----------: | :-------: | :-------: | 
-| Identical twins |  | 1 | 1|
-| First degree  | Parent-offspring   | 1/2    |  0  |  
-| Second degree  | Half sibs    | 1/4 |  0 |  
-|                | Full sibs     | 1/2 |  1/4 |  
-
-
---
-### General framework for calculating resemblance
+| Data                            | Parition      | Ratio | Definition |
+| :-----------------------------  | :-------: | :-----------: | :---: |
+| Relatives   | `\({V_A}:({V_{NA} + V_{Eg} + V_{Es}})\)`     | `\(\frac{V_A}{V_{P}}\)`     | `\(h^2\)` |
+| Genetically uniform group       | `\(({V_A} + V_{NA}):(V_{Eg} + V_{Es})\)`     | `\(\frac{V_G}{V_{P}}\)` |  `\(H^2\)` |
+| Multiple measurements           | `\(({V_A} + V_{NA} + V_{Eg}):V_{Es}\)`     | `\(\frac{V_G + V_{Eg}}{V_{P}}\)`   |   `\(r\)` |
 
 
 
-Alleles shared between relatives that are __identical by descent (IBD)__ contribute to the covariance between relatives.
 
-For example, if `\(\sigma_A^2 = 0\)`, meaning no variation in breeding values exists in the population for the trait of interest, then shared average allelic effects will not contribute to resemblance.
 
-`\(u \neq 0\)` only if the relatives having the same genotype through two alleles IBD.
+
+
+
+
+
+
+
+
+
+
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
