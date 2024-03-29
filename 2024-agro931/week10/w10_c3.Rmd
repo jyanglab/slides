@@ -87,7 +87,7 @@ $$
 
 \begin{align*}
 E(XY) & = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j) \\
-E(AD) &= p^2\times (2q\alpha)\times (-2q^2d) + 2pq \times (q-p)\alpha \times 2pqd + q^2 \times (-2p\alpha) \times (-2p^2d) \\
+E(AD) &= (2q\alpha)\times (-2q^2d) \times p^2  +  (q-p)\alpha \times 2pqd \times 2pq  +  (-2p\alpha) \times (-2p^2d) \times q^2 \\
       &= 4\alpha d p^2q^2(-q + q -p +p) \\
       &=0
 \end{align*}
@@ -184,6 +184,7 @@ kable(f1)
 ```
 
 - $Var(G)$: the among-clone variance 
+
   - is an estimate of the total genetic variance
 
 --
@@ -239,7 +240,7 @@ Non-genetic variance contributing to the __between-individual variation__ that i
 ### 2. Special environmental variance $\sigma_{Es}^2$: 
 
 __Within individual variation__ arising from temporary or localized circumstances. 
-- Measurement error, developmental accidents, temporary climactic effects, etc.
+- Measurement error, developmental accidents, temporary climatic effects, etc.
 
 
 
@@ -349,17 +350,17 @@ However,
 
 ### Phenotypic variance
 
-- Genetic componenents
+- Genetic components
   1. Additive
   2. Non-additive
 
-- Environmental componenents
+- Environmental components
   1. General
   2. Special
   
 --
 
-| Data                            | Parition      | Ratio | Definition |
+| Data                            | Partition      | Ratio | Definition |
 | :-----------------------------  | :-------: | :-----------: | :---: |
 | Relatives   | ${V_A}:({V_{NA} + V_{Eg} + V_{Es}})$     | $\frac{V_A}{V_{P}}$     | $h^2$ |
 | Genetically uniform group       | $({V_A} + V_{NA}):(V_{Eg} + V_{Es})$     | $\frac{V_G}{V_{P}}$ |  $H^2$ |
