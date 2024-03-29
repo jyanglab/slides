@@ -1,7 +1,7 @@
 ---
 title: "Estimation of heritability"
 author: "Jinliang Yang"
-date: "Oct. 31, 2022"
+date: "March 5, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -218,7 +218,7 @@ E(O) = b_{OP}P = 0.4144 \times 20 + \mu
 # Predicted bristle number 
 
 
-```{r, out.width='45%', fig.align='center', echo=TRUE}
+```{r, out.width='45%', fig.align='center', echo=TRUE, warning=FALSE, error=FALSE}
 fit <- lm(Offspring.Mean ~ Mother, data=d)
 o <- predict(fit, data.frame(Mother=20, Offspring.Mea=NA))
 
