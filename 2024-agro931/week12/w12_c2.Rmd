@@ -1,7 +1,7 @@
 ---
 title: "Examples for heritability estimation"
 author: "Jinliang Yang"
-date: "Nov. 4, 2022"
+date: "April 10, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
