@@ -32,7 +32,8 @@ table(p$sire)
 ```
 
 ```{r}
-table(p$dam)
+dam <- as.data.frame(table(p$dam))
+head(dam)
 ```
 
 ---
@@ -49,7 +50,7 @@ summary(aov(fit))
 | :------------: | :-------: | :-------:     | :-------: |
 | Between Sires  | 1     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
 | Between Dams   | 33      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
-| Within progenies | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
+| Within Dams | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
 
 ---
 
@@ -61,7 +62,7 @@ summary(aov(fit))
 | :------------: | :-------: | :-------:     | :-------: |
 | Between Sires  | 1     |    $MS_s=6331$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
 | Between Dams   | 33      |    $MS_d=734$     | $= \sigma_w^2 + n\sigma_d^2$ | 
-| Within progenies | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
+| Within Dams | 163    |    $MS_w=352$     | $= \sigma_w^2$ |
 
 
 Because $d=34$ and $n=4$ as we designed
@@ -159,12 +160,43 @@ t_{FS} & = \frac{Cov(FS)}{V_P} = \frac{1/2V_A + 1/4V_D}{V_P}\\
 &= \frac{\sigma^2_s + \sigma^2_d}{\sigma_T^2}  =  \frac{41.15 + 95.5}{488.65} = 0.28 \\
 \end{align*}
 
+---
+
+# North-Carolina Design I
+
+
+
+<div align="center">
+<img src="nc1.png" height=200>
+</div>
+
+### NC Design I: nested mating design
+
+- Consider $m$ male plants, each of which is mated to $f$ female plants, to produce $m \times f$ full-sib families within each male
+
+- In total, we have $m$ half-sib families
+
+- Note that __different female plants__ are used to cross with each male
 
 ---
 
-# Cross-factorial design: a maize example
+# North-Carolina Design II
 
-### North-Carolina Design II
+<div align="center">
+<img src="nc2.png" height=200>
+</div>
+
+### NC Design II: cross-factorial design
+
+- Consider $m$ male plants, each of which is mated to $f$ female plants, to produce $m \times f$ full-sib families within each male
+
+- In total, we have $m$ and $f$ half-sib families
+
+- Note that __the same female plants__ are used to cross with each male
+
+---
+
+# NC Design II: a maize example
 
 - A set of maize hybrids crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
   - $m=5$ and $f=6$
@@ -286,9 +318,9 @@ summary(aov(fit))
 
 | Observational component        |  Value     |    Resemblance of relatives    |  
 | :------------: | :-------: | :--------------------:     | :-------: |
-| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(MHS)$   |
-| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(FHS)$  | 
-| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(MHS) - Cov(FHS)$    | 
+| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(HS_M)$   |
+| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(HS_F)$  | 
+| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(HS_M) - Cov(HS_F)$    | 
 | Error variance | $MS_e$    |   $= V_P - Cov(FS)$   | 
 
 ---
@@ -318,9 +350,9 @@ summary(aov(fit))
 
 | Observational component        |  Value     |    Resemblance of relatives    |  
 | :------------: | :-------: | :--------------------:     | :-------: |
-| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(MHS)$   |
-| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(FHS)$  | 
-| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(MHS) - Cov(FHS)$    | 
+| Male variance  | $\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)$     |   $= Cov(HS_M)$   |
+| Female variance  | $\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)$     |  $= Cov(HS_F)$  | 
+| Interaction   | $\sigma_i^2=\frac{1}{r}(MS_i - MS_e)$      |    $= Cov(FS) - Cov(HS_M) - Cov(HS_F)$    | 
 | Error variance | $MS_e$    |   $= V_P - Cov(FS)$   | 
 
 - $v=4, r=3, m=5, f=6$

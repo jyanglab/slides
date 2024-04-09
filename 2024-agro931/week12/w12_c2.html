@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
     <meta name="date" content="2024-04-10" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
-    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/header-attrs-2.21/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
   </head>
   <body>
@@ -62,17 +62,18 @@ table(p$sire)
 
 
 ```r
-table(p$dam)
+dam &lt;- as.data.frame(table(p$dam))
+head(dam)
 ```
 
 ```
-## 
-## s117343 s120371 s304784 s304794 s304975 s305745 s309035 s309073 s309140 s312158 s312316 s313092 
-##       4       4       8       7       6       8       7       4       5       4       8       2 
-## s313498 s313506 s313662 s314117 s316318 s316331 s316647 s317607 s318054 s318437 s318555 s318823 
-##       6       4       6       8       8       8       4       8       8       3       3       5 
-## s318838 s319105 s319237 s319327  s52427  s53393  s53697  s54134  s54156  s54185 
-##       4       3       6       4       7       4       8       8       8       8
+##      Var1 Freq
+## 1 s117343    4
+## 2 s120371    4
+## 3 s304784    8
+## 4 s304794    7
+## 5 s304975    6
+## 6 s305745    8
 ```
 
 ---
@@ -99,7 +100,7 @@ summary(aov(fit))
 | :------------: | :-------: | :-------:     | :-------: |
 | Between Sires  | 1     |    `\(MS_s=6331\)`     | `\(= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2\)` |
 | Between Dams   | 33      |    `\(MS_d=734\)`     | `\(= \sigma_w^2 + n\sigma_d^2\)` | 
-| Within progenies | 163    |    `\(MS_w=352\)`     | `\(= \sigma_w^2\)` |
+| Within Dams | 163    |    `\(MS_w=352\)`     | `\(= \sigma_w^2\)` |
 
 ---
 
@@ -111,7 +112,7 @@ summary(aov(fit))
 | :------------: | :-------: | :-------:     | :-------: |
 | Between Sires  | 1     |    `\(MS_s=6331\)`     | `\(= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2\)` |
 | Between Dams   | 33      |    `\(MS_d=734\)`     | `\(= \sigma_w^2 + n\sigma_d^2\)` | 
-| Within progenies | 163    |    `\(MS_w=352\)`     | `\(= \sigma_w^2\)` |
+| Within Dams | 163    |    `\(MS_w=352\)`     | `\(= \sigma_w^2\)` |
 
 
 Because `\(d=34\)` and `\(n=4\)` as we designed
@@ -209,12 +210,43 @@ t_{FS} &amp; = \frac{Cov(FS)}{V_P} = \frac{1/2V_A + 1/4V_D}{V_P}\\
 &amp;= \frac{\sigma^2_s + \sigma^2_d}{\sigma_T^2}  =  \frac{41.15 + 95.5}{488.65} = 0.28 \\
 \end{align*}`
 
+---
+
+# North-Carolina Design I
+
+
+
+&lt;div align="center"&gt;
+&lt;img src="nc1.png" height=200&gt;
+&lt;/div&gt;
+
+### NC Design I: nested mating design
+
+- Consider `\(m\)` male plants, each of which is mated to `\(f\)` female plants, to produce `\(m \times f\)` full-sib families within each male
+
+- In total, we have `\(m\)` half-sib families
+
+- Note that __different female plants__ are used to cross with each male
 
 ---
 
-# Cross-factorial design: a maize example
+# North-Carolina Design II
 
-### North-Carolina Design II
+&lt;div align="center"&gt;
+&lt;img src="nc2.png" height=200&gt;
+&lt;/div&gt;
+
+### NC Design II: cross-factorial design
+
+- Consider `\(m\)` male plants, each of which is mated to `\(f\)` female plants, to produce `\(m \times f\)` full-sib families within each male
+
+- In total, we have `\(m\)` and `\(f\)` half-sib families
+
+- Note that __the same female plants__ are used to cross with each male
+
+---
+
+# NC Design II: a maize example
 
 - A set of maize hybrids crossed from male lines (M1, M2, M3, M4 and M5) and female lines (F1, F2, F3, F4, F5, F6).
   - `\(m=5\)` and `\(f=6\)`
@@ -338,9 +370,9 @@ summary(aov(fit))
 
 | Observational component        |  Value     |    Resemblance of relatives    |  
 | :------------: | :-------: | :--------------------:     | :-------: |
-| Male variance  | `\(\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)\)`     |   `\(= Cov(MHS)\)`   |
-| Female variance  | `\(\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)\)`     |  `\(= Cov(FHS)\)`  | 
-| Interaction   | `\(\sigma_i^2=\frac{1}{r}(MS_i - MS_e)\)`      |    `\(= Cov(FS) - Cov(MHS) - Cov(FHS)\)`    | 
+| Male variance  | `\(\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)\)`     |   `\(= Cov(HS_M)\)`   |
+| Female variance  | `\(\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)\)`     |  `\(= Cov(HS_F)\)`  | 
+| Interaction   | `\(\sigma_i^2=\frac{1}{r}(MS_i - MS_e)\)`      |    `\(= Cov(FS) - Cov(HS_M) - Cov(HS_F)\)`    | 
 | Error variance | `\(MS_e\)`    |   `\(= V_P - Cov(FS)\)`   | 
 
 ---
@@ -383,9 +415,9 @@ summary(aov(fit))
 
 | Observational component        |  Value     |    Resemblance of relatives    |  
 | :------------: | :-------: | :--------------------:     | :-------: |
-| Male variance  | `\(\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)\)`     |   `\(= Cov(MHS)\)`   |
-| Female variance  | `\(\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)\)`     |  `\(= Cov(FHS)\)`  | 
-| Interaction   | `\(\sigma_i^2=\frac{1}{r}(MS_i - MS_e)\)`      |    `\(= Cov(FS) - Cov(MHS) - Cov(FHS)\)`    | 
+| Male variance  | `\(\sigma_m^2=\frac{1}{rf}(MS_f - MS_i)\)`     |   `\(= Cov(HS_M)\)`   |
+| Female variance  | `\(\sigma_f^2=\frac{1}{rm}(MS_m - MS_i)\)`     |  `\(= Cov(HS_F)\)`  | 
+| Interaction   | `\(\sigma_i^2=\frac{1}{r}(MS_i - MS_e)\)`      |    `\(= Cov(FS) - Cov(HS_M) - Cov(HS_F)\)`    | 
 | Error variance | `\(MS_e\)`    |   `\(= V_P - Cov(FS)\)`   | 
 
 - `\(v=4, r=3, m=5, f=6\)`
