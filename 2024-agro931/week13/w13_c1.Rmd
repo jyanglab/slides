@@ -238,9 +238,9 @@ They plan to conduct 40 discrete generations of selection.
 --
 ### Assumptions:
 
-1. The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs). 
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by ~100 genetic loci (or QTLs). 
 
-2. These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome. 
+2. These QTL are equally split across 39 chromosomes so that there are about 3 QTLs per chromosome. 
 
 3. $h^2=0.5%$
 
@@ -276,12 +276,13 @@ They plan to conduct 40 discrete generations of selection.
 
 --
 
-### Creating Founder population
+### Creating founder population
 
-```{r, eval=TRUE}
+```{r eval=TRUE, message=FALSE, warning=FALSE}
 # install.packages("AlphaSimR")
 library(AlphaSimR)
-founderPop = runMacs(nInd=100, nChr=10, segSites=5000)
+founderPop = runMacs(nInd=100, nChr=39, segSites=10000)
+founderPop
 ```
 
 
@@ -290,8 +291,8 @@ founderPop = runMacs(nInd=100, nChr=10, segSites=5000)
 
 ### Simulate the phenotype
 
-1. The quantitative trait, 56-day body weight, is modeled as being controlled by 1,000 genetic loci (or QTLs). 
-2. These QTL are equally split across 10 chromosomes so that there are 100 QTLs per chromosome. 
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by 100 genetic loci (or QTLs). 
+2. These QTL are equally split across 39 chromosomes so that there are 3 QTLs per chromosome. 
 3. $h^2=0.5$
 
 --
@@ -301,9 +302,12 @@ founderPop = runMacs(nInd=100, nChr=10, segSites=5000)
 ```{r, eval=TRUE}
 SP = SimParam$new(founderPop)
 # The ‘A’ at the end indicates that the trait’s QTL only have additive effects.
-SP$addTraitA(nQtlPerChr=100) 
-# Systematic assignment is used to ensure that there is always equal numbers of males and females.
+SP$addTraitA(nQtlPerChr=3) 
+
+# Systematic assignment is used to ensure that there is always equal numbers
+# of males and females.
 SP$setSexes("yes_sys")
+
 SP$setVarE(h2=0.5)
 ```
 
@@ -311,7 +315,7 @@ SP$setVarE(h2=0.5)
 ---
 # Conduct the selection
 
-### Modeling the Breeding Program
+### Simulating the breeding program
 
 - This step will take the haplotypes in `founderPop` and the information in `SP` to create an object of `Pop-class`.
 
@@ -335,9 +339,42 @@ for(generation in 1:40){
 
 ```{r eval=TRUE, out.width='60%', fig.align='center'}
 plot(0:40, genMean1, type="l", col="blue", lwd=3, 
-     xlab="Generation", ylab="Mean Genetic Value")
+     xlab="Generation", ylab="Mean Genotypic Value")
 lines(0:40, genMean2, col="red", lwd=3)
 ```
 
+---
+# Conduct the selection
+
+### Compare different selection schemes
+
+```{r, eval=TRUE}
+set.seed(12345)
+pop1 = newPop(founderPop)
+pop2 = newPop(founderPop)
+pop3 = newPop(founderPop)
+# compute the mean in the current generation
+genMean1 = meanG(pop1)
+genMean2 = meanG(pop2)
+genMean3 = meanG(pop3)
+for(generation in 1:40){
+  pop1 = selectCross(pop=pop1, nFemale=30, nMale=30, use="bv", nCrosses=100)
+  pop2 = selectCross(pop=pop2, nFemale=30, nMale=30, use="pheno", nCrosses=100)
+  pop3 = selectCross(pop=pop3, nFemale=30, nMale=30, use="rand", nCrosses=100)
+  genMean1 = c(genMean1, meanG(pop1))
+  genMean2 = c(genMean2, meanG(pop2))
+  genMean3 = c(genMean3, meanG(pop3))
+}
+```
+
+---
+# Examining the Results
+
+```{r eval=TRUE, out.width='60%', fig.align='center'}
+plot(0:40, genMean1, type="l", col="blue", lwd=3, 
+     xlab="Generation", ylab="Mean Genotypic Value")
+lines(0:40, genMean2, col="red", lwd=3)
+lines(0:40, genMean3, col="green", lwd=3)
+```
 
 
