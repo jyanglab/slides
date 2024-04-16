@@ -122,7 +122,11 @@ whether it is real (need replications)
 #### Other reasons (F&M p211-215):
 
 - Scalar asymmetry
+  - uneven or non-proportional changes in different traits
+  
 - Indirect selection
+ - For example, if a breeding program selects for increased grain yield in wheat and this trait is correlated with plant height, the response in plant height might show asymmetry.
+
 - Maternal effects
 
 
