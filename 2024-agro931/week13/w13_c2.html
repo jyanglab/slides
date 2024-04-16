@@ -120,7 +120,11 @@ whether it is real (need replications)
 #### Other reasons (F&amp;M p211-215):
 
 - Scalar asymmetry
+  - uneven or non-proportional changes in different traits
+  
 - Indirect selection
+ - For example, if a breeding program selects for increased grain yield in wheat and this trait is correlated with plant height, the response in plant height might show asymmetry.
+
 - Maternal effects
 
 
@@ -160,6 +164,7 @@ __Total response ( `\(R_T\)` )__ = selection limit in high direction - selection
 
 ### Genetic architecture
 - Total response depends on __number of loci__ contributing to a given amount of variation.
+
 - For a given amount of variation, the number of loci is inversely related to __average size of effects__.
 
 --
@@ -172,6 +177,7 @@ Long term results become unpredictable, because __mutation__ produces new variat
 # Theoretical maximum limit
 
 ### Two assumptions:
+
 1. All the loci have the same magnitude of additive effect: `\(a\)`
 2. All alleles start at the frequencies of 0.5.
 
@@ -185,7 +191,7 @@ R_T &amp; = \sum\limits_{i=1}^n2a = 2na\\
 
 --
 
-The additive variance, assuming all alleles start at a frequency of 0.50, for one locu
+The additive variance, assuming all alleles start at a frequency of 0.50, for one locus
 
 `\begin{align*}
 \sigma_A^2 &amp; = 2pq(a + d(q-p))^2 = \frac{1}{2}a^2 \\
@@ -193,10 +199,10 @@ The additive variance, assuming all alleles start at a frequency of 0.50, for on
 
 --
 
-For more than more loci:
+For more than one loci:
 
 `\begin{align*}
-\sigma_A^2 &amp;= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
+\sum\sigma_A^2 &amp;= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
 \end{align*}`
 
 ---
@@ -209,7 +215,7 @@ For more than more loci:
 
 `\begin{align*}
 R_T &amp; = \sum\limits_{i=1}^n2a = 2na\\
-\sigma_A^2 &amp;= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
+\sum\sigma_A^2 &amp;= \sum\limits_{i=1}^n \frac{1}{2}a^2 = \frac{1}{2}na^2\\
 \end{align*}`
 
 --
@@ -217,7 +223,7 @@ R_T &amp; = \sum\limits_{i=1}^n2a = 2na\\
 The relationship between the range of response and the additive variance is obtained as:
 
 `\begin{align*}
-\frac{R_T^2}{\sigma_A^2} = \frac{4n^2a^2}{\frac{1}{2} na^2} = 8n \\
+\frac{R_T^2}{\sum\sigma_A^2} = \frac{4n^2a^2}{\frac{1}{2} na^2} = 8n \\
 \end{align*}`
 
 ---
@@ -225,7 +231,7 @@ The relationship between the range of response and the additive variance is obta
 
 | Observation | Exp1      | Exp2 | Exp3  | 
 | :-------: | :-------: | :--------: | :-------: |
-| `\(R_T/\sigma_A\)`  | 100 | 50 | 10 |
+| `\(R_T/\sum\sigma_A\)`  | 100 | 50 | 10 |
 | `\(n\)`  | ? | ? | ? |
 
 ---
