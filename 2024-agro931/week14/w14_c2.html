@@ -38,7 +38,7 @@ class: center, middle, inverse, title-slide
 ]
 
 .pull-right[
-- Heart girth vs. Body weight
+- Heart girth with body weight
 
 - Body weight with sale price
 
@@ -65,14 +65,16 @@ class: center, middle, inverse, title-slide
 
 .pull-left[
 &lt;div align="center"&gt;
-&lt;img src="https://i.imgur.com/5zuzejp.png" height=200&gt;
+&lt;img src="htp.png" height=200&gt;
 &lt;/div&gt;
 ]
 
 .pull-right[
 - Plant height vs. canopy coverage 
 
-- Plant height vs. Biomass
+- Canopy coverage vs. yield
+
+- Vegetation index vs. N content in leaf
 ]
 
 --
@@ -121,7 +123,7 @@ The __phenotypic correlation__ between __two traits__ X and Y:
 \end{align*}`
 
 - __ `\(Cov_P\)`__: the phenotypic covariance between the two traits X and Y
-- __ `\(r_P\)`__: the phenotypic correlation between the two traits X and Y
+- __ `\(r_P\)`__: the phenotypic correlation coefficient between the two traits X and Y
 
 --
 
@@ -134,7 +136,7 @@ The __phenotypic correlation__ between __two traits__ X and Y:
 
 - __ `\(r_A\)`__: the genetic correlation due to breeding values between X and Y
 - __ `\(r_E\)`__: the environmental correlation between X and Y, including non-additive genetic effects.
-- __ `\(\sigma\)`__: standard deviation, with subscripts P, A, and E, and X or Y to the traits referred to.
+- __ `\(\sigma\)`__: standard deviation, with subscripts `\(P\)`, `\(A\)`, and `\(E\)`, and X or Y to the traits referred to.
   - e.g., `\(\sigma_{A_Y}\)`, standard deviation of the trait Y due to breeding value.
 
 ---
@@ -275,11 +277,6 @@ This comes down to the relationship between the breeding values (BVs) for trait 
 --
 
 .pull-left[
-
-```
-## RStudio Community is a great place to get help:
-## https://community.rstudio.com/c/tidyverse
-```
 
 ```
 ## `geom_smooth()` using formula = 'y ~ x'
