@@ -259,16 +259,9 @@ The vector of weights, which is called the __Smith-Hazel index__, or __optimum i
 ---
 # A problem
 
-This litter size of mice could be increased: 
-- 1) by selection of females for their little size
-- 2) by selection of both parents for body weight
-
-Which would be the better of these two simple procedures, given the following parameters?
-
-- $h^2$ of litter size: 0.22
-- $h^2$ of body weight: 0.35
-- Genetic correlation $r_A$: 0.43
-- Proportion of selection:
-  - Females: 25% ( $i_f$ =1.271)
-  - Males: 10% ( $i_m$ =1.755)
+```{r}
+G <- read.csv("https://jyanglab.com/slides/2024-agro931/Gmatrix.csv")
+P <- read.csv("https://jyanglab.com/slides/2024-agro931/")
+w <- read.csv("https://jyanglab.com/slides/2024-agro931/")
+```
 
