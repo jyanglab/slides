@@ -270,15 +270,88 @@ The vector of weights, which is called the __Smith-Hazel index__, or __optimum i
 
 
 ---
-# A problem
+# A simulated example
+
+- A corn breeder, aiming to increase grain yield in a cost-effective manner for their small breeding program,  selects key yield component traits instead of relying solely on combine-based yield measurements. 
+
+- These traits include kernel count (KC), three ear-related traits and three cob-related traits.
+
+&lt;div align="center"&gt;
+&lt;img src="yct.png" height=230&gt;
+&lt;/div&gt;
+
+--
+
+How to build a selection index to maximize the genetic gain?
+
+`\begin{align*}
+I &amp; =  \sum_{i=1}^{m=7}b_iP_i \\
+\end{align*}`
+
+---
+# A simulated example
 
 
 ```r
-getwd()
+G &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Gmatrix.csv")
+P &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Pmatrix.csv")
+a &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Wmatrix.csv")
+
+# in R solve function gives the inverse of a matrix
+solve(as.matrix(P[, -1]))
 ```
 
 ```
-## [1] "/Users/jyang21/Documents/courses/slides/2024-agro931/week14"
+##           [,1]        [,2]       [,3]       [,4]        [,5]        [,6]        [,7]
+## EL  0.79474139 -0.08412097 -0.6252394 -0.5008019 -0.10351099  -0.5123586  -2.5482715
+## EW -0.08412097  0.31442910 -0.1616803  0.2426977  0.06199121  -0.3469347   0.9845905
+## ED -0.62523938 -0.16168025  6.9321926  1.5576210 -0.78367948   1.5797301  -0.6336474
+## CL -0.50080191  0.24269775  1.5576210  3.1885762 -0.34724248   1.9990310  -1.3838360
+## CW -0.10351099  0.06199121 -0.7836795 -0.3472425  0.40582077  -0.7215205   1.7977689
+## CD -0.51235860 -0.34693473  1.5797301  1.9990310 -0.72152053  21.4511330 -24.2007667
+## KC -2.54827155  0.98459046 -0.6336474 -1.3838360  1.79776894 -24.2007667  85.0088254
+```
+
+```r
+# function t to compute transpose
+t(as.matrix(G[,-1]))
+```
+
+```
+##      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]    [,7]
+## EL 1.2566  0.3294  0.1588  0.2430  0.7350  0.1276  0.0926
+## EW 0.3294  1.5602  0.1734 -0.3129 -0.2331  0.1168  0.0330
+## ED 0.1588  0.1734  0.1325 -0.0316  0.3201 -0.0086 -0.0124
+## CL 0.2430 -0.3129 -0.0316  0.2432  0.3019 -0.0209  0.0074
+## CW 0.7350 -0.2331  0.3201  0.3019  0.9608 -0.0692 -0.0582
+## CD 0.1276  0.1168 -0.0086 -0.0209 -0.0692  0.0174  0.0085
+## KC 0.0926  0.0330 -0.0124  0.0074 -0.0582  0.0085  0.0103
+```
+
+---
+# A simulated example
+
+The vector of weights, which is called the __Smith-Hazel index__, or __optimum index__:
+
+`\begin{align*}
+&amp; \mathbf{b} = \mathbf{P^{-1}}\mathbf{G^Ta}  \\
+\end{align*}`
+
+
+```r
+b &lt;- solve(as.matrix(P[, -1])) %*% t(as.matrix(G[, -1])) %*% as.matrix(a[,1])
+b
+```
+
+```
+##          [,1]
+## EL  1.0280734
+## EW  0.4042746
+## ED  2.3218498
+## CL  0.9935738
+## CW -0.1079861
+## CD  0.2339995
+## KC -0.6489541
 ```
 
     </textarea>

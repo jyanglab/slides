@@ -257,11 +257,50 @@ The vector of weights, which is called the __Smith-Hazel index__, or __optimum i
 
 
 ---
-# A problem
+# A simulated example
+
+- A corn breeder, aiming to increase grain yield in a cost-effective manner for their small breeding program,  selects key yield component traits instead of relying solely on combine-based yield measurements. 
+
+- These traits include kernel count (KC), three ear-related traits and three cob-related traits.
+
+<div align="center">
+<img src="yct.png" height=230>
+</div>
+
+--
+
+How to build a selection index to maximize the genetic gain?
+
+\begin{align*}
+I & =  \sum_{i=1}^{m=7}b_iP_i \\
+\end{align*}
+
+---
+# A simulated example
 
 ```{r}
 G <- read.csv("https://jyanglab.com/slides/2024-agro931/Gmatrix.csv")
-P <- read.csv("https://jyanglab.com/slides/2024-agro931/")
-w <- read.csv("https://jyanglab.com/slides/2024-agro931/")
+P <- read.csv("https://jyanglab.com/slides/2024-agro931/Pmatrix.csv")
+a <- read.csv("https://jyanglab.com/slides/2024-agro931/Wmatrix.csv")
+
+# in R solve function gives the inverse of a matrix
+solve(as.matrix(P[, -1]))
+
+# function t to compute transpose
+t(as.matrix(G[,-1]))
+```
+
+---
+# A simulated example
+
+The vector of weights, which is called the __Smith-Hazel index__, or __optimum index__:
+
+\begin{align*}
+& \mathbf{b} = \mathbf{P^{-1}}\mathbf{G^Ta}  \\
+\end{align*}
+
+```{r}
+b <- solve(as.matrix(P[, -1])) %*% t(as.matrix(G[, -1])) %*% as.matrix(a[,1])
+b
 ```
 
