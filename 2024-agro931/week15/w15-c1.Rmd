@@ -1,7 +1,7 @@
 ---
 title: "QTL: single-marker analysis"
 author: "Jinliang Yang"
-date: "Nov. 30, 2022"
+date: "April 29, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
