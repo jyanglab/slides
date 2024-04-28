@@ -1,7 +1,7 @@
 ---
 title: "QTL: Interval Mapping"
 author: "Jinliang Yang"
-date: "Dec. 2, 2022"
+date: "May 1, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
