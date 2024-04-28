@@ -412,7 +412,7 @@ pop &lt;- sim.cross(map, type="bc", n.ind=200, model=mymodel)
 plot.map(pop)
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-1-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w15_c2_files/figure-html/unnamed-chunk-1-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -427,7 +427,7 @@ hist(pop$pheno$phenotype, main="simulated phenotype",
      breaks=50, xlab="Phenotype", col="#cdb79e")
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w15_c2_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -442,7 +442,7 @@ out.mr &lt;- scanone(pop, method="mr")
 plot(out.mr, chr=c(1,2,3,4,5), ylab="LOD Score")
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w15_c2_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -460,7 +460,7 @@ out.hk &lt;- scanone(pop, method="hk")
 plot(out.hk, chr=c(1,2,3,4,5), ylab="LOD score")
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w15_c2_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Plot QTL effect
@@ -480,7 +480,7 @@ summary(out.mr, threshold=3)
 effectplot(pop, mname1="D1M4", main="Chr1")
 ```
 
-&lt;img src="w15-c2_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w15_c2_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
