@@ -158,9 +158,9 @@ If the genotypic values for each of the QTL genotypes were given as below:
 ---
 # Maximum likelihood
 
-What does it mean to calcuate the likelihood of somethings?
+What does it mean to calculate the likelihood of somethings?
 
-The likelihood funcion is represented as __ $L(\theta|s) = f_{\theta}(s)$ __.
+The likelihood function is represented as __ $L(\theta|s) = f_{\theta}(s)$ __.
 
 This function represents the likelihood of a certain parameter value ( $\theta$ ) given a data vector ( $s$ ).
 
@@ -297,7 +297,7 @@ L(z|MM) &  = P(QQ|MM)f(z, \mu_{QQ}, \sigma^2) + P(Qq|MM)f(z, \mu_{Qq}, \sigma^2)
 L(z|MM) &  = (1-c)^2f(z, \mu_{QQ}, \sigma^2) + 2c(1-c)f(z, \mu_{Qq}, \sigma^2) + c^2f(z, \mu_{qq}, \sigma^2)\\
 \end{align*}
 
-- And the QTL effects enter through the means and variances of the underlying normal distrutions $f_{\theta}(z)$ or $f(z, \mu_{Q_k}, \sigma^2)$.
+- And the QTL effects enter through the means and variances of the underlying normal distributions $f_{\theta}(z)$ or $f(z, \mu_{Q_k}, \sigma^2)$.
 
 ---
 # Back to interval mapping
