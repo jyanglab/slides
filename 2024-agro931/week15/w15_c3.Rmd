@@ -140,3 +140,68 @@ summary(out.mr, threshold=3)
 
 effectplot(pop, mname1="D5M6", main="Chr5")
 ```
+
+---
+
+# QTL recap
+
+.pull-left[
+<div align="center">
+<img src="ril2.png" height=400>
+</div>
+> Candela and Hake, 2008
+]
+
+.pull-right[
+### Traditional bi-parental QTL:
+
+- Newly created recombination events (very few)
+
+- Low mapping resolution (Mb level, ~ hundreds of genes)
+
+- Limited number of QTLs
+
+- Can be used for marker assistant selection (MAS)
+]
+
+---
+
+# GWAS: A brief overview
+
+.pull-left[
+<div align="center">
+<img src="gwas1.png" height=400>
+</div>
+
+]
+
+.pull-right[
+### GWAS in a nutshell:
+
+- Utilize existing populations
+
+- Leverage historical recombination events
+
+- Achieve high mapping resolution but need high density marker
+]
+
+---
+
+# Nested association mapping (NAM) 
+
+<div align="center">
+<img src="nam.png" height=450>
+</div>
+> Yu et al., 2008
+
+---
+
+# SNP projection for NAM RILs
+
+<div align="center">
+<img src="snp.png" height=300>
+</div>
+
+- More than 15 years ago
+- No reference genome, no GBS
+- It is a cost effective method to identify trait-associated genes in high resolution
