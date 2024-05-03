@@ -1,5 +1,5 @@
 ---
-title: "QTL + GWAS"
+title: "QTL and GWAS"
 author: "Jinliang Yang"
 date: "May 3, 2024"
 output:
@@ -15,8 +15,6 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
-
----
 # QTL or Linkage Mapping
 
 Linkage mapping uses statistical techniques to localize chromosomal
