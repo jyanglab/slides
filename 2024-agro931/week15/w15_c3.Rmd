@@ -232,7 +232,7 @@ effectplot(pop, mname1="D5M6", main="Chr5")
 
 ---
 
-# Population structure and relatedness
+# Population structure and  relatedness
 
 <div align="center">
 <img src="pop.png" height=330>
@@ -268,7 +268,7 @@ __Genetic relatedness (K)__: the degree of genetic similarity within a subpopula
 ### Extreme Phenotype GWAS (or XP-GWAS)
 
 <div align="center">
-<img src="xpgwas.png" height=330>
+<img src="krn.png" height=330>
 </div>
 > J. Yang et al., 2015
 ]
@@ -288,3 +288,42 @@ __Genetic relatedness (K)__: the degree of genetic similarity within a subpopula
 
 - Extreme phenotype selection may introduce bias if differs systematically
 ]
+
+---
+
+# Other strategies for association analysis
+
+.pull-left[
+
+### Mediation Annalysis
+
+<div align="center">
+<img src="med.png" height=200>
+</div>
+> Z. Yang et al., 2022
+
+__dSNP__: directly associated SNP
+__iSNP__: indirectly associated SNP
+__mediator__: gene mediating via iSNP
+]
+
+--
+
+.pull-right[
+#### Pros:
+- Establish a assumed causal chain from SNP to gene expression to phenotype
+
+- Mapping down to the gene (mediator)
+
+#### Cons:
+- Population-wide Omics data is required
+
+- Currently only powerful for large effect mediators
+]
+
+---
+# Multi-Omics data integration
+
+<div align="center">
+<img src="multiomics.png" height=400>
+</div>
