@@ -78,9 +78,7 @@ regions that might contain genes contributing to phenotypic variation in a compl
   - Each RIL is homozygous for a section of a parental chromosome
 
 ---
-# Simulating a QTL mapping experiment
-
-#### Simulate a F2 population with 250 individuals
+# Simulating an F2 population
 
 
 ```r
@@ -89,8 +87,7 @@ set.seed(12347)
 # Five autosomes of cM length 50, 75, 100, 125, 60
 L &lt;- c(50, 75, 100, 125, 60)
 map &lt;- sim.map(L, n.mar=L/5+1, eq.spacing=FALSE, include.x=FALSE)
-# simulate founder genotypes
-pg &lt;- simFounderSnps(map, "4")
+# Simulate a F2 population with 250 individuals
 pop &lt;- sim.cross(map, type="f2", n.ind=250, model = rbind(c(1,45,1,1),c(5,20,0.5,-0.5)))
 plot.map(pop)
 ```
@@ -154,9 +151,9 @@ summary(out.mr, threshold=3)
 ```
 
 ```
-##       chr  pos   lod
-## D1M10   1 42.3 20.85
-## D5M6    5 21.0  6.51
+##       chr  pos  lod
+## D1M10   1 42.3 21.7
+## D5M6    5 21.0  4.8
 ```
 
 ```r
@@ -175,9 +172,9 @@ summary(out.mr, threshold=3)
 ```
 
 ```
-##       chr  pos   lod
-## D1M10   1 42.3 20.85
-## D5M6    5 21.0  6.51
+##       chr  pos  lod
+## D1M10   1 42.3 21.7
+## D5M6    5 21.0  4.8
 ```
 
 ```r
@@ -282,7 +279,7 @@ effectplot(pop, mname1="D5M6", main="Chr5")
 
 ---
 
-# Population structure and grelatedness
+# Population structure and relatedness
 
 &lt;div align="center"&gt;
 &lt;img src="pop.png" height=330&gt;
