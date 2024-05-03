@@ -203,5 +203,93 @@ effectplot(pop, mname1="D5M6", main="Chr5")
 </div>
 
 - More than 15 years ago
-- No reference genome, no GBS
+
+- No reference genome available and the genotyping is challenging
+
 - It is a cost effective method to identify trait-associated genes in high resolution
+
+---
+
+# A diversity panel for GWAS
+
+.pull-left[
+<div align="center">
+<img src="diversity.png" height=300>
+</div>
+> Liu et al., 2003
+
+- NSS, SS, TS, popcorn, sweet corn, mixed group
+]
+
+--
+
+.pull-right[
+<div align="center">
+<img src="founders.png" height=190>
+</div>
+
+- With diverse genetic backgrounds repsenting different subpopulations
+
+- Individuals with known or unknown predigrees or ancestral origins
+
+- Representative sampling of alleles across the genome to capture genetic variation
+]
+
+---
+
+# Population structure and grelatedness
+
+<div align="center">
+<img src="pop.png" height=330>
+</div>
+
+--
+
+__Subpopulations (Q) __: ancestral origins and subgroups due to population subdivision
+
+__Genetic relatedness (K)__: the degree of genetic similarity within a subpopulation
+
+---
+
+# Mixed linear model for GWAS
+
+<div align="center">
+<img src="mlm.png" height=330>
+</div>
+> Yu et al., 2006
+
+--
+
+- __False Discovery Rate (FDR)__: the proportion of __false positive__ results among all statistical significant associations identified in a GWAS
+
+- __GWAS Power__: the ability of a GWAS to detect __true positive__ genetic associations with phenotypic traits
+
+---
+
+# Other strategies for association analysis
+
+.pull-left[
+
+### Extreme Phenotype GWAS (or XP-GWAS)
+
+<div align="center">
+<img src="xpgwas.png" height=330>
+</div>
+> J. Yang et al., 2015
+]
+
+--
+
+.pull-right[
+#### Pros:
+- Increased power due to variants likely have large effect size
+
+- Cost effective for genotyping and no need for additional phenotyping
+
+#### Cons:
+- Limited generalizability: only for a given trait
+
+- Collecting large sample size can be challenging
+
+- Extreme phenotype selection may introduce bias if differs systematically
+]
