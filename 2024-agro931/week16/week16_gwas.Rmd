@@ -1,7 +1,7 @@
 ---
 title: "Genome-wide association study"
 author: "Jinliang Yang"
-date: "Dec. 5, 2022"
+date: "May 6, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -51,8 +51,8 @@ The very first GWAS was published in 2015 about age-related macular degeneration
 ---
 # The driving forces for GWAS
 
-- The decreasing cost of genome-wide gentoyping
-  - Now > 20 times less expensive than 15 years ago
+- The decreasing cost of genome-wide genotyping
+  - Now >20 times less expensive than 15 years ago
 
 --
 
@@ -68,7 +68,7 @@ The very first GWAS was published in 2015 about age-related macular degeneration
 
 - Advanced statistical analyses and sophisticated modeling
   - Multivariate GWAS to identify loci that affect multiple traits simultaneously
-  - Integrate intermeidate Omics data to conduct causal inference 
+  - Integrate intermediate Omics data to conduct causal inference 
     > [Z. Yang et al., 2022](https://doi.org/10.1093/genetics/iyac057)
   
 
@@ -266,7 +266,7 @@ One-subpopulation-at-a-time approach
 
 > Price et al., 2006
 
-Proposed a method to use principal components analysis (PCA) of marker-allele frequencies and the use of PCA scores as the $\mathbf{Qv}$ matrix.
+Proposed a method to use principal component analysis (PCA) of marker-allele frequencies and the use of PCA scores as the $\mathbf{Qv}$ matrix.
 
 --
 
