@@ -4,6 +4,7 @@
     <title>Population Genomics Module 1</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-11-11" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -19,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Sept. 20, 2023
+### Nov. 11, 2024
 ]
 
 ---
@@ -27,6 +28,138 @@ class: center, middle, inverse, title-slide
 
 
 
+# About Me
+
+- Bachelor and Master degrees from CAU!
+
+- About 15 years experience in maize genetics and genomics
+
+--
+
+### Prefessional Experience
+
+- 2008-2014: __Ph.D.__ @ Iowa State University 
+  - Genetics and Genomics
+  
+- 2014-2017: __PostDoc__ @ University of California, Davis 
+  - Evolutionary Genetics
+
+- 2017-Now: __Assistant Professor__ @ University of Nebraska-Lincoln
+  - Quantitative Genetics and Statistical Genomics
+
+---
+
+# About my lab
+
+- My lab focuses on __quantitative genetics__ and __statistical genomics__ of maize and its wild relatives
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="study.png" height=300&gt;
+&lt;/div&gt; 
+
+- From historical _domestication_ to future _improvement_.
+
+
+---
+
+# Slides for this class module
+
+- Scan QR code to view the HTML slides: 
+
+&lt;div align="center"&gt;
+&lt;img src="qr-code.png" height=300&gt;
+&lt;/div&gt; 
+
+--
+
+- Lab website: https://jyanglab.com/
+  - TEACHING: Courses
+    - __Module 1__: [[HTML](https://jyanglab.com/slides/2022-module/week1/w1.html)]
+      
+
+---
+
+# Goals and Objectives
+
+### Overall goal: 
+
+- Understand the basic principles of population genomics
+
+- Apply the knowledge for study crop domestication and its implication for crop improvement
+
+--
+
+### Objectives:
+
+- 1) Learn basic population genomics terminology
+
+- 2) Learn how to measure diversity using sequencing data
+
+- 3) Understand the statistics for measuring population differentiation
+
+- 4) Be able to scan for direct and linked selection to detect selective sweeps
+
+---
+
+# A timely topic
+
+### __Nobel Prize in Physiology or Medicine 2022__
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="paabo.png" height=350&gt;
+&lt;/div&gt;
+]
+
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="ancientcorn.png" height=100&gt;
+&lt;/div&gt;
+A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years before the present. Length, 47 mm. 
+&gt; from Paabo's 2003 Science paper
+]
+
+--
+
+-----------
+
+__Svante Paabo__ represents the field of _evolutionary genetics_ and/or _population genetics!!!_
+
+---
+# Future jobs
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="X.png" height=200&gt;
+&lt;/div&gt;
+&gt; Google X, the Moonshot Factory
+
+A job description __Data Scientist, Plant Biology__ in [Google X](https://x.company/careers-at-x/6434423002/)
+]
+
+--
+
+.pull-right[
+### What you should have
+
+- Experience working with biological data, with an emphasis on NGS.
+
+- Understanding of molecular biology, field trial design, or population genetics.
+
+- Experience in the agriculture industry.
+
+- Knowledge of statistical methods and applied machine learning.
+
+...
+]
+
+---
 
 # Syllabus
 
@@ -276,7 +409,7 @@ Proportion of individuals with a specific genotype (combination of alleles)
 Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
 
 
-```r
+``` r
 n = 5
 n11 = 1
 f11 = n11/n
@@ -623,7 +756,7 @@ Then,
 # Simulation for selection against recessive
 
 
-```r
+``` r
 deltap &lt;- function(s, p){
   q &lt;- 1-p
   return((s*p*q^2)/(1 - s*q^2))
@@ -664,7 +797,7 @@ In the absence of migration, mutation, or selection, what is the allele freq ove
 --
 
 
-```r
+``` r
 wright_fisher &lt;- function(N=1000, A1=100, t=1000){
   p &lt;- A1/(2*N)
   ### make a numeric vector to hold the results
@@ -687,7 +820,7 @@ frq &lt;- wright_fisher(N=1000, A1=100, t=1000)
 ---
 
 
-```r
+``` r
 set.seed(12347)
 N=2000; A1=2000; t=50
 frq &lt;- wright_fisher(N=N, A1=A1, t=t)
@@ -705,7 +838,7 @@ plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1
 ---
 
 
-```r
+``` r
 set.seed(12347)
 N=20; A1=20; t=50
 frq &lt;- wright_fisher(N=N, A1=A1, t=t)
