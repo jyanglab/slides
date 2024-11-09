@@ -1,19 +1,32 @@
----
-title: "Population Genomics Module 1"
-author: "Jinliang Yang"
-date: "Nov. 11, 2024"
-output:
-  xaringan::moon_reader:
-    css: ["default", "../../asset/unl-150.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Population Genomics Module 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-11-11" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Population Genomics Module 1
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Nov. 11, 2024
+]
+
 ---
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-```
+
+
 
 # About Me
 
@@ -42,9 +55,9 @@ options(htmltools.dir.version = FALSE)
 
 --
 
-<div align="center">
-<img src="study.png" height=300>
-</div> 
+&lt;div align="center"&gt;
+&lt;img src="study.png" height=300&gt;
+&lt;/div&gt; 
 
 - From historical _domestication_ to future _improvement_
   - Particularly interested in __Nitrogen Use Efficiency (NUE)__ using PopGen approaches
@@ -103,20 +116,20 @@ options(htmltools.dir.version = FALSE)
 
 
 .pull-left[
-<div align="center">
-<img src="paabo.png" height=350>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="paabo.png" height=350&gt;
+&lt;/div&gt;
 ]
 
 
 --
 
 .pull-right[
-<div align="center">
-<img src="ancientcorn.png" height=100>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="ancientcorn.png" height=100&gt;
+&lt;/div&gt;
 A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years before the present. Length, 47 mm. 
-> from Paabo's 2003 Science paper
+&gt; from Paabo's 2003 Science paper
 ]
 
 --
@@ -129,10 +142,10 @@ __Svante Paabo__ represents the field of _evolutionary genetics_ and/or _populat
 # Future (or Current) jobs
 
 .pull-left[
-<div align="center">
-<img src="X.png" height=200>
-</div>
-> Google X, the Moonshot Factory
+&lt;div align="center"&gt;
+&lt;img src="X.png" height=200&gt;
+&lt;/div&gt;
+&gt; Google X, the Moonshot Factory
 
 A job description __Data Scientist, Plant Biology__ in Google X
 ]
@@ -173,17 +186,17 @@ A job description __Data Scientist, Plant Biology__ in Google X
 ---
 # 151 crops and their domestication origins
 
-<div align="center">
-<img src="crops.png" height=450>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="crops.png" height=450&gt;
+&lt;/div&gt;
 
 ---
 # Maize domestication
 
 
-<div align="center">
-<img src="ca.png" height=200>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="ca.png" height=200&gt;
+&lt;/div&gt;
 
 
 --
@@ -191,15 +204,15 @@ A job description __Data Scientist, Plant Biology__ in Google X
 ---------
 
 .pull-left[
-<div align="center">
-<img src="shelter.png" height=200>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="shelter.png" height=200&gt;
+&lt;/div&gt;
 ]
 
 .pull-right[
-<div align="center">
-<img src="stone.png" height=200>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="stone.png" height=200&gt;
+&lt;/div&gt;
 ]
 
 This __8,700__ year-old milling stone (excavated in an area of __the Balsas Valley__ in southwestern Mexico) was used to process maize and other crops. Maize starch grains were recovered from the stone.
@@ -208,12 +221,12 @@ This __8,700__ year-old milling stone (excavated in an area of __the Balsas Vall
 ---
 # Plant Domestication
 
-<div align="center">
-<img src="Teosinte.png" height=200>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="Teosinte.png" height=200&gt;
+&lt;/div&gt;
 
 - “Plant domestication is the _genetic modification_ of a wild species to create a new form of a plant altered _to meet human needs_.” 
-> Doebley et al., 2006
+&gt; Doebley et al., 2006
 
 --
 
@@ -224,9 +237,9 @@ __Plant domestication__ is the process whereby wild plants have been evolved int
 ---
 # Wild and domesticated species
 
-<div align="center">
-<img src="wild.png" height=300>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="wild.png" height=300&gt;
+&lt;/div&gt;
 
 --
 
@@ -239,9 +252,9 @@ __Fitness__ are different between wild ancestors and domesticated crops
 # Domestication Syndrome
 
 .pull-left[
-<div align="center">
-<img src="dom.png" height=500>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="dom.png" height=500&gt;
+&lt;/div&gt;
 ]
 
 .pull-left[
@@ -254,16 +267,16 @@ Compared to their progenitors, crops typically have:
 
 - A loss of natural seed dispersal
 
-> Doebley et al., 2006
+&gt; Doebley et al., 2006
 ]
 
 ---
 # Genes controlling domestication traits
 
-<div align="center">
-<img src="dom_genes.png" height=300>
-</div>
-> Doebley et al., 2006
+&lt;div align="center"&gt;
+&lt;img src="dom_genes.png" height=300&gt;
+&lt;/div&gt;
+&gt; Doebley et al., 2006
 
 
 
@@ -294,13 +307,13 @@ Compared to their progenitors, crops typically have:
 ### Illumina (HiSeq, MiSeq, NextSeq)
 - Throughput: very high
 - Read length: up to 2x300 bp 
-- Accuracy: high (error rate is < 1%)
+- Accuracy: high (error rate is &lt; 1%)
 
 --
 
 ### PacBio/Nanopore
 - Throughput: moderate
-- Read length: very long (> 70kb or > 1Mb)
+- Read length: very long (&gt; 70kb or &gt; 1Mb)
 - Accuracy: low (error rate is about 10%-20%)
 
 --
@@ -314,9 +327,9 @@ Compared to their progenitors, crops typically have:
 # Basic sequence terminology
 
 .pull-left[
-<div align="center">
-<img src="seq1.png" height=100>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
 
 - An alignment of three sequences sampled from 3 plants of a population
 
@@ -350,9 +363,9 @@ If T is the same allele as the wild ancestor, then it is the __Ancestral allele_
 # Allele and genotype frequencies
 
 .pull-left[
-<div align="center">
-<img src="dogs.jpg" height=150>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
 ]
 
 
@@ -364,13 +377,13 @@ If T is the same allele as the wild ancestor, then it is the __Ancestral allele_
 - dog 5: AA AA __CC__ CC GG
 ]
 
-Consider a diploid locus segregating for two alleles ( $A_1$ and $A_2$ ).
-We usually define the less frequent allele (or minor allele) as the $A_1$ allele.
+Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
+We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
 
-### Allele frequency ( $p$ and $q$ ) 
+### Allele frequency ( `\(p\)` and `\(q\)` ) 
 Frequency/proportion of alleles of a particular identity at one locus
 
-### Genotype frequency ( $f_{11}$, $f_{12}$, $f_{22}$ )
+### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
 Proportion of individuals with a specific genotype (combination of alleles)
 
 ---
@@ -378,9 +391,9 @@ Proportion of individuals with a specific genotype (combination of alleles)
 # Allele and genotype frequencies
 
 .pull-left[
-<div align="center">
-<img src="dogs.jpg" height=150>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
 ]
 
 .pull-right[
@@ -391,24 +404,29 @@ Proportion of individuals with a specific genotype (combination of alleles)
 - dog 5: AA AA __CC__ CC GG
 ]
 
-Let $n$ be the total number of individuals in the population. Genotype frequency of __TT__ is: 1/5
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is: 1/5
 
 
 --
 
-The frequency of minor allele $A_1$ in the population is then given by
+The frequency of minor allele `\(A_1\)` in the population is then given by
 
-\begin{align*}
+`\begin{align*}
 p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
-\end{align*}
+\end{align*}`
 
-```{r}
+
+``` r
 n = 5
 n11 = 1
 f11 = n11/n
 n12 = 2
 p = f11 + 1/2*2/n
 p ### allele freq of minor allele T
+```
+
+```
+## [1] 0.4
 ```
 
 
@@ -432,25 +450,25 @@ p ### allele freq of minor allele T
 
 # In Hardy-Weinberg Equilibrium
 
-If allele frequencies in parent population = $p$ & $q$, 
+If allele frequencies in parent population = `\(p\)` &amp; `\(q\)`, 
 then, genotype frequencies in progeny after random mating are:
 
-\begin{align*}
+`\begin{align*}
 (p + q)^2 = p^2 + 2pq + q^2
-\end{align*}
+\end{align*}`
 
 - The array of genotypes in progeny equals the square of the parental gametic array. 
 
-- (sum of allele frequencies) $^2$ = (sum of genotype frequencies)
+- (sum of allele frequencies) `\(^2\)` = (sum of genotype frequencies)
 
 
 ---
 # Allele effects relative to fitness
 
 
-<div align="center">
-<img src="seq1.png" height=100>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
 
 --
 
@@ -484,17 +502,17 @@ Keep both alleles
 # Positive selection
 
 .pull-left[
-<div align="center">
-<img src="seq1.png" height=100>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
 ]
 
 --
 
 .pull-right[
-<div align="center">
-<img src="seq2.png" height=90>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq2.png" height=90&gt;
+&lt;/div&gt;
 ]
 
 --
@@ -514,17 +532,17 @@ Keep both alleles
 # Negative (purifying) selection
 
 .pull-left[
-<div align="center">
-<img src="seq1.png" height=100>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
 ]
 
 --
 
 .pull-right[
-<div align="center">
-<img src="seq3.png" height=90>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="seq3.png" height=90&gt;
+&lt;/div&gt;
 ]
 
 --
@@ -543,7 +561,7 @@ Keep both alleles
 
 --
 
-> Yang et. al., 2017, PLOS Genetics.
+&gt; Yang et. al., 2017, PLOS Genetics.
 - [Incomplete dominance of deleterious alleles contribute substantially to trait variation and heterosis in maize](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007019)
 
 ---
@@ -562,7 +580,7 @@ Keep both alleles
 
 --
 
-> Xu et. al., 2022, bioRxiv.
+&gt; Xu et. al., 2022, bioRxiv.
 - [A historically balanced locus under recent directional selection in responding to changed nitrogen conditions during modern maize breeding](https://www.biorxiv.org/content/10.1101/2022.02.09.479784v1)
 
 
@@ -610,10 +628,10 @@ Arises in small populations from the effect of sampling.
 # Selection (on Fitness)
 
 
-- Selection coefficient ( $s$ ) 
+- Selection coefficient ( `\(s\)` ) 
   - The proportionate __REDUCTION__ in gametic contribution of a particular genotype _compared to the standard genotype_
 
-- Relative fitness: $w = 1 -s$
+- Relative fitness: `\(w = 1 -s\)`
   - Most fit is set to 1
 
 --
@@ -621,7 +639,7 @@ Arises in small populations from the effect of sampling.
 ---------
 #### For example
 
--  $AA$, $Aa$, and $aa$ have survival of 0.75, 0.75, and 0.5, respectively
+-  `\(AA\)`, `\(Aa\)`, and `\(aa\)` have survival of 0.75, 0.75, and 0.5, respectively
 
 --
 
@@ -639,28 +657,28 @@ Arises in small populations from the effect of sampling.
 - Here dominance is with respect to fitness only.
 
 
-<div align="center">
-<img src="dominance.png" width=350>
-</div>
+&lt;div align="center"&gt;
+&lt;img src="dominance.png" width=350&gt;
+&lt;/div&gt;
 
 ---
 
 # Selection with dominance
 
-Here, $h$ is the __level of dominance__
+Here, `\(h\)` is the __level of dominance__
 
 - It is the heterozygous effect from the fitness of the heterozygote relative to the difference between homozygotes.
 
 --
 
-In the example, __ $A_1$ is the most favorable allele__, conferring the greatest degree of fitness
+In the example, __ `\(A_1\)` is the most favorable allele__, conferring the greatest degree of fitness
 
-| Degree of dominance | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   |
+| Degree of dominance | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   |
 | :-------: | : ------ : | :-------: | :-------: |
-| Additive           | $1$    | $1 - s/2$    | $1 - s$     | 
-| Partial dominance   |  $1$        |  $1 - hs$        |  $1 -s$   | 
-| Complete dominance | $1$   | $1$    | $1 - s$    |
-| Overdominance      | $1 -s_1$ | $1$ | $1-s_2$ | 
+| Additive           | `\(1\)`    | `\(1 - s/2\)`    | `\(1 - s\)`     | 
+| Partial dominance   |  `\(1\)`        |  `\(1 - hs\)`        |  `\(1 -s\)`   | 
+| Complete dominance | `\(1\)`   | `\(1\)`    | `\(1 - s\)`    |
+| Overdominance      | `\(1 -s_1\)` | `\(1\)` | `\(1-s_2\)` | 
 
 
 
@@ -670,12 +688,12 @@ In the example, __ $A_1$ is the most favorable allele__, conferring the greatest
 
 - Gametic contribution is the product of genotype freq and fitness
 
-|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   |
+|                    | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   |
 | :-------: | : ------ : | :-------: | :-------: |
-| Initial frq           | $p^2$    | $2pq$    | $q^2$     | 
-| Coefficient of selection | $0$   | $0$      | $s$       |
-| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   | 
-| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |
+| Initial frq           | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`     | 
+| Coefficient of selection | `\(0\)`   | `\(0\)`      | `\(s\)`       |
+| Fitness ( `\(w\)` )   |  `\(1\)`        |  `\(1\)`        |  `\(1-s\)`   | 
+| Gametic contribution | `\(p^2\)`   | `\(2pq\)`    | `\(q^2(1-s)\)`    |
 
 ---
 
@@ -683,12 +701,12 @@ In the example, __ $A_1$ is the most favorable allele__, conferring the greatest
 
 - Gametic contribution is the product of genotype freq and fitness
 
-|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   | Total |
+|                    | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   | Total |
 | :-------: | : ------ : | :-------: | :-------: | :-------: |
-| Initial frq           | $p^2$    | $2pq$    | $q^2$     |  $1$        |
-| Coefficient of selection | $0$   | $0$      | $s$       |             |
-| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   |            |
-| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |  $1-sq^2$ |
+| Initial frq           | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`     |  `\(1\)`        |
+| Coefficient of selection | `\(0\)`   | `\(0\)`      | `\(s\)`       |             |
+| Fitness ( `\(w\)` )   |  `\(1\)`        |  `\(1\)`        |  `\(1-s\)`   |            |
+| Gametic contribution | `\(p^2\)`   | `\(2pq\)`    | `\(q^2(1-s)\)`    |  `\(1-sq^2\)` |
 
 
 
@@ -696,15 +714,15 @@ In the example, __ $A_1$ is the most favorable allele__, conferring the greatest
 
 ### After one generation of selection against recessive
 
-Note that there has been a proportionate loss of $sq^2$ due to the selection.
+Note that there has been a proportionate loss of `\(sq^2\)` due to the selection.
 
-The $A_1$ allele freq, 
+The `\(A_1\)` allele freq, 
 
 
-\begin{align*}
-p_1 & = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
-& = \frac{p}{1- sq^2} \\
-\end{align*}
+`\begin{align*}
+p_1 &amp; = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
+&amp; = \frac{p}{1- sq^2} \\
+\end{align*}`
 
 ---
 
@@ -713,40 +731,43 @@ p_1 & = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
 ### After one generation of selection against recessive
 
 
-\begin{align*}
+`\begin{align*}
 p_1  = \frac{p}{1- sq^2} \\
-\end{align*}
+\end{align*}`
 
 ### Change in allele freq after one generation
 
-\begin{align*}
-\Delta p & = p_1 - p_0  = \frac{p}{1- sq^2} - p\\
-& = \frac{p-p(1-sq^2)}{1-sq^2} \\
-& = \frac{spq^2}{1 - sq^2}
-\end{align*}
+`\begin{align*}
+\Delta p &amp; = p_1 - p_0  = \frac{p}{1- sq^2} - p\\
+&amp; = \frac{p-p(1-sq^2)}{1-sq^2} \\
+&amp; = \frac{spq^2}{1 - sq^2}
+\end{align*}`
 
 --
 
 Then,
 
-\begin{align*}
-\Delta q & = -\Delta p = -\frac{spq^2}{1 - sq^2}
-\end{align*}
+`\begin{align*}
+\Delta q &amp; = -\Delta p = -\frac{spq^2}{1 - sq^2}
+\end{align*}`
 
 ---
 
 # Simulation for selection against recessive
 
-```{r fig.align='center', fig.height=5}
-deltap <- function(s, p){
-  q <- 1-p
+
+``` r
+deltap &lt;- function(s, p){
+  q &lt;- 1-p
   return((s*p*q^2)/(1 - s*q^2))
 }
 
-p <- seq(0, 1, by=0.01)
+p &lt;- seq(0, 1, by=0.01)
 plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|")
 lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
 ```
+
+&lt;img src="w1_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -775,20 +796,21 @@ In the absence of migration, mutation, or selection, what is the allele freq ove
 
 --
 
-```{r}
-wright_fisher <- function(N=1000, A1=100, t=1000){
-  p <- A1/(2*N)
+
+``` r
+wright_fisher &lt;- function(N=1000, A1=100, t=1000){
+  p &lt;- A1/(2*N)
   ### make a numeric vector to hold the results
-  freq <- as.numeric();
+  freq &lt;- as.numeric();
   ### Use for loop to run over t generations
   for (i in 1:t){
-    A1 <- rbinom(1, 2*N, p) # samling allele from a binom distribution
-    p <- A1/(2*N)
-    freq[i] <- p
+    A1 &lt;- rbinom(1, 2*N, p) # samling allele from a binom distribution
+    p &lt;- A1/(2*N)
+    freq[i] &lt;- p
   }
   return(freq)
 }
-frq <- wright_fisher(N=1000, A1=100, t=1000)
+frq &lt;- wright_fisher(N=1000, A1=100, t=1000)
 ```
 
 - N: population size = # of individuals per generation (assuming it is constant)
@@ -797,33 +819,39 @@ frq <- wright_fisher(N=1000, A1=100, t=1000)
 
 ---
 
-```{r, fig.align='center', fig.height=6}
+
+``` r
 set.seed(12347)
 N=2000; A1=2000; t=50
-frq <- wright_fisher(N=N, A1=A1, t=t)
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
 plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
     for(u in 1:100){
-      frq <- wright_fisher(N=N, A1=A1, t=t)
-      random <- sample(1:1000,1,replace=F)
-      randomcolor <- colors()[random] 
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
       lines(frq,type="l",col=(randomcolor))
     }
 ```
+
+&lt;img src="w1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-```{r, fig.align='center', fig.height=6}
+
+``` r
 set.seed(12347)
 N=20; A1=20; t=50
-frq <- wright_fisher(N=N, A1=A1, t=t)
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
 plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
     for(u in 1:20){
-      frq <- wright_fisher(N=N, A1=A1, t=t)
-      random <- sample(1:1000,1,replace=F)
-      randomcolor <- colors()[random] 
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
       lines(frq,type="l",col=(randomcolor))
     }
 ```
+
+&lt;img src="w1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -869,3 +897,138 @@ Allele frequencies are subject to __random fluctuations__ arsing from the sampli
 
 
 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
