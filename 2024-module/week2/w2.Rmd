@@ -1,0 +1,908 @@
+---
+title: "Population Genomics Module 2"
+author: "Jinliang Yang"
+date: "Oct. 12, 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Slides for today's class module
+
+- Scan QR code to view the HTML slides: 
+
+<div align="center">
+<img src="frame.png" height=300>
+</div> 
+
+
+
+- Lab website: https://jyanglab.com/
+  - TEACHING: Courses
+    - __Module 2__: [[HTML](https://jyanglab.com/slides/2023-module/week2/w2.html)]
+
+
+
+---
+
+# A recent paper on Nature Genetics
+
+<div align="center">
+<img src="ng1.png" height=200>
+</div> 
+
+> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the genus _Zea_
+
+--
+
+- __744 genomes__, including maize and all wild taxa of the genus _Zea_
+
+- Reveals __evidence of selection__ within taxa displaying __novel adaptation__
+
+- Highlighted the __flowering-time-related pathways__ in the adaptation
+  - Generate mutant alleles to validate two flowering-time candidate genes
+
+---
+
+# A recent paper on Nature Genetics
+
+<div align="center">
+<img src="ng2.png" height=200>
+</div> 
+> [Chen et al., 2022](https://www.nature.com/articles/s41588-022-01184-y), Genome sequencing reveals evidence of adaptive variation in the genus _Zea_
+
+--
+
+- #### Novel diversity in _Zea_
+  - Heterozygosity and nucleotide diversity
+  
+- #### Signals of selection from allele frequency data
+  - Using $F_{ST}$, XP-CLR
+  
+
+---
+
+# Syllabus
+
+### Module 1: Introduction and popgen terminology
+- Introduction of population genomics
+- Basic principles of evolutionary processes
+
+--
+
+### __Module 2: Diversity measurement__
+- __Heterozygosity and diversity__
+- __Population differentiation ( $F_{ST}$ )__
+
+### Module 3: Scan for direct and linked selection
+- Direct selection
+- Linked selection (XP-CLR)
+
+
+---
+
+# Polymorphism
+
+Polymorphism is not always maintained by selection
+> Kimura, 1962
+
+--
+
+### Mutation-drift equilibrium (in the absence of selection)
+
+- Drift is reducing the number of alleles in the population
+
+- While, mutation is increasing
+
+- Eventually, equilibrium is reached with respect to the inbreeding coefficient ( $F$ )
+
+--
+
+#### Inbreeding coefficient ( $F$ )
+
+Is the probability that the two alleles at any locus in an individual are identical by descent (IBD).
+  - $F=0$, no inbreeding and $F=1$, completely inbreeding
+
+
+
+
+---
+
+# Mutation-drift equilibrium
+
+- At equilibrium ( $F_e$ ), $F_t = F_{t-1}$, with mutation rate of $\mu$ and effective population size of $N_e$:
+
+\begin{align*}
+F_e = \frac{(1 - \mu )^2}{2N_e - (2N_e -1)(1 - \mu)^2}
+\end{align*}
+
+--
+
+- But $\mu$ is small as compared to 1 and can be ignored, so:
+
+\begin{align*}
+F_e \approx \frac{1}{4N_e\mu + 1}
+\end{align*}
+
+
+--
+
+
+- $F_e$ is identity (or homozygosity)
+
+- So, the __expected heterozygosity__ at equilibrium is ( $1 - F_e$ ) or
+
+\begin{align*}
+1- F_e & \approx 1- \frac{1}{4N_e\mu + 1} \\
+H_e  & \approx \frac{4N_e \mu}{4N_e\mu + 1}
+\end{align*}
+
+---
+
+# Mutation-drift equilibrium
+
+\begin{align*}
+F_e \approx \frac{1}{4N_e\mu + 1}
+\end{align*}
+
+- The relationship between $N_e$, $\mu$, and $F$ at quilibrium.
+
+```{r}
+fe <- function(ne, mu){
+  den <- 4*ne*mu + 1  # denominator
+  return(1/den)
+}
+```
+
+---
+
+# Mutation-drift equilibrium
+
+```{r fig.align='center', fig.height=5}
+ne <- seq(1, 50000, by=10)
+plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", 
+     xlab="Effective population size (Ne)", ylab="F")
+lines(ne, fe(ne, mu=10^-5), lty=2, lwd=3, col="blue")
+lines(ne, fe(ne, mu=10^-8), lty=2, lwd=3, col="black")
+```
+
+
+---
+
+# Mutation-drift equilibrium
+
+
+.pull-left[
+
+<div align="center">
+<img src="ne_mu_f.png" width=450>
+</div>
+\begin{align*}
+1- F_e & \approx 1- \frac{1}{4N_e\mu + 1} \\
+H_e  & \approx \frac{4N_e \mu}{4N_e\mu + 1}
+\end{align*}
+]
+
+--
+
+.pull-right[
+#### When the mutation rate is low (black line, $10^{-8}$), $F$ is high even at very large Ne
+
+  - Mutations happen very infrequently and do not contribute much to the heterozygosity
+  
+  - Mutated alleles are easily lost through drift
+
+
+#### When the mutation rate is relative high (__red line__, $10^{-4}$)
+
+  - Mutation counteracts drift through introducing new alleles at a high rate
+]
+
+---
+
+# From Heterozygosity to Diversity
+
+
+### Expected Heterozygosity ( $H_{exp}$ )
+
+- Probability that two randomly chosen copies of a locus are different alleles
+
+--
+
+- $H_{exp}$ is often reported to __compare populations__
+
+  - Predict outlook for population or infer ancestral events
+  
+  - For example, high $H_{exp}$ = maybe in HWE, large size, no obvious drift/inbreeding
+
+--
+
+$H_{exp}$ = 1 - (avg expected __homozygosity__ over all loci)
+
+\begin{align*}
+H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+\end{align*}
+
+  - $m$ is the number of loci
+  - $k$ is the number of alleles at a particular locus
+  - $p_{ki}$ is the frq of $i^{th}$ allele at $k^{th}$ locus
+
+---
+
+# Expected Heterozygosity
+
+
+| Loci | Allele   | Freq   | 
+| :-------: | : ------ : | :-------: | 
+| locus A   | $A_1$    | $p_{11}=0.2$    | 
+|           | $A_2$    | $p_{12}=0.8$    |
+| locus B   |  $B_1$        |  $p_{21}=0.3$        |  
+|           |  $B_2$        |  $p_{22}=0.7$        |  
+
+--
+
+\begin{align*}
+H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+\end{align*}
+
+  - $m=2$ is the number of loci
+  - $k=2$ is the number of alleles at a particular locus
+  - $p_{ki}$ is the frq of $i^{th}$ allele at $k^{th}$ locus
+
+--
+
+\begin{align*}
+H_{exp} & = 1 - \frac{1}{2}\sum_{k=1}^{2} \sum_{i=1}^{2} p_{ki}^2 \\
+& = 1 - \frac{1}{2}(0.2^2 + 0.8^2 + 0.3^2 + 0.7^2) \\
+& = 0.37
+\end{align*}
+
+---
+
+# Expected Heterozygosity
+
+
+- If $H_e$ (or $H_{exp}$) is high, it does not mean that there are a lot of heterozygotes.
+
+- It reflects potential diversity 
+
+- And how much __heterozygosity you would expect__ if the population were to randomly mate (no selection, migration, mutation, etc.).
+
+--
+
+# Diversity - allelic richness
+
+- Count of how many alleles are in a sample
+
+- Informative when comparing populations
+
+  - A population with fewer alleles may be prone to inbreeding
+  
+  - A locus with fewer alleles compared to others may indicate it is selected for/against (i.e., minor alleles tends to be deleterious alleles)
+  
+
+---
+
+# Nucleotide Diversity ( $\pi$ )
+
+- Average of nucleotide difference between any two copies of a locus
+
+- When you look at a nucleotide position of two random copies of a gene, diversity  ( $\pi$ ) is the __probability they are different__
+
+--
+
+\begin{align*}
+\Pi = \frac{n}{n-1} \sum_{ij} x_i x_j \pi_{ij}
+\end{align*}
+
+- $x_i$ and $x_j$ is the freq of the $i^{th}$ and $j^{th}$ haplotype
+- $\pi_{ij}$ is the proportion of nucleotide differences between $i^{th}$ and $j^{th}$ haplotype
+
+
+---
+
+# An example of Nucleotide Diversity
+
+Here, we sequenced a population of 5 maize inbred lines for 500 bp and identified SNP variants as below.
+
+<div align="center">
+<img src="snps.png" width=450>
+</div>
+
+--
+
+--------------
+
+- Total number of bp: $N_t = 500$
+- Number of polymorphic: $N_p = 5$
+
+- Proportion of polymorphic site: $P_n = \frac{N_p}{N_t} = \frac{5}{500} = 0.01$
+
+
+---
+
+# An example of Nucleotide Diversity
+
+<div align="center">
+<img src="snps.png" width=450>
+</div>
+
+--------------
+
+\begin{align*}
+\Pi = \frac{n}{n-1} \sum_{ij} x_i x_j \pi_{ij}
+\end{align*}
+
+- $x_i$ and $x_j$ is the freq of the $i^{th}$ and $j^{th}$ haplotype
+- $\pi_{ij}$ is the proportion of nucleotide differences between $i^{th}$ and $j^{th}$ haplotype
+
+---
+
+# An example of Nucleotide Diversity
+
+<div align="center">
+<img src="snps.png" width=450>
+</div>
+
+--------------
+
+\begin{align*}
+\Pi = \frac{n}{n-1} \sum_{ij} x_i x_j \pi_{ij}
+\end{align*}
+
+- $x_i$ and $x_j$ is the freq of the $i^{th}$ and $j^{th}$ haplotype
+- $\pi_{ij}$ is the proportion of nucleotide differences between $i^{th}$ and $j^{th}$ haplotype
+
+
+- $\pi_{12} =3/500$, $\pi_{13} =3/500$, $\pi_{14} =3/500$, $\pi_{14} =2/500$
+- $\pi_{23} =3/500$, $\pi_{24} =2/500$, $\pi_{14} =3/500$
+- ...
+
+---
+
+# An example of Nucleotide Diversity
+
+<div align="center">
+<img src="snps.png" width=400>
+</div>
+
+--------------
+
+```{r}
+df <- data.frame(hap=paste0("line", 1:5), snp1=c(0,0,1,1,1), 
+                 snp2=c(1,1,0,1,1), snp3=c(0,1,1,1,0), 
+                 snp4=c(1,0,1,0,1), snp5=c(0,1,1,0,1))
+snp <- t(df[,-1])
+getpi <- function(snp, totbp=500){
+  nhap = ncol(snp) # number of hap
+  td <- c()
+  for(i in 1:(nhap -1)){
+    for(j in (i+1):nhap){
+      cn <- sum(abs(snp[,i] - snp[,j])) # count the nucleotide differences
+      td <- c(td, cn)
+    }
+  }
+  return(nhap/(nhap -1)*(1/nhap)^2*sum(td)/totbp)
+}
+```
+
+---
+
+# An example of Nucleotide Diversity
+
+```{r}
+getpi(snp, totbp=500)
+```
+
+Heterozygosity at this SNP site is:
+
+
+\begin{align*}
+h = \frac{n}{n-1}(1- p^2 - q^2)
+\end{align*}
+
+- $n$ is the number of haplotypes in a population
+
+--
+
+Then the sum of site heterozygosities is:
+
+\begin{align*}
+\sum_{i=1}^S h_i
+\end{align*}
+
+- Here, $S$ is the number of polymorphic sites
+- $h_i$ is the heterozygosity at the $i$th site
+
+---
+
+# An example of Nucleotide Diversity
+
+<div align="center">
+<img src="snps.png" width=450>
+</div>
+
+--------------
+
+```{r}
+geth <- function(snp, totbp=500){
+  nhap = ncol(snp) # number of hap
+  q <- apply(snp, 1, sum)/nhap
+  p <- 1 -q
+  return(nhap/(nhap -1) * sum(rep(1, nhap) - p^2 - q^2)/totbp/2)
+}
+geth(snp, totbp=500)
+```
+---
+# An example of Nucleotide Diversity
+
+<div align="center">
+<img src="snps.png" width=450>
+</div>
+
+# Heterozygosity and Nucleotide Diversity
+
+This estimate of heterozygosity gives us the average number of pairwise necleotide difference.
+
+\begin{align*}
+\Pi = \sum_{i=1}^S h_i
+\end{align*}
+
+---
+
+# Population subdivision
+
+.pull-left[
+- ### Selection
+- ### Migration
+- ### Mutation
+- ### Drift (inbreeding)
+]
+
+.pull-right[
+<div align="center">
+<img src="pops.png" width=400>
+</div>
+]
+
+--
+
+What if you did not know population boundaries before sampling?
+
+### Cryptic population structure
+
+Unknown (cryptic) population structure can appear as a __deficiency of heterozygotes__
+
+---
+
+# Population structure
+
+
+
+
+<div align="center">
+<img src="pops.png" width=300>
+</div>
+
+--
+
+### Wahlund Effect
+
+- Unknown (cryptic) population structure can appear as __a deficiency of heterozygotes__
+
+  - Created reduced heterozygosity and increased homozygosity in your sample
+
+
+
+---
+
+# Population subdivision
+
+
+| Genotype | $A_1A_1$   | $A_1A_2$    | $A_2A_2$ 
+| :-------: | : ------ : | :-------: | :-------: | 
+| sub-pop1  | 64    | 32    | 4    | 
+| sub-pop2  | 4     | 32    | 64    | 
+| Total     | 68    | 64    | 68    | 
+
+--
+
+The frequencies of the $A_1$ allele in sub-pop1 and sub-pop2:
+\begin{align*}
+p_1 & = \frac{2 \times 64 + 32}{2 \times 100} = 0.8 \\
+p_2 & = \frac{2 \times 4 + 32}{2 \times 100} = 0.2 \\
+\end{align*}
+
+--
+
+The frequency of the $A_1$ allele in the combined population:
+
+\begin{align*}
+\bar{p} & = \frac{2 \times 68 + 64}{2 \times 200} = 0.5 \\
+\end{align*}
+
+--
+
+The expected value of heterozygotes for the combined population is:
+
+\begin{align*}
+2\bar{p}\bar{q} \times n = 2 \times 0.5 \times 0.5 \times 200 = 100 \\ 
+\end{align*}
+
+---
+
+# Wahlund Effect
+
+The _perceived deficiency_ of heterozygotes due to treating two different populations as one --- the __Wahlund effect__. 
+> Wahlund, 1928
+
+
+--
+
+```{r wahlund, echo=FALSE, fig.align='center', fig.height=6}
+geth <- function(p){return(2*p*(1-p))}
+p <- seq(0, 1, by=0.01)
+plot(p, geth(p), type="l", lwd=3, col="red", xlab="Allele freq (p)", ylab="Heterozygosity (H)")
+lines(c(0.2, 0.2), c(0, geth(p=0.2)), lty=2, lwd=3) # add a line segment
+lines(c(0, 0.2), c(geth(p=0.2), geth(p=0.2)), lty=2, lwd=3)
+lines(c(0.4, 0.4), c(0, geth(p=0.4)), lty=2, lwd=3) # add a line segment
+lines(c(0, 0.4), c(geth(p=0.4), geth(p=0.4)), lty=2, lwd=3)
+lines(c(0.3, 0.3), c(0, geth(p=0.3)), lty=2, lwd=3) 
+lines(c(0, 0.3), c(geth(p=0.3), geth(p=0.3)), lty=2, lwd=3, col="red")
+lines(c(0.2, 0.4), c(geth(p=0.2), geth(p=0.4)), lty=1, lwd=3, col="blue")
+lines(c(0, 0.3), c(mean(c(geth(p=0.2), geth(p=0.4))), mean(c(geth(p=0.2), geth(p=0.4)))), lty=2, lwd=3, col="blue")
+```
+
+---
+
+# Wahlund Effect
+
+
+.pull-left[
+<div align="center">
+<img src="wahlund.png" height=400>
+</div>
+]
+
+.pull-right[
+
+- The red dashed horizontal segment is the $H_{exp} = 2 \bar{p}\bar{q}$
+
+- The blue dashed horizontal segment is the $H_{obs}$ 
+  - mean value of the $H_1$ and $H_2$
+
+- Because the curve is concave downward, $H_{obs}$ is always less than $H_{exp}$
+
+]
+
+--
+
+Even if subpopulations are __partially isolated__, the Wahlund effect is held true.
+
+ 
+---
+
+# Heterozygosity to describe populations 
+
+In a subdivided population, the overall deviation from HWE heterozygosity:
+
+- Factors acting within subpopulations
+- Simply due to the subdivision itself (the Wahlund effect)
+
+--
+
+### Wright's F-statistics
+
+Assuming HWE, Wright’s F describes the deviation from expected heterozygosity
+
+\begin{align*}
+F = \frac{H_e - H_o}{H_e}
+\end{align*}
+
+- Expected Heterozygosity ( $H_e$ ) = estimate of diversity
+
+- Observed Heterozygosity ( $H_o$ )  = current characterization of the sample
+
+--
+
+- This measures the proportionate reduction in heterozygosity compared to HWE
+ 
+
+---
+
+# Heirarchical F-statistics
+
+.pull-left[
+<div align="center">
+<img src="pops.png" width=300>
+</div>
+]
+
+.pull-right[
+<div align="center">
+<img src="wahlund.png" height=280>
+</div>
+]
+
+--
+
+- $H_I$ = mean observed heterozygosities over all subpopulations = $\frac{H_1 + H_2}{2}$
+
+- $H_S$ = mean expected heterozygosity within random mating subpopulations = $2p_iq_i$
+
+- $H_T$ = expected heterozygosity in a random mating total population = $2 \bar{p} \bar{q}$
+
+---
+
+# Hierarchical F-statistics
+
+
+.pull-left[
+<div align="center">
+<img src="wahlund.png" height=280>
+</div>
+]
+
+.pull-right[
+- $H_I$, the average of the observed heterozygosities
+
+- $H_S$, the average of the expected heterozygosities
+]
+
+
+The average deviation in heterozygosity within subpopulations is
+
+\begin{align*}
+F_{IS} = \frac{H_S - H_I}{H_S}
+\end{align*}
+
+- The subscript $IS$ here indicates deviation among __individuals__ relative to their __subpopulation__
+
+---
+
+# Hierarchical F-statistics
+
+
+.pull-left[
+<div align="center">
+<img src="wahlund.png" height=280>
+</div>
+]
+
+.pull-right[
+- $H_I$, the average of the observed heterozygosities
+
+- $H_S$, the average of the expected heterozygosities
+
+- $H_T$, the expected heterozygosity in the toal population
+]
+
+--
+
+The deviation in heterozygosity due to subdivision alone is
+
+\begin{align*}
+F_{ST} = \frac{H_T - H_S}{H_T}
+\end{align*}
+
+- The subscript $ST$ here indicates deviation among __subpopulations__ relative to the __total population__
+
+---
+
+# Hierarchical F-statistics
+
+.pull-left[
+<div align="center">
+<img src="wahlund.png" height=280>
+</div>
+]
+
+.pull-right[
+- $H_I$, the average of the observed heterozygosities
+
+- $H_S$, the average of the expected heterozygosities
+
+- $H_T$, the expected heterozygosity in the toal population
+]
+
+
+Finally, the overall deviation in heterozygosity in the total pouplation is
+
+\begin{align*}
+F_{IT} = \frac{H_T - H_I}{H_T}
+\end{align*}
+
+- The subscript $IT$ here indicates deviation among __individuals__ relative to the __total population__
+
+---
+
+# Summary of Hierarchical F-statistics
+
+### $F_{ST}$
+
+- Measures how different the subpopulations are
+
+- It can be interpreted as the proportion of the total heterozygosity that is due to differences in allele frequencies among subpopulations
+
+- $F_{ST}$ can be calculated from allele frequencies alone
+
+--
+
+### $F_{IS}$ and $F_{IT}$
+
+- $F_{IS}$ is due to factors (selection, drift, mutation) acting within subpopulations
+
+- $F_{IT}$ depends on the values of $F_{ST}$ and $F_{IS}$
+
+- $F_{IS}$ and $F_{IT}$ require observed genotype frequencies
+
+
+---
+
+# An example for F-statistics calculation
+
+
+| Genotype | $A_1A_1$   | $A_1A_2$    | $A_2A_2$ 
+| :-------: | : ------ : | :-------: | :-------: | 
+| sub-pop1  | 64    | 32    | 4    | 
+| sub-pop2  | 4     | 32    | 64    | 
+| Total     | 68    | 64    | 68    | 
+
+--
+
+
+Heterozygosity indicies (over individuals $H_{I}$, subpopulations $H_{S}$, and total population $H_{T}$)
+
+--
+
+- $H_I$ based on __observed__ heterozygosities in __subpopulations__:
+
+\begin{align*}
+H_I & = (H_{osb1} \times N_1 + H_{obs2} \times N_2) \times \frac{1}{N_{total}} \\
+& = (0.32 \times 100 + 0.32 \times 100) \times \frac{1}{200} = 0.32 \\
+\end{align*}
+
+---
+
+# An example for F-statistics calculation
+
+The frequencies of the $A_1$ allele in sub-pop1, sub-pop2, and combined population:
+\begin{align*}
+p_1  = 0.8, p_2 = 0.2, \bar{p} = 0.5 \\
+\end{align*}
+
+- $H_S$ based on __expected__ heterozygosities in __subpopulations__:
+
+\begin{align*}
+H_S & = (H_{exp1} \times N_1 + H_{exp2} \times N_2) \times \frac{1}{N_{total}} \\
+& = (2 \times 0.8 \times 0.2 \times 100 + 2 \times 0.8 \times 0.2 \times 100) \times \frac{1}{200} = 0.32 \\
+\end{align*}
+
+--
+
+
+- $H_T$ based on __expected__ heterozygosities in __total populations__:
+
+
+\begin{align*}
+H_T & = 2 \bar{p} \bar{q} \\
+& = 2 \times 0.5 \times 0.5 = 0.5 \\
+\end{align*}
+
+---
+
+# An example for F-statistics calculation
+
+\begin{align*}
+H_I & = 0.32 \\
+H_S & = 0.32 \\
+H_T & = 0.5 \\
+\end{align*}
+
+--------------
+
+\begin{align*}
+F_{IS} & = \frac{H_S - H_I}{H_S}  = \frac{0.32 - 0.32}{0.32} =0 \\
+\end{align*}
+
+--
+
+- There is no evidence of inbreeding within each subpopulations
+
+--
+
+\begin{align*}
+F_{ST} & = \frac{H_T - H_S}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
+\end{align*}
+
+\begin{align*}
+F_{IT} & = \frac{H_T - H_I}{H_T}  = \frac{0.5 - 0.32}{0.5} = 0.36 \\
+\end{align*}
+
+--
+
+- But clear evidence of population subdivision
+
+- And population subdivision accounts for all the genetic variation
+
+---
+# More on the Hierarchical F-statistics
+
+
+### $F_{IS}$ - Inbreeding index
+
+- Reduction in heterozygosity of an individual due to non-random mating in a subpopulation
+
+--
+
+### $F_{ST}$  - Fixation index 
+
+- Reduction in heterozygosity of a subpopulation relative to the total population due to drift; 
+
+- Measure of genetic differentiation
+
+---
+# More on the Hierarchical F-statistics
+
+### $F_{IT}$ - Overall fixation index
+
+- Mean reduction in heterozygosity of an individual relative to the total population 
+
+- Combined effects of non-random mating ( $F_{IS}$ ) with drift ( $F_{ST}$ )
+
+--
+
+### Relationship of $F_{IS}$, $F_{ST}$, and $F_{IT}$ 
+However, it is NOT simple additive relationship 
+
+They are related by the expression
+\begin{align*}
+(1-F_{IT}) = (1-F_{IS})(1-F_{ST})
+\end{align*}
+
+It can be rewritten as
+
+\begin{align*}
+F_{IT} = F_{IS} + F_{ST} - F_{IS}F_{ST}
+\end{align*}
+
+
+
+
+
+---
+
+# Of course there are issues...
+
+
+$F_{ST}$ must be adjusted to account for the numbers of individuals in each sub-population (sampling error)
+
+- Unbiased estimators, such as $\hat{F_{ST}}$
+  > Nei and Chesser, 1983
+  
+  
+
+--
+
+CANNOT compare $F_{ST}$ between studies or samples if they are not based upon the exact same loci!!
+
+
+
+- You can express $F_{ST}$ as $F_{ST}'$ --- a normalized version
+> Hedrick, 2005
+
+- Jost’s D uses number of effective alleles instead of heterozygosity
+> Jost, 2008
+
+
+
+
+

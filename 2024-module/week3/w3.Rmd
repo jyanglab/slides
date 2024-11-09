@@ -1,0 +1,914 @@
+---
+title: "Population Genomics Module 3"
+author: "Jinliang Yang"
+date: "Oct. 19, 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Syllabus
+
+### Module 1: Introduction and popgen terminology
+- Introduction of population genomics
+- Basic principles of evolutionary processes
+
+### Module 2: Diversity measurement
+- Heterozygosity and diversity
+- Population differentiation ( $F_{ST}$ )
+
+--
+
+### __Module 3: Scan for direct and linked selection__
+- __Direct selection__
+  - The effects of selection on these mutation themselves
+- __Linked selection__
+  - SNPs themselves have no effect on fitness ( $s=0$ ) but are affected by selection occurring nearby.
+
+---
+
+# Neutral theory of molecular evolution
+
+The neutral theory asserts that the great majority of evolutionary changes at the molecular level are caused
+
+- NOT by _Darwinian selection_ 
+
+- But by _random drift of selectively neutral or nearly neutral mutants_
+
+
+> Motoo Kimura (木村 資生), 1983 
+> - Iowa State with Jay Lush and then University of Wisconsin with James Crow
+
+--
+
+#### __Core ideas of neutral theory__:
+
+- #### Most mutations are not advantageous
+  - Selectively (or effectively) neutral if $s < 1/(2N_e)$
+- #### Most changes that are fixed over time are selectively neutral (fixed by drift)
+   - Drift rather than selection predominates
+   
+---
+
+# Neutral Theory
+
+### What the neutral theory does not claim
+
+- __Does NOT claim__ natural selection is unimportant in evolution
+
+  - In fact, most morphological adaptations are the result of natural selection 
+
+--
+
+- It __does NOT deny__ that most mutations are (slightly) deleterious (it claims most of the variation _we see_ is neutral)
+
+  - Most of the deleterious mutations have been eliminated
+  
+  - Rare mutations have been fixed
+
+
+--
+
+### Selection counteracts drift
+
+- $s > 1/(2N_e)$
+
+\begin{align*}
+Pr(fix) = \frac{1 - e^{-2s}}{1-e^{-4N_es}}
+\end{align*}
+
+
+---
+
+```{r echo=FALSE}
+wright_fisher <- function(N=1000, A1=100, t=1000){
+  p <- A1/(2*N)
+  ### make a numeric vector to hold the results
+  freq <- as.numeric();
+  ### Use for loop to run over t generations
+  for (i in 1:t){
+    A1 <- rbinom(1, 2*N, p) # samling allele from a binom distribution
+    p <- A1/(2*N)
+    freq[i] <- p
+  }
+  return(freq)
+}
+```
+
+```{r fig.align='center', fig.height=6}
+set.seed(12347)
+Ne=20; A1=1; t=4*Ne
+frq <- wright_fisher(N=Ne, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations", ylab="Freq")
+    for(u in 1:100){
+      frq <- wright_fisher(N=Ne, A1=A1, t=t)
+      random <- sample(1:1000,1,replace=F)
+      randomcolor <- colors()[random] 
+      lines(frq, type="l", lwd=3, col=(randomcolor))
+    }
+```
+
+---
+
+# Expected allele frequencies distribution
+
+On timescales shorter than those required for mutations to fix, selection will change the mean frequency of alleles in a population.
+
+--
+
+For new mutations, the density of polymorphisms found at frequency $q$, is
+
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
+
+> Wright, 1969
+
+- Where $\mu$ is the mutation rate.
+- $s$ is the fitness effect. 
+  - Advantageous mutations have $s > 0$ and deleterious mutations have $s <0$
+
+
+
+---
+
+# Types of selection
+
+To find loci that are under selection we test for departures from the neutral theory
+
+--
+
+### Purifying selection: $N_e \times s < -1$
+  - Deleterious mutations are eliminated
+
+
+### Positive selection:   $N_e \times s > 1$
+  - Opposite of purifying
+  - Favorable mutations are selected
+
+### Effectively netural: $-1 < N_e \times s < 1$
+
+
+---
+
+# The expected site frequency spectra
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
+
+
+```{r echo=TRUE, eval=FALSE, fig.align='center', out.width='80%'}
+# expected freq spectra
+f <- function(q, ns){
+  frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
+  return(frq)}
+q <- seq(from = 0.01, to =0.99, by=0.01)
+
+## Ploting function
+plot(q, f(q, ns=0.01), type="l", lty=1, lwd=3, xlab="Ns", 
+     ylab="No. of polymorhpic sites", cex.lab=2)
+lines(q, f(q, ns=-50), type="l", lty=1, lwd=3, col="red")
+lines(q, f(q, ns=-5), type="l", lty=2, lwd=3, col="red")
+lines(q, f(q, ns=5), type="l", lty=1, lwd=3, col="blue")
+lines(q, f(q, ns=50), type="l", lty=2, lwd=3, col="blue")
+legend(0.6, 200, title="Ne*s", legend=c("-50", "5", "0", "-5", "50"), 
+       col=c("red", "red", "black", "blue", "blue"), 
+       lty=c(1,2,1,1,2), cex=2, lwd=3)
+```
+
+---
+
+# The expected distribution of $f(q)$
+
+\begin{align*}
+f(q) & = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}} \\
+\end{align*}
+
+--
+
+.pull-left[
+```{r echo=FALSE, fig.align='center', out.width='100%'}
+# expected freq spectra
+f <- function(q, ns){
+  frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
+  return(frq)}
+q <- seq(from = 0.01, to =0.99, by=0.01)
+
+## Ploting function
+plot(q, f(q, ns=0.01), type="l", lty=1, lwd=4, xlab="Frq of allele", ylab="No. of polymorhpic sites", cex.lab=1.5)
+lines(q, f(q, ns=-5), type="l", lty=2, lwd=4, col="red")
+lines(q, f(q, ns=5), type="l", lty=1, lwd=4, col="blue")
+legend(0.6, 200, title="Ne*s", legend=c("-5", "0", "5"), 
+       col=c("red", "black", "blue"), 
+       lty=c(2,1,1), cex=2, lwd=3)
+```
+]
+
+
+--
+
+.pull-right[
+- #### Deleterious alleles => lower frequencies
+ - most strongly deleterious mutations are immediately removed from the population
+ 
+- #### Advantage alleles shifted toward higher frequencies
+  - most strongly advantageous mutations fix very rapidly.
+]
+
+---
+
+# Signature of negative selection
+
+
+.pull-left[
+### Site Freq Spectrum (SFS)
+
+<div align="center">
+<img src="negsel.png" height=300>
+</div>
+]
+
+--
+
+.pull-left[
+- Comparison of expected and observed is __uneven__
+
+- The rare alleles are at lower freq than expected
+
+- Evidence of __negative selection__ (or __purifying selection__)
+
+- However, confounded by population demographics (i.e., bottleneck effect)
+]
+
+---
+
+# Signature of positive/balancing selection
+
+
+.pull-left[
+### Site Freq Spectrum (SFS)
+
+<div align="center">
+<img src="possel.png" height=300>
+</div>
+]
+
+--
+
+.pull-left[
+- Comparison of expected and observed is __too even__
+
+- The most common allele is more common than expected
+
+- Evidence of __positive selection__ or __balancing selection__
+
+- However, confounded by population demographics (i.e., population expansion)
+]
+
+
+---
+
+# Diversity measurement
+
+We now consider several statistics summarizing sequencing diversity that use information about __the frequency of derived alleles__
+  - As these capture more information about our sequencing data.
+
+--
+
+Fu and Li (1993) defined a statistic, $\epsilon_1$, based on the number of __derived singletons__ in a sample.
+
+\begin{align*}
+\epsilon_1 = S_1 \\
+\end{align*}
+
+- Where $S_1$ is the number of segregating site with derived alleles found on only one haplotype.
+
+--
+
+If we don't know the ancestral status, we can aslo define a statistic, $\eta_1$, based on __all singletons__ in a sample
+
+\begin{align*}
+\eta_1 = S_1^*\frac{n-1}{n} \\
+\end{align*}
+
+- Where $S_1^*$ is all the singletons.
+
+---
+# Diversity measurement
+
+A second summary statistic of diversity that uses ancestral state information is $\theta_H$:
+
+\begin{align*}
+\theta_H = \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+\end{align*}
+
+- Where $S_i$ is again the number of segregating sites where $i$ haplotypes carry the derived allele (Fay and Wu, 2000).
+
+
+---
+
+# Summary of the $\theta$ statistics
+
+All of these statistics --- $\epsilon_1, \eta_1, \theta_H$ --- are estimators of $\theta$ 
+- at __mutation-drift__ equilibrium 
+- under an __infinite sites__ mutational model
+
+
+--
+
+Specifically,
+
+\begin{align*}
+E(\epsilon_1) = E(\eta_1) = E(\theta_H)
+\end{align*}
+
+These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
+
+
+---
+
+# Detecting selection using the SFS
+
+## The effects of positive selection
+
+
+.pull-left[
+<div align="center">
+<img src="sfs1.png" height=300>
+</div>
+> Hanh, 2020
+]
+
+.pull-right[
+- After sweep ended, new mutations started to accumulate.
+
+- These new mutations are by definition __singletons__
+ - there is only one origin in the sample with each derived allele.
+]
+
+The SFS can be skewed toward an excess of low-frequency polymorphisms relative to the neutral spectrum.
+
+---
+# Detecting selection using the SFS
+
+## The effects of balancing selection
+
+Here we consider a simple scenario with a single biallelic site that has been under balancing selection for a long time.
+- Variation within each allelic class has been able to __build up__ and __reach equilibrium__
+
+.pull-left[
+<div align="center">
+<img src="sfs3.png" height=200>
+</div>
+> Bitarello et al., 2018
+]
+
+.pull-right[
+- Neutral mutations has accumulated both within and between allelic classes
+
+- Overall variation is higher
+
+- SNPs at intermediate frequency show __a distinctive "bump"__ in the SFS.
+]
+
+
+---
+# Detecting selection using SFS
+
+A straightforward way would be test a difference between two SFSs.
+- However, linkage among sites means that __SNPs at a locus are not independent__, which violates the assumptions made by almost all such test.
+
+--
+
+### Instead, we use $\theta$ to detect deviations.
+
+- $\theta_\pi$: pairwise necleotide diversity.
+
+--
+
+- $\theta_W$: Watterson's $\theta$, using total number of segregating sites
+
+--
+
+- $\epsilon_1 = S_1$: the number of derived singletons in a sample.
+- $\eta_1$: based on all singletons in a sample.
+
+--
+
+Under the standard neutral model, all of these test statistics are expected to have a mean of 0.
+
+---
+
+# Tajima's D and related tests
+
+Tajima (1989) constructed the first test to detect difference between the SFS. 
+
+His statistic, $D$, was defined as:
+
+\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}
+
+--
+
+Fu and Li (1993) created similar statistics. These are known as Fu and Li's $D$, $F$, $D^*$, and $F^*$.
+
+\begin{align*}
+D = \frac{\theta_\pi - \epsilon_1}{\sqrt{Var(\theta_\pi - \epsilon_1)}}
+\end{align*}
+
+\begin{align*}
+F = \frac{\theta_W - \epsilon_1}{\sqrt{Var(\theta_W - \epsilon_1)}}
+\end{align*}
+
+\begin{align*}
+D^* = \frac{\theta_\pi - \eta_1}{\sqrt{Var(\theta_\pi - \eta_1)}}
+\end{align*}
+
+\begin{align*}
+F^* = \frac{\theta_W - \eta_1}{\sqrt{Var(\theta_W - \eta_1)}}
+\end{align*}
+
+---
+
+# Tajima's D and related tests
+
+Tajima (1989) constructed the first test to detect difference between the SFS. 
+
+His statistic, $D$, was defined as:
+
+\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}
+
+Originally designed to fit a normal distribution, however, none of these test statistics fit a parametric distribution very well.
+
+### Calculation
+
+- __Only variable sites__ at each locus are needed
+
+- The number of invariant sites do not figure into any calculations.
+
+---
+
+# Interpreting values of the test statistics
+
+Tajima's $D$, Fu and Li's $D, F, D^*, F^*$:
+
+\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}
+
+- After a sweep, all SNPs are low in frequency, $\theta_\pi$ will be much lower than expected.
+
+- While statistics based on counts of segregating sites (like $\theta_W$) will be much closer to their expected values.
+
+--
+
+------
+
+- All __negative__ when there has been a sweep
+
+
+---
+
+# Interpreting values of the test statistics
+
+Tajima's $D$, Fu and Li's $D, F, D^*, F^*$:
+
+\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}
+
+Balancing selection lead to __an excess of intermediate frequency neutral variation__ surrounding a selected site.
+
+In such case, $\theta_\pi$ will be greater than $\theta_W$ and other statistics.
+
+--
+
+------
+
+- All __negative__ when there has been a sweep
+
+- All __positive__ when there is balancing selection
+
+--
+
+- Are usually __significant__ when the values  $> +2$ or $< -2$
+  - The exact thresholds depend on sample size, number of SNPs, etc.
+
+
+---
+# The power of the SFS
+
+The time window for positive selection is limited.
+- #### Too early during the sweep 
+  - Signal will be not strong enough
+  
+--
+  
+- #### Too late after the sweep
+  - Both levels and frequencies of variants will have returned to normal
+
+--
+
+Power also determined by the distance between our studied loci and the location of the selected site.
+- Because of the effect of the recombination.
+- Move far away enough and there will be no signal of selection at all.
+
+---
+class: center, middle
+
+# Direct Selection
+
+
+---
+# The accumulation of sequence divergence
+
+
+## Necleotide substituion rate ( $k$ )
+
+The variable $k$ is defined as the substitution rate of __new alleles__
+  - The rate of alleles that are fixed over long periods of time.
+  - It determines how quickly two sequences are expected to diverge over time.
+
+--
+
+## Sequence divergence ( $d$ )
+
+We define $d$ as the genetic distance between two orthologous sequences. 
+- We generally calculate $d$ by taking a single sequence from each species and counting the number of positions that differ between them, divided by the total number of aligned nucleotides.
+
+
+---
+
+# The accumulation of sequence divergence
+
+The contribution of the __rate of substitution ( $k$ )__ to the expected amount of __divergence ( $d$ )__ can be seen in the following equation:
+
+\begin{align*}
+E(d) = k2t + \theta_{Anc}
+\end{align*}
+
+- Where $k$ represents the allele substitution rate.
+
+- $t$ is the time since the species split
+  - We use $2t$ because substitutions can occur on both branches of the phylogenetic tree.
+- $\theta_{Anc}$: average amount of nucleotide variation expected between two sequences in the ancestor.
+
+  - Because at the time of speciation there differences have already accumulated along the two linages.
+
+--
+
+Simplified as below if assuming divergence levels are much greater than the expected levels of polymorphism in the ancestral species,
+
+\begin{align*}
+E(d) = k2t
+\end{align*}
+
+
+---
+
+# What affects $k$?
+
+Two quantities determine the rate of substitution ( $k$ ).
+
+- The probability of fixation of any mutation ( $u$ ).
+
+- The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# Fixation rate of new mutation
+
+
+#### Neutral mutation ( $u_0$ )
+
+If a mutation has no effect on fitness, the probability of fixing is equal to __its current frequency__. 
+
+--
+
+New mutations always begin at frequency $\frac{1}{2N}$, therefore,
+
+\begin{align*}
+u_0 = \frac{1}{2N}
+\end{align*}
+
+--
+
+#### Advantageous mutations ( $u_a$ )
+
+For new, advantageous mutations ( $s > 0$ ) and large effective population sizes, the probability of fixation is
+
+\begin{align*}
+u_a \approx 2s_a
+\end{align*}
+
+according to Haldane 1927; Fisher 1930; Wright 1931.
+
+- $s_a$ is the __selective advantage of the new allele in a heterozygote__ and $2s_a$ in a homozygote.
+
+---
+
+# Fixation rate of new mutation
+
+#### Deleterious mutations ( $u_d$ )
+
+For new, deleterious mutations ( $s < 0$ ) that don't have large effects, the probability of fixation is (Kimura 1957):
+
+\begin{align*}
+u_d \approx \frac{2s_d}{1 - e^{(-4N s_d)}}
+\end{align*}
+
+- Here $s_d$ is the __deleterious effect of the new allele in a heterozygote__ and $2s_d$ is the effect in a homozygote.
+
+
+
+---
+# Fixation rate of new mutation
+
+Probability of fixation, relative to a neutral allele, of new, selected mutations:
+
+\begin{align*}
+u/u_0 \approx \frac{2s}{1 - e^{(-4N_e s)}} / \frac{1}{2N_e} = \frac{4N_e s}{1 - e^{(-4N_e s)}}
+\end{align*}
+
+.pull-left[
+```{r, out.width='80%', fig.align='center', echo=TRUE}
+ns <- seq(from = -1, to =1, by=0.01)
+plot(ns, 4*ns/(1 - exp(-4*ns)), xlab="Ns", ylab="")
+abline(v=0, lty=2, lwd=2)
+```
+]
+
+
+--
+
+.pull-right[
+- $N_es=0$, neutral mutations
+
+- $N_es > 0$, slightly advantageous mutations are not that much more likely to fix than neutral mutations
+
+- $N_es < 0$, slightly deleterious mutations have some probability of fixing
+]
+
+
+---
+
+# What affects $k$?
+
+Two quantities determine the rate of substitution ( $k$ ).
+
+### The probability of fixation of any mutation ( $u$ ).
+
+\begin{align*}
+u_0 & = \frac{1}{2N_e} \\
+u_a & \approx 2s_a \\
+u_d & \approx \frac{2s_d}{1 - e^{(-4N_e s_d)}}
+\end{align*}
+
+
+### The total number of mutations that arise and can possibly be fixed.
+
+---
+
+# The total number of mutations 
+
+If the probability of a mutation at a nucleotide in each generation is $\nu$, then in a population of $N$ diploid individuals, there will be __ $2N\nu$ new mutations per generation at a single site__.
+
+--
+
+- with $f_0$ representing the fraction of neutral mutations.
+  - __ $2N \nu f_0$__ will be neutral
+
+--
+
+- The remaining will be advantageous (__ $f_a$ fraction__) and deleterious (__ $f_d$ fraction__).
+  - __ $2N \nu f_a$__ new advantageous mutations
+  - __ $2N \nu f_d$__ new deleterious mutations
+
+
+--
+
+If advantageous and deleterious mutations have no contribution, then the substitution rate is a function of only _the total number_ of neutral mutations that arise and the _probability that each of them fixes_.
+
+
+\begin{align*}
+k = (2N \nu f_0) \frac{1}{2N} = \nu f_0
+\end{align*}
+
+---
+
+# Advantageous and deleterious mutations
+
+The rate of substitution for advantageous mutations:
+
+\begin{align*}
+k = (2N_e \nu f_a) 2s_a = 4N_e \nu f_as_a
+\end{align*}
+
+--
+
+The rate of substitution for deleterious mutations:
+
+\begin{align*}
+k & = (2N_e \nu f_d) \times \frac{2s_d}{1 - e^{(-4N_e s_d)}} \\
+& = \frac{4N_e \nu f_d s_d}{1 - e^{(-4N_e s_d)}}
+\end{align*}
+
+--
+
+----------------
+
+- The effective population size ( $N_e$ ) plays an important role in the rate of substitution of selected mutations.
+
+- More advantageous mutations will fix in larger populations than in smaller populations.
+
+- More deleterious mutation will fix in smaller populations relative to larger populations.
+
+
+
+
+
+
+
+---
+
+# Detecting direct selection using divergence
+
+In coding regions, we measure divergenece that is due to nonsynonymous and synonymous changes.
+
+- $d_N$ as the __number of nonsynonymous__ difference per nonsynonymous site
+
+- $d_S$ as the __number of synonymous__ differences per synonymous site
+
+--
+
+Note that natural selection has __a profound effect__ on the number of nonsynonymous mutations that are fixed.
+
+\begin{align*}
+E(d_N) & = k2t \\
+ & = 2t (\nu f_0 + 4N \nu f_as_a + \frac{4N_e \nu f_d s_d}{1 - e^{(-4N_e s_d)}}) \\
+ & = \nu 2t  (f_0 + 4N_e f_as_a + \frac{4N_e f_d s_d}{1 - e^{(-4N_e s_d)}}) \\
+\end{align*}
+
+The total nonsynonymous divergence in a region is due to all three types of mutations, therefore, our expression for $d_N$ includes all three terms.
+
+---
+
+# Detecting selection using divergence
+
+\begin{align*}
+E(d_N) & = \nu 2t  (f_0 + 4N f_as_a + \frac{4N f_d s_d}{1 - e^{(-4N s_d)}}) \\
+\end{align*}
+
+- A higher underlying mutation rate, $\nu$, and longer divergence times, $t$, will increase the amount of divergence
+
+- The proportion of advantageous mutations fixed will be a function of the frequency at which they arise and their average selective effect
+
+- The deleterious mutations can also contribute to divergence if selection is weak enough
+
+
+---
+
+# Synonymous mutations
+
+Here we assume all synonymous changes are neutral.
+- That is, $f_0 =1$ and $f_a = f_d =0$
+
+--
+
+The total expected amount of synonymous divergence between two sequences is:
+
+\begin{align*}
+E(d_S) & = \nu 2t \\
+\end{align*}
+
+For neutral mutations, the substitution rate is simply equal to the mutation rate.
+
+---
+
+# The ratio of nonsynonymous to synonymous divergence
+
+Because both $\nu$ and $t$ will be approximately the same of nonsynonymous and synonymous sites in the same gene, dividing above equations gives
+
+
+\begin{align*}
+\frac{E(d_N)}{E(d_S)} & = f_0 + 4N_e f_as_a + \frac{4N_e f_d s_d}{1 - e^{(-4N_e s_d)}} \\
+\end{align*}
+
+--
+
+- Relative to synonymous divergence, the level of nonsynonymous divergence is again due to the fractions of mutations that are __neutral__, __advantageous__, and __deleterious__.
+
+- Note that here, $f_0$ represents only the __nonsynonymous mutations__.
+
+
+---
+# Some general guidelines
+
+__ $d_N/d_S << 1$__
+The vast majority of nonsynonymous mutations are deleterious, and negative (purifying) selection is predominant.
+
+--
+
+__ $d_N/d_S < 1$__
+The majority of nonsynonymous mutations are deleterious, but here may be some unknown fraction of advantageous mutations.
+
+--
+
+__ $d_N/d_S = 1$__
+This situation can occur in two cases:
+- First, there is no selection and all nonsynoymous mutations are neutral.
+- Second, there is simply a large number of neutral and advantageous mutations (as well as deleterious mutations).
+
+--
+
+__  $d_N/d_S > 1$__
+There are many advantageous nonsynonymous mutations and positive selection is predominant, but there are still many deleterious mutations.
+
+
+---
+# $\pi_N/\pi_S$
+
+
+Within a species, by analogy with the logic of the comparison of $d_N$ and $d_S$, we can compare the average number of non-synonymous differences per nonsynoymous site ( $\pi_N$ ) to the average number of synonymous differences per synonymous site ( $\pi_S$ ).
+
+- Combining the methods for calculating $\pi$
+- With the methods for calculating nonsynonymous and synonymous changes.
+
+--
+
+### Interpretation of the ratio
+
+- Values of $\pi_N/\pi_S$ below 1 are again evidence for the predominance of purifying selection, and the vast majority of all coding loci show $\pi_N/\pi_S < 1$
+- However, interpretation of $\pi_N/\pi_S > 1$ is different.
+
+---
+# $\pi_N/\pi_S$
+
+### Interpretation of the ratio
+
+- Since positive selection will rapidly fix advantageous mutations, these adaptive changes will rarely be found in studies of polymorphism
+
+- Instead, balancing selection will result in $\pi_N/\pi_S > 1$
+
+  - heterozygote advantage (heterosis)
+  
+  - Therefore $d_N/d_S > 1$ for strong evidence of positive selection
+  
+  - $\pi_N/\pi_S > 1$ is a very strict criterion for detecting balancing selection.
+  
+  - Single sites under very strong selection will never contribute enough to values of $\pi_N$ to push $\pi_N/\pi_S$ greater than 1.
+
+
+---
+
+# The _tb1_ gene example
+
+.pull-left[
+<div align="center">
+<img src="tb1.png" height=250>
+</div> 
+
+> [Studer et al., 2011, Nature Genetics](https://www.nature.com/articles/ng.942)
+]
+
+.pull-right[
+<div align="center">
+<img src="hka.png" height=250>
+</div> 
+]
+
+---
+
+# Join my lab as a PhD or a PostDoc
+
+### Who we are looing for
+- A master or PhD in plant genetics, genomics, or related field
+- Be familiar with at least one coding language, R or python
+- Can work independently and also a team player
+- Have excellent communication skills
+
+--
+
+### What we can provide
+
+- A stimulating and supportive international research environment
+- Access to state-of-the art research infrastructure
+- Living in a lovely city with a low cost and high life quality
+
+### Learn more about us
+
+https://jyanglab.com

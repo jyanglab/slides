@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Population Genomics Module 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Population Genomics Module 1
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Sept. 21, 2023
+]
+
+---
+
+
+
+
+# About Me
+
+- Bachelor's and Master's degrees from CAU (2001-2008)
+
+--
+
+### Professional Experience
+
+- 2008-2014: __Ph.D.__ @ Iowa State University 
+  - Genetics and Genomics
+  
+- 2014-2017: __PostDoc__ @ University of California, Davis 
+  - Evolutionary Genetics
+
+- 2017-2023: __Assistant Professor__ @ University of Nebraska-Lincoln
+  - Quantitative Genetics and Statistical Genomics
+
+- 2023-now: __Associate Professor__ @ University of Nebraska-Lincoln
+  - Quantitative Genetics and Statistical Genomics
+
+
+---
+
+# About my lab
+
+- [My lab](https://jyanglab.com/people/) focuses on __quantitative genetics__ and __statistical genomics__ of maize and its wild relatives
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="study.png" height=300&gt;
+&lt;/div&gt; 
+
+- From historical __domestication__ to future __improvement__
+- Other cereal crops:  __Sorghum__ and __Pearl Millet__
+
+
+---
+
+# Slides for this class module
+
+
+- Lab website: https://jyanglab.com/
+    - __Module 1__: [[HTML](https://jyanglab.com/slides/2023-module/week1/w1v1.html)]
+    - __Module 2__: [[HTML](https://jyanglab.com/slides/2023-module/week2/w2v1.html)]
+    - __Module 3__: [[HTML](https://jyanglab.com/slides/2023-module/week3/w3v1.html)]
+       
+--
+
+### If you know someone who is going to graduate
+
+- __Heuermann Postdoctoral Fellow @UNL__
+  - Starting annual salary: $60,000
+  - Working with two PIs
+  - Develop research projects of your design
+  - Deadline: Oct. 31, 2023
+  - [To learn more](https://jobs.sciencecareers.org/job/649741/heuermann-postdoctoral-fellow/?TrackID=3)
+  
+---
+
+# Goals and Objectives
+
+### Overall goal: 
+
+- Understand the basic principles of population genomics
+
+- Apply the knowledge for study crop domestication and its implication for crop improvement
+
+--
+
+### Objectives:
+
+- 1) Learn basic population genomics terminology
+
+- 2) Learn how to measure diversity using sequencing data
+
+- 3) Understand the statistics for measuring population differentiation
+
+- 4) Be able to scan for direct and linked selection to detect selective sweeps
+
+---
+
+# A timely and hot topic
+
+### __Nobel Prize in Physiology or Medicine 2022__
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="paabo.png" height=350&gt;
+&lt;/div&gt;
+]
+
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="ancientcorn.png" height=100&gt;
+&lt;/div&gt;
+A maize cob from the Ocampo Caves (Valenzuela cave), dated to 3890 ± 60 years before the present. Length, 47 mm. 
+&gt; from Paabo's 2003 Science paper
+]
+
+--
+
+-----------
+
+__Svante Paabo__ represents the field of _evolutionary genetics_ and/or _population genetics!!!_
+
+---
+# Future (or Current) jobs
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="X.png" height=200&gt;
+&lt;/div&gt;
+&gt; Google X, the Moonshot Factory
+
+A job description __Data Scientist, Plant Biology__ in [Google X](https://x.company/careers-at-x/6434423002/)
+]
+
+--
+
+.pull-right[
+### What you should have
+
+- Experience working with biological data, with an emphasis on NGS.
+
+- Understanding of molecular biology, field trial design, or population genetics.
+
+- Experience in the agriculture industry.
+
+- Knowledge of statistical methods and applied machine learning.
+
+...
+]
+
+---
+
+# Syllabus
+
+### Module 1: Introduction and popgen terminology
+- Introduction of population genomics
+- Basic principles of evolutionary processes
+
+### Module 2: Diversity measurement
+- NGS and diversity measurement
+- Population differentiation
+
+### Module 3: Scan for direct and linked selection
+- Direct selection
+- Linked selection
+
+
+---
+# 151 crops and their domestication origins
+
+&lt;div align="center"&gt;
+&lt;img src="crops.png" height=450&gt;
+&lt;/div&gt;
+
+---
+# Maize domestication
+
+
+&lt;div align="center"&gt;
+&lt;img src="ca.png" height=200&gt;
+&lt;/div&gt;
+
+
+--
+
+---------
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="shelter.png" height=200&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="stone.png" height=200&gt;
+&lt;/div&gt;
+]
+
+This __8,700__ year-old milling stone (excavated in an area of __the Balsas Valley__ in southwestern Mexico) was used to process maize and other crops. Maize starch grains were recovered from the stone.
+
+
+---
+# Plant Domestication
+
+&lt;div align="center"&gt;
+&lt;img src="Teosinte.png" height=200&gt;
+&lt;/div&gt;
+
+- “Plant domestication is the _genetic modification_ of a wild species to create a new form of a plant altered _to meet human needs_.” 
+&gt; Doebley et al., 2006
+
+--
+
+__Plant domestication__ is the process whereby wild plants have been evolved into crop plants through artificial selection. 
+
+- This usually involves an early hybridization event followed by selective breeding.
+
+---
+# Wild and domesticated species
+
+&lt;div align="center"&gt;
+&lt;img src="wild.png" height=300&gt;
+&lt;/div&gt;
+
+--
+
+__Fitness__ are different between wild ancestors and domesticated crops
+
+- Fitness describes individual __reproductive__ success.
+
+---
+
+# Domestication Syndrome
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dom.png" height=500&gt;
+&lt;/div&gt;
+]
+
+.pull-left[
+Compared to their progenitors, crops typically have:
+- Larger grains or fruits
+
+- More robust plants overall
+
+- More determinate growth or increased apical dominance  
+
+- A loss of natural seed dispersal
+
+&gt; Doebley et al., 2006
+]
+
+---
+# Genes controlling domestication traits
+
+&lt;div align="center"&gt;
+&lt;img src="dom_genes.png" height=300&gt;
+&lt;/div&gt;
+&gt; Doebley et al., 2006
+
+
+
+---
+# Population genomics for domestication
+
+### Understand the popgen
+
+- To identify the selective sweeps 
+  - [Hufford et al., 2012](https://www.nature.com/articles/ng.2309) _Nature Genetics_
+  
+- To infer the history of populations
+  - [Beissinger et al., 2016](https://www.nature.com/articles/nplants201684) _Nature Plants_
+  
+- To examine the relative effects of evolutionary forces across the genome 
+  - [Xu et al., 2020](https://www.nature.com/articles/s41467-020-19333-4) _Nature Communications_
+  - [Meier et al., 2022](https://elifesciences.org/articles/75790) _eLife_
+  
+--
+
+### Design a selection scan experiment
+- Sampling wild and domesticated populations
+- DNA sequencing and data analysis
+
+---
+# Sequencing platforms
+
+### Illumina (HiSeq, MiSeq, NextSeq)
+- Throughput: very high
+- Read length: up to 2x300 bp 
+- Accuracy: high (error rate is &lt; 1%)
+
+--
+
+### PacBio
+- Throughput: moderate
+- Read length: very long (&gt; 70kb)
+- Accuracy: low (error rate is about 10%)
+
+--
+
+### Nanopore
+- Throughput: moderate
+- Read length: super long (&gt; 1Mb)
+- Accuracy: low (error rate is about 10-20%) 
+
+---
+# DNA Sequencing
+
+#### Short read sequencing can often be produced as either single-end or paired-end.
+
+- #### Paired-end (SE) 
+
+  - Means that two reads of equal length come from the same larger piece of DNA
+  
+  - The length is approximately known
+
+- #### Single-end (SE) 
+  - Just have one read.
+
+---
+# Basic sequence terminology
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
+
+- An alignment of three sequences sampled from 3 plants of a population
+
+- Each of the sequences has 10 nucleotides, from the same locus on a chromosome.
+]
+
+--
+
+.pull-right[
+There are two __polymorphisms__ (or segregating sites)
+
+Single nucleotide polymorphisms ( __SNPs__ )
+  - In the 3rd position, we have T/C alleles
+  - In the 8th position, we have G/T alleles
+]
+
+
+The set of alleles found on a single sequence is referred to as a __haplotype__.
+- _TG_ haplotype and _CT_ haplotype
+
+--
+
+__Allele frequency__:
+
+- In the 3rd position, __Major allele__ is T and __Minor allele__ is C
+- Minor allele frequency is 1/3
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Consider a diploid locus segregating for two alleles ( `\(A_1\)` and `\(A_2\)` ).
+We usually define the less frequent allele (or minor allele) as the `\(A_1\)` allele.
+
+### Allele frequency ( `\(p\)` and `\(q\)` ) 
+Frequency/proportion of alleles of a particular identity at one locus
+
+### Genotype frequency ( `\(f_{11}\)`, `\(f_{12}\)`, `\(f_{22}\)` )
+Proportion of individuals with a specific genotype (combination of alleles)
+
+---
+
+# Allele and genotype frequencies
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dogs.jpg" height=150&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+- dog 1: AA AA __TT__ CC GG 
+- dog 2: AA AA __CC__ CC GG
+- dog 3: AA AA __CT__ CC GG 
+- dog 4: AA AA __CT__ CC GG
+- dog 5: AA AA __CC__ CC GG
+]
+
+Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is: 1/5
+
+
+--
+
+The frequency of minor allele `\(A_1\)` in the population is then given by
+
+`\begin{align*}
+p = \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12}
+\end{align*}`
+
+
+```r
+n = 5
+n11 = 1
+f11 = n11/n
+n12 = 2
+p = f11 + 1/2*2/n
+p ### allele freq of minor allele T
+```
+
+```
+## [1] 0.4
+```
+
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+#### A population is in HWE if it has constant allele and genotype frequencies __from generation to generation__
+
+- Allele frequencies in parents predict allele and genotype frequencies in offspring
+
+--
+
+### Caveats
+
+- A large, randomly-mating population for diploid species
+
+- No selection, no mutation, no migration, etc.
+  
+---
+
+# In Hardy-Weinberg Equilibrium
+
+If allele frequencies in parent population = `\(p\)` &amp; `\(q\)`, 
+then, genotype frequencies in progeny after random mating are:
+
+`\begin{align*}
+(p + q)^2 = p^2 + 2pq + q^2
+\end{align*}`
+
+- The array of genotypes in progeny equals the square of the parental gametic array. 
+
+- (sum of allele frequencies) `\(^2\)` = (sum of genotype frequencies)
+
+
+---
+# Allele effects relative to fitness
+
+
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
+
+--
+
+.pull-left[
+### Advantageous
+Increase the fitness
+
+### Deleterious
+Decrease the fitness
+
+### Neutral
+Have no effect
+
+]
+
+--
+
+.pull-right[
+### Positive selection
+Increase the advantageous alleles
+
+### Negative (purifying) selection
+Remove the deleterious alleles
+
+### Balancing selection
+Keep both alleles
+]
+
+
+---
+# Positive selection
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="seq2.png" height=90&gt;
+&lt;/div&gt;
+]
+
+--
+
+-----------
+
+##### Refers to a history of a locus in which advantageous mutations have arisen and fixed or are in the process of fixing.
+
+--
+
+- Advantageous mutations __much rarer__ than deleterious mutations.
+
+- Advantageous mutation can rapidly increase in frequency.
+- Patterns generated by this rapid rise are used to detect signatures of positive selection.
+
+---
+# Negative (purifying) selection
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="seq1.png" height=100&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="seq3.png" height=90&gt;
+&lt;/div&gt;
+]
+
+--
+
+-----------
+
+#### Refers to a history of a locus in which the vast majority of mutations that have arisen and been removed due to their deleterious effects.
+
+--
+
+- A gene or noncoding region under negative selection is often conserved.
+
+- These genes or regions are constrained by selection.
+
+- Relatively common
+
+--
+
+&gt; Yang et. al., 2017, PLOS Genetics.
+- [Incomplete dominance of deleterious alleles contribute substantially to trait variation and heterosis in maize](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007019)
+
+---
+# Balancing selection
+
+
+- Alleles under balancing selection are not universally advantageous or deleterious.
+
+--
+
+- Balanced polymorphisms consist of alleles whose fitness changes with time, space, or population frequency. 
+
+  - __Heterozygote advantage (or overdominant) selection__: heterozygotes genotypes have higher fitness than either homozygous genotype
+  
+  - __Spatially or temporally varying selection__: Fitness of alleles in a population is dependent on the environment or season
+
+--
+
+&gt; Xu et. al., 2022, bioRxiv.
+- [A historically balanced locus under recent directional selection in responding to changed nitrogen conditions during modern maize breeding](https://www.biorxiv.org/content/10.1101/2022.02.09.479784v1)
+
+
+  
+---
+
+# Basic principles of evolutionary processes
+
+Factors lead  to changes of allele frequency
+
+### Systematic processes
+
+Predictable both in amount and in direction
+
+- _Migration_
+  - not a major concern in plant breeding
+
+- _Mutation_
+  - Mutation is the ultimate source of genetic variation
+  - Mutation alone produces slow change in allele frequency
+
+--
+
+- __Selection__
+  - An important forces in shaping the allele frequency changes
+
+---
+
+# Basic principles of evolutionary processes
+
+Factors lead  to changes of allele frequency
+
+
+### Stochastic process
+
+Arises in small populations from the effect of sampling.
+
+- __Genetic drift__
+
+  - Predictable in amount but not in direction
+
+
+---
+
+# Selection (on Fitness)
+
+
+- Selection coefficient ( `\(s\)` ) 
+  - The proportionate __REDUCTION__ in gametic contribution of a particular genotype _compared to the standard genotype_
+
+- Relative fitness: `\(w = 1 -s\)`
+  - Most fit is set to 1
+
+--
+
+---------
+#### For example
+
+-  `\(AA\)`, `\(Aa\)`, and `\(aa\)` have survival of 0.75, 0.75, and 0.5, respectively
+
+--
+
+- Then, the relative fitness is 1.0, 1.0, and 0.67 (0.5/0.75)
+
+
+---
+
+# Selection with dominance
+
+- Dominance needs to be accounted for when quantifying allele frequency changes with selection.
+
+- The degree of dominance influences the relative fitness of alleles. 
+
+- Here dominance is with respect to fitness only.
+
+
+&lt;div align="center"&gt;
+&lt;img src="dominance.png" width=350&gt;
+&lt;/div&gt;
+
+---
+
+# Selection with dominance
+
+Here, `\(h\)` is the __level of dominance__
+
+- It is the heterozygous effect from the fitness of the heterozygote relative to the difference between homozygotes.
+
+--
+
+In the example, __ `\(A_1\)` is the most favorable allele__, conferring the greatest degree of fitness
+
+| Degree of dominance | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   |
+| :-------: | : ------ : | :-------: | :-------: |
+| Additive           | `\(1\)`    | `\(1 - s/2\)`    | `\(1 - s\)`     | 
+| Partial dominance   |  `\(1\)`        |  `\(1 - hs\)`        |  `\(1 -s\)`   | 
+| Complete dominance | `\(1\)`   | `\(1\)`    | `\(1 - s\)`    |
+| Overdominance      | `\(1 -s_1\)` | `\(1\)` | `\(1-s_2\)` | 
+
+
+
+---
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   |
+| :-------: | : ------ : | :-------: | :-------: |
+| Initial frq           | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`     | 
+| Coefficient of selection | `\(0\)`   | `\(0\)`      | `\(s\)`       |
+| Fitness ( `\(w\)` )   |  `\(1\)`        |  `\(1\)`        |  `\(1-s\)`   | 
+| Gametic contribution | `\(p^2\)`   | `\(2pq\)`    | `\(q^2(1-s)\)`    |
+
+---
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | `\(A_1A_1\)`   | `\(A_1A_2\)`   | `\(A_2A_2\)`   | Total |
+| :-------: | : ------ : | :-------: | :-------: | :-------: |
+| Initial frq           | `\(p^2\)`    | `\(2pq\)`    | `\(q^2\)`     |  `\(1\)`        |
+| Coefficient of selection | `\(0\)`   | `\(0\)`      | `\(s\)`       |             |
+| Fitness ( `\(w\)` )   |  `\(1\)`        |  `\(1\)`        |  `\(1-s\)`   |            |
+| Gametic contribution | `\(p^2\)`   | `\(2pq\)`    | `\(q^2(1-s)\)`    |  `\(1-sq^2\)` |
+
+
+
+--
+
+### After one generation of selection against recessive
+
+Note that there has been a proportionate loss of `\(sq^2\)` due to the selection.
+
+The `\(A_1\)` allele freq, 
+
+
+`\begin{align*}
+p_1 &amp; = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
+&amp; = \frac{p}{1- sq^2} \\
+\end{align*}`
+
+---
+
+# Selection
+
+### After one generation of selection against recessive
+
+
+`\begin{align*}
+p_1  = \frac{p}{1- sq^2} \\
+\end{align*}`
+
+### Change in allele freq after one generation
+
+`\begin{align*}
+\Delta p &amp; = p_1 - p_0  = \frac{p}{1- sq^2} - p\\
+&amp; = \frac{p-p(1-sq^2)}{1-sq^2} \\
+&amp; = \frac{spq^2}{1 - sq^2}
+\end{align*}`
+
+--
+
+Then,
+
+`\begin{align*}
+\Delta q &amp; = -\Delta p = -\frac{spq^2}{1 - sq^2}
+\end{align*}`
+
+---
+
+# Simulation for selection against recessive
+
+
+```r
+deltap &lt;- function(s, p){
+  q &lt;- 1-p
+  return((s*p*q^2)/(1 - s*q^2))
+}
+
+p &lt;- seq(0, 1, by=0.01)
+plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|")
+lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
+```
+
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Effectiveness of Selection
+
+### Initial allele freq
+
+  - Most effective at intermediate freq
+  
+  - Inefficient when targeted recessive allele is rare
+
+--
+
+### Degree of dominance
+
+- It will become more complex
+
+
+
+---
+
+# Wright-Fisher Simulation
+
+In the absence of migration, mutation, or selection, what is the allele freq over time?
+
+--
+
+
+```r
+wright_fisher &lt;- function(N=1000, A1=100, t=1000){
+  p &lt;- A1/(2*N)
+  ### make a numeric vector to hold the results
+  freq &lt;- as.numeric();
+  ### Use for loop to run over t generations
+  for (i in 1:t){
+    A1 &lt;- rbinom(1, 2*N, p) # samling allele from a binom distribution
+    p &lt;- A1/(2*N)
+    freq[i] &lt;- p
+  }
+  return(freq)
+}
+frq &lt;- wright_fisher(N=1000, A1=100, t=1000)
+```
+
+- N: population size = # of individuals per generation (assuming it is constant)
+- A1: # of A1 allele in generation 0
+- t: generations
+
+---
+
+
+```r
+set.seed(12347)
+N=2000; A1=2000; t=50
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
+    for(u in 1:100){
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
+      lines(frq,type="l",col=(randomcolor))
+    }
+```
+
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+set.seed(12347)
+N=20; A1=20; t=50
+frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+plot(frq, type="l", ylim=c(0,1), col=3, xlab="Generations",ylab=expression(p(A[1])))
+    for(u in 1:20){
+      frq &lt;- wright_fisher(N=N, A1=A1, t=t)
+      random &lt;- sample(1:1000,1,replace=F)
+      randomcolor &lt;- colors()[random] 
+      lines(frq,type="l",col=(randomcolor))
+    }
+```
+
+&lt;img src="w1v1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Small Populations
+
+### Genetic drift
+
+Change in allele frequencies __by chance__ from the random sampling of gametes in a finite (small) population
+
+--
+
+Allele frequencies are subject to __random fluctuations__ arsing from the sampling of gametes.
+
+
+
+---
+
+# Consequences of small population
+
+### Random drift
+
+- Leads to allele fixation
+
+--
+
+### Differentiation between sub-populations
+
+- Leads to genetic differentiation and local group (or geographic isolation)
+
+--
+
+### Uniformity within sub-populations
+
+- Reduces diversity and becomes more alike in genotype in local groups
+
+--
+
+### Increased homozygosity
+
+- Reduces heterozygotes and results in inbreeding
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
