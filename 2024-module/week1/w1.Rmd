@@ -1,7 +1,7 @@
 ---
 title: "Population Genomics Module 1"
 author: "Jinliang Yang"
-date: "Nov. 11, 2024"
+date: "Nov. 18, 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
@@ -38,7 +38,7 @@ options(htmltools.dir.version = FALSE)
 
 # About my lab
 
-- [My lab](https://jyanglab.com/people/) focuses on __quantitative genetics__ and __statistical genomics__ of maize and its wild relatives
+- [My lab](https://jyanglab.com/people/) focuses on __Genetics__, __Genomics__, and __Biotechnology__ of maize and its wild relatives
 
 --
 
@@ -57,8 +57,7 @@ options(htmltools.dir.version = FALSE)
 
 - Lab website: https://jyanglab.com/teaching/
     - __Module 1__: [[HTML](https://jyanglab.com/slides/2024-module/week1/w1.html)]
-    - __Module 2__: [[HTML](https://jyanglab.com/slides/2024-module/week2/w2v1.html)]
-    - __Module 3__: [[HTML](https://jyanglab.com/slides/2024-module/week3/w3v1.html)]
+    - __Module 2__: [[HTML](https://jyanglab.com/slides/2024-module/week2/w2.html)]
        
 --
 
@@ -161,11 +160,9 @@ A job description __Data Scientist, Plant Biology__ in Google X
 - Introduction of population genomics
 - Some case studies of crop domestication and improvement
 
-### Module 2: Diversity measurement
-- NGS and diversity measurement
-- Population differentiation
+--
 
-### Module 3: Scan for direct and linked selection
+### Module 2: Scan for direct and linked selection
 - Direct selection
 - Linked selection
 
@@ -222,6 +219,17 @@ __Plant domestication__ is the process whereby wild plants have been evolved int
 - This usually involves an early hybridization event followed by selective breeding.
 
 ---
+# Two teosintes made modern maize
+
+<div align="center">
+<img src="teo2.jpg" height=300>
+</div>
+
+- "After initial domestication, introgression from a relative of domesticated maize, mexicana, occurred in the highlands of Mexico before propagating across Central America."
+> Yang et al., 2023
+
+
+---
 # Wild and domesticated species
 
 <div align="center">
@@ -261,7 +269,7 @@ Compared to their progenitors, crops typically have:
 # Genes controlling domestication traits
 
 <div align="center">
-<img src="dom_genes.png" height=300>
+<img src="dom_genes.png" height=350>
 </div>
 > Doebley et al., 2006
 
@@ -277,16 +285,29 @@ Compared to their progenitors, crops typically have:
   
 - To infer the history of populations
   - [Beissinger et al., 2016](https://www.nature.com/articles/nplants201684) _Nature Plants_
+  - [Yang et al., 2023](https://www.science.org/doi/10.1126/science.adg8940) _Science_
   
 - To examine the relative effects of evolutionary forces across the genome 
   - [Xu et al., 2020](https://www.nature.com/articles/s41467-020-19333-4) _Nature Communications_
   - [Meier et al., 2022](https://elifesciences.org/articles/75790) _eLife_
   
+---
+# Steps for a population genomics study
+
+### Propose a biological question
+- An addressable hypothesis (i.e., what is the genetic basis of maize adaptation to N limitation?)
+
 --
 
-### Design a selection scan experiment
-- Sampling wild and domesticated populations
+### Design a (selection scan) experiment
+- Sampling wild and/or domesticated populations
 - DNA sequencing and data analysis
+
+--
+
+### Intrepret the results and validate the discovery
+- Test if the observed data are consistent with the hypothesis
+- If so, could you validate the discovery using additional data?
 
 ---
 # Sequencing platforms and technologies
