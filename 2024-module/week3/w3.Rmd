@@ -520,8 +520,9 @@ In such case, $\theta_\pi$ will be greater than $\theta_W$ and other statistics.
 <img src="SFS.png" height=300>
 </div>
 
-Selection against dele- terious mutations will increase the fraction of mutations segregating at low frequencies in the sample. A selective sweep has roughly the same effect on the frequency spectrum (13). Conversely, positive selection will tend to in- crease the frequency in a sample of mutations segregating at high frequencies. 
-
+- Selection against deleterious mutations will increase the fraction of mutations segregating at low frequencies in the sample. 
+- A selective sweep has roughly the same effect on the frequency spectrum. 
+- Conversely, positive selection will tend to increase the frequency in a sample of mutations segregating at high frequencies.
 
 ---
 # The power of the SFS
