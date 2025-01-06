@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Mixed models and BLUP</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Mixed models and BLUP
+### Jinliang Yang
+### April 5th, 2022
+
+---
+
+
+
+
+# Why BLUP?
+
+__Best linear unbiased prediction__, or BLUP for short, is a general procedure that allows comparisons among individuals 
+  - developed from different breeding populations 
+  - evaluated in different sets of environments
+
+--
+
+### Analysis of unbalanced data
+
+- Plant A missing in plot 1
+- Other plants in plot 1 can be leveraged
+
+--
+
+### Exploits information from relatives
+
+- A vs. B
+- More precise by using relatives of A and relatives of B
+
+---
+# A little bit of history about BLUP
+
+C. R. Henderson in the 1940s in studying dairy bulls
+
+The BLUP procedure was not used in plant breeding until the 1990s (Bernardo, 1994, Panter and Allen, 1995)
+- BLUE (Best linear unbiased estimation)
+  - Fixed effects are __estimated__ in BLUE
+  
+- BLUP (Best linear unbiased prediction)
+  - Random effects are __predicted__ in BLUP
+
+
+---
+# Fixed vs. random effects
+
+`\begin{align*}
+y_{ij} &amp; = \mu + \beta_i + l_{ij} \\
+\end{align*}`
+
+where `\(1 \leq j \leq k\)`
+
+--
+
+----
+
+In a linear model, sets of variables that categorize objects or observations are referred to as factors or effects.
+
+- For example, variety ( `\(\beta_i\)` ) and location ( `\(l_{ij}\)` )
+  - Varieties may be grouped according to maturity group
+  - And location may be grouped according to soil type or latitude.
+
+--
+
+### Fixed or random
+
+- Factors can be considered either as __fixed__ or __random__
+
+- and the distinction can be obvious or subtle.
+
+- The treatment of this effect depends on how the `\(i\)` or `\(k\)` values of the effects are chosen.
+
+---
+
+# Fixed vs. random effects
+
+Factors can be considered either as fixed or random, and the distinction can be obvious or subtle.
+
+`\begin{align*}
+y_{ij} &amp; = \mu + \beta_i + l_{ij} \\
+\end{align*}`
+
+where `\(1 \leq j \leq k\)`
+
+-------
+
+The treatment of this effect depends on how the `\(k\)` values of the effect are chosen.
+
+- __Fixed__: a fixed set of factors are chosen in advance.
+  - There is no variance in this choice.
+
+--
+
+- __Random__: `\(k\)` (i.e., `\(k=10\)`) values are drawn from some probability distribution with mean 0 and some unknown variance.
+  - Here, we are interested in estimating the variance of this distribution
+  
+
+
+---
+
+# Fixed vs. random effects
+
+Distinction lies in how the underlying sampling distribution is treated statistically.
+
+--
+
+Sometimes, investigators treat the same effect __differently__.
+
+  - For example, some investigators might treat variety (or line) as random, because they see the varieties they chose to test as randomly sampled from __a large universe of varieties__.
+  
+  - Some investigators might treat variety as fixed becasue they chose a set of varieties they were particularly interested in comparing, such as a transgenic variety vs. a non-transgenic isogenic variety.
+  
+
+--
+
+### An important property
+
+Random effects have __a covariance structure__, where fixed effects do not.
+
+
+---
+# How to determine fixed or random
+
+Two questions should be answered to determine if effects should be treated as fixed or random:
+&gt; Robinson (1991)
+
+- 1) Do these effects come from a probability distribution?
+  - If no, effects should be treated as fixed.
+
+--
+
+- 2) For nuisance parameters (i.e., block, plot, location, etc.), is interclass information to be recovered for this class of effects?
+  - If yes, treat as random.
+
+---
+
+# Matrix and linear algebra
+
+An understanding of BLUP requires knowledge of matrices and elementary matrix operations.
+- Compact way for treating the algebra of systems of linear equations
+
+--
+
+### Linear models
+
+Most common statistical methods can be written in matrix form
+
+- `\(\mathbf{y} = \mathbf{X\beta} + \mathbf{e}\)` is the __general linear model__
+  - Ordinary least square (OLS) solution: `\(\mathbf{\beta} = (\mathbf{X^TX})^{-1}\mathbf{X^Ty}\)`
+
+- `\(\mathbf{y} = \mathbf{X\beta} + \mathbf{Za} + \mathbf{e}\)` is the __general mixed model__
+
+---
+# Matrices
+
+A __matrix__ is a rectangular array of elements. A __scalar__, as opposed to a matrix, has only one element.
+
+--
+`\begin{align*}
+  \mathbf{A} 
+  =
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+\end{align*}`
+
+This `\(\mathbf{A}\)` matrix is a `\(3 \times 2\)` matrix, with the number of __rows given first__.
+  
+--
+
+Dimensionality of a matrix: r `\(\times\)` c ( rows `\(\times\)` columns): think of __R__ailroad __C__ar!
+
+--
+
+ - The `\(ij\)`th element refers to that in the `\(i\)`th row and `\(j\)`th column of the matrix.
+
+A __square matrix__ has equal numbers of rows and columns.
+
+
+---
+
+# Matrices
+
+A __square matrix__ has equal numbers of rows and columns.
+
+`\begin{align*}
+  \mathbf{A} 
+  =
+  \begin{bmatrix}
+    3 &amp; 2 \\
+    2 &amp; 1 \\
+  \end{bmatrix}
+\end{align*}`
+
+In a __symmetric matrix__, the element in the `\(i\)`th row and `\(j\)`th column is equal to the element in the `\(j\)` row and `\(i\)`th column, i.e. `\(a_{ij}=a_{ji}\)`.
+
+`\begin{align*}
+  \mathbf{A} 
+  =
+  \begin{bmatrix}
+    3 &amp; 4 &amp; 2 \\
+    4 &amp; 1 &amp; 5 \\
+    2 &amp; 5 &amp; 9 \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+An __identity matrix__, which is denoted by `\(\mathbf{I}\)`, is __a diagonal matrix with 1s__, e.g.,
+
+`\begin{align*}
+  \mathbf{I} 
+  =
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    0 &amp; 1 \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+A __null matrix__, denoted by  `\(\mathbf{O}\)`, includes __only 0s__, e.g.,
+
+`\begin{align*}
+  \mathbf{O} 
+  =
+  \begin{bmatrix}
+    0 &amp; 0 \\
+    0 &amp; 0 \\
+  \end{bmatrix}
+\end{align*}`
+
+
+
+---
+
+# Matrix Operations
+
+- If `\(\mathbf{A}\)` and `\(\mathbf{B}\)` are matrices, then __addition__, __subtraction__, and __multiplication__ can be performed if specific conditions are met.
+
+- The division operation in arithmetic is analogous to the __inversion__ of a matrix.
+
+---
+# Matrix Operations
+
+### Addition and substraction
+
+These operations are performed by simply adding or subtracting the corresponding elements of the two matrices.
+
+- If matrix `\(\mathbf{C}\)` is equal to `\(\mathbf{A} + \mathbf{B}\)`, then the element in the ith row and jth column of `\(\mathbf{C}\)` is `\(c_{ij} = a_{ij} + b_{ij}\)`
+
+`\begin{align*}
+  \mathbf{C} 
+  =
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+    2 &amp; 3 \\
+    3 &amp; 4 \\
+    4 &amp; 5 \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    3 &amp; 5 \\
+    6 &amp; 8 \\
+    9 &amp; 11 \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+- Likewise, if C is equal to `\(\mathbf{A} - \mathbf{B}\)`, then the elements of `\(\mathbf{C}\)` are `\(c_{ij} = a_{ij} - b_{ij}\)`
+
+`\begin{align*}
+  \mathbf{C} 
+  =
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+  -
+  \begin{bmatrix}
+    2 &amp; 3 \\
+    3 &amp; 4 \\
+    4 &amp; 5 \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    -1 &amp; -1 \\
+    0 &amp; 0 \\
+    1 &amp; 1 \\
+  \end{bmatrix}
+\end{align*}`
+
+---
+# Matrix Operations
+
+The __product of a scalar and a matrix__ is equal to the scalar multiplied by each element of the matrix.
+
+
+`\begin{align*}
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    0 &amp; 1 \\
+  \end{bmatrix}
+  \times 10 =
+  \begin{bmatrix}
+    10 &amp; 0 \\
+    0 &amp; 10 \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+The __product of two matrices__, `\(\mathbf{AB=C}\)`, can be obtained only when the number of columns in `\(\mathbf{A}\)` is equal to the number of rows in `\(\mathbf{B}\)`.
+Matrix `\(\mathbf{C}\)` then has the same number of rows as `\(\mathbf{A}\)` and the same number of columns as `\(\mathbf{B}\)`. In other words,
+
+`\begin{align*}
+  \mathbf{A}_{(m \times n)}\mathbf{B}_{(n \times p)} = \mathbf{C}_{(m \times p)}
+\end{align*}`
+
+- Note that the __element in the `\(i\)`th row and `\(j\)`th column of `\(\mathbf{C}\)`__ is obtained as the sum of the products of corresponding elements in the `\(i\)`th row of `\(\mathbf{A}\)` and `\(j\)`th column of `\(\mathbf{B}\)`:
+
+
+`\begin{align*}
+  c_{ij} = \sum_{s=1}^na_{is}b_{sj}
+\end{align*}`
+
+---
+# Product of two matrices
+
+`\begin{align*}
+  \mathbf{A}=
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+  ,
+  \mathbf{B}=
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    0 &amp; 2 \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+We begin by obtaining the element in row 1 and column 1 of C as
+
+`\begin{align*}
+  \mathbf{C}=
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    . &amp; . \\
+    . &amp; . \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    1 &amp; . \\
+    0 &amp; . \\
+  \end{bmatrix}
+  =
+ \begin{bmatrix}
+    ? &amp; . \\
+    . &amp; . \\
+    . &amp; . \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+`\begin{align*}
+  c_{ij} &amp; = \sum_{s=1}^na_{is}b_{sj} \\
+  &amp; = 1 \times 1 + 2 \times 0 \\
+  &amp; = 1
+\end{align*}`
+
+--
+
+`\begin{align*}
+  \mathbf{C}=
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    0 &amp; 2 \\
+  \end{bmatrix}
+  =
+ \begin{bmatrix}
+    1 &amp; 4 \\
+    3 &amp; 8 \\
+    5 &amp; 12 \\
+  \end{bmatrix}
+\end{align*}`
+
+---
+# Matrix multiplication in R
+
+`\begin{align*}
+  \mathbf{C}=
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    1 &amp; 0 \\
+    0 &amp; 2 \\
+  \end{bmatrix}
+  =
+ \begin{bmatrix}
+    1 &amp; 4 \\
+    3 &amp; 8 \\
+    5 &amp; 12 \\
+  \end{bmatrix}
+\end{align*}`
+
+
+
+```r
+A &lt;- matrix(c(1,2,3,4,5,6), byrow = TRUE, nrow=3)
+# A
+B &lt;- matrix(c(1,0,0,2), byrow = TRUE, nrow=2)
+B
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    2
+```
+
+--
+The command `%*%` is the R code for the multiplication of two matrices.
+
+
+```r
+A %*% B
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    4
+## [2,]    3    8
+## [3,]    5   12
+```
+
+---
+# The transpose of a Matrix
+
+The __transpose__ of a matrix is obtained by interchanging its rows and columns. The transpose of `\(\mathbf{A}\)` is
+
+.pull-left[
+`\begin{align*}
+  \mathbf{A} 
+  =
+  \begin{bmatrix}
+    1 &amp; 2 \\
+    3 &amp; 4 \\
+    5 &amp; 6 \\
+  \end{bmatrix}
+\end{align*}`
+]
+
+--
+
+.pull-right[
+`\begin{align*}
+  \mathbf{A'} 
+  =
+  \begin{bmatrix}
+    1 &amp; 3 &amp; 5\\
+    2 &amp; 4 &amp; 6\\
+  \end{bmatrix}
+\end{align*}`
+]
+
+The element in the `\(j\)`th row and `\(i\)`th column of `\(\mathbf{A'}\)` or `\(\mathbf{A^T}\)`  is `\(a'_{ji}=a_{ij}\)`.
+
+--
+
+### Some useful identities
+
+`\begin{align*}
+  &amp; \mathbf{(AB)^T = B^TA^T} \\
+  &amp; \mathbf{(ABC)^T = C^TB^TA^T} \\
+\end{align*}`
+
+---
+
+# R code for transposition
+
+
+```r
+A &lt;- matrix(c(1,2,3,4), byrow = TRUE, nrow=2)
+A
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+```
+
+```r
+t(A) # function t will transpose of matrix A
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+```
+
+
+---
+# Matrix Inverse
+
+Suppose `\(\mathbf{A}\)` is a square matrix. The __inverse__ of a square matrix, denoted by `\(\mathbf{A^{-1}}\)`, is analogous to the reciprocal of a scalar in that 
+
+`\begin{align*}
+  \mathbf{A^{-1}A} &amp; = \mathbf{AA^{-1}} \\
+  &amp; = \mathbf{I}
+\end{align*}`
+
+--
+For example, suppose A is a diagonal matrix:
+
+`\begin{align*}
+  \mathbf{A}=
+  \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0\\
+    0 &amp; 0 &amp; 5\\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+The inverse of A is a diagonal matrix with the reciprocals of `\(a_{ii}\)`:
+
+`\begin{align*}
+  \mathbf{A^{-1}}=
+  \begin{bmatrix}
+    1/3 &amp; 0 &amp; 0 \\
+    0 &amp; 1/4 &amp; 0\\
+    0 &amp; 0 &amp; 1/5\\
+  \end{bmatrix}
+\end{align*}`
+
+---
+# Matrix Inverse
+
+Now suppose `\(\mathbf{A}\)` is a `\(2 \times 2\)` matrix:
+
+`\begin{align*}
+  \mathbf{A}=
+  \begin{bmatrix}
+    a_{11} &amp; a_{12} \\
+    a_{21} &amp; a_{22} \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+The inverse of it is obtained as
+
+`\begin{align*}
+  \mathbf{A^{-1}}=
+  \frac{1}{a_{11}a_{22} - a_{12}a_{21}}
+  \begin{bmatrix}
+    a_{22} &amp; -a_{12} \\
+    -a_{21} &amp; a_{11} \\
+  \end{bmatrix}
+\end{align*}`
+
+Where the `\(a_{ij}\)` values refer to those in the original `\(\mathbf{A}\)` matrix.
+
+--
+
+Square matrices, however, do not always have a unique inverse. 
+
+
+`\begin{align*}
+  \mathbf{A}=
+  \begin{bmatrix}
+    1 &amp; 10 \\
+    10 &amp; 100 \\
+  \end{bmatrix}
+\end{align*}`
+
+We cannot obtain `\(\mathbf{A^{-1}}\)` because `\(\frac{1}{1\times 100 - 10 \times 10}\)` leads to division by zero.
+
+The quantity of `\(a_{11}a_{22} - a_{12}a_{21}\)` is called the __determinant__.
+
+---
+# Singular matrix
+
+`\begin{align*}
+  \mathbf{A}=
+  \begin{bmatrix}
+    1 &amp; 10 \\
+    10 &amp; 100 \\
+  \end{bmatrix}
+\end{align*}`
+
+The above `\(\mathbf{A}\)` matrix is __singular__ because its rows (or columns) are __linearly dependent__.
+  - This `\(\mathbf{A}\)` matrix can also be described as lacking __full rank__.
+  
+  - The __rank__ of a matrix is equal to the number of rows or columns that are linearly independent. In this example, the rank of `\(\mathbf{A}\)` is 1.
+
+---
+
+# Generalized inverse
+
+Instead of a unique inverse, a __generalized inverse__ can be obtained for both singular and nonsingular matrices.
+
+The generalized inverse of `\(\mathbf{A}\)` is denoted by `\(\mathbf{A}^{-}\)`, and it is defined such that
+
+
+`\begin{align*}
+  \mathbf{A}\mathbf{A^{-}}\mathbf{A}=\mathbf{A}
+\end{align*}`
+
+For a nonsingular matrix the unique inverse is the only generalized inverse, i.e., `\(\mathbf{A^{-}}=\mathbf{A^{-1}}\)`
+
+But for singular matrices there are any number of generalized inverse (see methods, e.g., Henderson, 1984, p. 22-26).
+
+--
+
+In this example, a possible generalized inverse of `\(\mathbf{A}\)` is:
+
+`\begin{align*}
+  \mathbf{A^{-}}=
+  \begin{bmatrix}
+    0 &amp; 1/10 \\
+    1/10 &amp; -1/100 \\
+  \end{bmatrix}
+\end{align*}`
+
+---
+
+# The identity matrix in R
+
+`diag(k)`, where k is an integer, return the `\(k \times k\)` identity matrix ( `\(\mathbf{I}\)` ).
+
+
+```r
+I &lt;- diag(2)
+I
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+```
+
+The identity matrix serves the role of the number 1 in matrix multiplication:
+`\begin{align*}
+  \mathbf{AI=A} \\
+  \mathbf{IA=A} \\
+\end{align*}`
+
+
+```r
+A &lt;- matrix(c(1,3,5,7), byrow=T, nrow=2)
+A %*% I
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    5    7
+```
+
+
+---
+
+# Inversion in R
+
+- `solve(A)` computes matrix inversion
+- `det(A)` computes determinant of matrix A
+
+
+```r
+A &lt;- matrix(c(1,10,10,100), byrow = TRUE, nrow=2)
+A 
+```
+
+```
+##      [,1] [,2]
+## [1,]    1   10
+## [2,]   10  100
+```
+
+
+```r
+det(A)
+```
+
+```
+## [1] 0
+```
+
+```r
+# solve(A)
+```
+
+---
+
+# Inversion in R
+
+- `solve(A)` computes matrix inversion
+- `det(A)` computes determinant of matrix A
+
+
+```r
+A &lt;- matrix(c(1,11,10,100), byrow = TRUE, nrow=2)
+det(A) # get the determinant of A
+```
+
+```
+## [1] -10
+```
+
+```r
+solve(A)
+```
+
+```
+##      [,1] [,2]
+## [1,]  -10  1.1
+## [2,]    1 -0.1
+```
+Showing that `\(\mathbf{A^{-1}A=I}\)`
+
+
+```r
+solve(A) %*% A
+```
+
+```
+##      [,1]         [,2]
+## [1,]    1 1.421085e-14
+## [2,]    0 1.000000e+00
+```
+
+---
+
+# Example:
+
+Estimate the effects on plant height of four SNP markers:
+
+- Put the following system of equations in matrix form and solve using R
+
+`\begin{align*}
+  1 b_1 + 0b_2 + 1b_3 + 1b_4 &amp; = 10 \\
+  0 b_1 + 1b_2 - 1b_3 - 1b_4 &amp; = 20 \\
+  1b_1 + 1b_2 + 0b_3 - 1b_4 &amp; = 21 \\
+  -1b_1 + 1b_2 + 1b_3 - 1b_4 &amp; = 15 \\
+\end{align*}`
+
+--
+
+----
+
+`\begin{align*}
+  \begin{bmatrix}
+    1 &amp; 0 &amp; 1 &amp; 1\\
+    0 &amp; 1 &amp; -1 &amp; -1\\
+    1 &amp; 1 &amp; 0 &amp; -1\\
+    -1 &amp; 1 &amp; 1 &amp; -1\\
+  \end{bmatrix}
+  \times
+  \begin{bmatrix}
+    b_1 \\
+    b_2 \\
+    b_3 \\
+    b_4 \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    10 \\
+    20 \\
+    21 \\
+    15 \\
+  \end{bmatrix}
+\end{align*}`
+
+`\begin{align*}
+  \mathbf{Ab = Y}
+\end{align*}`
+
+
+
+--
+
+`\begin{align*}
+  \mathbf{A^{-1}Ab = A^{-1}Y} \\
+  \mathbf{Ib = A^{-1}Y} \\
+  \mathbf{b = A^{-1}Y} \\
+\end{align*}`
+
+---
+
+# Example:
+
+`\begin{align*}
+  \mathbf{b = A^{-1}Y} \\
+\end{align*}`
+
+
+
+```r
+A &lt;- matrix(c(1,0,1,1, 0,1,-1,-1, 1,1,0,-1, -1, 1, 1, -1), nrow=4, byrow=T)
+Y &lt;- matrix(c(10, 20, 21, 15), nrow=4, byrow=T)
+det(A)
+```
+
+```
+## [1] 3
+```
+
+```r
+b = solve(A) %*% Y
+b
+```
+
+```
+##           [,1]
+## [1,]  2.333333
+## [2,] 27.666667
+## [3,] -1.333333
+## [4,]  9.000000
+```
+
+```r
+A %*% b
+```
+
+```
+##      [,1]
+## [1,]   10
+## [2,]   20
+## [3,]   21
+## [4,]   15
+```
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

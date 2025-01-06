@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>GWAS in practice</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-04-26" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# GWAS in practice
+### Jinliang Yang
+### April 26, 2022
+
+---
+
+
+
+
+# GWAS practice using rice data
+
+
+[Zhao et al., 2011](https://www.nature.com/articles/ncomms1467) Genome-wide association mapping reveals a rich genetic architecture of complex traits in _Oryza sativa_
+
+### Materials and methods
+- __Materials__: 413 diverse accessions (inbreds) of rice from 82 countries
+- __Genotype__: 44,100 SNPs using 44 K SNP array
+- __Phenotype__: One location in two years. Two reps per year in a randomized complete block design.
+  - 34 traits
+
+--
+
+### Five sub-populations
+- _Indica_
+- _Aus_
+- _Temperate Japonica_
+- _Tropical Japonica_
+- _Aromatic_
+
+---
+
+# Geographic distribution of germplasm
+
+
+
+```r
+### read in the data from step one
+df &lt;- read.csv("http://ricediversity.org/data/sets/44kgwas/RiceDiversity.44K.germplasm.csv", skip=1)
+df$Latitude &lt;- as.numeric(as.character(df$Latitude))
+range(df$Latitude, na.rm = T)
+```
+
+```
+## [1] -38.4161  55.7500
+```
+
+```r
+df$Longitude &lt;- as.numeric(as.character(df$Longitude))
+range(df$Longitude, na.rm = T)
+```
+
+```
+## [1] -102.5528  179.4144
+```
+
+
+---
+
+# Geographic distribution of germplasm
+
+
+```r
+library(ggmap)
+##lowerleftlon, lowerleftlat, upperrightlon, upperrightlat
+myloc &lt;- c(-105, -40, 170, 56)
+
+mymap &lt;- get_map(location=myloc, source="stamen", crop=FALSE, color="bw")
+ggmap(mymap) + 
+    geom_point(aes(x = Longitude, y = Latitude), data = df,
+               alpha = .9, size = 1, col="red")
+```
+
+---
+
+# Geographic distribution of germplasm
+
+### Color code the subpopulatios
+
+
+```r
+table(df$Sub.population)
+##lowerleftlon, lowerleftlat, upperrightlon, upperrightlat
+myloc &lt;- c(-105, -40, 170, 56)
+
+mymap &lt;- get_map(location=myloc, source="stamen", crop=FALSE, color="bw")
+ggmap(mymap) + 
+    geom_point(aes(x = Longitude, y = Latitude, color=Sub.population), data = df,
+               alpha = .9, size = 2)
+```
+
+---
+
+# Geographic distribution of germplasm
+
+###  Weight the size of the dots
+
+Count the number of the accessions for each country.
+
+
+```r
+library(plyr)
+c &lt;- ddply(df, .(Country.of.origin), nrow)
+c &lt;- subset(c, Country.of.origin != "")
+df2 &lt;- merge(c, df[, c("Country.of.origin",  "Latitude", "Longitude")], by="Country.of.origin")
+df2 &lt;- df2[!duplicated(df2$Country.of.origin), ]
+
+mymap &lt;- get_map(location=myloc, source="stamen", crop=FALSE, color="bw")
+ggmap(mymap) + 
+    geom_point(aes(x = Longitude, y = Latitude, color=Country.of.origin), data = df2,
+               alpha = .9, size = df2$V1/3) +
+    theme(legend.position = "none")
+head(df2[order(df2$V1, decreasing = T),])
+```
+
+---
+
+# Genotypic data
+
+- `data/RiceDiversity_44K_Genotypes_PLINK/`
+  - sativas413.fam
+  - sativas413.map
+  - sativas413.ped
+- Or download data from: [zipped data](http://ricediversity.org/data/sets/44kgwas/)
+
+--------------------
+
+### PLINK PED File format
+
+__.fam__: A text file with no header line, and one line per sample with the following six fields:
+
+- Family ID ('FID')
+- Within-family ID ('IID'; cannot be '0')
+- Within-family ID of father ('0' if father isn't in dataset)
+- Within-family ID of mother ('0' if mother isn't in dataset)
+- Sex code ('1' = male, '2' = female, '0' = unknown)
+- Phenotype value ('1' = control, '2' = case, '-9'/'0'/non-numeric = missing data if case/control)
+
+---
+
+# Genotypic data
+
+- `data/RiceDiversity_44K_Genotypes_PLINK/`
+  - sativas413.fam
+  - sativas413.map
+  - sativas413.ped
+- Or download data from: [zipped data](http://ricediversity.org/data/sets/44kgwas/)
+
+--------------------
+
+### PLINK PED File format
+
+__.map__: A text file with no header file, and one line per variant with the following 3-4 fields:
+
+- Chromosome code. PLINK 1.9 also permits contig names here, but most older programs do not.
+- Variant identifier
+- Position in morgans or centimorgans (optional; also safe to use dummy value of '0')
+- Base-pair coordinate
+
+---
+
+# Genotypic data
+
+- `data/RiceDiversity_44K_Genotypes_PLINK/`
+  - sativas413.fam
+  - sativas413.map
+  - sativas413.ped
+- Or download data from: [zipped data](http://ricediversity.org/data/sets/44kgwas/)
+
+--------------------
+### PLINK PED File format
+
+__.ped__: Contains no header line, and one line per sample with 6+2V fields where V is the number of variants.
+
+- The first six fields are the same as those in a `.fam` file. 
+- The seventh and eighth fields are allele calls for the first variant in the `.map` file ('0' = no call); 
+- the 9th and 10th are allele calls for the second variant; and so on.
+
+---
+
+# Genotypic data manipulation
+
+
+```bash
+cp -r data/RiceDiversity_44K_Genotypes_PLINK largedata/
+
+module load plink/1.90
+# convert it to binary file
+cd largedata/RiceDiversity_44K_Genotypes_PLINK
+plink --file sativas413 --make-bed --out binary_sativas413
+```
+
+### Calculate MAF and missingness
+
+[plink v1.9](https://www.cog-genomics.org/plink/1.9/)
+
+- `--freq`: writes a minor allele frequency report to plink.frq
+- `--missing`: produces sample-based and variant-based missing data reports. 
+
+
+```bash
+plink -bfile binary_sativas413 --freq --missing --out sativas413
+
+# copy results back to cache folder!
+cp largedata/RiceDiversity_44K_Genotypes_PLINK/sativas413.frq cache/
+cp largedata/RiceDiversity_44K_Genotypes_PLINK/sativas413.lmiss cache/
+```
+
+---
+
+# Visualize MAF and locus missing rate
+
+
+```r
+# install.packages("data.table")
+library("data.table")
+
+maf &lt;- fread("cache/sativas413.frq", header=TRUE)
+lmiss &lt;- fread("cache/sativas413.lmiss", header=TRUE)
+
+
+pdf("graphs/maf_lmiss.pdf", width = 10, height=5)
+par(mfrow=c(1,2))
+hist(maf$MAF, breaks=50, col="#cdb79e", main="MAF (SNP = 36,901)", xlab="Minor Allele Freq")
+#abline(v=0.01, lty=2, col="black", lwd=3)
+abline(v=0.05, lty=2, col="red", lwd=3)
+
+hist(lmiss$F_MISS, breaks=35, col="#cdb79e", main="Missingness (SNP = 36,901)", xlab="Missing Rate")
+#abline(v=0.6, lty=2, col="red", lwd=3)
+#abline(v=0.05, lty=2, col="red", lwd=3)
+dev.off()
+```
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Plant breeding</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-03-08" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Plant breeding
+### Jinliang Yang
+### March 8, 2022
+
+---
+
+
+
+
+# From PopGen to QuantGen
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="b4.0.png" height=450&gt;
+&lt;/div&gt;
+&gt; Wallace et al., 2018
+]
+
+.pull-right[
+### Domestication 
+  - Natural populations
+
+### Conventional plant breeding
+  - Breeding populations
+]
+
+---
+
+# Plant breeding is an art and science
+
+Plant breeding is the genetic improvement of plants for __human benefit__.
+
+
+## As a science
+- An objective basis for deciding which parents to cross
+- Which selection methods to use
+- Which progeny to keep
+- Which cultivars to release
+
+--
+
+## As an art
+
+- Requires subjective judgment in the design and implementation of a breeding program
+- The intuition to determine one parent or one group of progeny or one cultivar is better than another.
+
+
+---
+
+# Changed definition on fitness
+
+Plant breeding is the genetic improvement of plants for __human benefit__.
+
+--
+
+
+Breeders do not improve plants for the sake of the plants themselves.
+  - For example, seed shattering, which allows a plant to propagate itself for the next generation, would be considered beneficial in cereal crops.
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="sh1.png" height=200&gt;
+&lt;/div&gt;
+&gt; __Seed shattering phenotype in sorghum__. Seeds were scattered everywhere in the wild sorghum SV and firmly retained on the domesticated Tx430. (Lin et al., 2012.) 
+
+---
+
+# Quantitative traits
+
+&lt;div align="center"&gt;
+&lt;img src="maize.png" height=200&gt;
+&lt;/div&gt;
+
+__Quantitative traits__, relative to _qualitative traits_, characterized by a continuum of phenotypes.
+
+Quantitative traits are studies with measures of central tendency (e.g., mean) and dispersion (e.g., variance)
+
+Quantitative traits are controlled by the joint effect of many genes (i.e., __quantitative trait loci__).
+
+
+---
+
+# Breeding populations
+
+Breeding populations are created by breeders to serve as a source of cultivars that meet specific breeding objectives.
+
+- Genotype frequencies and allele frequencies to characterize them
+
+--
+
+-----------
+
+Suppose a diploid breeding population is segregating at a locus with two alleles, `\(A_1\)` and `\(A_2\)`
+
+| Genotype  | Number    | Freq.     | 
+| :-------: |: ------- :| :-------: | 
+| `\(A_1A_1\)`  | 240   | `\(P_{11}=0.4\)`  | 
+| `\(A_1A_2\)`  | 240  | `\(P_{12} =0.4\)`  | 
+| `\(A_2A_2\)`  | 120  | `\(P_{22} =0.2\)`  |
+| Total     | 600  |
+
+--
+
+What is the allele frequence `\(p\)` and `\(q\)` for `\(A_1\)` and `\(A_2\)`?
+
+--
+
+`\begin{align*}
+&amp; p = P_{11} + 1/2P_{12} \\
+&amp; p + q =1
+\end{align*}`
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+
+| Genotype  | Number    | Freq.     | 
+| :-------: |: ------- :| :-------: | 
+| `\(A_1A_1\)`  | 240   | `\(P_{11}=0.4\)`  | 
+| `\(A_1A_2\)`  | 240  | `\(P_{12} =0.4\)`  | 
+| `\(A_2A_2\)`  | 120  | `\(P_{22} =0.2\)`  |
+| Total     | 600  |
+
+Suppose this diploid breeding population is mated at random.
+
+--
+
+The union of two gametes that have the `\(A_1\)` alleles leads to an individual with the `\(A_1A_1\)` genotype would be `\(P_{11(RM)}=p^2=0.36\)`
+
+Similarly, `\(P_{22(RM)}=q^2=0.16\)`
+
+--
+
+With random mating, what is the probability of having an `\(A_1A_2\)` individual?
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+
+| Genotype  | Number    | Freq.     | After 1st RM |
+| :-------: |: ------- :| :-------: | :-------: |
+| `\(A_1A_1\)`  | 240   | `\(P_{11}=0.4\)`  | `\(P_{11(RM)}=0.36\)` |
+| `\(A_1A_2\)`  | 240  | `\(P_{12} =0.4\)`  | `\(P_{12(RM)}=0.48\)` |
+| `\(A_2A_2\)`  | 120  | `\(P_{22} =0.2\)`  | `\(P_{22(RM)}=0.16\)` |
+| Total     | 600  | | |
+
+Suppose this diploid breeding poulation is mated at random.
+
+
+---------------
+
+How about the allele frequencies after random mating?
+
+--
+
+`\begin{align*}
+p &amp;  = P_{11} + 1/2P_{12} \\
+p_{(RM)} &amp; = P_{11(RM)} + 1/2P_{12(RM)} \\
+&amp; = p^2 + 1/2 \times 2pq \\
+&amp; = p \times (p + q) \\
+&amp; = p
+\end{align*}`
+
+--
+
+Random mating therefore __changes the genotype frequencies__ of the population, but it does not change the allele frequencies.
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+What happens after a second generation of random mating?
+
+--
+
+
+| Genotype  | Number    | Freq.     | After 1st RM | 2nd RM |
+| :-------: |: ------- :| :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | 240   | `\(P_{11}=0.4\)`  | `\(P_{11(RM)}=0.36\)` | `\(P_{11(RM)}=0.36\)` |
+| `\(A_1A_2\)`  | 240  | `\(P_{12} =0.4\)`  | `\(P_{12(RM)}=0.48\)` | `\(P_{12(RM)}=0.48\)` |
+| `\(A_2A_2\)`  | 120  | `\(P_{22} =0.2\)`  | `\(P_{22(RM)}=0.16\)` | `\(P_{22(RM)}=0.16\)` |
+| Total     | 600  | | |
+
+--
+
+### Three key features of HWE
+
+1. The allele frequencies remain __constant__ from generation to generation.
+2. The square of the array of allele frequencies is equal to the array of genotype frequencies.
+`\begin{align*}
+(p +q )^2 = p^2 + 2pq + q^2
+\end{align*}`
+3. If allele frequencies change due to external factors, __one generation of random mating__ will lead to equilibrium genotype frequencies.
+
+---
+
+# Hardy-Weinberg Equilibrium
+
+To meet HWE, in addition to __random mating__ and the __absence of selection__, other conditions needed are:
+- a large population
+- absence of mutation and migration.
+
+--
+
+An `\(F_2\)` population from two inbred is in HWE at a single locus.
+
+--
+
+Breeders, however, routinely use procedures that cause deviations from HWE:
+- Artificial selection
+- Inbreeding during the development of progeny
+- etc.
+
+---
+
+# Artificial selection
+
+Selection, in general, refers to __a differential rate of reproduction__ among individuals that differ in their genotypes.
+- In other words, selection occurs when some individuals __produce more progeny__ than others.
+
+--
+
+### Natural selection
+
+Due to either differential fertility or differential viability.
+
+### Artificial selection
+
+- The nonselected plants do not contribute any progeny to the next generation.
+- Whereas all the selected plants usually contribute the __same number of progeny__ to the next generation.
+- The direct consequence of selection is _a change in allele frequencies_.
+
+---
+
+# Artificial selection
+
+- Consider a single locus in a random-mating population.
+
+- The __selection coefficient__ represents the severity of selection against a particular genotype.
+  - `\(s_{11}\)` for `\(A_1A_1\)`, `\(s_{12}\)` for `\(A_1A_2\)`, `\(s_{22}\)` for `\(A_2A_2\)`
+
+--
+
+- The relative __fitness__ of each genotype is 
+  - `\(1- s_{11}\)` for `\(A_1A_1\)`, `\(1- s_{12}\)` for `\(A_1A_2\)`, `\(1- s_{22}\)` for `\(A_2A_2\)`
+
+- When selection occurs in an F2 population in HWE.
+
+--
+
+|                           | `\(A_1A_1\)`    |  `\(A_1A_2\)`     | `\(A_2A_2\)` |  Total |
+| :-------: | :-------: | :-------: | :-------: | :-------: |
+| Frequency                  | `\(p^2\)`             | `\(2pq\)`       | `\(q^2\)` |   1 |
+| Relative fitness           |  `\(1- s_{11}\)`      | `\(1- s_{12}\)` | `\(1- s_{22}\)` | |
+| Contribution               |  `\(p^2(1- s_{11})\)` | `\(2pq(1- s_{12})\)` | `\(q^2 (1- s_{22})\)` | T | 
+| Frequency after selection  | `\(\frac{p^2(1- s_{11})}{T}\)` | `\(\frac{2pq(1- s_{12})}{T}\)` | `\(\frac{q^2 (1- s_{22})}{T}\)` | |
+
+
+---
+
+# Artificial selection
+
+|                           | `\(A_1A_1\)`    |  `\(A_1A_2\)`     | `\(A_2A_2\)` |  Total |
+| :-------: | :-------: | :-------: | :-------: | :-------: |
+| Frequency                  | `\(p^2\)`             | `\(2pq\)`       | `\(q^2\)` |   1 |
+| Relative fitness           |  `\(1- s_{11}\)`      | `\(1- s_{12}\)` | `\(1- s_{22}\)` | |
+| Contribution               |  `\(p^2(1- s_{11})\)` | `\(2pq(1- s_{12})\)` | `\(q^2 (1- s_{22})\)` | T | 
+| Frequency after selection  | `\(\frac{p^2(1- s_{11})}{T}\)` | `\(\frac{2pq(1- s_{12})}{T}\)` | `\(\frac{q^2 (1- s_{22})}{T}\)` | |
+
+The frequency of the recessive allele after one generation of selection is:
+
+`\begin{align*}
+T &amp; = p^2 - p^2s_{11} + 2pq - 2pqs_{12} + q^2 - q^2s_{22} \\
+ &amp; = 1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})
+\end{align*}`
+
+
+--
+
+`\begin{align*}
+q_1 &amp; = \frac{pq(1-s_{12}) + q^2(1-s_{22})}{T} \\
+ &amp; = \frac{q(p -ps_{12} + q -qs_{22})}{1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})} \\
+ &amp; = \frac{q(1 -ps_{12} -qs_{22})}{1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})} \\
+\end{align*}`
+
+
+---
+
+# Artificial selection
+
+|                           | `\(A_1A_1\)`    |  `\(A_1A_2\)`     | `\(A_2A_2\)` |  Total |
+| :-------: | :-------: | :-------: | :-------: | :-------: |
+| Frequency                  | `\(p^2\)`             | `\(2pq\)`       | `\(q^2\)` |   1 |
+| Relative fitness           |  `\(1- s_{11}\)`      | `\(1- s_{12}\)` | `\(1- s_{22}\)` | |
+| Contribution               |  `\(p^2(1- s_{11})\)` | `\(2pq(1- s_{12})\)` | `\(q^2 (1- s_{22})\)` | T | 
+| Frequency after selection  | `\(\frac{p^2(1- s_{11})}{T}\)` | `\(\frac{2pq(1- s_{12})}{T}\)` | `\(\frac{q^2 (1- s_{22})}{T}\)` | |
+
+The change in allele frequency due to one generation of selection is
+
+`\begin{align*}
+\Delta_q &amp; = q_1 -q \\
+ &amp; = \frac{pq[p(s_{11} - s_{12}) + q(s_{12} - s_{22})]}{1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})} \\
+\end{align*}`
+
+
+---
+
+# Artificial selection
+
+`\begin{align*}
+q_1 &amp; = \frac{pq(1-s_{12}) + q^2(1-s_{22})}{T} \\
+ &amp; = \frac{q(p -ps_{12} + q -qs_{22})}{1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})} \\
+ &amp; = \frac{q(1 -ps_{12} -qs_{22})}{1 - (p^2s_{11} + 2pqs_{12} + q^2s_{22})} \\
+\end{align*}`
+
+
+
+```r
+Dq &lt;- function(q, s11=0, s12=0, s22=0, n=10){
+  
+  out &lt;- data.frame(n=0, q=q)
+  # loop through n generations
+  for (i in 1:n){
+    p = 1 - q
+    q &lt;- (q*(1-p*s12 - q*s22))/(1- (p^2*s11 + 2*p*q*s12 + q^2*s22))
+    tem &lt;- data.frame(n=i, q= q)
+    out &lt;- rbind(out, tem)
+  }
+  return(out)
+}
+```
+
+
+---
+
+# Artificial selection
+
+- We completely select __against__ the __recessive__ deleterious alleles: `\(A_2A_2\)` with `\(s_{22}=1\)`
+- Selection coeffecients are `\(s_{11} = s_{12} =0\)` for `\(A_1A_1\)` and `\(A_1A_2\)` genotypes.
+
+
+
+```r
+df &lt;- Dq(q=0.5, s11=0, s12=0, s22=1, n=10)
+plot(df$n, df$q, type="l", xlab="Generations", main="F2 population",
+     ylab="Freq of A2 allele", lwd=3, ylim=c(0, 0.5))
+```
+
+&lt;img src="w8class1_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Artificial selection
+
+- We completely select against the __heterozygote `\(A_1A_2\)` with `\(s_{12}=1\)`__
+- Selection coeffecients are `\(s_{11} = s_{22} =0\)` for `\(A_1A_1\)` and `\(A_2A_2\)` genotypes.
+
+--
+
+
+```r
+df &lt;- Dq(q=0.5, s11=0, s12=1, s22=0, n=10)
+#df &lt;- Dq(q=0.4, s11=0, s12=1, s22=0, n=10)
+#df &lt;- Dq(q=0.6, s11=0, s12=1, s22=0, n=10)
+plot(df$n, df$q, type="l", xlab="Generations", main="F2 population",
+     ylab="Freq of A2 allele", lwd=3, ylim=c(0, 1))
+```
+
+&lt;img src="w8class1_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Artificial selection
+
+The change in `\(q\)` with complete selection against the heterozygote depends on the initial `\(q\)` value.
+
+- `\(\Delta_q\)` is __zero__ if `\(q\)` is = 0.50
+- `\(\Delta_q\)` is __positive__ if `\(q\)` is &gt; 0.50
+- `\(\Delta_q\)` is __negative__ if `\(q\)` is &lt; 0.50
+
+--
+
+Changes in allele frequency lead to changes in the population mean of a given phenotype.
+
+An allele becomes __fixed__ when all the other alleles originally present in a population become lost.
+- Join effect of __selection__ and __inbreeding__.
+
+
+---
+
+# Inbreeding and relatedness
+
+__Inbreeding__ results when two __related__ individuals are mated.
+  - Two individuals are related if they have at least one ancestor in common.
+  - But if the common ancestor is too remote, its effect on inbreeding is negligible.
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="fig2.7.png" height=250&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+Two alleles are __identical by state__ if they physically represent the same allele, e.g., in P1.
+
+In contrast, alleles are __identical by descent__ if they are copies of the same allele present in a common ancestor.
+- The copies of the A1 allele in P2 and P3 are not only IBS but are also IBD.
+]
+
+
+---
+
+# Coefficient of coancestry
+
+The probability that two alleles are identical by descent can be deduced from the system of mating or from the pedigree structure.
+
+The __coefficient of coancestry ( `\(f_{XY}\)` )__ between individuals X and Y is the probability that, at a single locus, a random allele from X and Y are IBD.
+
+- `\(f_{XY}=0\)` indicates two individuals have no relationship.
+
+- `\(f_{XY}=1\)` at a given locus indicates that the two individuals are homozygous for copies of the same allele found in an ancestor.
+
+- `\(f_{XY}=1\)` _across the genome_ indicates that the two individuals are __fully inbred and genetically identical__. 
+
+
+---
+
+# Coefficient of inbreeding
+
+The coefficient of inbreeding ( `\(F\)` ) is the probability that, at a single locus, the two alleles in the __same individual__ are IBD.
+
+- The coefficient of inbreeding measures IBD within an individual ( `\(F=f_{XX}\)` )
+
+- Whereas the coefficient of coancestry measures IBD between two individuals ( `\(f_{XY}\)` )
+
+
+- Similarly, `\(F=0\)` indicates no inbreeding and `\(F=1\)` indicates complete inbreeding.
+
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="fig2.7.png" height=250&gt;
+&lt;/div&gt;
+
+
+---
+
+# Selfing
+
+The increase in the `\(F\)` coefficient is __halved__ upon each generation of selfing.
+
+In a cross between inbreds, the coefficient of inbreeding among individual plants in the `\(F_n\)` or `\(S_{n-2}\)` generation is:
+
+
+`\begin{align*}
+F = 1 - (\frac{1}{2})^{n-2}
+\end{align*}`
+
+--
+
+Plant breeders work with individual plants or with families.
+
+The `\(F\)` coefficient __among families (e.g., `\(F_3\)`)__ is equal to the `\(F\)` coefficient __among the individual plant (e.g., `\(F_2\)`)__ that were selfed to form the families (Cockerham, 1961).
+
+--
+
+|      Plants    | Families        |  Freq of heterozygotes     | `\(F\)` | 
+| :-------:      | :-------:       | :-------: | :-------: | :-------: |
+| `\(F_2\)` or `\(S_0\)` | `\(F_3\)` or `\(S_1\)`  | `\(P_{12}\)`    | `\(0\)` |  
+| `\(F_3\)` or `\(S_1\)` | `\(F_4\)` or `\(S_2\)`  | `\(0.5P_{12}\)` | `\(0.5\)` | 
+| `\(F_4\)` or `\(S_2\)` | `\(F_5\)` or `\(S_3\)`  | `\(0.25P_{12}\)` | `\(0.75\)` |  
+| `\(F_5\)` or `\(S_3\)` | `\(F_6\)` or `\(S_4\)`  | `\(0.125P_{12}\)` | `\(0.875\)` | 
+
+
+
+
+---
+
+# A F2 population
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="f2.png" height=500&gt;
+&lt;/div&gt;
+]
+
+--
+
+Another way to define __coefficient of inbreeding ( `\(F\)` )__ is equal to:
+
+- The proportion by which heterozygosity is reduced upon inbreeding, relative to a population in Hardy-Weinberg equilibrium.
+
+`\begin{align*}
+F &amp;= 1 - \frac{P_{12(F)}}{P_{12}} \\
+\end{align*}`
+
+--
+
+We assume the `\(F2\)` population is non-inbred.
+- This assumption is made so that genetic parameters, such as the __population mean__ and __variance__, are defined for a non-inbred base population.
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

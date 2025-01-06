@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Submitting Slurm job for Fst</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Submitting Slurm job for Fst
+### Jinliang Yang
+### Feb. 17th, 2022
+
+---
+
+
+
+
+
+# Submit a Slurm job
+
+- We wrap our jobs in little batch scripts, which is nice because these also help make steps reproducible. 
+
+- To keep your directory organized, I usually keep a scripts directory (i.e., `slurm-script/` ) and log dir (i.e., `slurm-log` )  for Slurm’s logs.
+  - Tip: use these logs, as these are very helpful in debugging. I separate them from my project because they fill up directories rather quickly.
+
+--
+
+Let’s look at an example __slurm script header__ for a job called `theta` (which is run with script `theta.sh`).
+
+
+```bash
+#!/bin/bash -l
+#SBATCH -D ~projects/your-cool-project/
+#SBATCH -o ~/your-cool-project/slurm-log/steve-stdout-%j.txt
+#SBATCH -e ~/your-cool-project/slurm-log/steve-stderr-%j.txt
+#SBATCH -J steve
+#SBATCH -t 24:00:00
+set -e
+set -u
+
+# insert your script here
+```
+
+
+---
+
+## An Example Slurm Batch Script Header
+
+
+```bash
+#!/bin/bash -l
+#SBATCH -D ~/projects/your-cool-project/
+#SBATCH -o ~/your-cool-project/slurm-log/steve-stdout-%j.txt
+#SBATCH -e ~/your-cool-project/slurm-log/steve-stderr-%j.txt
+#SBATCH -J theta
+#SBATCH -t 24:00:00
+#SBATCH --mail-user=your_email_address@gmail.com
+#SBATCH --mail-type=END #email if ends
+#SBATCH --mail-type=FAIL #email if fails
+set -e
+set -u
+
+# insert your script here
+```
+
+- `D` sets your project directory.
+- `o` sets where standard output (of your batch script) goes.
+- `e` sets where standard error (of your batch script) goes.
+- `J` sets the job name.
+- `t` sets the time limit for the job, 24:00:00 indicates 24 hours.
+- `--mail`: will email you if the job is "END" or "FAIL"
+
+---
+
+## An Example Slurm Batch Script Header
+
+
+```bash
+cd slurm-script
+vi my_theta.sh
+i # insert text
+:sq # quit vi editor
+```
+
+- Copy the above header to a `.sh` file and make appropriate modifications
+
+- Insert the following:
+
+
+```bash
+# module load bwa samtools
+# cd largedata/lab4/
+
+# alignment
+for i in {1..20}; do bwa mem Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
+# sort
+for i in *.bam; do samtools sort $i -o sorted_$i; done
+# index them
+for i in sorted*.bam; do samtools index $i; done
+```
+
+--
+
+- submit the job via `sbatch`:
+
+
+```bash
+sbatch --licenses=common --ntasks=2 --mem=10G slurm-script/my_theta.sh
+
+## check your job status
+squeue | grep "YOUR USER ID"
+```
+
+
+---
+
+# A procedure to calculate `\(\theta\)` values
+
+### 2. Obtain the SNP calls  with `samtools`
+
+
+
+```bash
+### index the genome assembly
+samtools faidx Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
+### Run `mpileup` to generate VCF format
+ls sorted_l*bam &gt; bamlist.txt
+samtools mpileup -g -f Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa -b bamlist.txt &gt; myraw.bcf
+bcftools call myraw.bcf -cv -Ob -o snps.bcf
+```
+
+#### exact SNP information
+
+
+```bash
+### Extract allele frequency at each position
+bcftools query -f '%CHROM %POS %AF1\n' snps.bcf &gt; frq.txt
+
+bcftools query -f '%CHROM %POS %REF %ALT [\t%GT]\n' snps.bcf &gt; geno.txt
+```
+
+- Print chromosome, position, ref allele and the first alternate allele
+- %TGT: Translated genotype (e.g. C/A)
+- %TAG{INT}: Curly brackets to print a subfield (e.g. INFO/TAG{1}, the indexes are 0-based)
+
+---
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+
+
+```r
+geno &lt;- read.table("largedata/geno.txt", header=FALSE)
+names(geno) &lt;- c("chr", "pos", "ref", "alt", "l1", "l2", "l3", "l4", "l5")
+
+
+for(i in 5:9){
+  # replace slash and everything after it as nothing
+  geno$newcol &lt;- gsub("/.*", "", geno[,i] )
+  # extract the line name
+  nm &lt;- names(geno)[i]
+  # assign name for this allele
+  names(geno)[ncol(geno)] &lt;- paste0(nm, sep="_a1")
+  
+  geno$newcol &lt;- gsub(".*/", "", geno[,i] )
+  names(geno)[ncol(geno)] &lt;- paste0(nm, sep="_a2")
+}
+```
+
+---
+
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+#### Compute p1, p2, p
+
+
+```r
+geno$p &lt;- apply(geno[, 10:19], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p &lt;- geno$p/10
+
+geno$p1 &lt;- apply(geno[, 10:15], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p1 &lt;- geno$p1/6
+
+geno$p2 &lt;- apply(geno[, 16:19], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p2 &lt;- geno$p2/4
+```
+
+Then finally,
+
+
+```r
+geno$fst &lt;- with(geno, ((p1-p)^2 + (p2-p)^2)/(2*p*(1-p)) )
+```
+
+Output the Fst results
+
+
+
+```r
+write.table(geno, "cache/fst.csv", sep=",", row.names = FALSE, quote=FALSE)
+```
+
+---
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+#### Visualize the results on my local computer
+
+
+```r
+fst &lt;- read.csv("cache/fst.csv")
+
+plot(fst$pos, fst$fst, xlab="Physical position", ylab="Fst value", main="")
+```
+
+---
+
+# General feature format (GFF) from EnsemblPlants
+
+Maize [reference genome](https://plants.ensembl.org/Zea_mays/Info/Index)
+
+change to `largedata\lab4` folder:
+
+
+```bash
+wget ftp://ftp.ensemblgenomes.org/pub/plants/release-46/fasta/zea_mays/dna/Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+
+### then unzip it
+gunzip Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+```
+
+Similarly, we will download and unzip the [Mt GFF3](ftp://ftp.ensemblgenomes.org/pub/plants/release-46/gff3/zea_mays/Zea_mays.B73_RefGen_v4.46.chromosome.Mt.gff3.gz) file
+
+--
+
+#### Use R to process the GFF3 file
+
+
+```r
+# install.package("data.table")
+library("data.table")
+
+## simply read in wouldn't work
+gff &lt;- fread("largedata/lab4/Zea_mays.B73_RefGen_v4.46.chromosome.Mt.gff3", skip="#", header=FALSE, data.table=FALSE)
+
+## grep -v means select lines that not matching any of the specified patterns
+gff &lt;- fread(cmd='grep -v "#" largedata/lab4/Zea_mays.B73_RefGen_v4.46.chromosome.Mt.gff3', header=FALSE, data.table=FALSE)
+```
+
+---
+
+# General feature format (GFF) version 3
+
+```
+  V1      V2         V3   V4     V5 V6 V7 V8
+1 Mt Gramene chromosome    1 569630  .  .  .
+2 Mt ensembl       gene 6391   6738  .  +  .
+3 Mt    NCBI       mRNA 6391   6738  .  +  .
+4 Mt    NCBI       exon 6391   6738  .  +  .
+5 Mt    NCBI        CDS 6391   6738  .  +  0
+6 Mt ensembl       gene 6951   8285  .  +  .
+                  V9
+1   ID=chromosome:Mt;Alias=AY506529.1,NC_007982.1;Is_circular=true
+2   ID=gene:ZeamMp002;biotype=protein_coding;description=orf115-a1;
+3   ID=transcript:ZeamMp002;Parent=gene:ZeamMp002;
+4   Parent=transcript:ZeamMp002;Name=ZeamMp002.exon1;constitutive=1;ensembl_end_phase=0;
+5   ID=CDS:ZeamMp002;Parent=transcript:ZeamMp002;
+6   ID=gene:ZeamMp003;biotype=protein_coding;description=orf444
+```
+
+---
+
+# General feature format (GFF) version 3
+
+```
+  V1      V2         V3   V4     V5 V6 V7 V8
+1 Mt Gramene chromosome    1 569630  .  .  .
+2 Mt ensembl       gene 6391   6738  .  +  .
+                  V9
+1   ID=chromosome:Mt;Alias=AY506529.1,NC_007982.1;Is_circular=true
+2   ID=gene:ZeamMp002;biotype=protein_coding;description=orf115-a1;
+```
+--------------
+
+- 1	__sequence__:	The name of the sequence where the feature is located.
+
+- 2	__source__:	Keyword identifying the source of the feature, like a program (e.g. RepeatMasker) or an organization (like ensembl).
+
+- 3	__feature__:	The feature type name, like "gene" or "exon". 
+  - In a well structured GFF file, all the children features always follow their parents in a single block (so all exons of a transcript are put after their parent "transcript" feature line and before any other parent transcript line).
+  
+- 4	__start__:	Genomic start of the feature, with a 1-base offset. 
+  - This is in contrast with other 0-offset half-open sequence formats, like [BED]().
+  
+
+---
+# General feature format (GFF) version 3
+
+```
+  V1      V2         V3   V4     V5 V6 V7 V8
+1 Mt Gramene chromosome    1 569630  .  .  .
+2 Mt ensembl       gene 6391   6738  .  +  .
+                  V9
+1   ID=chromosome:Mt;Alias=AY506529.1,NC_007982.1;Is_circular=true
+2   ID=gene:ZeamMp002;biotype=protein_coding;description=orf115-a1;
+```
+
+--------------
+
+- 5	__end__:	Genomic end of the feature, with a 1-base offset. 
+  - This is the same end coordinate as it is in 0-offset half-open sequence formats, like BED.
+
+- 6	__score__:	Numeric value that generally indicates the confidence of the source in the annotated feature. 
+  - A value of "." (a dot) is used to define a null value.
+  
+- 7	__strand__:	Single character that indicates the strand of the feature. 
+  - it can assume the values of "+" (positive, or 5' -&gt; 3'), 
+  - "-", (negative, or 3' -&gt; 5'), "." (undetermined).
+
+---
+# General feature format (GFF) version 3
+
+```
+  V1      V2         V3   V4     V5 V6 V7 V8
+1 Mt Gramene chromosome    1 569630  .  .  .
+2 Mt ensembl       gene 6391   6738  .  +  .
+                  V9
+1   ID=chromosome:Mt;Alias=AY506529.1,NC_007982.1;Is_circular=true
+2   ID=gene:ZeamMp002;biotype=protein_coding;description=orf115-a1;
+```
+
+--------------
+
+- 8	__phase__:	phase of CDS (__means CoDing Sequence__) features. 
+  - The phase indicates where the feature begins with reference to the reading frame. 
+  - The phase is one of the integers 0, 1, or 2, indicating the number of bases that should be removed from the beginning of this feature to reach the first base of the next codon.
+  
+- 9	__attributes__:	All the other information pertaining to this feature. 
+  - The format, structure and content of this field is the one which varies the most between the three competing file formats.
+
+---
+
+# Work with GFF
+
+
+```r
+names(gff) &lt;- c("seq", "source", "feature", "start", "end", "score", "strand", "phase", "att")
+table(gff$feature)
+```
+
+### Get genes and upstream and downstream 5kb regions
+
+
+```r
+g &lt;- subset(gff, feature %in% "gene")
+g$geneid &lt;- gsub(".*gene:|;biotype.*", "", g$att)
+
+### + strand
+gp &lt;- subset(g, strand %in% "+") 
+# nrow(gp) 75
+
+### get the 5k upstream of the + strand gene model
+gp_up &lt;- gp
+gp_up$end &lt;- gp_up$start - 1
+gp_up$start &lt;- gp_up$end - 5000 
+
+### get the 5k downstream of the + strand gene model
+gp_down &lt;- gp
+gp_down$start &lt;- gp_down$end + 1
+gp_down$end &lt;- gp_down$start + 5000 
+```
+
+---
+
+
+### Get genes and upstream and downstream 5kb regions
+
+
+
+
+
+```r
+### - strand
+gm &lt;- subset(g, strand %in% "-") 
+dim(gm) # 82
+
+fwrite(g, "cache/mt_gene.txt", sep="\t", row.names = FALSE, quote=FALSE)
+```
+
+---
+
+## Intepret the theta results
+
+
+
+```r
+library("data.table")
+library("GenomicRanges")
+library("plyr")
+
+
+theta &lt;- fread("cache/theta.txt", data.table=FALSE)
+names(theta)[1] &lt;- "seq"
+
+up5k &lt;- read.table("cache/mt_gene_up5k.txt", header=TRUE)
+
+### define the subject file for theta values
+grc &lt;- with(theta, GRanges(seqnames=seq, IRanges(start=Pos, end=Pos)))
+
+### define the query file for genomic feature
+grf &lt;- with(up5k, GRanges(seqnames=seq, IRanges(start=start, end=end), geneid=geneid))
+    
+### find overlaps between the two
+tb &lt;- findOverlaps(query=grf, subject=grc)
+tb &lt;- as.matrix(tb)
+    
+out1 &lt;- as.data.frame(grf[tb[,1]])
+out2 &lt;- as.data.frame(grc[tb[,2]])
+### for each genomic feature, find the sites with non-missing data
+out &lt;- cbind(out1, out2[, "start"]) 
+names(out)[ncol(out)] &lt;- "pos"
+```
+
+---
+
+## Intepret the theta results
+
+
+
+```r
+#define unique identifier and merge with the thetas
+out$uid &lt;- paste(out$seqnames, out$pos, sep="_")
+theta$uid &lt;- paste(theta$seq, theta$Pos, sep="_")
+
+df &lt;- merge(out, theta[, c(-1, -2)], by="uid")
+# for each upstream 5k region, how many theta values
+
+mx &lt;- ddply(df, .(geneid), summarise,
+            Pairwise = mean(Pairwise, na.rm=TRUE),
+            thetaH = mean(thetaH, na.rm=TRUE),
+            nsites = length(uid))
+```
+
+---
+
+## Intepret the theta results
+
+Copy and paste everything above, and pack it into an `R` function:
+
+
+```r
+get_mean_theta &lt;- function(gf_file="cache/mt_gene_up5k.txt"){
+  # gf_file: gene feature file [chr, ="cache/mt_gene_up5k.txt"]
+  
+  theta &lt;- fread("cache/theta.txt", data.table=FALSE)
+  names(theta)[1] &lt;- "seq"
+
+  up5k &lt;- read.table(gf_file, header=TRUE)
+
+  ### define the subject file for theta values
+  grc &lt;- with(theta, GRanges(seqnames=seq, IRanges(start=Pos, end=Pos)))
+
+  ### define the query file for genomic feature
+  grf &lt;- with(up5k, GRanges(seqnames=seq, IRanges(start=start, end=end), geneid=geneid))
+    
+  ### find overlaps between the two
+  tb &lt;- findOverlaps(query=grf, subject=grc)
+  tb &lt;- as.matrix(tb)
+    
+  out1 &lt;- as.data.frame(grf[tb[,1]])
+  out2 &lt;- as.data.frame(grc[tb[,2]])
+  ### for each genomic feature, find the sites with non-missing data
+  out &lt;- cbind(out1, out2[, "start"]) 
+  names(out)[ncol(out)] &lt;- "pos"
+
+  #define unique identifier and merge with the thetas
+  out$uid &lt;- paste(out$seqnames, out$pos, sep="_")
+  theta$uid &lt;- paste(theta$seq, theta$Pos, sep="_")
+
+  df &lt;- merge(out, theta[, c(-1, -2)], by="uid")
+  # for each upstream 5k region, how many theta values
+
+  mx &lt;- ddply(df, .(geneid), summarise,
+            Pairwise = mean(Pairwise, na.rm=TRUE),
+            thetaH = mean(thetaH, na.rm=TRUE),
+            nsites = length(uid))
+  return(mx)
+}
+```
+
+---
+
+## Plot the results
+
+Run the customized R function
+
+
+```r
+### apply the function
+up5k &lt;- get_mean_theta(gf_file="cache/mt_gene_up5k.txt")
+down5k &lt;- get_mean_theta(gf_file="cache/mt_gene_down5k.txt")
+```
+
+And then plot the results:
+
+
+```r
+library("ggplot2")
+
+up5k$feature &lt;- "up 5k"
+down5k$feature &lt;- "down 5k"
+res &lt;- rbind(up5k, down5k)
+
+ggplot(res, aes(x=feature, y=Pairwise, fill=feature)) + 
+  geom_violin(trim=FALSE)+
+  labs(title="Theta value", x="", y = "Log10 (theta)")+
+  geom_boxplot(width=0.1, fill="white")+
+  scale_fill_brewer(palette="Blues") + 
+  theme_classic()
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

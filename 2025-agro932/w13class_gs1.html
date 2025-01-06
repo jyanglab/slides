@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genomic Selection</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2022-04-12" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Genomic Selection
+### Jinliang Yang
+### April 12, 2022
+
+---
+
+
+
+
+
+# The Linear Mixed Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{u} + \mathbf{e} \\
+\end{align*}`
+where,
+- `\(\mathbf{y}\)` is a vector of observed phenotypes 
+- `\(\mathbf{X}\)` is the __design__ or __incidence__ matrix
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects to be estimated
+- `\(\mathbf{Z}\)` is the __incidence__ matrix for random effects
+- `\(\mathbf{u}\)` is the vector of the __random__ effects to be predicted
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{u} \\
+    \mathbf{e} 
+  \end{bmatrix}
+  \sim N
+  \begin{bmatrix}
+    \mathbf{0},  &amp; 
+    \Bigg(
+    \begin{array}{cccc}
+    \mathbf{G \sigma_u^2} &amp; \mathbf{0} \\
+    \mathbf{0} &amp; \mathbf{R\sigma_e^2} \\
+    \end{array}
+    \Bigg)
+  \end{bmatrix} \\
+\end{align*}`
+
+Or,
+`\begin{align*}
+  \mathbf{u}  \sim N\mathbf{(0, \mathbf{G^*})} \\
+  \mathbf{e}  \sim N\mathbf{(0, \mathbf{R^*})} \\
+\end{align*}`
+
+---
+
+# The covarinace matrix using pedigree
+
+|  | Morex | Robust  | Stander | Excel |
+| :-------: | :-------: | :-----------: | :-----------: | 
+| Morex  |  1 | 1/2 | 11/32 | 7/16 |
+| Robust  |    | 1   | 43/64 | 27/32
+| Stander |    | | 1 | 91/128 |
+| Excel  |    |  |   | 1 |
+
+`\begin{align*}
+V(\mathbf{u}) &amp; = \mathbf{A}V_A \\
+  &amp; =
+  \begin{bmatrix}
+    2 &amp; 1 &amp; 11/16 &amp; 7/8 \\
+    1 &amp; 2 &amp; 43/32 &amp; 27/16 \\
+    11/16 &amp; 43/32 &amp; 2 &amp; 91/64  \\
+    7/8 &amp; 27/16 &amp; 91/64 &amp; 2  \\
+  \end{bmatrix}
+  V_A
+\end{align*}`
+
+Where the elements of `\(\mathbf{A}\)`, __the additive relationship matrix__, are equal to twice the `\(f_{XY}\)` among inbreds.
+
+-----------------
+
+Genetic covariances for general relatives is
+
+`\begin{align*}
+Cov(X, Y) = 2f_{XY}V_A + \Delta_{XY}V_D
+\end{align*}`
+
+
+---
+
+# Pedigree-based relationship
+
+Parental contributions to progeny may differ from those expected from pedigrees.
+
+--
+
+- For example, F2 =&gt; Recombinant Inbred lines (RILs)
+- Expected to have a parental contribution of 50%, but `\(f_{XY}\)` deviates from its expected value.
+
+&lt;div align="center"&gt;
+&lt;img src="f2_3.png" height=300&gt;
+&lt;/div&gt;
+
+---
+
+# Genomic relationship
+
+### Marker similarity
+
+The expected __marker similarity__ between X and Y is equal to:
+
+`\begin{align*}
+S_{XY}  = f_{XY} - (1- f_{XY}) \theta_{XY} \\
+\end{align*}`
+
+
+- Where `\(\theta_{XY}\)` is the probability that a marker allele from a random parent `\(X\)` and a marker allele from a random parent of `\(Y\)` are IBS, given that they are not IBD.
+- If `\(f_{XY}=0\)`, `\(S_{XY} = -\theta_{XY}\)` 
+
+--
+
+- `\(\theta_{XY}\)` can be estimated from unrelated individuals as 
+  - the average nucleotide diversity: `\(\theta\)`
+
+---
+
+# Genomic relationship
+
+Rearrange the marker similarity equation and replace `\(\theta_{XY}\)` with `\(\theta\)`:
+
+`\begin{align*}
+f_{XY} &amp; = \frac{S_{XY} - \theta_{XY}}{ 1-  \theta_{XY}} \\
+&amp; = \frac{S_{XY} - \theta}{ 1-  \theta}
+\end{align*}`
+
+--
+
+__Marker-based `\(f_{XY}\)`__: the probability of identity by descent (IBD) between two individuals by accounting for the frequency of marker alleles that are identity by state (IBS).
+
+--
+
+### Example:
+
+1. two unrelated individual A and B: `\(\theta_{AB}=0.5\)`
+2. A and C are related: `\(S_{AC}=0.6\)`
+3. therefore, `\(f_{AC} = \frac{S_{AC} - \theta}{ 1-  \theta} = 0.2\)`
+
+
+---
+# GBLUP
+
+- Step1: __Coefficients of coancestry__ calculated from genome-wide markers instead of pedigree records
+
+- Step2: __Genomic relationship (G) matrix__ replaces the additive relationship matrix or __A__ matrix
+  - G matrix can also be described as a realized relationship matrix because it captures the realized rather than the expected relatedness.
+
+- Step3: Fit the linear mixed model or the GBLUP model.  
+
+--
+
+-----------
+
+
+- Empirical results in plants have shown that GBLUP is superior to BLUP. 
+  - For maize yield, the predictive ability ranged from 0.7 to 0.8 with GBLUP vs. 0.66 to 0.79 with BLUP (Bernardo, 1994)
+  
+  - Recent results with high density markers: 0.10-0.25 higher (Albrecht et al., 2014; Schrag et al., 2019)
+
+---
+
+# Genomic Selection
+
+
+__Genomic selection__ is a procedure that utilizes a large set of random markers in marker-based selection.
+- GS can be considered as marker-based selection without QTL mapping!
+
+
+#### Prediction: 
+
+Obtaining genome-enabled prediction of genotypic value 
+
+#### Selection: 
+
+Selection is conducted on the basis of such predicted values.
+
+
+
+--
+
+Meuwissen et al. (2001) published the landmark paper outlining the application of BLUP of allele effects to breeding, specifically in the context of animal breeding. 
+
+&gt; Meuwissen, et al.,2001.  Prediction of total genetic value using genome-wide dense marker maps.  Genetics 157:1819-1829.
+
+
+---
+
+# Genomic Selection Procedure
+
+&lt;div align="center"&gt;
+&lt;img src="gs.png" height=350&gt;
+&lt;/div&gt;
+
+
+&gt; Heffner, E.L., M.E. Sorrells, and J.L. Jannink.  2009.  Genomic selection for crop improvement.  Crop Sci. 49:1-12.
+
+
+---
+
+# A GS experimental design
+
+&gt; Bernardo 2020. textbook
+
+- Suppose __N=150 F3 families__ are developed from the cross between two maize inbreds.
+
+- These F3 families are evaluated for their testcross performance and are genotyped with __N=384 random SNP markers__.
+  - Pooled amplicon sequencing
+  - Genotyping-by-sequencing
+  - SNP array
+  - Whole genome sequencing
+
+- The yield trials are conducted in the same set of environments and the data are assumed balanced so that the only fixed effect is the overall mean.
+
+---
+
+# A GS example
+
+The performance of the testcrosses on an entry-mean basis can be modeled as:
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{1} \mu + \mathbf{Zm} + \mathbf{e} \\
+\end{align*}`
+
+where,
+- `\(\mathbf{y}\)` is a vector of testcross phenotypic means 
+- `\(\mathbf{1}\)` is an `\(N \times 1\)` vector with all elements equal to 1
+- `\(\mu\)` is the __fixed__ effect of the overall mean
+- `\(\mathbf{Z}\)` is the __incidence__ matrix for random effects of __SNP genotype__
+- `\(\mathbf{m}\)` is the vector of the __random effects for each of the SNP markers__
+- `\(\mathbf{e}\)` is the vector of residuals 
+
+--
+
+### About Z matrix
+
+- The `\(\mathbf{Z}\)` matrix is coded (first homozygous `\(=1\)`, heterozygous `\(=0\)`, 2nd homozygous `\(=-1\)`) with marker genotype.
+- The __SNP effect__ is defined as the effect associated with the first homozygous inbred, coded with 1.
+
+---
+# A GS example
+
+The performance of the testcrosses on an entry-mean basis can be modeled as:
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{1} \mu + \mathbf{Zm} + \mathbf{e} \\
+\end{align*}`
+
+Note that fitting marker effects as random instead of fixed does not require degrees of freedom
+  - The number of marker loci (N=384) can exceed the population size (N=150)
+
+--
+
+The covariance matrix of `\(\mathbf{m}\)` can be modeled as:
+&gt; Meuwiseen et al., 2001.
+
+`\begin{align*}
+V(\mathbf{m}) &amp;= \mathbf{I}V_{M_i} \\
+ &amp; = \mathbf{I}(V_{G}/N_M) 
+\end{align*}`
+
+
+- where `\(\mathbf{I}\)` is an identity matrix
+- `\(V_{M_i}\)` is the variance due to each marker locus
+- `\(V_{G}\)` is the type of genetic variance expressed among the progeny being evaluated.
+- `\(N_M\)` is the number of markers
+
+
+---
+
+# Ridge regression-BLUP
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{1} \mu + \mathbf{Zm} + \mathbf{e} \\
+\end{align*}`
+
+`\begin{align*}
+V(\mathbf{m}) &amp;= \mathbf{I}V_{M_i} \\
+ &amp; = \mathbf{I}(V_{G}/N_M) 
+\end{align*}`
+
+This convenient way to calculated the effects of genome-wide markers by BLUP is called __ridge regression BLUP__ or __RR-BLUP__.
+
+--
+
+### Two assumptions in RR-BLUP
+
+- (1) Each random marker is assumed to account for an equal amount of the genetic variance
+  - This does not mean that the predicted marker effects are equal
+  - It simply means that the marker effects have the same underlying genetic variance
+
+- (2) Epistasis is ignored for convenience in the prediction
+
+---
+# The Barley Example
+
+### Materials
+
+Four __related__ barley cultivars:
+- __M__orex, __R__obust, __E__xcel, __S__tander
+
+### Experimental design
+- M, R, and S in 18 environments (set1)
+- R, E, and S in 9 environments (set2)
+
+--
+
+| Env | Number| inbred | Grain yield  | SNP1 | SNP2 | SNP3 |
+| :-------: | :-------: | :-----: | :--: | :--: | :--: | :--: | :--: | 
+| Set1  | 18  |  M  | 4.45 | C | A | C |
+| Set1  | 18  |  R  | 4.61 | C | G | C |
+| Set1  | 18  |  S  | 5.27 | T | A | A |
+| Set2  | 9   |  R  | 5.00 | C | G | C |
+| Set2  | 9   |  E  | 5.82 | T | G | C |
+| Set2  | 9   |  S  | 5.79 | T | A | A |
+
+---
+
+# The Linear Mixed Model
+
+`\begin{align*}
+\mathbf{y} &amp;= \mathbf{X}\mathbf{b} + \mathbf{Z}\mathbf{m} + \mathbf{e} \\
+\end{align*}`
+
+
+- `\(\mathbf{y}\)` is a vector of observed grain yield phenotype
+- `\(\mathbf{X}\)` is the __design__ or __incidence__ matrix
+- `\(\mathbf{b}\)` is the vector of the __fixed__ effects due to sets of yield trials
+- `\(\mathbf{e}\)` is the vector of residuals. 
+
+--
+
+- `\(\mathbf{Z}\)` is the incidence matrix for __the SNP markers__
+- `\(\mathbf{m}\)` is the vector of the __random effects due to SNPs__
+
+`\begin{align*}
+V(\mathbf{m}) &amp;= \mathbf{I}V_{M_i} \\
+ &amp; = \mathbf{I}(V_{G}/N_M) 
+\end{align*}`
+
+--
+
+#### SNP Coding
+
+We will use biallelic SNPs and consider Morex (coded as 1) as our reference
+  - `\(1\)`: If an individual is homozygous for the allele carried by Morex 
+  - `\(0\)`: heterozygous
+  - `\(-1\)`: if homozygous for the allele not carried by Morex
+
+---
+# Z Matrix
+
+| Env | Number| inbred | Grain yield  | SNP1 | SNP2 | SNP3 |
+| :-------: | :-------: | :-----: | :--: | :--: | :--: | :--: | :--: | 
+| Set1  | 18  |  __M__  | 4.45 | __C__ | __A__ | __C__ |
+| Set1  | 18  |  R  | 4.61 | C | G | C |
+| Set1  | 18  |  S  | 5.27 | T | A | A |
+| Set2  | 9   |  R  | 5.00 | C | G | C |
+| Set2  | 9   |  E  | 5.82 | T | G | C |
+| Set2  | 9   |  S  | 5.79 | T | A | A |
+
+
+#### Get Z matrix into R
+
+--
+
+
+```r
+# let's input data by column
+Z &lt;- matrix(c(1,1,-1,1,-1,-1,
+              1,-1,1,-1,-1,1, 
+              1,1,-1,1,1,-1), byrow=FALSE, nrow=6)
+Z
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    1    1
+## [2,]    1   -1    1
+## [3,]   -1    1   -1
+## [4,]    1   -1    1
+## [5,]   -1   -1    1
+## [6,]   -1    1   -1
+```
+
+---
+# Solve the MME
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{u}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{G^{-1}} V_e/V_u \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+In our case,
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{m}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{I} V_e/V_{M_i} \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+Here, we suppose the heritability is `\(H^2 = 0.5\)`.
+
+`\begin{align*}
+H^2 &amp; = \frac{V_G}{V_G + V_e} \\
+V_{M_i} &amp; = \frac{V_G}{N_M} \\
+\frac{V_e}{V_{M_i}} &amp; = \frac{(1 - H^2) \times N_M}{H^2} \\
+&amp; = 3
+\end{align*}`
+
+---
+# Solve the MME
+
+
+```r
+y &lt;- matrix(c(4.45, 4.61, 5.27, 5.00, 5.82, 5.79), byrow=FALSE, nrow=6)
+X &lt;- matrix(c(1,1,1,0,0,0, 0, 0,0, 1, 1,1), byrow=FALSE, nrow=6)
+R &lt;- matrix(c(1/18,0,0,0,0,0, 0,1/18,0,0,0,0, 0,0,1/18,0,0,0,
+              0,0,0,1/9,0,0, 0,0,0,0,1/9,0, 0,0,0,0,0,1/9), nrow=6, byrow=T)
+```
+
+--
+
+`\begin{align*}
+  \begin{bmatrix}
+    \mathbf{\hat{b}} \\
+    \mathbf{\hat{m}} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}X} &amp; \mathbf{X^{'}R^{-1}Z} \\
+    \mathbf{Z^{'}R^{-1}X} &amp; \mathbf{Z^{'}R^{-1}Z} + \mathbf{I} V_e/V_{M_i} \\
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    \mathbf{X^{'}R^{-1}y} \\
+    \mathbf{Z^{'}R^{-1}y} \\
+  \end{bmatrix}
+\end{align*}`
+
+--
+
+
+```r
+solve_mme &lt;- function(X, y, R, Z, H2, nmarker){
+  a11 &lt;- t(X) %*% solve(R) %*% X
+  a12 &lt;- t(X) %*% solve(R) %*% Z
+  a21 &lt;- t(Z) %*% solve(R) %*% X
+  a22 &lt;- t(Z) %*% solve(R) %*% Z 
+  v = (1-H2)*nmarker/H2
+  a22_2 &lt;- diag(3)*3
+  lhs &lt;- rbind(cbind(a11, a12), cbind(a21, a22 + a22_2))
+  rhs &lt;- rbind(t(X) %*% solve(R) %*% y, t(Z) %*% solve(R) %*% y)
+  eff &lt;- solve(lhs) %*% rhs
+  return(eff)
+}
+
+eff &lt;- solve_mme(X, y, R, Z, H2=0.5, nmarker=3)
+```
+
+---
+# The marker effects
+
+
+| Env | Number| inbred | Grain yield  | SNP1 | SNP2 | SNP3 |
+| :-------: | :-------: | :-----: | :--: | :--: | :--: | :--: | :--: | 
+| Set1  | 18  |  __M__  | 4.45 | __C__ | __A__ | __C__ |
+| Set1  | 18  |  R  | 4.61 | C | G | C |
+| Set1  | 18  |  S  | 5.27 | T | A | A |
+| Set2  | 9   |  R  | 5.00 | C | G | C |
+| Set2  | 9   |  E  | 5.82 | T | G | C |
+| Set2  | 9   |  S  | 5.79 | T | A | A |
+
+
+```r
+eff
+```
+
+```
+##             [,1]
+## [1,]  4.93475643
+## [2,]  5.41898437
+## [3,] -0.34842360
+## [4,] -0.06523449
+## [5,] -0.06061120
+```
+
+----------
+
+The effect of SNP1 `\(\hat{m_1}=-0.35\)` indicates that at SNP1, the allele carried by `Morex` leads to a lower trait value.
+
+If the genotype at SNP1 changes from CC to CT, the predicted value for yield would increase by 0.35. CC -&gt; TT, increase by 0.7.
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

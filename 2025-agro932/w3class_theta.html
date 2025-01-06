@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Measures of sequence diversity</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Measures of sequence diversity
+### Jinliang Yang
+### Feb. 1st, 2022
+
+---
+
+
+
+
+# Common estimators of `\(\theta\)` under the infinite sites model
+
+For an individual SNP, one allele has sample frequency `\(p\)`, alternative allele frequency is `\(q\)`, such that `\(p +q =1\)`.
+
+--
+
+__Heterozygosity__ at this SNP site is:
+
+`\begin{align*}
+h = \frac{n}{n-1}(1 - p^2 - q^2)
+\end{align*}`
+
+- where `\(n\)` is the number of sequences in the sample. 
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="p4.png" height=150&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+For the first SNP site:
+`\begin{align*}
+h = &amp; \frac{n}{n-1}(1 - p^2 - q^2) \\
+= &amp; \frac{4}{4-1}(1 - (1/4)^2 - (3/4)^2) \\
+= &amp; 0.5
+\end{align*}`
+]
+
+---
+
+# Common estimators of `\(\theta\)` under the infinite sites model
+
+For an individual SNP, one allele has sample frequency `\(p\)`, alternative allele frequency is `\(q\)`, such that `\(p +q =1\)`.
+
+
+
+__Heterozygosity__ at this SNP site is:
+
+`\begin{align*}
+h = \frac{n}{n-1}(1 - p^2 - q^2)
+\end{align*}`
+
+- where `\(n\)` is the number of sequences in the sample. 
+
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="p4.png" height=150&gt;
+&lt;/div&gt;
+]
+
+
+
+.pull-right[
+For the __2nd SNP site__:
+`\begin{align*}
+h = &amp; \frac{n}{n-1}(1 - p^2 - q^2) \\
+= &amp; \frac{4}{4-1}(1 - (2/4)^2 - (2/4)^2) \\
+= &amp; 0.667
+\end{align*}`
+]
+
+---
+# Common estimators of `\(\theta\)` under the infinite sites model
+
+Given this measure of diversity at a single site, we now consider measures of diversity across an entire sequence.
+
+We can define the __sum of site heterozygosities__ as:
+
+`\begin{align*}
+\pi = &amp; \sum_{j=1}^{S}h_j \\
+\end{align*}`
+
+- Where `\(S\)` is the number of segregating sites
+- `\(h_j\)` is the heterozygosity at the `\(j\)`th SNP site.
+
+--
+
+Under the __infinite sites model__ for a diploid Wright-Fisher population at equilibrium,
+
+`\begin{align*}
+E(\pi) = &amp; \theta \\
+\end{align*}`
+
+Which is why this statistic is sometimes called `\(\theta_\pi\)`.
+
+
+---
+# Common estimators of `\(\theta\)` under the infinite sites model
+
+
+&lt;div align="center"&gt;
+&lt;img src="p4.png" height=150&gt;
+&lt;/div&gt;
+
+- For the 1st SNP site, `\(h_1=0.5\)`
+- For the 2nd SNP site, `\(h_2=0.667\)`
+
+--
+
+`\begin{align*}
+\pi = &amp; \sum_{j=1}^{S}h_j \\
+= &amp; 0.5 + 0.667 \\
+= &amp; 1.167
+\end{align*}`
+
+
+--
+
+We often give this value per site, in which case `\(\pi = 1.167/10=0.1167\)`
+
+---
+# Common estimators of `\(\theta\)` under the infinite sites model
+
+
+`\begin{align*}
+\pi = &amp; \frac{\sum_{i &lt; j}{k_{ij}}}{n(n-1)/2} \\
+\end{align*}`
+
+- Where `\(k_{ij}\)` is the number of nucleotide differences between the `\(i\)`th and `\(j\)`th sequences.
+
+--
+
+This measure of diversity gives us the average number of pairwise necleotide difference between any two sequences.
+
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="p4.png" height=150&gt;
+&lt;/div&gt;
+
+--
+
+`\begin{align*}
+P1:P2, 0; P1:P3, 2; P1:P4, 1; P2:P3, 2; P2:P4, 1; P3:P4, 1
+\end{align*}`
+
+
+---
+# An Alternative method: Watterson' theta
+
+In this method, we summarize SNPs using the total number of segregating sites, `\(S\)`, in the sample.
+
+However, because larger sample sizes will result in larger values of `\(S\)`, we must adjust the statistic to be
+
+`\begin{align*}
+\theta_W = &amp; \frac{S}{a} \\
+\end{align*}`
+
+Where `\(a\)` is,
+
+`\begin{align*}
+a=\sum_{i=1}^{n-1}\frac{1}{i}
+\end{align*}`
+
+Or, combine them together
+
+`\begin{align*}
+\theta_W = &amp; \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
+\end{align*}`
+
+---
+
+# An Alternative method: Watterson' theta
+
+&lt;div align="center"&gt;
+&lt;img src="p4.png" height=150&gt;
+&lt;/div&gt;
+
+
+`\begin{align*}
+\theta_W = &amp; \frac{S}{\sum_{i=1}^{n-1}\frac{1}{i}} \\
+= &amp; 2/(1/1 + 1/2 + 1/3) \\
+= &amp; 1.09
+\end{align*}`
+
+The per site measure would be `\(1.09/10=0.109\)`, which is very similar to `\(\theta_\pi\)`
+
+
+---
+# The frequency spectrum of alleles
+
+&lt;div align="center"&gt;
+&lt;img src="p10.png" height=200&gt;
+&lt;/div&gt;
+
+
+In this case, among these 10 haplotypes are 10 segregating sites, each of which can have a frequency between `\(1/n\)` and `\((n-1)/n\)`
+
+- Note that if an allele is present on all n individuals, it is not polymorhpic.
+
+--
+
+If we donot know which allele is ancestral and which is derived, a simple way would be using the __minor allele frequency (MAF)__: the frequency of the less common allele.
+
+Visually summarize the MAF of all segregating sites using the __allele frequency spectrum__
+  
+
+---
+# The frequency spectrum of alleles
+
+The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="p10.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-left[
+
+```r
+maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
+         0.2, 0.1, 0.4, 0.1, 0.1)
+sfs &lt;- table(maf)
+barplot(sfs, col="#cdc0b0", xlab="Minor allele frequency", 
+        ylab="No. of segregating sites", 
+        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
+```
+
+&lt;img src="hahn_c3_theta_files/figure-html/unnamed-chunk-1-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# The frequency spectrum of alleles
+
+- The allele frequency specturm is also referred to as the __site frequency spectrum (SFS)__.
+- Use the sequences of one or more closely related species, we can get the ancestral state.
+- Therefore, we can describe variation at each site using the __derived allele frequency (DAF)__.
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="daf.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-left[
+
+```r
+maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
+         0.2, 0.1, 0.6, 0.9, 0.9)
+sfs &lt;- table(maf)
+barplot(sfs, col="#cdc0b0", xlab="Derived allele frequency", ylab="No. of segregating sites", 
+        cex.axis =1.5, cex.names = 1.5, cex.lab=1.5)
+```
+
+&lt;img src="hahn_c3_theta_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# The frequency spectrum of alleles
+
+We now consider several statistics summarizing sequencing diversity that use informtion about the frequency of derived alleles, as these capture more information about our sequencing data.
+
+Fu and Li (1993) defined a statistic, `\(\epsilon_1\)`, based on the number of __derived singletons__ in a sample.
+
+`\begin{align*}
+\epsilon_1 = S_1 \\
+\end{align*}`
+
+- Where `\(S_1\)` is the number of segregating site with derived alleles found on only one haplotype.
+
+--
+
+If we don't know the ancestral status, we can aslo define a statistic, `\(\eta_1\)`, based on all singletons in a sample
+
+`\begin{align*}
+\eta_1 = S_1^*\frac{n-1}{n} \\
+\end{align*}`
+
+- Where `\(S_1^*\)` is all the singletons.
+
+---
+# The frequency spectrum of alleles
+
+A second summary statistic of diversity that uses ancestral state information is `\(\theta_H\)`:
+
+`\begin{align*}
+\theta_H = \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+\end{align*}`
+
+- Where `\(S_i\)` is again the number of segregating sites where `\(i\)` haplotypes carry the derived allele (Fay and Wu, 2000).
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="daf.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-left[
+`\begin{align*}
+\theta_H = &amp; \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+= &amp; \frac{(1^2 \times 4 + 2^2 \times 1 + 3^2 \times 2 + 6^2 \times 1 + 9^2 \times 2)}{10(10-1)/2} \\
+= 4.98
+\end{align*}`
+]
+
+---
+
+# Summary
+
+All of these statistics --- `\(\pi, \epsilon_1, \eta_1, \theta_H\)` --- are estimators of `\(\theta\)` 
+- in a __Wright-Fisher population__
+- at __mutation-drift__ equilibrium 
+- under an __infinite sites__ mutational model
+
+--
+
+Specifically,
+
+`\begin{align*}
+E(\epsilon_1) = E(\eta_1) = E(\theta_H)
+\end{align*}`
+
+These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

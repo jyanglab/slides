@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Compute Fst</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Compute Fst
+### Jinliang Yang
+### Feb. 10th, 2022
+
+---
+
+
+
+
+# Syncing a fork (from the web UI)
+
+1. Click the __Fork__ button for the Git Repo `https://github.com/jyanglab/2022-agro932-lab`
+2. And then clone to your own system `git clone git@github.com:YOURID/2022-agro932-lab.git`
+
+
+### If you have __Forked__ it before:
+
+1. On GitHub, navigate to the main page of the forked repository that you want to sync with the upstream repository.
+2. Select the __Fetch upstream__ drop-down.
+3. Review the details about the commits from the upstream repository, then click __Fetch and merge__.
+4. [How to resolve a merge conflict](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github)
+  
+---
+
+# NGS data simulation using `wgsim`
+
+```
+Usage:   wgsim [options] &lt;in.ref.fa&gt; &lt;out.read1.fq&gt; &lt;out.read2.fq&gt;
+
+Options: -e FLOAT      base error rate [0.020]
+         -d INT        outer distance between the two ends [500]
+         -s INT        standard deviation [50]
+         -N INT        number of read pairs [1000000]
+         -1 INT        length of the first read [70]
+         -2 INT        length of the second read [70]
+         -r FLOAT      rate of mutations [0.0010]
+         -R FLOAT      fraction of indels [0.15]
+         -X FLOAT      probability an indel is extended [0.30]
+         -S INT        seed for random generator [-1]
+         -A FLOAT      disgard if the fraction of ambiguous 
+                       bases higher than FLOAT [0.05]
+         -h            haplotype mode
+```
+
+#### Type in the following command:
+
+
+```bash
+wgsim lambda.fa -e 0 -d 500 -N 5000 -1 100 -2 100 -r 0.01  \
+-R 0 -X 0 -S 1234567 -h l1.read1.fq l1.read2.fq
+```
+
+---
+
+# Download Reference from EnsemblPlants
+
+Maize [reference genome](https://plants.ensembl.org/Zea_mays/Info/Index)
+
+#### Change to `largedata\lab4` folder:
+
+```bash
+cd largedata
+mkdir lab4
+cd lab4
+```
+
+
+#### Then use `wget` to download the reference genome:
+
+
+```bash
+wget ftp://ftp.ensemblgenomes.org/pub/plants/release-46/fasta/zea_mays/dna/Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+
+### then unzip it
+gunzip Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+```
+
+---
+
+#### Type in the following command:
+
+
+```bash
+wgsim Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa \
+-e 0 -d 500 -N 5000 -1 100 -2 100 -r 0.01  \
+-R 0 -X 0 -S 1234567 l1.read1.fq l1.read2.fq
+```
+
+- Reference (about 500k)
+  - `Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa`
+- 20x coverage
+  - `N 5000`
+- PE 100bp
+  - `-1 100 -2 100`
+- Only SNP no Indel
+  - `-R 0 -X 0`
+- Simulate Mutations 
+  - `-r 0.01`
+
+---
+
+# NGS data simulation using `wgsim`
+
+## simulate 20 individals
+
+
+```bash
+for i in {1..20}
+do
+   wgsim Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa -e 0 -d 500 -N 50000 -1 100 -2 100 -r 0.1  -R 0 -X 0 l$i.read1.fq l$i.read2.fq
+done
+```
+
+--
+
+
+#### check how many reads
+
+
+```bash
+wc -l l1.read1.fq 
+# suppose to be 200,000 lines = 50,000 reads
+```
+
+---
+
+# A procedure to calculate `\(\theta\)` and `\(F_{ST}\)` values
+
+### 1. Align the NGS reads to the reference genome
+  - [bwa](https://github.com/lh3/bwa)
+  - [samtools](https://github.com/samtools/samtools)
+
+
+### 2. Obtain the SNP calls 
+  - [bcftools](https://samtools.github.io/bcftools/bcftools.html)
+
+### 3. Calculate the Fst value for each site and visualize the results
+  - `R`
+
+---
+# A procedure to calculate `\(\theta\)` and `\(F_{ST}\)` values
+
+### 1. Align the NGS reads to the reference genome
+
+
+
+```bash
+module load bwa samtools bcftools
+# index the reference genome
+bwa index Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
+```
+
+#### Do alignment for 10 individuals using bash loop:
+
+
+```bash
+# using bwa mem to align the reads to the reference genome 
+for i in {1..20}; do bwa mem Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
+# sort
+for i in *.bam; do samtools sort $i -o sorted_$i; done
+# index them
+for i in sorted*.bam; do samtools index $i; done
+```
+
+#### Check mapping statistics
+
+
+```bash
+samtools flagstat sorted_l1.bam
+```
+
+---
+
+# Submit a Slurm job
+
+- We wrap our jobs in little batch scripts, which is nice because these also help make steps reproducible. 
+
+- To keep your directory organized, I usually keep a scripts directory (i.e., `slurm-script/` ) and log dir (i.e., `slurm-log` )  for Slurm’s logs.
+  - Tip: use these logs, as these are very helpful in debugging. I separate them from my project because they fill up directories rather quickly.
+
+--
+
+Let’s look at an example __slurm script header__ for a job called `theta` (which is run with script `theta.sh`).
+
+
+```bash
+#!/bin/bash -l
+#SBATCH -D ~projects/your-cool-project/
+#SBATCH -o ~/your-cool-project/slurm-log/steve-stdout-%j.txt
+#SBATCH -e ~/your-cool-project/slurm-log/steve-stderr-%j.txt
+#SBATCH -J steve
+#SBATCH -t 24:00:00
+set -e
+set -u
+
+# insert your script here
+```
+
+
+---
+
+## An Example Slurm Batch Script Header
+
+
+```bash
+#!/bin/bash -l
+#SBATCH -D ~/projects/your-cool-project/
+#SBATCH -o ~/your-cool-project/slurm-log/steve-stdout-%j.txt
+#SBATCH -e ~/your-cool-project/slurm-log/steve-stderr-%j.txt
+#SBATCH -J theta
+#SBATCH -t 24:00:00
+#SBATCH --mail-user=your_email_address@gmail.com
+#SBATCH --mail-type=END #email if ends
+#SBATCH --mail-type=FAIL #email if fails
+set -e
+set -u
+
+# insert your script here
+```
+
+- `D` sets your project directory.
+- `o` sets where standard output (of your batch script) goes.
+- `e` sets where standard error (of your batch script) goes.
+- `J` sets the job name.
+- `t` sets the time limit for the job, 24:00:00 indicates 24 hours.
+- `--mail`: will email you if the job is "END" or "FAIL"
+
+---
+
+## An Example Slurm Batch Script Header
+
+
+```bash
+cd slurm-script
+vi my_theta.sh
+i # insert text
+:sq # quit vi editor
+```
+
+- Copy the above header to a `.sh` file and make appropriate modifications
+
+- Insert the following:
+
+
+```bash
+# module load bwa samtools
+# cd largedata/lab4/
+
+# alignment
+for i in {1..20}; do bwa mem Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
+# sort
+for i in *.bam; do samtools sort $i -o sorted_$i; done
+# index them
+for i in sorted*.bam; do samtools index $i; done
+```
+
+--
+
+- submit the job via `sbatch`:
+
+
+```bash
+sbatch --licenses=common --ntasks=2 --mem=10G slurm-script/my_theta.sh
+
+## check your job status
+squeue | grep "YOUR USER ID"
+```
+
+
+---
+
+# A procedure to calculate `\(\theta\)` values
+
+### 2. Obtain the SNP calls  with `samtools`
+
+
+
+```bash
+### index the genome assembly
+samtools faidx Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
+### Run `mpileup` to generate VCF format
+ls sorted_l*bam &gt; bamlist.txt
+samtools mpileup -g -f Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa -b bamlist.txt &gt; myraw.bcf
+bcftools call myraw.bcf -cv -Ob -o snps.bcf
+```
+
+#### exact SNP information
+
+
+```bash
+### Extract allele frequency at each position
+bcftools query -f '%CHROM %POS %AF1\n' snps.bcf &gt; frq.txt
+
+bcftools query -f '%CHROM %POS %REF %ALT [\t%GT]\n' snps.bcf &gt; geno.txt
+```
+
+- Print chromosome, position, ref allele and the first alternate allele
+- %TGT: Translated genotype (e.g. C/A)
+- %TAG{INT}: Curly brackets to print a subfield (e.g. INFO/TAG{1}, the indexes are 0-based)
+
+---
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+
+
+```r
+geno &lt;- read.table("largedata/geno.txt", header=FALSE)
+names(geno) &lt;- c("chr", "pos", "ref", "alt", "l1", "l2", "l3", "l4", "l5")
+
+
+for(i in 5:9){
+  # replace slash and everything after it as nothing
+  geno$newcol &lt;- gsub("/.*", "", geno[,i] )
+  # extract the line name
+  nm &lt;- names(geno)[i]
+  # assign name for this allele
+  names(geno)[ncol(geno)] &lt;- paste0(nm, sep="_a1")
+  
+  geno$newcol &lt;- gsub(".*/", "", geno[,i] )
+  names(geno)[ncol(geno)] &lt;- paste0(nm, sep="_a2")
+}
+```
+
+---
+
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+#### Compute p1, p2, p
+
+
+```r
+geno$p &lt;- apply(geno[, 10:19], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p &lt;- geno$p/10
+
+geno$p1 &lt;- apply(geno[, 10:15], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p1 &lt;- geno$p1/6
+
+geno$p2 &lt;- apply(geno[, 16:19], 1, function(x) {sum(as.numeric(as.character(x)))})
+geno$p2 &lt;- geno$p2/4
+```
+
+Then finally,
+
+
+```r
+geno$fst &lt;- with(geno, ((p1-p)^2 + (p2-p)^2)/(2*p*(1-p)) )
+```
+
+Output the Fst results
+
+
+
+```r
+write.table(geno, "cache/fst.csv", sep=",", row.names = FALSE, quote=FALSE)
+```
+
+---
+# A procedure to calculate `\(\theta\)` values
+
+### 3. Calculate the Fst value for each site and visualize the results
+
+#### Visualize the results on my local computer
+
+
+```r
+fst &lt;- read.csv("cache/fst.csv")
+
+plot(fst$pos, fst$fst, xlab="Physical position", ylab="Fst value", main="")
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
