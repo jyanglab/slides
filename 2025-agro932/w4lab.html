@@ -73,23 +73,7 @@ Then copy the following to your `.bash_profile`
 PATH=$PATH:~/bin/wgsim/
 ```
 
----
 
-# Reference genome
-
-## EnsemblPlants
-
-- Bread Wheat: [Triticum aestivum](https://plants.ensembl.org/Triticum_aestivum/Info/Index)
-- Common bean: [Phaseolus vulgaris](https://plants.ensembl.org/Phaseolus_vulgaris/Info/Index)
-- Domesticated sunflower: [Helianthus annuus](https://plants.ensembl.org/Helianthus_annuus/Info/Index)
-- Maize: [Zea mays](https://plants.ensembl.org/Zea_mays/Info/Index?db=core)
-- Soybean: [Glycine max](http://plants.ensembl.org/Glycine_max/Info/Index)
-
---
-
-## Important info
-- Version
-- Gene annotation: GFF3
 
 ---
 
@@ -123,6 +107,24 @@ wgsim lambda.fa -e 0 -d 500 -N 5000 -1 100 -2 100 -r 0.01  \
 
 ---
 
+# Reference genome
+
+## EnsemblPlants
+
+- Bread Wheat: [Triticum aestivum](https://plants.ensembl.org/Triticum_aestivum/Info/Index)
+- Common bean: [Phaseolus vulgaris](https://plants.ensembl.org/Phaseolus_vulgaris/Info/Index)
+- Domesticated sunflower: [Helianthus annuus](https://plants.ensembl.org/Helianthus_annuus/Info/Index)
+- Maize: [Zea mays](https://plants.ensembl.org/Zea_mays/Info/Index?db=core)
+- Soybean: [Glycine max](http://plants.ensembl.org/Glycine_max/Info/Index)
+
+--
+
+## Important info
+- Version
+- Gene annotation: GFF3
+
+---
+
 # Download Reference from EnsemblPlants
 
 Maize [reference genome](https://plants.ensembl.org/Zea_mays/Info/Index)
@@ -140,10 +142,15 @@ cd lab4
 
 
 ``` bash
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-46/fasta/zea_mays/dna/Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+wget https://ftp.ensemblgenomes.ebi.ac.uk/pub/plants/release-60/fasta/zea_mays/dna/Zea_mays.Zm-B73-REFERENCE-NAM-5.0.dna.nonchromosomal.fa.gz
 
 ### then unzip it
-gunzip Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
+gunzip Zea_mays.Zm-B73-REFERENCE-NAM-5.0.dna.nonchromosomal.fa.gz
+
+### then check the file with less
+less Zea_mays.Zm-B73-REFERENCE-NAM-5.0.dna.nonchromosomal.fa | grep "&gt;"
+# extracts the first record into the file
+awk '/^&gt;/ {if (found++) exit} {print}' Zea_mays.Zm-B73-REFERENCE-NAM-5.0.dna.nonchromosomal.fa &gt; first_chr.fa
 ```
 
 ---
@@ -152,13 +159,13 @@ gunzip Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa.gz
 
 
 ``` bash
-wgsim Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa \
+wgsim first_chr.fa \
 -e 0 -d 500 -N 5000 -1 100 -2 100 -r 0.01  \
 -R 0 -X 0 -S 1234567 l1.read1.fq l1.read2.fq
 ```
 
-- Reference (about 500k)
-  - `Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa`
+- Reference (about 700k)
+  - `first_chr.fa`
 - 20x coverage
   - `N 5000`
 - PE 100bp
@@ -178,7 +185,7 @@ wgsim Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa \
 ``` bash
 for i in {1..20}
 do
-   wgsim Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa -e 0 -d 500 -N 50000 -1 100 -2 100 -r 0.1  -R 0 -X 0 l$i.read1.fq l$i.read2.fq
+   wgsim first_chr.fa -e 0 -d 500 -N 50000 -1 100 -2 100 -r 0.1  -R 0 -X 0 l$i.read1.fq l$i.read2.fq
 done
 ```
 
@@ -218,7 +225,7 @@ wc -l l1.read1.fq
 ``` bash
 module load bwa samtools bcftools
 # index the reference genome
-bwa index Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
+bwa index first_chr.fa
 ```
 
 #### Do alignment for 10 individuals using bash loop:
@@ -226,7 +233,7 @@ bwa index Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
 
 ``` bash
 # using bwa mem to align the reads to the reference genome 
-for i in {1..20}; do bwa mem Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
+for i in {1..20}; do bwa mem first_chr.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
 # sort
 for i in *.bam; do samtools sort $i -o sorted_$i; done
 # index them
@@ -318,7 +325,7 @@ i # insert text
 # cd largedata/lab4/
 
 # alignment
-for i in {1..20}; do bwa mem Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
+for i in {1..20}; do bwa mem first_chr.fa l$i.read1.fq l$i.read2.fq | samtools view -bSh - &gt; l$i.bam; done
 # sort
 for i in *.bam; do samtools sort $i -o sorted_$i; done
 # index them
@@ -348,10 +355,10 @@ squeue | grep "YOUR USER ID"
 
 ``` bash
 ### index the genome assembly
-samtools faidx Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa
+samtools faidx first_chr.fa
 ### Run `mpileup` to generate VCF format
 ls sorted_l*bam &gt; bamlist.txt
-samtools mpileup -g -f Zea_mays.B73_RefGen_v4.dna.chromosome.Mt.fa -b bamlist.txt &gt; myraw.bcf
+samtools mpileup -g -f first_chr.fa -b bamlist.txt &gt; myraw.bcf
 bcftools call myraw.bcf -cv -Ob -o snps.bcf
 ```
 
