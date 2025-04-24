@@ -283,7 +283,7 @@ Directly take the inverse of LHS to obtain the solutions for GBLUP. Report the e
 
 
 ```r
-lambda &lt;- 1.35 # fit$Ve / fit$Vm
+lambda &lt;- 1.35 # fit$Ve / fit$Vg
 Ginv &lt;- solve(G)
 ones &lt;- matrix(1, ncol=1, nrow=n)
 Z &lt;- diag(n)
