@@ -23,26 +23,7 @@ class: center, middle, inverse, title-slide
 
 
 
-# RR-BLUP vs. QTL mapping
 
-In RR-BLUP, usually, the number of markers ( `\(p\)` ) is greatly larger than observation ( `\(n\)` ), or `\(p &gt;&gt; n\)` 
-  - a large p, small n problem
-
-
-### Shrinkage
-
-The marker effects with RR-BLUP are __shrinkage toward zero__.
-
-- Modeling `\(V_{M_i}\)` as constant across all loci caused an overshrinkage of effects for markers close to major QTL (large effect QTL).
-
-- And an undershrinkage of effects for markers close to minor QTL.
-&gt; Meuwissen et al., 2001.
-
---
-
-Furthermore, for a given QTL, several marker loci will capture its effect if using the RR-BLUP method.
-
----
 # GBLUP vs. RR-BLUP
 
 ### GBLUP
@@ -62,6 +43,27 @@ Theory has shown that GBLUP and RR-BLUP are equivalent:
 - No major QTL are present
 - And the QTL are evenly distributed across the genome
 &gt; Fernando, 1998; Habier et al., 2007; Goddard, 2009.
+
+---
+
+# RR-BLUP vs. QTL mapping
+
+In RR-BLUP, usually, the number of markers ( `\(p\)` ) is greatly larger than observation ( `\(n\)` ), or `\(p &gt;&gt; n\)` 
+  - a large p, small n problem
+
+
+### Shrinkage
+
+The marker effects with RR-BLUP are __shrinkage toward zero__.
+
+- Modeling `\(V_{M_i}\)` as constant across all loci caused an overshrinkage of effects for markers close to major QTL (large effect QTL).
+
+- And an undershrinkage of effects for markers close to minor QTL.
+&gt; Meuwissen et al., 2001.
+
+--
+
+Furthermore, for a given QTL, several marker loci will capture its effect if using the RR-BLUP method.
 
 ---
 
