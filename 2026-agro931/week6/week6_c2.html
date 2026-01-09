@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Coancestry</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-02-28" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Coancestry
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Feb. 28, 2024
+]
+
+---
+
+
+
+
+# Individual Inbreeding: `\(F_X\)`
+
+
+`\begin{align*}
+F_{X} = (\frac{1}{2})^n(1 + F_{A})
+\end{align*}`
+
+- Where `\(n\)` is the number of individuals in the path from the individual’s sire (dad), through the common ancestor, to the dam (mom).
+
+- If multiple common ancestors, must sum the individual estimates.
+
+
+--
+------------
+
+The inbreeding coefficient of an individual X depends on the amount of common ancestry in its two parents.
+
+# Coancestry (Kinship): `\(f_{XY}\)`
+
+- Coancestry of two parents = inbreeding of their offspring
+
+- Probability of IBD of two haplotypes, one drawn from each parent X and Y, symbolized by `\(f_{XY}\)`
+ 
+
+---
+
+# Coancestry
+
+Coancestry ( `\(f_{XY}\)` ) is the probability of two gametes, one from each parent (X and Y), will contain haplotypes that are IBD
+
+### Example: `\(X \times Y\)` mating
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dog1.png" width=280&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+### Coancestry `\(f_{XY}\)`
+`\begin{align*}
+f_{XY} = &amp; \frac{1}{4}Pr(x_1 	\equiv y_1) \\
+&amp; + \frac{1}{4}Pr(x_1 	\equiv y_2) \\
+&amp; + \frac{1}{4}Pr(x_2 	\equiv y_1) \\
+&amp; + \frac{1}{4}Pr(x_2 	\equiv y_2) \\
+\end{align*}`
+]
+
+---
+
+# Case study 1: selfing
+
+### Coefficient of coancestry with one’s self.
+
+&lt;div align="center"&gt;
+&lt;img src="corn1.png" width=250&gt;
+&lt;/div&gt;
+
+--
+
+- If __ `\(x1x2\)`__ are sampled, the probability they are IBD depends on whether or not the individual could have obtained these gametes from a common ancestor
+
+- This is reflected by the inbreeding coefficient of the individual __ `\(F_X\)`__
+
+- If inbreeding = 0, this combination of gametes does NOT contribute to the possibility of IBD.
+
+
+---
+
+# Case study 1: selfing
+
+### Coefficient of coancestry with one’s self.
+
+&lt;div align="center"&gt;
+&lt;img src="corn1.png" width=280&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+f_{XX} = &amp; \frac{1}{4}Pr(x_1 	\equiv x_1) + \frac{1}{4}Pr(x_1 	\equiv x_2)  + \frac{1}{4}Pr(x_2 	\equiv x_1)  + \frac{1}{4}Pr(x_2 	\equiv x_2) \\
+= &amp; \frac{1}{2}(1 + F_X) \\
+\end{align*}`
+
+--
+
+This result suggests that `\(f_{XX} = \frac{1}{2}\)` if individual X is a non-inbred with `\(F_X=0\)`.
+
+---
+# Case study 2: Parent-Offspring
+
+Draw gametes at random (one from each individual X and its progeny A), what is probability they are IBD (or `\(f_{XA}\)`)?
+
+&lt;div align="center"&gt;
+&lt;img src="dog2.png" width=280&gt;
+&lt;/div&gt;
+
+---
+# Case study 2: Parent-Offspring
+
+Draw gametes at random (one from each individual X and its progeny A), what is probability they are IBD (or `\(f_{XA}\)`)?
+
+&lt;div align="center"&gt;
+&lt;img src="dog3.png" width=450&gt;
+&lt;/div&gt;
+
+--
+
+#### Eight possible combinations
+
+- 1) `\(x_1x_1\)` 2) `\(x_1x_2\)` 3) `\(x_2x_1\)` 4) `\(x_2x_2\)`
+
+- 5) `\(x_1y_1\)` 6) `\(x_1y_2\)` 7) `\(x_2y_1\)` 8) `\(x_2y_2\)`
+
+
+---
+# Case study 2: Parent-Offspring
+
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dog2.png" width=200&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+#### Eight possible combinations
+- 1) `\(x_1x_1\)` 2) `\(x_1x_2\)` 3) `\(x_2x_1\)` 4) `\(x_2x_2\)`
+
+- 5) `\(x_1y_1\)` 6) `\(x_1y_2\)` 7) `\(x_2y_1\)` 8) `\(x_2y_2\)`
+
+]
+
+------
+
+- If gamete from X is `\(x_1\)`, and gamete from A is `\(y_1\)`, the probability of IBD depends on if there is a relationship between X and Y (the parents of A)
+
+--
+
+  - This is quantified by the coefficient of coancestry between those parents `\(f_{XY}\)`
+
+  - In total, of the 8 possible combinations, 4 include a gamete from parent Y where this relationship holds
+
+---
+# Case study 2: Parent-Offspring
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="dog2.png" width=200&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+#### Eight possible combinations
+- 1) `\(x_1x_1\)` 2) `\(x_1x_2\)` 3) `\(x_2x_1\)` 4) `\(x_2x_2\)`
+
+- 5) `\(x_1y_1\)` 6) `\(x_1y_2\)` 7) `\(x_2y_1\)` 8) `\(x_2y_2\)`
+]
+
+------
+`\begin{align*}
+f_{XA} = &amp; \frac{1}{8}[Pr(x_1 	\equiv x_1) + Pr(x_1 	\equiv x_2)  + Pr(x_2 	\equiv x_1)  + Pr(x_2 	\equiv x_2) )\\
+&amp; + Pr(x_1 	\equiv y_1) + Pr(x_1 	\equiv y_2)  + Pr(x_2 	\equiv y_1)  + Pr(x_2 	\equiv y_2)] \\
+= &amp; \frac{1}{8}(1 + F_X+ F_X+1 + 4f_{XY})\\
+= &amp; \frac{1}{4}(1 + F_X + 2f_{XY})\\
+\end{align*}`
+
+--
+
+Assuming no inbreeding, i.e., `\(F_X = 0\)` and `\(f_{XY}=0\)`
+
+Coefficient of coancestry of parent-offspring, `\(f_{XA}=\frac{1}{4}\)`
+
+
+---
+
+# Relationship vs Coancestry
+
+### Coefficient of coancestry: 
+
+Pick an allele from X. The probability that you will __pick__ that allele in Y is the coefficient of coancestry.
+
+--
+
+### Coefficient of relationship: 
+
+Pick an allele from X. The probability that Y __has__ that allele is the coefficient of relationship
+
+--
+
+----------------
+
+Therefore: __coancestry = 1⁄2 relationship__
+
+---
+
+# Relationship vs Coancestry
+
+|  | Coancestry   | Relationship    | 
+| :-------: | : ------ : | :-------: | 
+| Parent-offspring  | 0.25    | 0.5    | 
+| Full-siblings     | 0.25    | 0.5    |
+| Half-siblings     | 0.125   | 0.25    |
+
+- Full-sibs have two parents in common
+
+- Half-sibs have one parent in common
+
+---
+
+# The basic rule relating coancestries
+
+&lt;div align="center"&gt;
+&lt;img src="cow_ped.png" width=350&gt;
+&lt;/div&gt;
+
+#### What is coancestry of X and Y (or `\(f_{XY}=Pr(x \equiv y)\)`)?
+
+--
+
+Coancestry between X and Y depends on relationship among parents
+
+`\begin{align*}
+f_{XY} &amp; = Pr(x \equiv y) \\
+&amp; = Pr(a 	\equiv c) + Pr(a 	\equiv d)  + Pr(b 	\equiv c)  + Pr(b 	\equiv d )
+\end{align*}`
+
+--
+
+Consider one part of this equation: `\(Pr(a \equiv c)\)`
+- This is the probability that a random allele from X is derived from individual A 
+- And a randomly chosen allele from Y is from individual C 
+- And these are IBD
+
+---
+
+# The basic rule relating coancestries
+
+&lt;div align="center"&gt;
+&lt;img src="cow_ped.png" width=350&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+f_{XY} &amp; = Pr(x \equiv y) \\
+&amp; = Pr(a 	\equiv c) + Pr(a 	\equiv d)  + Pr(b 	\equiv c)  + Pr(b 	\equiv d )
+\end{align*}`
+
+### Consider one part of this equation: `\(Pr(a \equiv c)\)`
+
+`\begin{align*}
+Pr(a 	\equiv c) &amp; =  \frac{1}{4}\frac{1}{4}Pr(a_1 	\equiv c_1) + \frac{1}{4}\frac{1}{4}Pr(a_1 	\equiv c_2)  + \frac{1}{4}\frac{1}{4}Pr(a_2 	\equiv c_1)  + \frac{1}{4}\frac{1}{4}Pr(a_2 	\equiv c_2) \\
+&amp; = \frac{1}{16}(Pr(a_1 	\equiv c_1) + Pr(a_1 	\equiv c_2) + Pr(a_2 	\equiv c_1) + Pr(a_2 	\equiv c_2)) \\
+&amp; = \frac{1}{16}(4f_{AC}) = \frac{1}{4}(f_{AC})
+\end{align*}`
+
+---
+
+# The basic rule relating coancestries
+
+### Repeat for the 3 other terms
+
+&lt;div align="center"&gt;
+&lt;img src="cow_ped.png" width=350&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+f_{XY} &amp; = Pr(x \equiv y) \\
+&amp; = Pr(a 	\equiv c) + Pr(a 	\equiv d)  + Pr(b 	\equiv c)  + Pr(b 	\equiv d ) \\
+&amp; = \frac{1}{4}(f_{AC} + f_{AD} + f_{BC}+ f_{BD})
+\end{align*}`
+
+--
+
+In summary, `\(f_{XY}\)` is equal to the average coefficient of coancestry between the parents of X and Y
+- Avg coancestry between parents: AC, AD, BC, and BD
+
+
+---
+
+# Relationship vs Coancestry
+
+|  | Coancestry   | Relationship    | 
+| :-------: | : ------ : | :-------: | 
+| Parent-offspring  | 0.25    | 0.5    | 
+| Full-siblings     | 0.25    | 0.5    |
+| Half-siblings     | 0.125   | 0.25    |
+
+- Full-sibs have two parents in common
+
+&lt;div align="center"&gt;
+&lt;img src="cow2.png" width=350&gt;
+&lt;/div&gt;
+
+--
+
+`\begin{align*}
+f_{XY} &amp; = Pr(x \equiv y) \\
+&amp; = \frac{1}{4}(f_{AA} + f_{AB} + f_{BA}+ f_{BB})
+\end{align*}`
+
+With no previous inbreeding or relationship, and `\(f_{AA}=f_{BB}\)`=1/2, `\(f_{XY}=1/4\)`
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Long-term results and interpretation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-04-19" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Long-term results and interpretation
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### April 19, 2024
+]
+
+---
+
+
+
+
+
+# Theoretical maximum limit
+
+### Without considering mutation
+
+`\begin{align*}
+&amp; R_{max} = 2N_eih^2\sigma_P = 2N_e i \frac{V_A}{V_P}\sigma_P = 2N_e i \frac{V_A}{\sigma_P}\\
+\end{align*}`
+
+Set an upper limit to what can be expected.
+
+--
+
+-----
+
+Long-term selection is expected to reduce the phenotypic variance of a population because of gradual shifts in allele frequency toward 0 or 1.
+
+--
+
+### Unexpected results
+
+
+However, the variance often surprisingly remains the same over long-term selection
+
+- Conversion of variance due to epistasis to `\(V_A\)`
+
+- Generation of new alleles through __mutation__
+
+
+
+---
+# Response upon long-term selection
+
+### Considering mutation
+
+Dr. __W. G. Hill__ in 1982, developed theory to include mutations as a wellspring of continuing new variation upon which selection could produce response.
+
+--
+
+Analogous to `\(R=2 N_e \times i \frac{V_A}{\sigma_P}\)`, he got:
+
+`\begin{align*}
+&amp; R = 2N_e \times \frac{iV_M}{\sigma_P} \\
+\end{align*}`
+
+- Where `\(V_M\)` is the __additive genetic variance__ arising from __new mutations of each generation__.
+
+---
+
+# Considering mutation
+
+`\begin{align*}
+&amp; R = \frac{2N_eiV_M}{\sigma_P} \\
+\end{align*}`
+
+- Where `\(V_M\)` is the __additive genetic variance__ arising from new mutations of each generation.
+
+--
+
+- And `\(V_M = 2pq(a_M + d_M(q-p))^2\)`
+
+--
+
+### Important notes:
+
+1. Additive variance of new mutation is a function of allele frequency.
+
+2. It takes at least 20 generations for mutations to be __high enough in frequency__.
+
+
+--
+
+### Take home message:
+
+Increasing the mutation rate through __mutagenesis__ is not expected to enhance response in the short term.
+
+
+---
+
+# Number of effective factors
+
+`\begin{align*}
+&amp; n = \frac{R_T^2}{8\sigma_A^2} \\
+\end{align*}`
+
+Where `\(n\)` is the number of loci with many assumptions:
+  - 1) unrelated loci 
+  - 2) same effect size
+
+--
+
+If takes LD into consideration, the above equation actually defines __the number of effective factors__.
+  - The numer of loci affecting a trait is larger than the number of effective factor, resulting from __LD between loci__ 
+
+--
+
+If considering  __large differences__ in effect size between loci
+  - Not to actually using the above formula, but rather understanding the nature of genetic variation
+
+
+---
+
+# Definition of Evolvability
+
+### General definition:
+
+The ability for a species or breeding population 
+- to adapt to its environment through __natural selection__
+- to be improved through __artificial selection__
+
+is known as __evolvability__.
+
+--
+
+### Other possible definition:
+
+- The ability of a population to respond to selection
+
+- The ability of a genomic architecture to facilitate change
+
+- The ability of a genetic system to produce and maintain potentially adaptive genetic variants
+
+- Propensity to evolve novel structures
+
+---
+
+# Definition of Evolvability
+
+### General definition:
+
+The ability for a species or breeding population 
+- to adapt to its environment through __natural selection__
+- to be improved through __artificial selection__
+
+is known as __evolvability__.
+
+### __Is evolvability evolvable?__
+  - Or is evolvability genetically determined?
+  - Does natural selection in favor populations that are more evolvable?
+
+---
+
+# E. Coli Long-term selection experiment (LTEE)
+
+.pull-left[
+- Richard Lenski and co-workers, at Michigan State University since 1988
+
+- Selection for fitness under glucose-limited conditions for __&gt; 50,000 generations__ with __12 independent populations__
+
+- Transferring 0.1 ml of culture into 9.9 ml of fresh medium __each day (about 6.6 life cycles)__
+]
+
+.pull-right[
+
+&lt;div align="center"&gt;
+&lt;img src="ecoli.png" height=350&gt;
+&lt;/div&gt;
+
+Rich makes the 10,000th transfer.
+]
+
+---
+# E. Coli Long-term selection experiment 
+
+__Response__: 
+- They store a sample every 75 days, or about 500 generations.
+- The __relative fitness__ can be compared to ancestral populations by competing two populations one another and counting the number of cells from each population.
+
+--
+
+&lt;div align="center"&gt;
+&lt;img src="response.png" height=250&gt;
+&lt;/div&gt;
+The figure is from Dawkins 2009.
+
+- Left: the response for 1/12 populations.
+- Right: responses of all 12 populations.
+
+
+---
+# Mutations
+
+
+&lt;div align="center"&gt;
+&lt;img src="mut.png" height=300&gt;
+&lt;/div&gt;
+&gt; Tenaillon et. al., 2016.
+
+Mutations accumulated over time.
+
+- Left: total mutations over time in the 12 LTEE.
+- Right: total mutations rescaled to reveal the trajectories for the six populations that did not become __hypermutable__ for point mutations, and for the other six before they evolved hypermutability.
+
+---
+# Mutations accumulated over time
+
+
+&lt;div align="center"&gt;
+&lt;img src="mutmap.png" height=380&gt;
+&lt;/div&gt;
+&gt; Barrick et. al., 2009.
+
+
+- Inside ring represents genome of clone from 2K generations.
+- Outside ring represents clone from 20K generations.
+- In between, intermediate clones.
+
+???
+Note that, mutations in the form of SNPs, deletions, insertions, and inversions have accumulated across the generations.
+
+---
+
+# Large effect mutation
+
+&lt;div align="center"&gt;
+&lt;img src="largeeffect.png" height=250&gt;
+&lt;/div&gt;
+&gt; Dawkins et. al., 2009.
+
+--
+
+- Increase in bacterial population density after 33,000 generations of one of the twelve populations. 
+
+- This population accumulated the __large effect mutations__ necessary to metabolize citrate, greatly increasing the food source availability.
+
+- And thus greatly increase in the bacterial population.
+
+---
+
+# Mutations affecting mutation rate
+
+Recently, Wielgoss et al., 2013 reported an interesting interaction between __mutations affecting mutation rate__, which involves mutations falling in genes controlling the cellular repair machinery.
+
+&lt;div align="center"&gt;
+&lt;img src="mm.png" height=350&gt;
+&lt;/div&gt;
+&gt; Wielgoss et. al., 2013.
+
+
+---
+
+# Mutations affecting mutation rate
+
+&lt;div align="center"&gt;
+&lt;img src="mm.png" height=300&gt;
+&lt;/div&gt;
+&gt; Wielgoss et. al., 2013.
+
+--
+
+- A mutation in __mutT__ between 20,000 and 30,000 generations dramatically increased the mutation rate.
+
+- Then, two mutations in __mutY__ (__mutY-E__ and __mutY-L__) between generations 35,000 and 40,000, which decreased the mutation rate
+
+---
+
+# Mutations affecting mutation rate
+
+&lt;div align="center"&gt;
+&lt;img src="mm.png" height=300&gt;
+&lt;/div&gt;
+&gt; Wielgoss et. al., 2013.
+
+
+
+- The interesting part is that because __mutY__ is involved in DNA repair, mutations in __mutY__ are expected to be hypermutators themselves.
+
+--
+
+- But in the background of the __mutT__, it actually decrease the mutation rate, because these mutations coincidentally repair the mutations made by __mutT__.
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

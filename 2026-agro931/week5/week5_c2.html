@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Test for selection</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-02-23" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Test for selection
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Feb. 23, 2024
+]
+
+---
+
+
+
+
+
+# Diversity measurement
+
+We now consider several statistics summarizing sequencing diversity that use information about __the frequency of derived alleles__
+  - As these capture more information about our sequencing data.
+
+--
+
+Fu and Li (1993) defined a statistic, `\(\epsilon_1\)`, based on the number of __derived singletons__ in a sample.
+
+`\begin{align*}
+\epsilon_1 = S_1 \\
+\end{align*}`
+
+- Where `\(S_1\)` is the number of segregating site with derived alleles found on only one haplotype.
+
+--
+
+If we don't know the ancestral status, we can aslo define a statistic, `\(\eta_1\)`, based on __all singletons__ in a sample
+
+`\begin{align*}
+\eta_1 = S_1^*\frac{n-1}{n} \\
+\end{align*}`
+
+- Where `\(S_1^*\)` is all the singletons.
+
+---
+# Diversity measurement
+
+A second summary statistic of diversity that uses ancestral state information is `\(\theta_H\)`:
+
+`\begin{align*}
+\theta_H = \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+\end{align*}`
+
+- Where `\(S_i\)` is again the number of segregating sites where `\(i\)` haplotypes carry the derived allele (Fay and Wu, 2000).
+
+--
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="daf.png" height=300&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-left[
+`\begin{align*}
+\theta_H = &amp; \frac{\sum_{i=1}^{n-1} i^2S_i}{n(n-1)/2} \\
+= &amp; \frac{(1^2 \times 4 + 2^2 \times 1 + 3^2 \times 2 + 6^2 \times 1 + 9^2 \times 2)}{10(10-1)/2} \\
+= &amp; 4.98
+\end{align*}`
+]
+
+---
+
+# Summary of the `\(\theta\)` statistics
+
+All of these statistics --- `\(\epsilon_1, \eta_1, \theta_H\)` --- are estimators of `\(\theta\)` 
+- at __mutation-drift__ equilibrium 
+- under an __infinite sites__ mutational model
+
+
+--
+
+Specifically,
+
+`\begin{align*}
+E(\epsilon_1) = E(\eta_1) = E(\theta_H)
+\end{align*}`
+
+These relationships arise because we know the expected shape of the allele frequency distribution under our standard neutral assumptions.
+
+
+
+---
+
+# Detecting selection using the SFS
+
+## The effects of positive selection
+
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="sfs1.png" height=300&gt;
+&lt;/div&gt;
+&gt; Hanh, 2020
+]
+
+.pull-right[
+- After sweep ended, new mutations started to accumulate.
+
+- These new mutations are by definition __singletons__
+ - there is only one origin in the sample with each derived allele.
+]
+
+The SFS can be skewed toward an excess of low-frequency polymorphisms relateive to the neutral spectrum.
+
+---
+# Detecting selection using the SFS
+
+## The effects of balancing selection
+
+Here we consider a simple scenario with a single biallelic site that has been under balancing selection for a long time.
+- Variation within each allelic class has been able to __build up__ and __reach equilibrium__
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="sfs3.png" height=200&gt;
+&lt;/div&gt;
+&gt; Bitarello et al., 2018
+]
+
+.pull-right[
+- Neutral mutations has accumulated both within and between allelic classes
+
+- Overall variation is higher
+
+- SNPs at intermediate frequency show __a distinctive "bump"__ in the SFS.
+]
+
+
+---
+# Detecting selection using SFS
+
+A straightforward way would be test a difference between two SFSs.
+- However, linkage among sites means that __SNPs at a locus are not independent__, which violates the assumptions made by almost all such test.
+
+--
+
+### Instead, we use `\(\theta\)` to detect deviations.
+
+- `\(\theta_\pi\)`: pairwise necleotide diversity.
+
+--
+
+- `\(\theta_W\)`: Watterson's `\(\theta\)`, using total number of segregating sites
+
+--
+
+- `\(\epsilon_1 = S_1\)`: the number of derived singletons in a sample.
+- `\(\eta_1\)`: based on all singletons in a sample.
+
+--
+
+Under the standard neutral model, all of these test statistics are expected to have a mean of 0.
+
+---
+
+# Tajima's D and related tests
+
+Tajima (1989) constructed the first test to detect difference between the SFS. 
+
+His statistic, `\(D\)`, was defined as:
+
+`\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}`
+
+--
+
+Fu and Li (1993) created similar statistics. These are known as Fu and Li's `\(D\)`, `\(F\)`, `\(D^*\)`, and `\(F^*\)`.
+
+`\begin{align*}
+D = \frac{\theta_\pi - \epsilon_1}{\sqrt{Var(\theta_\pi - \epsilon_1)}}
+\end{align*}`
+
+`\begin{align*}
+F = \frac{\theta_W - \epsilon_1}{\sqrt{Var(\theta_W - \epsilon_1)}}
+\end{align*}`
+
+`\begin{align*}
+D^* = \frac{\theta_\pi - \eta_1}{\sqrt{Var(\theta_\pi - \eta_1)}}
+\end{align*}`
+
+`\begin{align*}
+F^* = \frac{\theta_W - \eta_1}{\sqrt{Var(\theta_W - \eta_1)}}
+\end{align*}`
+
+---
+
+# Tajima's D and related tests
+
+Tajima (1989) constructed the first test to detect difference between the SFS. 
+
+His statistic, `\(D\)`, was defined as:
+
+`\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}`
+
+Originally designed to fit a normal distribution, however, none of these test statistics fit a parametric distribution very well.
+
+### Calculation
+
+- Only variable sites at each locus are needed
+- The number of invariant sites do not figure into any calculations.
+
+---
+
+# Interpreting values of the test statistics
+
+Tajima's `\(D\)`, Fu and Li's `\(D, F, D^*, F^*\)`:
+
+`\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}`
+
+After a sweep, all SNPs are low in frequency, `\(\theta_\pi\)` will be much lower than expected.
+
+While statistics based on counts of segregating sites (like `\(\theta_W\)`) will be much closer to their expected values.
+
+--
+
+------
+
+- All __negative__ when there has been a sweep
+
+
+---
+
+# Interpreting values of the test statistics
+
+Tajima's `\(D\)`, Fu and Li's `\(D, F, D^*, F^*\)`:
+
+`\begin{align*}
+D = \frac{\theta_\pi - \theta_W}{\sqrt{Var(\theta_\pi - \theta_W)}}
+\end{align*}`
+
+Balancing selection lead to __an excess of intermediate frequency neutral variation__ surrounding a selected site.
+
+In such case, `\(\theta_\pi\)` will be greater than `\(\theta_W\)` and other statistics.
+
+--
+
+------
+
+- All __negative__ when there has been a sweep
+
+- All __positive__ when there is balancing selection
+
+--
+
+- Are usually __significant__ when the values  `\(&gt; +2\)` or `\(&lt; -2\)`
+  - The exact thresholds depend on sample size, number of SNPs, etc.
+
+
+---
+# The power of the SFS
+
+The time window for positive selection is limited.
+- #### Too early during the sweep 
+  - Signal will be not strong enough
+  
+--
+  
+- #### Too late after the sweep
+  - Both levels and frequencies of variants will have returned to normal
+
+--
+
+Power also determined by the distance between our studied loci and the location of the selected site.
+- Because of the effect of the recombination.
+- Move far away enough and there will be no signal of selection at all.
+
+
+---
+
+# The Hudson, Kreitman, Aguadé (HKA) Test
+
+#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
+
+--
+
+Teases apart what is responsible for `\(\theta = 4N_e \mu\)`, testing for selection
+
+Under a neutral model:
+
+- All loci share the same `\(N_e\)`
+  
+- Neutral mutation rate `\(\mu\)` varies for different loci, but should be constant for the same locus in different species
+
+--
+  - High neutral mutation rate = high polymorphism and greater divergence between species
+  
+  -  Low rate = low polymorphism and less divergence
+  
+---
+
+# The Hudson, Kreitman, Aguadé (HKA) Test
+
+#### H0: If two loci evolve neutrally, they should have a similar ratio of polymorphism (within species) to divergence (between species)
+
+
+To determine level of divergence
+- Examine fixed differences between species
+- Then look at number of polymorphisms between species
+
+--
+
+### The _Adh_ locus example
+
+|  | _Adh_   | Control locus    | 
+| :-------: | : ------ : | :-------: | 
+| Polymorphism within species (S)  | 0.101    | 0.022   | 
+| Divergence between species (D)  | 0.056     | 0.052   | 
+| Ratio S/D (within/between)    | 1.80    | 0.42    | 
+| `\(\chi^2\)` P-value | 0.016 |     |     |
+
+--
+
+Conclusion: Excess polymorphism at _Adh_ may be due to balancing selection, but HKA can’t determine the true cause
+
+
+---
+
+# Cautions and Prospects
+
+- A review paper: [Detecting Natural Selection in Genomic Data](https://www.annualreviews.org/doi/abs/10.1146/annurev-genet-111212-133526) by Vitti, Grossman, and Sabeti, 2013.
+
+  - Frequency-based methods (i.e., Tajima's D, Fay &amp; Wu's H, Ewens-Watterson test)
+  - Gene-based methods (i.e., Ka/Ks, MKT)
+  - Mutation rate-based methods (i.e., HKA test)
+
+--
+
+Rejection of the null hypothesis (H0: neutral theory) is not necessarily the same as demonstrating natural selection!
+Because we have strong assumptions:
+1. Constant Ne
+2. Populations are at mutation-drift equilibrium
+3. No gene flow
+4. No recombination
+...
+
+--
+
+Most of these tests are weak! They have little power to detect deviation unless these deviations are large.
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

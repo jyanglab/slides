@@ -1,0 +1,396 @@
+---
+title: "Effective Pop Size"
+author: "Jinliang Yang"
+date: "Feb. 7, 2024"
+output:
+  xaringan::moon_reader: 
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Non-ideal population
+
+Allele frequencies of populations often behave as if the population is smaller than it is.
+
+--
+
+### Census population size ( $N$ or $N_c$ )
+
+- Just a count of how many individuals are there
+
+--
+
+### Effective population size ( $N_e$ )
+
+- Effective number of breeding individuals
+
+  - Describes the number of individuals that would __give rise to the observed sample variance__ _IF they bred in an ideal manner_
+
+--
+
+- In terms of inbreeding: $\Delta F = \frac{1}{2N}$
+- In a real population: $\Delta F = \frac{1}{2N_e}$, and  $N_e= \frac{1}{2\Delta F}$
+
+
+---
+
+# Causes of $N_e$
+
+Deviations in effective population size from the actual population size are caused by:
+
+--
+
+- #### Exclusion of closely related matings
+ 
+
+- #### Different number of males and females
+
+- #### Population bottleneck and expansion
+
+- #### Minimize inbreeding
+
+- #### Overlapping generations
+
+---
+
+# Exclusion of closely related matings
+
+In general, exclusion of closely related matings has very minimal effect on $N_e$
+
+### With self-fertilization excluded
+
+\begin{align*}
+N_e \approx N + 1/2
+\end{align*}
+
+--
+
+### With sib-mating also excluded
+
+\begin{align*}
+N_e \approx N + 2
+\end{align*}
+
+---
+
+# Different number of males and females
+
+In domestic animals, the sexes are often unequally represented among the breeding individuals!
+
+- No matter their relative numbers, males and females contribute equally to the alleles of the next generation
+
+- Have to consider sampling variance of each sex
+
+--
+
+$N_e$ is twice the harmonic mean and harmonic mean is
+
+\begin{align*}
+\frac{1}{\frac{1}{2}(\frac{1}{N_m} + \frac{1}{N_f})}
+\end{align*}
+
+--
+
+Therefore,
+\begin{align*}
+N_e & = 2 \times \frac{1}{\frac{1}{2}(\frac{1}{N_m} + \frac{1}{N_f})} \\
+\frac{1}{N_e} & = \frac{1}{4N_m} +  \frac{1}{4N_f} \\
+\end{align*}
+
+---
+
+# The rate of inbreeding
+
+Because
+\begin{align*}
+\frac{1}{N_e} & = \frac{1}{4N_m} +  \frac{1}{4N_f} \\
+\Delta F & = \frac{1}{2N_e} \\
+\end{align*}
+
+So, the rate of inbreeding,
+\begin{align*}
+V(p) = \Delta F = \frac{1}{2N_e} = \frac{1}{8N_m} +  \frac{1}{8N_f}
+\end{align*}
+
+--
+
+And $N_e$ due to unequal contribution of sexes
+
+\begin{align*}
+N_e = \frac{4N_mN_f}{N_m + N_f}
+\end{align*}
+
+- If the $N_m = N_f = N/2$, simply, $N_e = N$
+
+- If, for example, $4N_m = N_f = 4/5N$, now $N_e = \frac{16}{25}N$
+
+- Therefore, $N_e$ depends on the rarity of one sex
+
+
+---
+
+# Different number of males and females
+
+The effective population size as a function of the proportion of males
+```{r fig.align='center', fig.height=4}
+ne <- function(pnm=0.5, n=10){
+  nm <- n*pnm # number of male
+  nf <- n - nm # number of female
+  ne <- 4*nm*nf/(nm + nf)
+  return(ne)
+}
+p <- seq(from=0, to=1, by=0.01)
+plot(p, ne(pnm=p, n=10), xlab="Nm/N", ylab="Ne", type="l", lwd=3, ylim=c(0,40))
+lines(p, ne(pnm=p, n=20), type="l", lwd=3, col="red")
+lines(p, ne(pnm=p, n=40), type="l", lwd=3, col="blue")
+```
+
+---
+
+# Population bottleneck and expansion
+
+Refer to change in number from generation to generation. 
+  - It is another reason for $N_e$ deviation from $N$
+
+
+--
+-------------------
+
+\begin{align*}
+\Delta F = \frac{1}{2N_i}
+\end{align*}
+
+- Here, $N_i$ is the population size at generation $i$.
+
+--
+
+### Average $N_e$ across generations
+
+\begin{align*}
+N_e = \frac{t}{\frac{1}{N_1} + \frac{1}{N_2} + ... + \frac{1}{N_t}}
+\end{align*}
+
+- The smallest $N_i$ has the most impact on $N_e$
+  - Ex: pop size over 4 gens: 1000, 1000, 50, 1000
+  - Average pop size = 762.5; and $N_e$ = 174
+
+---
+
+# Variation in family size (fecundity)
+
+Family size is the number of progeny of an individual parent or pair of parents that survive to become founders.
+
+--
+
+### In a stable population
+
+- The family size ( $K$ ) of a mating pair = 2 (on average, one male and one female) 
+- The family size follows a Poisson distribution with __variance = mean = 2__ (or $K = V_k=2$).
+
+\begin{align*}
+N_e \approx \frac{4N}{V_k  + 2}
+\end{align*}
+
+- When variance $V_k =2$, the $N_e = N$
+
+---
+
+# Variation in family size (fecundity)
+
+As usual, things are never this simple.
+
+If males can mate with more than one female, $V_k$ is likely to be different for males and females ( $V_{km} \neq V_{kf}$ )
+
+
+\begin{align*}
+N_e & \approx \frac{4N}{\frac{V_{km} + V_{kf}}{2}  + 2} \\
+& \approx \frac{8N}{V_{km} + V_{kf}  + 4}
+\end{align*}
+
+--
+
+Variation of family size, $V_k$, is one of the most important causes of $N_e$ being less than $N$.
+
+---
+
+# Increase $N_e$ and minimize inbreeding
+
+\begin{align*}
+N_e = \frac{1}{2\Delta F} &  \approx \frac{4N}{V_k  + 2} \\
+& \approx 2N \\
+\end{align*}
+
+In many experiments, you want to minimize inbreeding
+
+--
+
+- By choosing individuals a parents, $V_k$ can be reduced below its random amount.
+
+- Can choose equal number of individuals from each family for the next generation, so $V_k=0$
+
+
+
+--
+
+What if unequal number of males and females?
+
+- Can eliminate variance by choosing one male from each sire and one female from each dam
+
+
+
+\begin{align*}
+N_e & \approx \frac{16N_mN_f}{N_m + 3N_f} \\
+\end{align*}
+
+> Gowe, Robertson, and Latter, 1959
+
+---
+
+# Swine example
+
+- A swine breeding program has 15 males and 45 females
+- Select to breed 1 son from each sire and one daughter of each dam
+- What is the expected inbreeding coefficients after one generation and 23 generations?
+
+\begin{align*}
+N_e & \approx \frac{16N_mN_f}{N_m + 3N_f} \\
+\end{align*}
+
+--
+
+```{r}
+ne <- function(nm, nf){
+  return(16*nm*nf/(nm + 3*nf))
+}
+ne(nm=15, nf=45)
+```
+
+--
+
+\begin{align*}
+\Delta F = \frac{1}{2N_e} = \frac{1}{2 \times 72} = 0.0069
+\end{align*}
+
+--
+
+\begin{align*}
+F_t & = 1 - (1 - \Delta F)^t \\
+F_{23} & = 1 - (1 - 0.0069)^{23} \\
+& = 0.15
+\end{align*}
+
+---
+
+# Swine example
+
+- A swine breeding program has 15 males and 45 females
+- ~~Select to breed 1 son from each sire and one daughter of each dam~~
+- __What if they had selected individuals and mated them at random__
+- What is the expected inbreeding coefficients after one generation and 23 generations?
+
+\begin{align*}
+N_e = \frac{4N_mN_f}{N_m + N_f} \\
+\end{align*}
+
+--
+
+```{r}
+ne1 <- function(nm, nf){
+  return(4*nm*nf/(nm + nf))
+}
+ne1(nm=15, nf=45)
+```
+
+--
+
+\begin{align*}
+\Delta F = \frac{1}{2N_e} = \frac{1}{2 \times 45} = 0.011
+\end{align*}
+
+--
+
+\begin{align*}
+F_t & = 1 - (1 - \Delta F)^t \\
+F_{23} & = 1 - (1 - 0.011)^{23} \\
+& = 0.22
+\end{align*}
+
+---
+# Overlapping generations
+
+Differences in lifetime add to differences of fertility in increasing the variance of family size.
+
+- This often confounds things
+  - i.e., longer lived individuals can contribute more progeny
+
+\begin{align*}
+N_e \approx \frac{4N_cL}{V_k  + 2}
+\end{align*}
+
+- $N_c$, number born in corhort defined by a time interval
+
+- $L$, length of generation (avg age of the parents at the birth of offspring)
+
+- $V_k$, variance in family size
+
+
+---
+
+# Other considerations for $N_e$
+
+> "Effective popopulation size and patterns of molecular evolution and variation" by [Charlesworth 2019](https://www.nature.com/articles/nrg2526) 
+
+- #### Formulas given only useful when population history is known
+
+- #### Drift randomly affects allele frequencies, and also creates LD between alleles
+
+- #### The amount of drift is proportional to $N_e$
+
+- #### LD breaks up with recombination
+
+
+---
+
+# $N_e$ from LD
+
+Expected LD as a function of recombination rate is:
+
+\begin{align*}
+E(r^2) \approx \frac{1}{1 + 4N_ec}
+\end{align*}
+
+- $r^2$, the expected LD
+- $c$, the recombination rate
+
+In this equation, as $N_ec$ approaches 0, $E(r^2)$ approaches 1.
+
+As $N_e$ and $c$ increase, $E(r^2)$ approaches 0.
+
+---
+
+# A real-world study
+
+> "Extent of linkage disequilibrium and effective population size in Finnish Landrace and Finnish Yorkshire pig breeds" [Uimari and Tapio, 2011](https://academic.oup.com/jas/article/89/3/609/4764206?login=true)
+
+### Inbreeding from pedigree data
+
+- 554,000 Yorkshire and 608,000 Landrace
+- Used equation $\Delta F = 1/2N_e$ 
+- Pedigree-based $N_e= 91$ and $61$ for Landrace and Yorkshire
+
+### Inbreeding from SNP data
+
+- Genotype data (60K SNP) for 86 Landrace and 32 Yorkshire boars
+- Estimated $r^2$ based upon haplotype frequencies
+- Estimated $c$ assuming 1 cm = 1 Mb
+- Genotype-based $N_e = 80$ and $55$ for Landrace and Yorkshire
+
+
+

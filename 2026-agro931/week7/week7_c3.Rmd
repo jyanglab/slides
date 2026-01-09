@@ -1,0 +1,91 @@
+---
+title: "Peer Review Discussion"
+author: "Jinliang Yang"
+date: "Mar. 8th, 2024"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+
+# Points to cover in the review:
+
+- ### 1. Novelty
+
+- ### 2. Quality
+
+- ### 3. Clarity
+
+- ### 4. Reproduciblity
+
+----------
+
+
+#### Muller’s Ratchet in Cassava
+> [Long et al., 2024](https://www.biorxiv.org/content/10.1101/2024.02.14.580345v1)
+
+--
+
+#### Urbanization and reduced genetic diversity in fish
+> [Karachaliou et al., 2024](https://www.biorxiv.org/content/10.1101/2024.02.20.581210v1)
+
+
+---
+
+# Points to cover in the review:
+### Novelty
+
+- What are the main claims of the paper and how significant are they? 
+
+- How novel is the work? Are the conclusions worth knowing? 
+
+- Is this paper important in its discipline? 
+
+- Are the claims properly placed in the context of the previous literature? 
+
+---
+
+# Points to cover in the review:
+
+### Quality
+
+- Do the data and analyses support the authors’ claims?   
+
+- Is the stated purpose achieved throughout the paper? 
+
+- Would additional work improve the manuscript? 
+
+- Is the experimentation design appropriate for the purpose of the study? 
+
+---
+
+# Points to cover in the review:
+
+### Clarity
+
+- Evaluate clarity, style and readability of the paper to scientists in the field.  
+
+- Would you recommend the author seek the service of a professional science writer?
+
+---
+
+# Points to cover in the review:
+
+### Reproduciblity
+
+- Are original data (and/or code) deposited in appropriate repositories?
+
+- Are details of the methodology sufficient to allow the experiments to be reproduced? 
+
+--
+
+

@@ -1,0 +1,318 @@
+---
+title: "Heritability: precision of estimation"
+author: "Jinliang Yang"
+date: "April 8, 2024"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Variance componenets in a sib design
+
+| Source        |    df     |  Sums of Squares      | MS      | E(MS) |
+| :------:      | :-------: | :--------------------:|:------: | :---------------: |
+| Sires         | s-1       |  $dn\sum\limits_{i=1}^s(\bar{p}_i - \bar{p})^2$ | $MS_s$ | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$   |
+| Dams (Sires)  | s(d-1)    |  $n\sum\limits_{i=1}^s\sum\limits_{j=1}^d(\bar{p}_{ij} - \bar{p}_i)^2$ | $MS_d$  | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Sibs (Dams)   | sd(n-1)   |  $\sum\limits_{i=1}^s\sum\limits_{j=1}^d\sum\limits_{k=1}^n(p_{ijk} - \bar{p}_{ij})^2$  | $MS_w$       | $= \sigma_w^2$ |
+
+--
+
+Under the assumption that individuals are random members of the same population:
+
+#### Phenotypic variance
+
+Phenotypic variance is the sum ( $\sigma_T^2$ ) of the three observational components:
+
+\begin{align*}
+ V_P & = \sigma_T^2 \\
+& = \sigma^2_s + \sigma^2_d + \sigma^2_w\\
+& = \sigma^2_A + \sigma^2_D + \sigma^2_E\\
+\end{align*}
+
+
+---
+# Interpretation of variance components
+
+<div align="center">
+<img src="sdkids.png" height=180>
+</div>
+
+
+### Among-sire component $\sigma_s^2$
+
+This is the __variance between the means of half-sib families__ 
+
+--
+
+- A key concept in the __analysis of variance (ANOVA)__ is that:
+  - The variance between groups is equal to the covariance within groups.
+- It therefore estimates the phenotypic __covariance of half sibs__.
+
+--
+
+\begin{align*}
+& \sigma_s^2 = Cov(HS) = \frac{1}{4}\sigma_A^2 \\
+\end{align*}
+
+
+
+---
+# Interpretation of variance components
+
+### Within-progeny component $\sigma_w^2$
+- Another key concept in the __analysis of variance (ANOVA)__ is:
+
+  - The total variance = between-group variance + within-group variance
+
+--
+
+- It follows that the  __within-group variance = total variance - covariance of members of the groups__.
+
+--
+
+Within-dams are full-sibs, therefore,
+
+\begin{align*}
+\sigma_w^2 &  = V_P - Cov(FS) \\
+& = \sigma^2_A + \sigma^2_D + \sigma^2_E - (\frac{1}{2}\sigma^2_A + \frac{1}{4}\sigma^2_D) \\
+& = \frac{1}{2}\sigma^2_A + \frac{3}{4}\sigma^2_D + \sigma^2_E
+\end{align*}
+
+
+---
+# Interpretation of variance components
+
+### Among-dam component $\sigma_d^2$
+
+\begin{align*}
+\sigma_d^2 &  = \sigma_P^2 - \sigma_s^2 - \sigma_w^2 \\
+& = \sigma^2_A + \sigma^2_D + \sigma^2_E - \frac{1}{4}\sigma_A^2 - (\frac{1}{2}\sigma^2_A + \frac{3}{4}\sigma^2_D + \sigma^2_E) \\
+& = \frac{1}{4}\sigma^2_A + \frac{1}{4}\sigma^2_D
+\end{align*}
+
+--
+
+Alternatively,
+
+\begin{align*}
+\sigma_w^2 &  = V_p - Cov(FS) \\
+\sigma_s^2 & = Cov(HS) \\
+\sigma_d^2 & = \sigma_P^2 - \sigma_s^2 - \sigma_w^2 \\
+& = V_p - Cov(HS) - V_p + Cov(FS) \\
+& = Cov(FS) - Cov(HS)
+\end{align*}
+
+
+---
+
+# Summary of the variance components
+
+<div align="center">
+<img src="sdkids.png" height=200>
+</div>
+
+| Observational  | Covariance and causal components  |  Estimated values  |
+| :------------: | :-------: | :----:  | 
+| Sires | $\sigma_s^2 = Cov(HS)$  | ?    |
+| Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | ? | 
+| Progeny | $\sigma_w^2 = V_P - Cov(FS)$  | ? |
+| Total | $\sigma_T^2 = V_P = \sigma_s^2 + \sigma_d^2 + \sigma_w^2$ | ? |
+| Sires + Dams   | $\sigma_s^2 + \sigma_d^2 = Cov(FS)$       | ? |
+
+---
+
+# Summary of the variance components
+
+| Observational  | Covariance and causal components  |  Estimated values  |
+| :------------: | :-------: |  | 
+| Sires | $\sigma_s^2 = Cov(HS)$  | $=\frac{1}{4}\sigma_A^2$    |
+| Dams  | $\sigma_d^2 = Cov(FS) - Cov(HS)$ | $=\frac{1}{4}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ | 
+| Progeny | $\sigma_w^2 = V_P - Cov(FS)$  | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2$ |
+| Total | $\sigma_T^2 = V_P = \sigma_s^2 + \sigma_d^2 + \sigma_w^2$ | $=\sigma_A^2 + \sigma_D^2 + \sigma_E^2$ |
+| Sires + Dams   | $\sigma_s^2 + \sigma_d^2 = Cov(FS)$       | $=\frac{1}{2}\sigma_A^2 + \frac{1}{4}\sigma_D^2$ |
+
+--
+
+#### Variance componenets in a sib design
+
+| Source        |    df     |  E(MS) | Estimated values |
+| :------:      | :----------: | :--------------------:| :------: |
+| Sires         | s-1       | $\sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$   | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2 + \frac{n}{4}\sigma_A^2 + \frac{n}{4}\sigma_D^2 + \frac{dn}{4}\sigma_A^2$ |
+| Dams (Sires)  | s(d-1)    | $\sigma_w^2 + n\sigma_d^2$ | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2 + \frac{n}{4}\sigma_A^2 + \frac{n}{4}\sigma_D^2$ |
+| Sibs (Dams)   | sd(n-1)   | $\sigma_w^2$ | $= \frac{1}{2}\sigma_A^2 +\frac{3}{4}\sigma_D^2$ |
+
+
+
+
+---
+# Example: a sib experiment
+
+- A balanced experimental data collected from 100 sires each mated to 4 dams.
+- Have body length records of 5 male and 5 female offspring from each dam.
+- Get $h^2$ for body length?
+
+--
+
+### __ANOVA__ table for body length:
+
+| Source         |    Mean Sq    | Value  |
+| :------------: | :-----------: | :-------: | 
+| Between Sires  |    $MS_s$      | =7.83      | 
+| Between Dams   |    $MS_d$     | =4.51     |
+| Within progenies |  $MS_w$    | =1.27    | 
+
+
+---
+# A sib experiment
+
+#### __ANOVA__ table for body length:
+
+| Source         |  Value    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Between Sires  | 7.83      |    $MS_s$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
+| Between Dams   | 4.51      |    $MS_d$     | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Within progenies | 1.27    |    $MS_w$     | $= \sigma_w^2$ |
+
+--
+
+First get $V_P$:  
+\begin{align*}
+& \sigma_w^2 = MS_w = 1.27 \\
+& \sigma_d^2 = (MS_d - \sigma_w^2)/n = (4.51-1.27)/10 = 0.324 \\
+& \sigma_s^2 = (MS_s - MS_d)/(dn) = (7.83-4.51)/(4 \times 10) = 0.083 \\
+& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.324 + 0.083 = 1.677 \\
+\end{align*}
+
+--
+
+Then get $V_A$:  
+\begin{align*}
+& \sigma^2_s = \sigma_A^2/4\\
+& \sigma_A^2 = 0.083 \times 4 = 0.332 \\
+\end{align*}
+
+
+---
+# A sib experiment
+
+#### __ANOVA__ table for body length:
+
+| Source         |  Value    |    Mean Sq    |  Expectation of MS |
+| :------------: | :-------: | :-------:     | :-------: |
+| Between Sires  | 7.83      |    $MS_s$     | $= \sigma_w^2 + n\sigma_d^2 + dn\sigma_s^2$ |
+| Between Dams   | 4.51      |    $MS_d$     | $= \sigma_w^2 + n\sigma_d^2$ | 
+| Within progenies | 1.27    |    $MS_w$     | $= \sigma_w^2$ |
+
+
+First get $V_P$:  
+\begin{align*}
+& \sigma^2_P = \sigma_d^2 + \sigma_s^2 + \sigma_w^2 = 1.27 + 0.324 + 0.083 = 1.677 \\
+\end{align*}
+
+
+Then get $V_A$:  
+\begin{align*}
+& \sigma_A^2 = 0.083 \times 4 = 0.332 \\
+\end{align*}
+
+--
+Finally $h^2$
+\begin{align*}
+& h^2 =  \frac{\sigma^2_A}{\sigma^2_P} =  0.332/1.677 = 0.198\\
+\end{align*}
+
+---
+
+# Precision and design
+
+### Data collection must be practical
+
+- time/cost/etc is usually the important determinant
+ 
+--
+
+### Be freedom from bias
+  - Random mating
+  - Absence of common environmental effects, e.g. maternal effects.
+
+
+---
+
+# Precision and design
+
+If we want to design a balanced experiment:
+- $s$ sires each mated to $d$ dams
+- Each dam has $n$ progenies.
+
+<div align="center">
+<img src="sdkids.png" height=200>
+</div>
+
+--
+
+#### Questions before experimental design?
+
+1. Parent-offspring, half-sib, full-sib, or others?
+1. How many families?
+2. Numbers of progeny?
+3. What if it is unbalanced?
+
+---
+
+# Sampling variance of $b$
+
+F & M page 178, the sampling variance of the parent-offspring regression ( $b$ ) is approximately:
+
+\begin{align*}
+SV_b = \frac{k[1+(n-1)t]}{nN}
+\end{align*}
+
+- $N$ families (offspring and parents)
+- $k$ parents (1 or 2) for each family
+- $n$ offspring per family
+- $t$ the intra-class correlation between offspring in a family
+
+--
+
+### One parent
+
+Sampling variance is minimal when $n=1$, i.e. $(n-1)t=0$.
+
+--
+
+The most efficient design:
+1. as many families as possible
+2. measure only one offspring per family
+
+---
+
+# One parent
+
+\begin{align*}
+& SV(h^2=2b) = 4/N \\
+& s.e.(h^2) = 2/\sqrt{N} \\
+\end{align*}
+
+--
+
+```{r, out.width='45%', fig.align='center', echo=TRUE}
+N=1:1000
+se <- 2/sqrt(N)
+
+plot(N, se, type="l", lwd=5, col="red")
+```
+
+
+
+
+
+

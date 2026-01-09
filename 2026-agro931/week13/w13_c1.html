@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Variability in response</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-04-15" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Variability in response
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### April 15, 2024
+]
+
+---
+
+
+
+
+
+# Improvement of response
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+The form of the breeder's equation allows us to clearly see how to maximize response to selection per unit of time.
+
+
+### 1. Reduce the generation interval
+
+### 2. Increase the heritability of the trait
+
+### 3. Increase the selection intensity
+
+### 4. Increase additive genetic variance
+
+---
+
+
+# Measuring response to selection
+
+Response to selection of two  populations of broilers.
+
+- One population was selected for __high__ 56-day body weight.
+- One population was selected for __low__ 56-day body weight.
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="poultry.jpg" height=200&gt;
+&lt;/div&gt;
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="longterm.png" height=250&gt;
+&lt;/div&gt;
+]
+
+
+--
+
+#### Causes of response variability to selection?
+
+--
+
+1. Genetic drift
+2. Sampling error in estimating the generation mean
+3. Differences in selection differential
+4. Environmental factors
+
+
+---
+
+# Measuring response to selection
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="longterm.png" height=250&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+#### Causes of response variability:
+1. Genetic drift
+2. Sampling error in estimating the generation mean
+3. Differences in selection differential
+4. Environmental factors
+]
+
+
+### How to separate these effects?
+
+--
+
+1. Maintain an unselected control population
+2. Practice divergent selection
+3. Or carry out replicated, parallel selection programs
+
+
+---
+
+# The Breeder's equation
+
+### The complex version
+
+`\begin{align*}
+&amp; R =  \frac{i h^2\sigma_P}{L} \\
+\end{align*}`
+
+--
+
+### The simple version
+
+`\begin{align*}
+&amp; R =  h^2 S \\
+\end{align*}`
+
+--
+
+The heritability, therefore
+
+`\begin{align*}
+&amp; h^2  = \frac{R}{S} \\
+\end{align*}`
+
+
+---
+
+# Realized heritability
+
+.pull-left[
+
+`\begin{align*}
+&amp; h_R^2 =  \frac{R}{S} \\
+\end{align*}`
+
+Shows how the response is related to the selection differential
+]
+
+--
+
+.pull-right[
+
+```r
+S &lt;- c(5, 6, 5, 6, 6, 10)
+R &lt;- c(3, 2, 1, 3, 2, 3)
+df &lt;- data.frame(s=cumsum(S), 
+                 r=cumsum(R))
+
+library(ggplot2)
+ggplot(df, aes(x=s, y=r)) + 
+  geom_point(color='red', size = 4) + 
+  geom_smooth(method=lm, color='#2C3E50')
+```
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Realized heritability
+
+.pull-left[
+
+`\begin{align*}
+&amp; h_R^2 =  \frac{R}{S}\\
+\end{align*}`
+
+Shows how the response is related to the selection differential
+
+- The selection differential are summed across the generations plotted against the cumulative response.
+
+- The slope of the regression line fitted to the points is equal to the average value of R/S.
+
+]
+
+
+
+.pull-right[
+
+```r
+S &lt;- c(5, 6, 5, 6, 6, 10)
+R &lt;- c(3, 2, 1, 3, 2, 3)
+df &lt;- data.frame(s=cumsum(S), 
+                 r=cumsum(R))
+
+library(ggplot2)
+ggplot(df, aes(x=s, y=r)) + 
+  geom_point(color='red', size = 4) + 
+  geom_smooth(method=lm, color='#2C3E50')
+```
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Realized heritability
+
+`\begin{align*}
+&amp; h_R^2 =  \frac{R}{S} \\
+\end{align*}`
+
+### Be cautious:
+
+1. Reduces response to selection after first generation for high heritability traits (__Bulmer effect__)
+
+--
+
+  - For complex traits, each allele carries a small effect. Therefore, allele frequencies changes are gradual and change in variance through changes in individual allele frequency is slow.
+  
+--
+
+  - However, what is known as the __Bulmer effect__ immediately changes the variance of complex traits subjected to one generation of selection.
+
+---
+
+# Realized heritability
+
+`\begin{align*}
+&amp; h_R^2 =  \frac{R}{S} \\
+\end{align*}`
+
+### Be cautious:
+
+1. Reduces response to selection after first generation for high heritability traits (__Bulmer effect__)
+
+2. Systematic changes in environment or inbreeding depression will affect response.
+  - Comparison with control line can adjust for these effects.
+
+--
+
+3. Random drift affect response.
+  - The magnitude of random drift can be assessed by replicated selection.
+
+---
+
+# A breeding simulation example:
+
+In a chicken breeding program, the breeders aim to increase the 56-day body weight.
+They plan to conduct 40 discrete generations of selection.
+
+--
+### Assumptions:
+
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by ~100 genetic loci (or QTLs). 
+
+2. These QTL are equally split across 39 chromosomes so that there are about 3 QTLs per chromosome. 
+
+3. `\(h^2=0.5%\)`
+
+---
+
+# A breeding simulation example:
+
+## Breeding schemes:
+
+- The base population consists of 100 animals, of which 50 are male and 50 are female. 
+- Suppose the breeders can only handle 100 replacement animals per generation.
+
+--
+
+#### 1. Balanced selection scheme
+
+- In each generation, the best 30 males are selected on the basis of their phenotypic value for a single polygenic trait (56-day body weight) and mated to the females ( `\(N=30\)` ) to produce 100 replacement animals. 
+
+
+#### 2. Unbalanced selection scheme
+- In each generation, the best 10 males are selected on the basis of their phenotypic value for a single polygenic trait (56-day body weight) and mated to the females ( `\(N=50\)` ) to produce 100 replacement animals. 
+
+
+
+---
+# Breeding simulation
+
+### Simulate a founder population with genomic data
+
+[AlphaSimR](https://github.com/gaynorr/AlphaSimR)
+  - An R package for breeding program simulations
+  - Here is the [introduction](https://cran.r-project.org/web/packages/AlphaSimR/vignettes/intro.html) of the package
+
+--
+
+### Creating founder population
+
+
+```r
+# install.packages("AlphaSimR")
+library(AlphaSimR)
+founderPop = runMacs(nInd=100, nChr=39, segSites=10000)
+founderPop
+```
+
+```
+## An object of class "MapPop" 
+## Ploidy: 2 
+## Individuals: 100 
+## Chromosomes: 39 
+## Loci: 390000
+```
+
+
+---
+# Breeding simulation
+
+### Simulate the phenotype
+
+1. The quantitative trait, 56-day body weight, is modeled as being controlled by 100 genetic loci (or QTLs). 
+2. These QTL are equally split across 39 chromosomes so that there are 3 QTLs per chromosome. 
+3. `\(h^2=0.5\)`
+
+--
+
+### Setting Simulation Parameters
+
+
+```r
+SP = SimParam$new(founderPop)
+# The ‘A’ at the end indicates that the trait’s QTL only have additive effects.
+SP$addTraitA(nQtlPerChr=3) 
+
+# Systematic assignment is used to ensure that there is always equal numbers
+# of males and females.
+SP$setSexes("yes_sys")
+
+SP$setVarE(h2=0.5)
+```
+
+
+---
+# Conduct the selection
+
+### Simulating the breeding program
+
+- This step will take the haplotypes in `founderPop` and the information in `SP` to create an object of `Pop-class`.
+
+
+```r
+set.seed(12345)
+pop1 = newPop(founderPop)
+pop2 = newPop(founderPop)
+# compute the mean in the current generation
+genMean1 = meanG(pop1)
+genMean2 = meanG(pop2)
+for(generation in 1:40){
+  pop1 = selectCross(pop=pop1, nFemale=50, nMale=10, use="pheno", nCrosses=100)
+  pop2 = selectCross(pop=pop2, nFemale=30, nMale=30, use="pheno", nCrosses=100)
+  genMean1 = c(genMean1, meanG(pop1))
+  genMean2 = c(genMean2, meanG(pop2))
+}
+```
+
+---
+# Examining the Results
+
+
+```r
+plot(0:40, genMean1, type="l", col="blue", lwd=3, 
+     xlab="Generation", ylab="Mean Genotypic Value")
+lines(0:40, genMean2, col="red", lwd=3)
+```
+
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+# Conduct the selection
+
+### Compare different selection schemes
+
+
+```r
+set.seed(12345)
+pop1 = newPop(founderPop)
+pop2 = newPop(founderPop)
+pop3 = newPop(founderPop)
+# compute the mean in the current generation
+genMean1 = meanG(pop1)
+genMean2 = meanG(pop2)
+genMean3 = meanG(pop3)
+for(generation in 1:40){
+  pop1 = selectCross(pop=pop1, nFemale=30, nMale=30, use="bv", nCrosses=100)
+  pop2 = selectCross(pop=pop2, nFemale=30, nMale=30, use="pheno", nCrosses=100)
+  pop3 = selectCross(pop=pop3, nFemale=30, nMale=30, use="rand", nCrosses=100)
+  genMean1 = c(genMean1, meanG(pop1))
+  genMean2 = c(genMean2, meanG(pop2))
+  genMean3 = c(genMean3, meanG(pop3))
+}
+```
+
+---
+# Examining the Results
+
+
+```r
+plot(0:40, genMean1, type="l", col="blue", lwd=3, 
+     xlab="Generation", ylab="Mean Genotypic Value")
+lines(0:40, genMean2, col="red", lwd=3)
+lines(0:40, genMean3, col="green", lwd=3)
+```
+
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-10-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

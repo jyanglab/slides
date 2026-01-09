@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genetic components of variance</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-03-27" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Genetic components of variance
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### Mar. 27, 2024
+]
+
+---
+
+
+
+
+# Expectation and Variance 
+
+### Expectation `\(E(X)\)`:  
+- A measure of the __mean value__ of a variable
+
+`\begin{align*}
+E[X] &amp;= \mu_X \\
+&amp;= \sum\limits_{i=1}^kf(x_i)Pr(X = x_i)
+\end{align*}`
+
+
+--
+
+### Variance `\(Var(X)\)`: 
+- A measure of the __spread__ of a variable
+
+`\begin{align*}
+Var(X) &amp; = \sigma_X^2 \\
+       &amp; = E[X^2] - E[X]^2 \\
+\end{align*}`
+
+
+---
+# An example: Tobacco leaves
+
+Number of leaves per plant in a F1 population (N=25) crossed from two inbred lines of tobacco:
+
+|   |   |   |   |   |
+|--:|--:|--:|--:|--:|
+| 18| 16| 16| 15| 15|
+| 15| 14| 13| 16| 16|
+| 16| 16| 16| 15| 16|
+| 18| 18| 14| 15| 15|
+| 15| 17| 16| 16| 16|
+
+--
+
+Then, made N=25 F2 plants:
+
+|   |   |   |   |   |
+|--:|--:|--:|--:|--:|
+| 16| 16| 20| 21| 14|
+| 20| 14| 13| 18| 17|
+| 19| 14| 12| 15| 13|
+| 17| 15| 15| 14| 15|
+| 14| 17| 16| 18| 13|
+
+---
+# An example: Tobacco leaves
+
+### Mean and variance of F1 and F2 populations?
+
+```r
+f1 &lt;- as.vector(as.matrix(f1))
+f2 &lt;- as.vector(as.matrix(f2))
+mean(f1)
+```
+
+```
+## [1] 15.72
+```
+
+```r
+mean(f2)
+```
+
+```
+## [1] 15.84
+```
+
+--
+
+
+```r
+var(f1)
+```
+
+```
+## [1] 1.46
+```
+
+```r
+var(f2)
+```
+
+```
+## [1] 5.973333
+```
+
+---
+# Tobacco example
+
+
+
+```r
+library(ggplot2)
+df &lt;- rbind(data.frame(number=f1, pop="F1"), data.frame(number=f2, pop="F2"))
+ggplot(df, aes(x=pop, y=number, fill=pop)) +
+  scale_fill_manual(values=c("#E69F00", "#56B4E9")) +
+  geom_violin(trim=FALSE) +
+  guides(fill=guide_legend(title="Popl.s")) +
+  theme_classic() +
+  theme(legend.position=c(0.2, 0.8), axis.text=element_text(size=20),
+              axis.title=element_text(size=20))
+```
+
+&lt;img src="w9_c1_files/figure-html/unnamed-chunk-3-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Covariance
+
+To quantify to what extent the two variables **co-vary**.
+
+$$
+`\begin{aligned}
+Cov(X, Y) &amp; = \sigma_{XY} \\
+&amp; = E([X - E(X)][Y - E(Y)]) \\
+&amp; = E(XY) - E(X)E(Y) \\
+\end{aligned}`
+$$
+
+where,
+
+$$
+`\begin{aligned}
+E(XY) = \sum_i \sum_j x_i y_j Pr(X = x_i, Y = y_j)
+\end{aligned}`
+$$
+
+--
+
+### The variance of a sum
+
+`\begin{align*}
+&amp; Var(X+Y) = Var(X) + Var(Y) + 2Cov(X, Y) \\
+&amp; \sigma_{X+Y}^2 = \sigma_X^2 + \sigma_Y^2 + 2\sigma_{XY} \\
+\end{align*}`
+
+
+---
+# Phenotypic variance partitioning
+
+### Phenotypic model: P = G + E
+
+`\begin{align*}
+&amp; Var(P) = Var(G+E) \\
+&amp; \sigma_{P}^2 = \sigma_{G+E}^2 = \sigma_G^2 + \sigma_E^2 + 2\sigma_{GE}
+\end{align*}`
+
+--
+
+- `\(\sigma_{G}^2\)` is the variance of the genotypic effects
+- `\(\sigma_{E}^2\)` is the variance of the environmental deviation
+- `\(\sigma_{GE}\)` is the covariance between genotypic effects and environmental deviation. **Normally, we assume `\(\sigma_{GE} = 0\)`**
+
+--
+
+Therefore,
+`\begin{align*}
+&amp; \sigma_{P}^2 = \sigma_G^2 + \sigma_E^2
+\end{align*}`
+
+---
+
+# Genetic variance partitioning 
+
+The genotypic value could be partitioned into the breeding value and dominance deviation.
+
+### Genotypic model:  `\(G = A + D\)`
+
+`\begin{align*}
+&amp; \sigma_{G}^2 = \sigma_A^2 + \sigma_D^2
+\end{align*}`
+
+--
+
+### Breeding Value:  `\(A = \alpha_i + \alpha_j\)`
+
+`\begin{align*}
+&amp; \sigma_{A}^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2
+\end{align*}`
+
+Therefore,
+
+`\begin{align*}
+&amp; \sigma_{G}^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 + \sigma_{\delta_{ij}}^2
+\end{align*}`
+
+---
+# Epistatic effect for multiple loci
+
+### Genotypic effect model
+
+`\begin{align*}
+&amp; G_{ijkl} = \mu + (\alpha_i + \alpha_j + \delta_{ij}) + (\alpha_k + \alpha_l + \delta_{kl}) + I_{ijkl}
+\end{align*}`
+
+--
+### Genotypic variance
+
+`\begin{align*}
+\sigma_{G_{ijkl}}^2 = &amp; (\sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 + \sigma_{\delta_{ij}}^2) \\
+                    &amp; + (\sigma_{\alpha_k}^2 + \sigma_{\alpha_l}^2 + \sigma_{\delta_{kl}}^2) \\
+                    &amp; + \sigma^2_{I_{ijkl}} \\
+                    = &amp; (\sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 + \sigma_{\alpha_k}^2 + \sigma_{\alpha_l}^2 ) \\
+                    &amp; + (\sigma_{\delta_{ij}}^2 + \sigma_{\delta_{kl}}^2) \\
+                    &amp; + \sigma^2_{I_{ijkl}}\\
+                    = &amp; \sigma_A^2 + \sigma_D^2 + \sigma_I^2 \\
+\end{align*}`
+
+
+---
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    |    |  `\(-2q^2d\)`   |   |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` |   |  `\(2pqd\)`   |   |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   |   |  `\(-2p^2d\)`   |   |
+
+--
+
+#### Variance `\(Var(X)\)`: **a measure of the spread of a variable**
+`\begin{align*}
+Var(X) &amp; = \sigma_X^2 = V_A \\
+       &amp; = E[X^2] - E[X]^2 \\
+\end{align*}`
+
+--
+### What is the `\(\sigma^2_{A}\)` and `\(\sigma^2_{D}\)`?
+
+Remember that the means of **breeding value** and **dominance deviation** are **0**.
+
+
+
+
+
+
+---
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    | `\((2q\alpha)^2\)`  |  `\(-2q^2d\)`   | `\((-2q^2d)^2\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` | `\((q-p)^2\alpha^2\)` |  `\(2pqd\)`   | `\((2pqd)^2\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   | `\((-2p\alpha)^2\)` |  `\(-2p^2d\)`   | `\((-2p^2d)^2\)` |
+
+`\begin{align*}
+Var(X) &amp; = \sigma_X^2 = V_A \\
+       &amp; = E[A^2] - E[A]^2 \\
+       &amp; = E[A^2]
+\end{align*}`
+
+The __additive genetic variance__ in a HWE population is:
+
+--
+
+`\begin{align*}
+\sigma_A^2 &amp; = p^2(2q\alpha)^2 + 2pq(q-p)^2\alpha^2 + q^2(-2p\alpha)^2 \\
+           &amp; = 2pq\alpha^2(2pq + (q-p)^2 + 2pq) \\
+           &amp; = 2pq\alpha^2(p+q)^2 \\
+           &amp; = 2pq\alpha^2 \\
+           &amp; = 2pq(a + d(q-p))^2 \\
+\end{align*}`
+  
+  
+---
+# Additive and dominance variance
+
+
+| Genotype  | Freq      | Breeding Value | `\(A^2\)`  | Dominance Deviation  | `\(D^2\)` |
+| :-------: | :-------: | :-----------: | :-------: | :-------: | :-------: | :-------: |
+| `\(A_1A_1\)`  | `\(p^2\)`     | `\(2q\alpha\)`    | `\((2q\alpha)^2\)`  |  `\(-2q^2d\)`   | `\((-2q^2d)^2\)` |
+| `\(A_1A_2\)`  | `\(2pq\)`     | `\((q-p)\alpha\)` | `\((q-p)^2\alpha^2\)` |  `\(2pqd\)`   | `\((2pqd)^2\)` |
+| `\(A_2A_2\)`  | `\(q^2\)`     | `\(-2p\alpha\)`   | `\((-2p\alpha)^2\)` |  `\(-2p^2d\)`   | `\((-2p^2d)^2\)` |
+
+
+
+Likewise, the variance due to dominance deviations in a HWE population is:
+
+`\begin{align*}
+Var(X) &amp; = \sigma_X^2 = V_D \\
+       &amp; = E[D^2] - E[D]^2 \\
+       &amp; = E[D^2]
+\end{align*}`
+--
+
+`\begin{align*}
+\sigma_D^2 &amp; = p^2(-2q^2d)^2 + 2pq(2pqd)^2 + q^2(-2p^2d)^2 \\
+           &amp; = 4p^2q^2d^2(q^2 + 2pq + p^2) \\
+           &amp; = 4p^2q^2d^2 \\
+           &amp; = (2pqd)^2 \\
+\end{align*}`
+  
+
+---
+# Graphical Representation
+
+
+```r
+a = 1
+*d = 0*a # pure additive
+q = seq(0, 1, by=0.01)
+p = 1 - q
+va &lt;- 2*p*q*(a + d*(q-p))^2
+vd &lt;- (2*p*q*d)^2
+vg &lt;- va + vd
+plot(p, vg, lty=1, lwd=5, type="l", xlab="Allele Freq", ylab="Variance")
+lines(p, va, lty=2, lwd=5, col="red")
+lines(p, vd, lty=3, lwd=5, col="blue")
+```
+
+&lt;img src="w9_c1_files/figure-html/unnamed-chunk-4-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Graphical Representation
+
+&lt;img src="w9_c1_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+- Genetic variance components are typically maximized at intermediate allele frequencies. 
+- Additive genetic variance typically makes up most of the genetic variance except in unusual situations, such as when overdominant gene action is present or allele frequencies are at the extremes.
+
+
+---
+
+# Variance due to disequilibrium
+
+Consider two loci that affect a trait. The genotypic value across both loci is
+
+### G'' = G' + G
+
+`\begin{align*}
+&amp; Var(G'') = Var(G'+G) \\
+&amp; \sigma_{G''}^2 = \sigma_{G'}^2 + \sigma_G^2 + 2\sigma_{G'G} \\
+&amp; \sigma_{G''}^2 = \sigma_{G'}^2 + \sigma_G^2 + 2E[(G' - \mu_{G'})(G - \mu_G)]
+\end{align*}`
+
+--
+
+- #### When the loci are independent, the covariance term equals to zero.
+
+--
+
+- #### When loci in LD, what do you think the covariance term will be?
+  - i.e., positive or negative?
+
+---
+
+# Variance due to disequilibrium
+
+`\begin{align*}
+&amp; \sigma_{G''}^2 = \sigma_{G'}^2 + \sigma_G^2 + 2E[(G' - \mu_{G'})(G - \mu_G)] \\
+&amp; \sigma_{G''}^2 = \sigma_{G'}^2 + \sigma_G^2 + 2E(G' - \mu_{G'}) \times E(G - \mu_G)
+\end{align*}`
+
+### Negative covariance
+Two loci are linked in repulsion phase. =&gt; reduce the genetic variance.
+
+&lt;div align="center"&gt;
+&lt;img src="negcov.png" height=60&gt;
+&lt;/div&gt;
+
+--
+
+### Positive covariance
+Two loci are in coupling linkage, i.e., assortative mating.
+
+&lt;div align="center"&gt;
+&lt;img src="poscov.png" height=50&gt;
+&lt;/div&gt;
+
+---
+
+# Variance due to GxE interaction
+
+
+&lt;img src="w9_c1_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+Here, we have two genotypes (or varieties) A and B, tested in two different locations.
+
+---
+
+# Variance due to GxE interaction
+
+Often time, different genotypes react to different environments differently.
+
+&lt;img src="w9_c1_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Variance due to GxE interaction
+
+In this case, 
+
+`\begin{align*}
+&amp; P = G + E + G \times E \\
+\end{align*}`
+
+--
+Or,
+`\begin{align*}
+&amp; P = G + E + I_{GE} \\
+\end{align*}`
+where `\(I_{GE}\)` is the __interaction effect__ between genotype and environment.
+
+--
+
+And the variance is,
+
+`\begin{align*}
+&amp; \sigma_P^2 = \sigma^2_G + \sigma^2_E + 2Cov(G, E) + \sigma^2_{I_{GE}} \\
+\end{align*}`
+
+--
+
+- The covariance between genetic and non-genetic effects is often zero except in special circumstances.
+
+- The variance due to interaction between genotype and environment is considered a non-genetic variance and is typically pooled in with `\(\sigma_E^2\)`.
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

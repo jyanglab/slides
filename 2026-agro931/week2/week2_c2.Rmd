@@ -1,0 +1,323 @@
+---
+title: "Effectiveness of Selection"
+author: "Jinliang Yang"
+date: "Jan. 31, 2024"
+output:
+  xaringan::moon_reader: 
+    css: ["default", "../../asset/unl-150.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   |
+| :-------: | : ------ : | :-------: | :-------: |
+| Initial frq           | $p^2$    | $2pq$    | $q^2$     | 
+| Coefficient of selection | $0$   | $0$      | $s$       |
+| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   | 
+| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |
+
+---
+
+# Selection against the recessive allele
+
+- Gametic contribution is the product of genotype freq and fitness
+
+|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   | Total |
+| :-------: | : ------ : | :-------: | :-------: | :-------: |
+| Initial frq           | $p^2$    | $2pq$    | $q^2$     |  $1$        |
+| Coefficient of selection | $0$   | $0$      | $s$       |             |
+| Fitness ( $w$ )   |  $1$        |  $1$        |  $1-s$   |            |
+| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |  $1-sq^2$ |
+
+
+
+--
+
+### After one generation of selection against recessive
+
+Note that there has been a proportionate loss of $sq^2$ due to the selection.
+
+The $A_1$ allele freq, 
+
+
+\begin{align*}
+p_1 & = \frac{(2p^2 + 2pq)/2}{p^2 + 2pq + q^2(1-s)} = \frac{p(p+q)}{1 -sq^2}\\
+& = \frac{p}{1- sq^2} \\
+\end{align*}
+
+---
+
+# Selection
+
+### After one generation of selection against recessive
+
+
+\begin{align*}
+p_1  = \frac{p}{1- sq^2} \\
+\end{align*}
+
+### Change in allele freq after one generation
+
+\begin{align*}
+\Delta p & = p_1 - p_0  = \frac{p}{1- sq^2} - p\\
+& = \frac{p-p(1-sq^2)}{1-sq^2} \\
+& = \frac{spq^2}{1 - sq^2}
+\end{align*}
+
+--
+
+Then,
+
+\begin{align*}
+\Delta q & = -\Delta p = -\frac{spq^2}{1 - sq^2}
+\end{align*}
+
+---
+
+# Simulation for selection against recessive
+
+```{r fig.align='center', fig.height=5}
+deltap <- function(s, p){
+  q <- 1-p
+  return((s*p*q^2)/(1 - s*q^2))
+}
+
+p <- seq(0, 1, by=0.01)
+plot(p, deltap(s=0.4, p), type="l", lwd=3, col="red", xlab="p", ylab="|p1 - p0|")
+lines(p, deltap(s=0.2, p), lty=2, lwd=3, col="blue")
+```
+
+
+---
+
+# Effectiveness of Selection
+
+### Initial allele freq
+
+  - Most effective at intermediate freq
+  
+  - Inefficient when targeted recessive allele is rare
+
+--
+
+### Degree of dominance
+
+- It will become more complex
+
+---
+
+# Degree of dominance
+
+|                    | $A_1A_1$   | $A_1A_2$   | $A_2A_2$   | Total |
+| :-------: | : ------ : | :-------: | :-------: | :-------: |
+| Initial frq           | $p^2$    | $2pq$    | $q^2$     |  $1$        |
+| Fitness ( $w$ ): recessive  |  $1$        |  $1$        |  $1 -s$   |   
+| Fitness ( $w$ ): dominance   |  $w_{11}$        |  $w_{12}$        |  $w_{22}$   |            |
+| Gametic contribution | $p^2$   | $2pq$    | $q^2(1-s)$    |  $1-sq^2$ |
+
+--
+
+### Recessive:
+
+\begin{align*}
+p_1 & = \frac{p^2 + pq}{p^2 + 2pq + q^2(1-s)} = \frac{p}{1- sq^2} \\
+\end{align*}
+
+--
+
+### Degree of dominance:
+
+\begin{align*}
+p_1 & = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}
+
+---
+
+# Average fitness
+
+\begin{align*}
+p_1 & = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}
+
+\begin{align*}
+\bar{w} = p^2w_{11} + 2pqw_{12} + q^2w_{22} \\
+\end{align*}
+
+- $w_{11}$: genotype specific fitness for $A_1A_1$
+- $w_{12}$: genotype specific fitness for $A_1A_2$
+- $w_{22}$: genotype specific fitness for $A_2A_2$
+
+\begin{align*}
+\Delta p & = \frac{p^2w_{11} + pqw_{12}}{\bar{w}} - p \\
+& = \frac{pq(p(w_{11} - w_{12}) + q(w_{12} - w_{22}))}{\bar{w}}
+\end{align*}
+
+---
+
+# Practice Problem
+
+In a population of fireflies, allele $A_1$ results in a brighter light. We wish to select for the $A_1$ allele to save money on electricity.
+
+--
+
+36% of the population is $A_1A_1$. We spray all the dimly lit $A_2A_2$ individuals so they are sterile but estimate that we missed 10%, which randomly mate with the others.
+
+--
+
+### Questions:
+
+- What is the fitness of each genotype?
+
+- What type of dominance model is this?
+
+- What is the proportion of fireflies _carrying_ the unwanted, $A_2$ allele after one generation of selection?
+
+
+---
+
+# Average fitness
+
+- Define each of your variables ( $A_1$, $A_2$, $p$, $q$ )
+
+- Identify % survial/contribution of each genotype
+
+- Calculate the relative fitness ( $w$ ) for each genotype
+
+- Use the general equation with $\bar{w}$
+
+\begin{align*}
+p_1 & = \frac{p^2w_{11} + pqw_{12}}{p^2w_{11} + 2pqw_{12} + q^2w_{22}} \\
+\end{align*}
+
+- When you get your answer does it make sense?
+
+  - For example, for the favorable allele, i.e., $A_1$ allele, does $p_1$ increase?
+
+---
+
+# Allele freq change over time
+
+Selection for generations to achieve target frequency:
+
+- $p_0$ = current frequency
+- $p_t$ = frequency at future time
+- $t$ = number of generations
+
+--
+----------
+
+### Selection for Dominant allele ( $s=1$ )
+
+It is the same as selection against recessive genotype.
+
+\begin{align*}
+p_1 = & \frac{p}{1 - sq^2} \\
+= & \frac{1-q}{(1+q)(1-q)} = \frac{1}{1+q}
+\end{align*}
+
+
+--
+
+\begin{align*}
+p_2 = & \frac{p_1}{1 - sq^2_1} \\
+= & \frac{1-q_1}{(1-q_1^2)} = \frac{1 - (1-p_1)}{1 - (1-p_1)^2} = \frac{\frac{1}{1+q}}{1 - (\frac{q}{1+q})^2}
+= \frac{1+q}{1+2q}
+\end{align*}
+
+
+---
+
+# Allele freq change over time
+
+\begin{align*}
+p_1  & = \frac{1}{1+q} \\
+p_2  & = \frac{1+q}{1+2q} \\
+p_3  & = \frac{1+2q}{1+3q} \\
+\end{align*}
+
+--
+
+A pattern emerges ...
+
+\begin{align*}
+p_t  & = \frac{1+(t-1)q_0}{1+tq_0} \\
+q_t  & = 1- p_t = \frac{q_0}{1+tq_0} \\
+\end{align*}
+
+--
+
+The generations required to move from $p_0$ to $p_t$ is the same as to move from $q_0$ to $q_t$
+
+\begin{align*}
+1 + tq_0 & = \frac{q_0}{q_t} \\
+t & = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
+\end{align*}
+
+---
+
+# Simulation for selection against recessive
+
+\begin{align*}
+p_t  & = \frac{1+(t-1)q_0}{1+tq_0} \\
+q_t  & = 1- p_t = \frac{q_0}{1+tq_0} \\
+\end{align*}
+
+```{r fig.align='center', fig.height=5}
+get_pt <- function(p0, t){
+  q0 <- 1 - p0
+  return(1- q0/(1+t*q0))
+  }
+```
+
+--
+
+\begin{align*}
+t & = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
+\end{align*}
+
+```{r}
+
+get_t <- function(p0, pt){
+  q0 = 1- p0
+  qt = 1 - pt
+  return(1/qt - 1/q0)
+  }
+```
+
+---
+
+# Simulation for selection against recessive
+
+```{r fig.align='center', fig.height=5}
+t <- 1:50
+get_t(p0=0.6, pt=0.9) #7.5
+plot(t, get_pt(0.05, t), type="l", lwd=3, col="red", 
+     xlab="generations", ylab="p", ylim=c(0, 1))
+points(x=get_t(p0=0.05, pt=0.6), y=0.6, col="blue", cex=3, pch=16)
+points(x=get_t(p0=0.05, pt=0.9), y=0.9, col="blue", cex=3, pch=16)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

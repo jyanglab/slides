@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Genetic and Environmental covariance</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Genetic and Environmental covariance
+### Jinliang Yang
+### Oct. 28th, 2020
+
+---
+
+
+
+
+
+# General framework for genetic covariance
+
+&lt;div align="center"&gt;
+&lt;img src="cow_xy.png" height=230&gt;
+&lt;/div&gt;
+
+--
+
+If allele `\(x_i\)` carried by individual X is IBD to allele `\(y_k\)` in Y, then the covariance due to this allele is:
+
+`\begin{align*}
+Cov(\alpha_i, \alpha_k) &amp; =  E[(\alpha_i - \mu_{\alpha})(\alpha_k - \mu_{\alpha})] \\
+&amp; = E[(\alpha_i - \mu_{\alpha})^2] \\
+&amp; = \sigma_{\alpha}^2
+\end{align*}`
+
+Because `\(\alpha_i = \alpha_k\)` if alleles `\(x_i\)` and `\(y_k\)` are IBD.
+
+---
+# Additive genetic covariance
+
+
+Alleles in individuals `\(X (x_ix_j)\)` and `\(Y (y_ky_l)\)` can be IBD through four possible events:
+  
+--
+
+&lt;div align="center"&gt;
+&lt;img src="cow_4ibd.png" height=230&gt;
+&lt;/div&gt;
+
+`\begin{align*}
+&amp; x_i \equiv y_k \\
+&amp; x_i \equiv y_l \\
+&amp; x_j \equiv y_k \\
+&amp; x_j \equiv y_l \\
+\end{align*}`
+
+---
+# Additive genetic covariance
+
+Therefore, the covariance due to additive genetic effects:
+
+`\begin{align*}
+Cov_\alpha(X, Y) = &amp; P(x_i \equiv y_k)Cov(\alpha_i, \alpha_k) + P(x_i \equiv y_l)Cov(\alpha_i, \alpha_l) \\
+ &amp; + P(x_j \equiv y_k)Cov(\alpha_j, \alpha_k) + P(x_j \equiv y_l)Cov(\alpha_j, \alpha_l) \\
+ = &amp; 4f_{XY}\sigma_\alpha^2 \\
+ = &amp; 2f_{XY}\sigma_A^2 \\
+\end{align*}`
+
+Because `\(\sigma_A^2 = \sigma_{\alpha_i}^2 + \sigma_{\alpha_j}^2 = 2\sigma_\alpha^2\)` and `\(\alpha_i = \alpha_k\)` when alleles `\(i\)` and `\(k\)` are IBD.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## Covariance due to dominance deviations
+
+To get dominance deviations, must be two alleles IBD:
+
+&lt;div align="center"&gt;
+&lt;img src="cow_dom.png" height=100&gt;
+&lt;/div&gt;
+
+--
+
+`\begin{align*}
+&amp; x_i \equiv y_k,  x_j \equiv y_l\\
+&amp; x_j \equiv y_l,  x_j \equiv y_k \\
+\end{align*}`
+
+--
+
+Therefore,
+
+`\begin{align*}
+Cov_\delta(X, Y) = &amp; P(x_i \equiv y_k,  x_j \equiv y_l)Cov(\delta_{ij}, \delta_{kl}) + P(x_j \equiv y_l,  x_j \equiv y_k)Cov(\delta_{ij}, \delta_{kl}) \\
+ = &amp; (P(x_i \equiv y_k,  x_j \equiv y_l) + P(x_j \equiv y_l,  x_j \equiv y_k))Cov(\delta_{ij}, \delta_{kl}) \\
+ = &amp; \Delta_{XY}\sigma_D^2 \\
+\end{align*}`
+
+
+---
+# Genetic covariances for general relatives
+
+`\begin{align*}
+&amp; Cov_\alpha(X, Y) = 2f_{XY}\sigma_A^2 \\
+&amp; Cov_\delta(X, Y) = \Delta_{XY}\sigma_D^2 \\
+\end{align*}`
+
+--
+
+The genetic covariance between relative now is:
+
+`\begin{align*}
+Cov_G(X, Y) = 2f_{XY}\sigma_A^2 + \Delta_{XY}\sigma_D^2 \\
+\end{align*}`
+
+--
+
+### Simplify it:
+
+`\begin{align*}
+Cov_G = r\sigma_A^2 + u\sigma_D^2
+\end{align*}`
+
+Where,
+`\begin{align*}
+&amp; r = 2f_{XY} \\
+&amp; u = \Delta_{XY} \\
+\end{align*}`
+
+
+
+---
+
+# Genetic covariances for general relatives
+
+`\begin{align*}
+&amp; Cov_G = 2f_{XY}\sigma_A^2 + \Delta_{XY}\sigma_D^2 \\
+&amp; Cov_G = r\sigma_A^2 + u\sigma_D^2 \\
+\end{align*}`
+
+Note that `\(u\)` is normally zero unless they IBD through __both of their respective parents__.
+for example, full sibs and double first cousins.
+
+--
+
+| Relationship  |       | Coancestry | r (of `\(\sigma^2_A\)`) | u (of `\(\sigma^2_D\)`)  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| First degree  | Parent:offspring   |  1/4  | ?    |  0  |  
+| Second degree  | Half sibs    |    1/8     | ? |  0 |  
+|                | Full sibs     |   1/4    | ? |  __1/4__ |  
+|                | Grantparent:offspring | 1/8 | ? | 0 |
+| Third degree   | great-grantparent:offspring |  1/16   | ? |  0 |  
+
+
+---
+
+# Genetic covariances for general relatives
+
+`\begin{align*}
+&amp; Cov_G = 2f_{XY}\sigma_A^2 + \Delta_{XY}\sigma_D^2 \\
+&amp; Cov_G = r\sigma_A^2 + u\sigma_D^2 \\
+\end{align*}`
+
+Note that `\(u\)` is normally zero unless they IBD through __both of their respective parents__.
+for example, full sibs and double first cousins.
+
+
+
+| Relationship  |       | Coancestry | r (of `\(\sigma^2_A\)`) | u (of `\(\sigma^2_D\)`)  | 
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | 
+| First degree  | Parent:offspring   |  1/4  | 1/2    |  0  |  
+| Second degree  | Half sibs    |    1/8     | 1/4 |  0 |  
+|                | Full sibs     |   1/4    | 1/2 |  __1/4__ |  
+|                | Grantparent:offspring | 1/8 | 1/4 | 0 |
+| Third degree   | great-grantparent:offspring |  1/16   | 1/8 |  0 |  
+
+---
+
+# Genetic covariances for general relatives
+
+`\begin{align*}
+&amp; Cov_G = 2f_{XY}\sigma_A^2 + \Delta_{XY}\sigma_D^2 \\
+&amp; Cov_G = r\sigma_A^2 + u\sigma_D^2 \\
+\end{align*}`
+
+Note that `\(u\)` is normally zero unless they IBD through __both of their respective parents__.
+for example, full sibs and double first cousins.
+
+
+|    Relationship   | `\(f_{XY}\)` | r | u   | Regression (b) or correlation (t) |
+| :-------: | :-------: | :-----------: | :-----------: | :-------: | :-------: | :---:|
+| Parent:Offspring   |  1/4  | 1/2    |  0  |  `\(b=\frac{Cov_{OP}}{V_P}=\frac{1}{2}\frac{V_A}{V_P}\)` |
+| Mid-Parent:Offspring   |  1/4  | 1/2    |  0  |  `\(b=\frac{Cov_{O\bar{P}}}{V_\bar{P}}=\frac{V_A}{V_P}\)` |
+| Half sibs    |    1/8     | 1/4 |  0 |  `\(t=\frac{Cov_{HS}}{V_P}=\frac{1}{4}\frac{V_A}{V_P}\)` |
+| Full sibs     |   1/4    | 1/2 |  1/4 |  `\(t=\frac{Cov_{FS}}{V_P}=\frac{1}{2}\frac{V_A}{V_P} + \frac{1}{4}\frac{V_D}{V_P}\)` |
+
+Note that `\(V_P\)` is the variance of parents.
+
+---
+
+# Genetic covariances for general relatives
+
+Note that though the covariance of offspring with the mean of both parents is the same,
+the __degree of resemblance__ is not the same.
+
+--
+
+It is defined as the regression of offspring on mid-parent values:
+
+`\begin{align*}
+b=\frac{Cov_{O\bar{P}}}{V_\bar{P}}=\frac{1/2V_A}{V_\bar{P}}
+\end{align*}`
+
+where `\(V_\bar{P}\)` is the variance of mid-parent value.
+
+--
+
+Note that the variance of the mean of `\(n\)` individuals is one `\(n\)`th of the variance of single individuals.
+
+`\begin{align*}
+b=&amp; \frac{Cov_{O\bar{P}}}{V_\bar{P}}=\frac{1/2V_A}{V_\bar{P}} \\
+ =&amp; \frac{1/2V_A}{1/2V_{P}} = \frac{V_A}{V_P}
+\end{align*}`
+
+---
+
+# Epistasis
+
+&lt;div align="center"&gt;
+&lt;img src="epistasis.png" height=300&gt;
+&lt;/div&gt;
+
+When epistasis is present, alleles that are IBD across multiple loci:
+
+
+---
+### Additive by additive epistasis `\(\sigma_{AA}^2\)`
+
+&lt;div align="center"&gt;
+&lt;img src="epistasis.png" height=200&gt;
+&lt;/div&gt;
+
+
+#### __At the first locus__:
+Random allele from X and a random allele from Y are IBD.
+
+This can occur through four possible events, each with probability of `\(f_{XY}\)`.
+
+
+--
+
+#### __At the 2nd locus__:
+
+Same is true for the 2nd locus.
+
+---
+
+### Joint probability
+
+- There are __ 16 different pairs__ meeting the two conditions.
+- The joint probability of each pair of alleles is __ `\(f_{XY}^2\)`__.
+- The probability both conditions are met, therefore, is __ `\(16f_{XY}^2\)`__.
+
+
+--
+
+### The two locus epistatic effect
+
+`\begin{align*}
+I_{ijkl} = &amp; \alpha_{i}\alpha_{k} +  \alpha_{i}\alpha_{l} +  \alpha_{j}\alpha_{k} +  \alpha_{j}\alpha_{l} \\
+&amp; + \alpha_{i}\delta_{kl} + \alpha_{j}\delta_{kl} + \delta_{ij}\alpha_{k} + \delta_{ij}\alpha_{l} \\
+&amp; + \delta_{ij}\delta_{kl} \\
+\end{align*}`
+
+- The first four terms are additive by additive epistatic effects.
+
+--
+
+### Variance of the additive by additive
+
+`\begin{align*}
+\sigma^2_{AA} = &amp; \sigma^2_{\alpha_{i}\alpha_{k}} +  \sigma^2_{\alpha_{i}\alpha_{l}} +  \sigma^2_{\alpha_{j}\alpha_{k}} +  \sigma^2_{\alpha_{j}\alpha_{l}} \\
+= &amp; 4 \sigma^2_{\alpha}
+\end{align*}`
+
+
+---
+
+### Joint probability
+
+- There are __ 16 different pairs__ meeting the two conditions.
+- The joint probability of each pair of alleles is __ `\(f_{XY}^2\)`__.
+- The probability both conditions are met, therefore, is __ `\(16f_{XY}^2\)`__.
+
+
+--
+
+#### For two relatives:
+
+The covariance due to the additive epistasis is:
+
+`\begin{align*}
+Cov(I_{AA}, I'_{AA}) = &amp; Cov( \alpha_{i}\alpha_{k} +  \alpha_{i}\alpha_{l} +  \alpha_{j}\alpha_{k} +  \alpha_{j}\alpha_{l},  \alpha_{i}\alpha_{k} +  \alpha_{i}\alpha_{l} +  \alpha_{j}\alpha_{k} +  \alpha_{j}\alpha_{l}) \\
+= &amp; 16f_{XY}^2 Cov(\alpha_{i}\alpha_{k}, \alpha_{i}\alpha_{k}) \\
+= &amp; 16f_{XY}^2 Var(\alpha_{i}\alpha_{k}) \\
+= &amp; 16f_{XY}^2 \sigma^2_{\alpha} \\
+= &amp; 4f_{XY}^2 \sigma^2_{AA} \\
+= &amp; r^2 \sigma^2_{AA}
+\end{align*}`
+
+---
+
+# Covariance considering epistasis
+
+
+By including two loci epistatic effects, the genetic covariance between relatives can be extended to:
+
+`\begin{align*}
+Cov_G = r\sigma_A^2 + u\sigma_D^2 + r^2\sigma^2_{AA} + ru\sigma^2_{AD} + u^2\sigma^2_{DD}
+\end{align*}`
+
+--
+
+If considering three loci interactions,
+
+`\begin{align*}
+ Cov_G = &amp; r\sigma_A^2 + u\sigma_D^2 + r^2\sigma^2_{AA} + ru\sigma^2_{AD} + u^2\sigma^2_{DD} \\
+&amp; + u^3\sigma_{AAA}^2 + ...
+\end{align*}`
+
+--
+
+Notice that the coefficients in front of the variance components become __smaller and smaller__ as more loci are added to the epistatic component.
+
+
+---
+# Environmental covariance
+
+### Common environment ( `\(V_{Ec}\)`)
+
+__Between-group__ environmental component.
+- e.g. litters of mice reared together
+
+--
+
+- sources of the common environmental variance:
+  - nutrition, climatic conditions or, in human, cultural influences.
+
+---
+# Environmental covariance
+
+### Maternal effects
+
+The young are subject to a maternal environment during the first stages of their life.
+- e.g. larger mice give more milk
+
+--
+
+### Competition effects
+
+__Reduce__ resemblance between relatives
+- members of the same family compete for limited resources, e.g. food. 
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

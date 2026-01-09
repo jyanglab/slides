@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>QTL and GWAS</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2024-05-03" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# QTL and GWAS
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### May 3, 2024
+]
+
+---
+
+
+
+
+# QTL or Linkage Mapping
+
+Linkage mapping uses statistical techniques to localize chromosomal
+regions that might contain genes contributing to phenotypic variation in a complex trait of interest.
+
+
+#### Steps for QTL mapping include:
+
+  - 1) Create a segregating population
+    - __mating design__
+  
+  - 2) Genotype individuals within this population with molecular markers
+    - __genotyping by sequencing__
+  
+  - 3) Phenotype the individuals
+    - __field experimental design__
+  
+  - 4) Apply statistical models to associate the markers to the phenotypic variation
+    - __single-marker analysis__ or __interval mapping__
+
+
+---
+# Recombinant inbred lines (RILs)
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ril.jpg" height=400&gt;
+&lt;/div&gt;
+&gt; Mauricio et al., 2001
+]
+
+--
+
+#### a. Select the parental lines with extreme phenotypes
+
+  - The density of hairs that occur on a plant leaf
+
+--
+
+#### b. Selfing an F1 to form a population of F2 individuals 
+
+--
+
+#### c. Each F2 is selfed for six additional generations
+
+  - Forming a population of recombinant inbred lines (RILs)
+
+  - Each RIL is homozygous for a section of a parental chromosome
+
+---
+# Simulating an F2 population
+
+
+```r
+library(qtl)
+set.seed(12347)
+# Five autosomes of cM length 50, 75, 100, 125, 60
+L &lt;- c(50, 75, 100, 125, 60)
+map &lt;- sim.map(L, n.mar=L/5+1, eq.spacing=FALSE, include.x=FALSE)
+# Simulate a F2 population with 250 individuals
+pop &lt;- sim.cross(map, type="f2", n.ind=250, model = rbind(c(1,45,1,1),c(5,20,0.5,-0.5)))
+plot.map(pop)
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-1-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Simulating a QTL mapping experiment
+
+#### Checking phenotypic distribution
+
+
+```r
+hist(pop$pheno$phenotype, main="simulated phenotype", 
+     breaks=50, xlab="Phenotype", col="#cdb79e")
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Single-marker analysis
+
+
+```r
+# single-QTL scan by marker regression with the simulated data
+out.mr &lt;- scanone(pop, method="mr")
+
+# plot of marker regression results for chr 4 and 12
+plot(out.mr, chr=c(1,2,3,4,5), ylab="LOD Score")
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Haley-knott Regression
+
+This is a version of interval mapping which is a very good approximation to interval mapping via maximum likelihood.
+
+
+
+```r
+# single-QTL scan using Haley-knott Regression approach
+out.hk &lt;- scanone(pop, method="hk")
+
+# plot of marker regression results for chr 4 and 12
+plot(out.hk, chr=c(1,2,3,4,5), ylab="LOD score")
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+# Plot QTL effect
+
+
+```r
+# summary of out.mr
+summary(out.mr, threshold=3)
+```
+
+```
+##       chr  pos  lod
+## D1M10   1 42.3 21.7
+## D5M6    5 21.0  4.8
+```
+
+```r
+effectplot(pop, mname1="D1M10", main="Chr1")
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-5-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+# Plot QTL effect
+
+
+```r
+# summary of out.mr
+summary(out.mr, threshold=3)
+```
+
+```
+##       chr  pos  lod
+## D1M10   1 42.3 21.7
+## D5M6    5 21.0  4.8
+```
+
+```r
+effectplot(pop, mname1="D5M6", main="Chr5")
+```
+
+&lt;img src="w15_c3_files/figure-html/unnamed-chunk-6-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# QTL recap
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="ril2.png" height=400&gt;
+&lt;/div&gt;
+&gt; Candela and Hake, 2008
+]
+
+.pull-right[
+### Traditional bi-parental QTL:
+
+- Newly created recombination events (very few)
+
+- Low mapping resolution (Mb level, ~ hundreds of genes)
+
+- Limited number of QTLs
+
+- Can be used for marker assistant selection (MAS)
+]
+
+---
+
+# GWAS: A brief overview
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="gwas1.png" height=400&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+### GWAS in a nutshell:
+
+- Utilize existing populations
+
+- Leverage historical recombination events
+
+- Achieve high mapping resolution but need high density marker
+]
+
+---
+
+# Nested association mapping (NAM) 
+
+&lt;div align="center"&gt;
+&lt;img src="nam.png" height=450&gt;
+&lt;/div&gt;
+&gt; Yu et al., 2008
+
+---
+
+# SNP projection for NAM RILs
+
+&lt;div align="center"&gt;
+&lt;img src="snp.png" height=300&gt;
+&lt;/div&gt;
+
+- More than 15 years ago
+
+- No reference genome available and the genotyping is challenging
+
+- It is a cost effective method to identify trait-associated genes in high resolution
+
+---
+
+# A diversity panel for GWAS
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="diversity.png" height=300&gt;
+&lt;/div&gt;
+&gt; Liu et al., 2003
+
+- NSS, SS, TS, popcorn, sweet corn, mixed group
+]
+
+--
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="founders.png" height=190&gt;
+&lt;/div&gt;
+
+- With diverse genetic backgrounds repsenting different subpopulations
+
+- Individuals with known or unknown predigrees or ancestral origins
+
+- Representative sampling of alleles across the genome to capture genetic variation
+]
+
+---
+
+# Population structure and  relatedness
+
+&lt;div align="center"&gt;
+&lt;img src="pop.png" height=330&gt;
+&lt;/div&gt;
+
+--
+
+__Subpopulations (Q) __: ancestral origins and subgroups due to population subdivision
+
+__Genetic relatedness (K)__: the degree of genetic similarity within a subpopulation
+
+---
+
+# Mixed linear model for GWAS
+
+&lt;div align="center"&gt;
+&lt;img src="mlm.png" height=330&gt;
+&lt;/div&gt;
+&gt; Yu et al., 2006
+
+--
+
+- __False Discovery Rate (FDR)__: the proportion of __false positive__ results among all statistical significant associations identified in a GWAS
+
+- __GWAS Power__: the ability of a GWAS to detect __true positive__ genetic associations with phenotypic traits
+
+---
+
+# Other strategies for association analysis
+
+.pull-left[
+
+### Extreme Phenotype GWAS (or XP-GWAS)
+
+&lt;div align="center"&gt;
+&lt;img src="krn.png" height=330&gt;
+&lt;/div&gt;
+&gt; J. Yang et al., 2015
+]
+
+--
+
+.pull-right[
+#### Pros:
+- Increased power due to variants likely have large effect size
+
+- Cost effective for genotyping and no need for additional phenotyping
+
+#### Cons:
+- Limited generalizability: only for a given trait
+
+- Collecting large sample size can be challenging
+
+- Extreme phenotype selection may introduce bias if differs systematically
+]
+
+---
+
+# Other strategies for association analysis
+
+.pull-left[
+
+### Mediation Annalysis
+
+&lt;div align="center"&gt;
+&lt;img src="med.png" height=200&gt;
+&lt;/div&gt;
+&gt; Z. Yang et al., 2022
+
+__dSNP__: directly associated SNP
+__iSNP__: indirectly associated SNP
+__mediator__: gene mediating via iSNP
+]
+
+--
+
+.pull-right[
+#### Pros:
+- Establish a assumed causal chain from SNP to gene expression to phenotype
+
+- Mapping down to the gene (mediator)
+
+#### Cons:
+- Population-wide Omics data is required
+
+- Currently only powerful for large effect mediators
+]
+
+---
+# Multi-Omics data integration
+
+&lt;div align="center"&gt;
+&lt;img src="multiomics.png" height=400&gt;
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+---
+title: "Chapter 19: QTL"
+date: "11-25-2018"
+author: "Jinliang Yang"
+output:
+   rmdformats::material:
+      highlight: kate
+      self_contained: no
+      code_folding: hide
+---
+
+# Git version control
+
+```{bash, eval=FALSE}
+git clone git@github.com:jyanglab/agro931-project.git
+```
+
+### Fork the project
+
+Fork the project on github to your own repo and git clone it to your local computer
+
+### Create or edit files
+
+Folders in a project serve for their own purposes. Read [here](https://jyanglab.com/2017-01-07-project/) to learn more about them.
+
+### Commit your changes
+Note commit with informative message. 
+
+```{bash, eval=FALSE}
+git add --all
+git commit -m "to explore litature in qtl from 1960-2018"
+```
+
+### push to the branch
+
+```{bash, eval=FALSE}
+git push
+```
+
+
+# Search pubmed using key words
+
+```{r search}
+### source https://freshbiostats.wordpress.com/2013/12/03/analysis-of-pubmed-search-results-using-r/
+library(RCurl)
+library(RISmed)
+query = "QTL"
+
+res <- EUtilsSummary(query, type="esearch", db = "pubmed", mindate=1960, maxdate=2018, retmax=30000)
+QueryCount(res)
+```
+
+### Pubs by Years
+```{r years, eval=FALSE}
+
+qtlpub <- EUtilsGet(res)
+years <- YearPubmed(qtlpub)
+qc <- as.data.frame(table(years))
+write.table(qc, "qtl_pub_count.csv", sep=",", row.names=FALSE, quote=FALSE)
+#save(file="qtlpub", list="qtlpub")
+```
+
+### Plot the number of pubs by year
+```{r}
+library(tidyverse)
+qc <- read.csv("qtl_pub_count.csv")
+theme_set(theme_grey(base_size = 18)) 
+s <- ggplot(qc, aes(x=years, y=Freq)) + 
+    #opts(axis.text.x=theme_text(angle=90)) +
+    geom_bar(stat="identity") +
+    labs(x="", y="# of pubs") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, size=12))
+s
+```
+
+
+## What are the journals?
+
+```{r}
+### get the count of NGS pub per journal:
+journal <- MedlineTA(qtlpub)
+qtl_journal_count <- as.data.frame(table(journal))
+qtl_journal_count_top25 <- qtl_journal_count[order(-qtl_journal_count[,2]),][1:25,]
+
+as_tibble(qtl_journal_count_top25)
+```
+
+## Top authors
+```{r}
+### Get authors
+auths <- Author(qtlpub)
+Last <- sapply(auths, function(x) paste(x$LastName, x$ForeName))
+auths2 <- as.data.frame(sort(table(unlist(Last)), dec=TRUE))
+auths2$author <- row.names(auths2)
+names(auths2)[1] <- c("num")
+
+df <- as_tibble(auths2)
+head(df, 30)
+```
+
+## Top Affiliations
+
+```{r}
+### Get affiliations
+aff <- Affiliation(qtlpub)
+#Last <- sapply(auths, function(x) paste(x$LastName, x$ForeName))
+aff2 <- as.data.frame(sort(table(unlist(aff)), dec=TRUE))
+aff2$id <- row.names(aff2)
+names(aff2)[1] <- c("number")
+
+df2 <- as_tibble(aff2)
+head(df2, 30)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
