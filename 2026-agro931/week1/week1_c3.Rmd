@@ -1,10 +1,10 @@
 ---
 title: "Linkage disequilibrium"
 author: "Jinliang Yang"
-date: "Jan. 26, 2024"
+date: "Jan. 16, 2026"
 output:
   xaringan::moon_reader: 
-    css: ["default", "../../asset/unl-150.css"]
+    css: ["default", "../../asset/unl.css"]
     lib_dir: libs
     nature:
       highlightStyle: github

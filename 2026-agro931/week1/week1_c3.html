@@ -4,10 +4,10 @@
     <title>Linkage disequilibrium</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-01-26" />
+    <meta name="date" content="2026-01-16" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+    <link rel="stylesheet" href="../../asset/unl.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Jan. 26, 2024
+### Jan. 16, 2026
 ]
 
 ---
@@ -283,14 +283,14 @@ D &amp; =  ru -st \\
 # Range of `\(D\)` through simulation
 
 
-```r
+``` r
 fab &lt;- seq(0, 1, by=0.01)
 pa &lt;- seq(0, 1, by=0.01)
 pb &lt;- seq(0, 1, by=0.01)
 plot(fab - pa * pb, type ="l", ylab="D stat", xlab="hap frq")
 ```
 
-![](week1_c3_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](week1_c3_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
 ---
 
 # Range of `\(D\)`
@@ -552,7 +552,7 @@ D_t &amp; = D(1-c)^t
 For unlinked loci ( `\(c =0.5\)`, the red line), LD decays by half each generation.
 
 
-```r
+``` r
 t = seq(0,25, by=1)
 D &lt;- function(t, c){return(0.25*(1-c)^t)} 
 plot(t, D(t, c=0), type="l", col="blue", ylim=c(0, 0.3), xlab="Generation", ylab="LD (D)")
@@ -562,7 +562,7 @@ lines(t, D(t, c=0.1), type="l", col="orange")
 lines(t, D(t, c=0.5), type="l", col="red")
 ```
 
-![](week1_c3_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](week1_c3_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 
 
     </textarea>

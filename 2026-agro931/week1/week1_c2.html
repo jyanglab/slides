@@ -4,10 +4,10 @@
     <title>Hardy-Weinberg Equilibrium</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-01-24" />
+    <meta name="date" content="2026-01-14" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+    <link rel="stylesheet" href="../../asset/unl.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Jan. 24, 2024
+### Jan. 14, 2026
 ]
 
 ---
@@ -74,7 +74,7 @@ Proportion of individuals with a specific genotype (combination of alleles)
 Let `\(n\)` be the total number of individuals in the population. Genotype frequency of __TT__ is:
 
 
-```r
+``` r
 n = 5
 n11 = 1
 f11 = n11/n
@@ -209,7 +209,7 @@ f_1 = &amp; \frac{2n_{11}+n_{12}}{2n} = f_{11} + \frac{1}{2}f_{12} \\
 # Relationship between allele and genotype frequencies
 
 
-```r
+``` r
 p = seq(0, 1, by=0.01)
 q = 1 - p
 f11 &lt;- p^2
@@ -326,7 +326,7 @@ Our value of `\(\chi^2 &gt; 3.84\)`, therefore, we reject H0 and conclude that t
 | Expected  | `\(p^2 \times 431=53\)`   | `\(2pq \times 431=196\)`    | `\(q^2 \times 431=182\)`    | `\(431\)`    | 
 
 
-```r
+``` r
 nMM = 84; nMN = 131; nNN = 216
 n = nMM + nMN + nNN
 p = (2*nMM + nMN)/(2*n) # M allele freq
@@ -342,7 +342,7 @@ stat
 ## [1] 46.70601
 ```
 
-```r
+``` r
 # pchisq gives the distribution function
 1 - pchisq(stat, df=1)
 ```
@@ -374,7 +374,7 @@ p(data) = \frac{n!}{n_{11}!n_{12}!n_{22}!}p^{2n_{11}}q^{2n_{22}}(2pq)^{n_{12}}
 \end{align*}`
 
 
-```r
+``` r
 exact.t &lt;- function(n11, n12, n22){
   n &lt;- n11 + n12 + n22
   p &lt;- (2*n11 + n12)/(2*n)
@@ -417,7 +417,7 @@ exact.t(n11=2, n12=40, n22=2)
 # Work with your own data
 
 
-```r
+``` r
 # This code implements an exact SNP test of Hardy-Weinberg Equilibrium as described in
 # Wigginton, JE, Cutler, DJ, and Abecasis, GR (2005) A Note on Exact Tests of 
 # Hardy-Weinberg Equilibrium. American Journal of Human Genetics. 76: 000 - 000  
