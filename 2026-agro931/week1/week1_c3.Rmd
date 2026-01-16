@@ -349,11 +349,9 @@ D_{AB} & = f_{AB} - p_Ap_B \\
 
 .pull-right[
 Observed:
-- $p_{AB} = 3/10 = 0.3$
+- $f_{AB} = 3/10 = 0.3$
 
 Expected: 
-- $p_A = 3/10 = 0.3$
-- $p_B = 3/10 = 0.3$
 - $p_Ap_B = 0.3 \times 0.3 = 0.09$
 
 LD:
