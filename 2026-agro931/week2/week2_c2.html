@@ -4,7 +4,7 @@
     <title>Effectiveness of Selection</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-01-31" />
+    <meta name="date" content="2026-01-23" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Jan. 31, 2024
+### Jan. 23, 2026
 ]
 
 ---
@@ -102,7 +102,7 @@ Then,
 # Simulation for selection against recessive
 
 
-```r
+``` r
 deltap &lt;- function(s, p){
   q &lt;- 1-p
   return((s*p*q^2)/(1 - s*q^2))
@@ -291,7 +291,7 @@ q_t  &amp; = 1- p_t = \frac{q_0}{1+tq_0} \\
 \end{align*}`
 
 
-```r
+``` r
 get_pt &lt;- function(p0, t){
   q0 &lt;- 1 - p0
   return(1- q0/(1+t*q0))
@@ -305,7 +305,7 @@ t &amp; = \frac{q_0 - q_t}{q_tq_0} = \frac{1}{q_t} - \frac{1}{q_0}
 \end{align*}`
 
 
-```r
+``` r
 get_t &lt;- function(p0, pt){
   q0 = 1- p0
   qt = 1 - pt
@@ -318,7 +318,7 @@ get_t &lt;- function(p0, pt){
 # Simulation for selection against recessive
 
 
-```r
+``` r
 t &lt;- 1:50
 get_t(p0=0.6, pt=0.9) #7.5
 ```
@@ -327,7 +327,7 @@ get_t(p0=0.6, pt=0.9) #7.5
 ## [1] 7.5
 ```
 
-```r
+``` r
 plot(t, get_pt(0.05, t), type="l", lwd=3, col="red", 
      xlab="generations", ylab="p", ylim=c(0, 1))
 points(x=get_t(p0=0.05, pt=0.6), y=0.6, col="blue", cex=3, pch=16)
