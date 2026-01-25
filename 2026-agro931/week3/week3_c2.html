@@ -4,7 +4,7 @@
     <title>Effective Pop Size</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-02-07" />
+    <meta name="date" content="2026-01-30" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Feb. 7, 2024
+### Jan. 30, 2026
 ]
 
 ---
@@ -153,7 +153,7 @@ N_e = \frac{4N_mN_f}{N_m + N_f}
 
 The effective population size as a function of the proportion of males
 
-```r
+``` r
 ne &lt;- function(pnm=0.5, n=10){
   nm &lt;- n*pnm # number of male
   nf &lt;- n - nm # number of female
@@ -282,7 +282,7 @@ N_e &amp; \approx \frac{16N_mN_f}{N_m + 3N_f} \\
 --
 
 
-```r
+``` r
 ne &lt;- function(nm, nf){
   return(16*nm*nf/(nm + 3*nf))
 }
@@ -323,7 +323,7 @@ N_e = \frac{4N_mN_f}{N_m + N_f} \\
 --
 
 
-```r
+``` r
 ne1 &lt;- function(nm, nf){
   return(4*nm*nf/(nm + nf))
 }
