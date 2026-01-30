@@ -4,7 +4,7 @@
     <title>Selection-drift and Diversity</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-02-12" />
+    <meta name="date" content="2026-02-04" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Feb. 12, 2024
+### Feb. 4, 2026
 ]
 
 ---
@@ -75,7 +75,7 @@ Pr(fixation) = \frac{1 - e^{-2s}}{1- e^{-4N_es}} \approx \frac{1}{2N_e}
 ### R function for the fixation equation
 
 
-```r
+``` r
 pfix &lt;- function(ne, s){
   # exp computes the exponential function
   num &lt;- 1 - exp(-2*s) # numerator
@@ -91,7 +91,7 @@ pfix &lt;- function(ne, s){
 - In this case, `\(s\)` is selective advantage
 
 
-```r
+``` r
 ne &lt;- seq(1, 100, by=1)
 plot(ne, 1/(2*ne), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="Pr(fixation)")
 lines(ne, pfix(ne, s=0.01), lty=2, lwd=3, col="blue")
@@ -264,7 +264,7 @@ F_e \approx \frac{1}{4N_e\mu + 1}
 - The relationship between `\(N_e\)`, `\(\mu\)`, and `\(F\)` at equilibrium.
 
 
-```r
+``` r
 fe &lt;- function(ne, mu){
   den &lt;- 4*ne*mu + 1  # denominator
   return(1/den)
@@ -276,7 +276,7 @@ fe &lt;- function(ne, mu){
 # Mutation-drift equilibrium
 
 
-```r
+``` r
 ne &lt;- seq(1, 50000, by=10)
 plot(ne, fe(ne, mu=10^-4), type="l", lwd=3, col="red", xlab="Effective population size (Ne)", ylab="F")
 lines(ne, fe(ne, mu=10^-5), lty=2, lwd=3, col="blue")
@@ -485,7 +485,7 @@ Here, we sequenced a population of 5 maize inbred lines for 500 bp and identifie
 --------------
 
 
-```r
+``` r
 df &lt;- data.frame(hap=paste0("line", 1:5), snp1=c(0,0,1,1,1), 
                  snp2=c(1,1,0,1,1), snp3=c(0,1,1,1,0), 
                  snp4=c(1,0,1,0,1), snp5=c(0,1,1,0,1))
@@ -508,7 +508,7 @@ getpi &lt;- function(snp, totbp=500){
 # An example of Nucleotide Diversity
 
 
-```r
+``` r
 getpi(snp, totbp=500)
 ```
 
@@ -547,7 +547,7 @@ then the sum of site heterozygosities is:
 --------------
 
 
-```r
+``` r
 geth &lt;- function(snp, totbp=500){
   nhap = ncol(snp) # number of hap
   q &lt;- apply(snp, 1, sum)/nhap
