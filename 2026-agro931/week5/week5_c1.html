@@ -4,7 +4,7 @@
     <title>Neutral theory</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-02-19" />
+    <meta name="date" content="2026-02-06" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Feb. 19, 2024
+### Feb. 6, 2026
 ]
 
 ---
@@ -84,7 +84,7 @@ Pr(fix) = \frac{1 - e^{-2s}}{1-e^{-4N_es}}
 
 
 
-```r
+``` r
 set.seed(12347)
 Ne=20; A1=1; t=4*Ne
 frq &lt;- wright_fisher(N=Ne, A1=A1, t=t)
@@ -132,7 +132,7 @@ f(q) &amp; = \frac{2 \mu}{q(1-q)} \frac{1 - e^{(-4N_es)(1-q)}}{1 - e^{(-4N_e s)}
 
 
 
-```r
+``` r
 # expected freq spectra
 f &lt;- function(q, ns){
   frq = 2/(q*(1-q)) * (1 - exp(-4*ns*(1-q))) / (1 - exp(-4*ns))
@@ -223,7 +223,7 @@ The allele frequency specturm is also referred to as the __site frequency spectr
 
 .pull-left[
 
-```r
+``` r
 maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
          0.2, 0.1, 0.4, 0.1, 0.1)
 sfs &lt;- table(maf)
@@ -252,7 +252,7 @@ barplot(sfs, col="#cdc0b0", xlab="Minor allele frequency",
 
 .pull-left[
 
-```r
+``` r
 maf &lt;- c(0.1, 0.1, 0.3, 0.1, 0.3, 
          0.2, 0.1, 0.6, 0.9, 0.9)
 sfs &lt;- table(maf)
