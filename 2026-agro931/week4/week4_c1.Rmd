@@ -315,12 +315,12 @@ H_e  & \approx \frac{4N_e \mu}{4N_e\mu + 1}
 $H_{exp}$ = 1 - (avg expected __homozygosity__ over all loci)
 
 \begin{align*}
-H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+H_{exp} = 1 - \frac{1}{m}\sum_{l=1}^{m} \sum_{i=1}^{k} p_{ki}^2
 \end{align*}
 
-  - $m$ is the number of loci
-  - $k$ is the number of alleles at a particular locus
-  - $p_{ki}$ is the frq of $i^{th}$ allele at $k^{th}$ locus
+  - $l$ is the number of loci (1 to $m$)
+  - $i$ is the number of alleles at a particular locus (1 to $k$)
+  - $p_{li}$ is the frq of $i^{th}$ allele at $l^{th}$ locus
 
 ---
 
@@ -337,12 +337,12 @@ H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
 --
 
 \begin{align*}
-H_{exp} = 1 - \frac{1}{m}\sum_{k=l}^{m} \sum_{i=l}^{k} p_{ki}^2
+H_{exp} = 1 - \frac{1}{m}\sum_{l=1}^{m} \sum_{i=1}^{k} p_{ki}^2
 \end{align*}
 
   - $m=2$ is the number of loci
   - $k=2$ is the number of alleles at a particular locus
-  - $p_{ki}$ is the frq of $i^{th}$ allele at $k^{th}$ locus
+  - $p_{li}$ is the frq of $i^{th}$ allele at $l^{th}$ locus
 
 --
 
