@@ -4,7 +4,7 @@
     <title>Pedigreed Population</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-02-26" />
+    <meta name="date" content="2026-02-16" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Feb. 26, 2024
+### Feb. 16, 2026
 ]
 
 ---
@@ -274,7 +274,7 @@ X is expected to have __9.6% fewer heterozygous loci__ than a non-inbreeding ind
 #### `\(H_{exp}\)` in the population = `\(\frac{1}{m}\sum2pq\)`
 
 
-```r
+``` r
 h &lt;- function(p){return(2*p*(1-p))}
 (h(p=0.05)+h(p=0.1)+h(p=0.15)+h(p=0.45))/4
 ```
