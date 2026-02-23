@@ -398,7 +398,7 @@ F_{X=F} = f_{AD} & = \frac{1}{4}(f_{EB} + f_{EC} + f_{BB} + f_{BC}) \\
 Here we use matrix notation
 - $\mathbf{g}$, a vector of genetic values
 - $\mathbf{Z}$, genotype matrix
-- $\mathbf{g}$, a vector of SNP effects
+- $\mathbf{a}$, a vector of SNP effects
 > [VanRaden (2008)](https://pubmed.ncbi.nlm.nih.gov/18946147/) 
 
 ---
