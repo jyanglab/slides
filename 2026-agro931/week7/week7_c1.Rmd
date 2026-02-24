@@ -1,7 +1,7 @@
 ---
 title: "Statistical Foundations of QuantGen"
 author: "Jinliang Yang"
-date: "Mar. 4th, 2024"
+date: "Feb. 25, 2026"
 output:
   xaringan::moon_reader: 
     css: ["default", "../../asset/unl-150.css"]

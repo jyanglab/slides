@@ -4,6 +4,7 @@
     <title>Continuous Variation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2026-02-27" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -19,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Mar. 6th, 2024
+### Feb. 27, 2026
 ]
 
 ---
@@ -269,7 +270,7 @@ $$
 
 
 
-```r
+``` r
 dt &lt;- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", "Hawken"),
                  P=c(30, 20, 30, 20, 30, 20),
                  G=c(28, 28, 26, 26, 22, 22),
@@ -280,7 +281,7 @@ dt &lt;- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", 
 --
 
 
-```r
+``` r
 *sum(with(dt, G*P*Prob)) # E(GP)
 ```
 
@@ -288,7 +289,7 @@ dt &lt;- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", 
 ## [1] 655
 ```
 
-```r
+``` r
 *sum(with(dt, G*Prob)) # E(G)
 ```
 
@@ -296,7 +297,7 @@ dt &lt;- data.frame(Variety=c("NE03490", "NE03490", "Aspen", "Aspen", "Hawken", 
 ## [1] 25.5
 ```
 
-```r
+``` r
 *sum(with(dt,  P*Prob)) # E(P)
 ```
 
@@ -324,7 +325,7 @@ $$
 Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
 
 
-```r
+``` r
 *sum(dt$G * dt$E * dt$Prob) # E(GE)
 ```
 
@@ -332,7 +333,7 @@ Similarly, to calculate `\(Cov(G, E) =E(GE) - E(G)E(E)\)`:
 ## [1] -3.552714e-15
 ```
 
-```r
+``` r
 *sum(dt$E * dt$Prob) # E(E)
 ```
 
@@ -385,7 +386,7 @@ $$
 - `\(Var(G) = E(G^2) - E(G)^2\)`
 
 
-```r
+``` r
 sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
 ```
 
@@ -398,7 +399,7 @@ sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
 - `\(Var(P) = E(P^2) - E(P)^2\)`
 
 
-```r
+``` r
 sum(dt$P^2 * dt$Prob) - sum(dt$P * dt$Prob)^2
 ```
 
@@ -495,7 +496,7 @@ $$
 --
 
 
-```r
+``` r
 plot(x=1, y=1, ylim=c(0, 50), xlim=c(0, 30), type="n", xlab="P", ylab="G")
 # a, b : single values specifying the intercept and the slope of the line
 abline(a=20.604, b=0.192, lwd=3, col="red")
@@ -514,7 +515,7 @@ G = 20.604 + 0.192 \times P
 $$
 
 
-```r
+``` r
 dt$ghat &lt;- 20.604 + 0.192*dt$P
 kable(dt)
 ```
@@ -548,7 +549,7 @@ $$
 # Accuracy of prediction
 
 
-```r
+``` r
 kable(dt)
 ```
 
@@ -572,7 +573,7 @@ r_{\hat{G}G} &amp; =  \frac{Cov(\hat{G}, G)}{\sqrt{Var(\hat{G})Var(G)}} \\
 $$
 
 
-```r
+``` r
 vg &lt;- sum(dt$G^2 * dt$Prob) - sum(dt$G * dt$Prob)^2
 vghat &lt;- sum(dt$ghat^2 * dt$Prob) - sum(dt$ghat * dt$Prob)^2
 cov_g_ghat &lt;- sum(dt$ghat * dt$G * dt$Prob) - sum(dt$G * dt$Prob) * sum(dt$ghat * dt$Prob)
