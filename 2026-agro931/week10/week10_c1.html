@@ -4,7 +4,7 @@
     <title>Breeding value interpretation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-03-25" />
+    <meta name="date" content="2026-03-06" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### March 25, 2024
+### March 6, 2026
 ]
 
 ---
@@ -93,7 +93,7 @@ Therefore,
 An R function to calculate genotypic values
 
 
-```r
+``` r
 gfunction &lt;- function(a=1, d=0, p=1/2){
    # a: additive effect
    # d: dominance effect
@@ -118,7 +118,7 @@ gfunction &lt;- function(a=1, d=0, p=1/2){
 ### Apply the R function
 
 
-```r
+``` r
 out &lt;- gfunction(a=1, d=-1, p=1/3)
 #out
 out$dd &lt;- out$gv - out$bv
@@ -136,7 +136,7 @@ out
 # Plot the results
 
 
-```r
+``` r
 plot(out$N1, out$gv, xlab="Genotype", ylab="", ylim=c(-1, 2), cex.lab=1.5, xaxt="n", pch=17, cex=2, col="red"); 
 # add the axis and labels
 axis(1, at=c(0, 1, 2), labels=c("A2A2", "A1A2", "A1A1")); 
@@ -188,10 +188,10 @@ G = &amp; 2\alpha_2  + \alpha N_1 + \delta
 # Predicting BV: a real-world data
 
 
-```r
+``` r
 # read phenotype and genotype data
-flowering &lt;- read.table("https://jyanglab.com/slides/flowering.csv", 
-                        sep=",", header=TRUE)
+flowering &lt;- read.csv("https://jyanglab.com/slides/flowering.csv")
+
 dim(flowering)
 ```
 
@@ -199,21 +199,21 @@ dim(flowering)
 ## [1] 413   7
 ```
 
-```r
+``` r
 head(flowering)
 ```
 
 ```
 ##   FID IID Flowering_time snp1 snp2 snp3     type
-## 1  F1   1       85.08333    2    2    1 training
-## 2  F2   3      101.50000    2    2    2 training
-## 3  F3   4      106.50000    2    2    2 training
-## 4  F4   5       99.50000    2    2    2 training
-## 5  F5   6       95.08333    1    1    1 training
-## 6  F6   7      111.00000    1    1    1 training
+## 1  F1   1       90.08333    2    2    1 training
+## 2  F2   3      107.50000    2    2    2 training
+## 3  F3   4      112.50000    2    2    2 training
+## 4  F4   5      105.50000    2    2    2 training
+## 5  F5   6       98.08333    1    1    1 training
+## 6  F6   7      114.00000    1    1    1 training
 ```
 
-```r
+``` r
 table(flowering$type)
 ```
 
@@ -223,7 +223,7 @@ table(flowering$type)
 ##       63      350
 ```
 
-```r
+``` r
 f &lt;- subset(flowering, type == "training")
 ```
 
@@ -231,7 +231,7 @@ f &lt;- subset(flowering, type == "training")
 # Visualize the phenotypic data
 
 
-```r
+``` r
 library(ggplot2)
 p &lt;- ggplot(f, aes(x=Flowering_time, fill=as.factor(snp1))) +
   geom_histogram(position="dodge")+
@@ -276,7 +276,7 @@ The number of copies of the A1 allele:
 - A2A2 -&gt; 0
 
 
-```r
+``` r
 A1A1 &lt;- mean(subset(f, snp1 == 2)$Flowering_time, na.rm=TRUE)
 A1A2 &lt;- mean(subset(f, snp1 == 1)$Flowering_time, na.rm=TRUE)
 A2A2 &lt;- mean(subset(f, snp1 == 0)$Flowering_time, na.rm=TRUE)
@@ -284,23 +284,23 @@ A1A1
 ```
 
 ```
-## [1] 99.13419
+## [1] 104.2302
 ```
 
-```r
+``` r
 A1A2
 ```
 
 ```
-## [1] 96.27799
+## [1] 100.5053
 ```
 
-```r
+``` r
 A2A2
 ```
 
 ```
-## [1] 92.94753
+## [1] 96.28086
 ```
 
 ---
@@ -310,7 +310,7 @@ A2A2
 #### Step1: For each SNP, find out __ `\(a\)`__, __ `\(d\)`__, `\(p\)`, and `\(M\)`
 
 
-```r
+``` r
 ### mid point
 m &lt;- (A1A1 + A2A2)/2
 a &lt;- A1A1 - m
@@ -326,7 +326,7 @@ d &lt;- A1A2 - m
 Allele freq for __A1__ (Note it is in __`2`__ coding)
 
 
-```r
+``` r
 table(f$snp1)
 ```
 
@@ -339,7 +339,7 @@ table(f$snp1)
 --
 
 
-```r
+``` r
 getp &lt;- function(df=f$snp1){
   t &lt;- as.data.frame(table(df))
   c11 &lt;- subset(t, df==2)$Freq
@@ -355,7 +355,7 @@ p
 ## [1] 0.7942857
 ```
 
-```r
+``` r
 q &lt;- 1 -p
 ```
 
@@ -365,38 +365,38 @@ q &lt;- 1 -p
 #### Step1: For each SNP, find out `\(a, d\)`, `\(p\)`, and __ `\(M\)`__
 
 
-```r
+``` r
 M1 &lt;- mean(f$Flowering_time, na.rm=T)
 M1
 ```
 
 ```
-## [1] 97.96743
+## [1] 102.7119
 ```
 
-```r
+``` r
 M2 &lt;- a*(p-q) + 2*d*p*q
 M2
 ```
 
 ```
-## [1] 1.898136
+## [1] 2.420978
 ```
 
-```r
+``` r
 M1 - M2
 ```
 
 ```
-## [1] 96.0693
+## [1] 100.2909
 ```
 
-```r
+``` r
 m
 ```
 
 ```
-## [1] 96.04086
+## [1] 100.2555
 ```
 
 
@@ -414,7 +414,7 @@ m
 --
 
 
-```r
+``` r
 # allele sub effect
 alpha &lt;- a + d*(q-p) 
 a1a1 &lt;- 2*alpha*q 
@@ -427,16 +427,16 @@ a2a2 &lt;- -2*p*alpha
 Apply the previous `gfunction` to get BV for snp1
 
 
-```r
+``` r
 out2 &lt;- gfunction(a=a, d=d, p=p)
 out2
 ```
 
 ```
 ##   N1        gv        bv
-## 1  0 -4.991466 -4.692268
-## 2  1 -1.661012 -1.738502
-## 3  2  1.195194  1.215264
+## 1  0 -6.395621 -6.080492
+## 2  1 -2.171228 -2.252844
+## 3  2  1.553666  1.574804
 ```
 
 ---
@@ -444,7 +444,7 @@ out2
 ### Repeat the process for snp2 and snp3
 
 
-```r
+``` r
 bv &lt;- function(f, snpid="snp1", trait="Flowering_time"){
   A1A1 &lt;- mean(f[f[, snpid]==0, trait], na.rm=TRUE)
   A1A2 &lt;- mean(f[f[, snpid]==1, trait], na.rm=TRUE)
@@ -470,9 +470,9 @@ bv(f, snpid="snp1", trait="Flowering_time")
 
 ```
 ##   N1        gv        bv
-## 1  0  4.836486  5.135684
-## 2  1  1.980280  1.902789
-## 3  2 -1.350175 -1.330105
+## 1  0  6.232389  6.547518
+## 2  1  2.507495  2.425879
+## 3  2 -1.716898 -1.695760
 ```
 
 ---
@@ -493,7 +493,7 @@ Where summation occurs across the number of loci ( `\(k\)` ) and the two alleles
 --
 
 
-```r
+``` r
 b1 &lt;- bv(f, snpid="snp1", trait="Flowering_time")
 b2 &lt;- bv(f, snpid="snp2", trait="Flowering_time")
 b3 &lt;- bv(f, snpid="snp3", trait="Flowering_time")
@@ -501,10 +501,10 @@ b3
 ```
 
 ```
-##   N1        gv        bv
-## 1  0  1.153707  2.405023
-## 2  1  1.225328  0.640331
-## 3  2 -1.397850 -1.124361
+##   N1        gv         bv
+## 1  0  2.493950  3.6833766
+## 2  1  1.536753  0.9806894
+## 3  2 -1.981960 -1.7219979
 ```
 
 ---
@@ -514,7 +514,7 @@ b3
 ### Step3: Sum up the BV of all SNPs
 
 
-```r
+``` r
 t &lt;- subset(flowering, type=="test")
 dim(t)
 ```
@@ -523,14 +523,14 @@ dim(t)
 ## [1] 63  7
 ```
 
-```r
+``` r
 head(t, 4)
 ```
 
 ```
 ##      FID IID Flowering_time snp1 snp2 snp3 type
 ## 351 F351  52             NA    2    2    0 test
-## 352 F352  54       118.8333    1    2    2 test
+## 352 F352  54       123.8333    1    2    2 test
 ## 353 F353  62             NA    2    1    2 test
 ## 354 F354  64             NA    2    2    2 test
 ```
@@ -540,12 +540,12 @@ head(t, 4)
 BV for individual `F356`:
 
 
-```r
+``` r
 b1[b1$N1 ==2, ]$bv + b2[b2$N1 ==2, ]$bv + b3[b3$N1 ==2, ]$bv + M1
 ```
 
 ```
-## [1] 95.48984
+## [1] 99.15556
 ```
 
 ---
@@ -555,7 +555,7 @@ b1[b1$N1 ==2, ]$bv + b2[b2$N1 ==2, ]$bv + b3[b3$N1 ==2, ]$bv + M1
 ### Step3: Sum up the BV of all SNPs
 
 
-```r
+``` r
 mygs &lt;- function(t, b1, b2, b3){
   t$yhat &lt;- -9
   for(i in 1:nrow(t)){
@@ -573,13 +573,13 @@ cor.test(out$Flowering_time, out$yhat+M1)
 ## 	Pearson's product-moment correlation
 ## 
 ## data:  out$Flowering_time and out$yhat + M1
-## t = -1.1976, df = 55, p-value = 0.2362
+## t = -1.9679, df = 55, p-value = 0.05413
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  -0.4032380  0.1055306
+##  -0.484653385  0.004386153
 ## sample estimates:
 ##        cor 
-## -0.1594208
+## -0.2564746
 ```
 
 
