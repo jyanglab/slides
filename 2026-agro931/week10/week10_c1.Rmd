@@ -164,7 +164,7 @@ G = & 2\alpha_2  + \alpha N_1 + \delta
 
 ```{r}
 # read phenotype and genotype data
-flowering <- read.table("https://jyanglab.com/slides/asset/flowering.csv", 
+flowering <- read.table("https://jyanglab.com/slides/flowering.csv", 
                         sep=",", header=TRUE)
 dim(flowering)
 
