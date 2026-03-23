@@ -94,7 +94,7 @@ ggplot(df, aes(x=pop, y=number, fill=pop)) +
   geom_violin(trim=FALSE) +
   guides(fill=guide_legend(title="Popl.s")) +
   theme_classic() +
-  theme(legend.position=c(0.2, 0.8), axis.text=element_text(size=20),
+  theme(legend.position="inside", legend.position.inside=c(0.2, 0.8), axis.text=element_text(size=20),
               axis.title=element_text(size=20))
 ```
 
@@ -484,7 +484,6 @@ And the variance is,
 - The covariance between genetic and non-genetic effects is often zero except in special circumstances.
 
 - The variance due to interaction between genotype and environment is considered a non-genetic variance and is typically pooled in with $\sigma_E^2$.
-
 
 
 
