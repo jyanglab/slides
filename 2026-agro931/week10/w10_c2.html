@@ -4,7 +4,7 @@
     <title>Genetic components of variance</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-03-27" />
+    <meta name="date" content="2026-03-23" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### Mar. 27, 2024
+### Mar. 23, 2026
 ]
 
 ---
@@ -80,7 +80,7 @@ Then, made N=25 F2 plants:
 
 ### Mean and variance of F1 and F2 populations?
 
-```r
+``` r
 f1 &lt;- as.vector(as.matrix(f1))
 f2 &lt;- as.vector(as.matrix(f2))
 mean(f1)
@@ -90,7 +90,7 @@ mean(f1)
 ## [1] 15.72
 ```
 
-```r
+``` r
 mean(f2)
 ```
 
@@ -101,7 +101,7 @@ mean(f2)
 --
 
 
-```r
+``` r
 var(f1)
 ```
 
@@ -109,7 +109,7 @@ var(f1)
 ## [1] 1.46
 ```
 
-```r
+``` r
 var(f2)
 ```
 
@@ -122,7 +122,7 @@ var(f2)
 
 
 
-```r
+``` r
 library(ggplot2)
 df &lt;- rbind(data.frame(number=f1, pop="F1"), data.frame(number=f2, pop="F2"))
 ggplot(df, aes(x=pop, y=number, fill=pop)) +
@@ -132,6 +132,15 @@ ggplot(df, aes(x=pop, y=number, fill=pop)) +
   theme_classic() +
   theme(legend.position=c(0.2, 0.8), axis.text=element_text(size=20),
               axis.title=element_text(size=20))
+```
+
+```
+## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+## 3.5.0.
+## ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 &lt;img src="w10_c2_files/figure-html/unnamed-chunk-3-1.png" width="40%" style="display: block; margin: auto;" /&gt;
@@ -330,7 +339,7 @@ Var(X) &amp; = \sigma_X^2 = V_D \\
 # Graphical Representation
 
 
-```r
+``` r
 a = 1
 *d = 0*a # pure additive
 q = seq(0, 1, by=0.01)

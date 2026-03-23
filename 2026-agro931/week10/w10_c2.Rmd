@@ -1,7 +1,7 @@
 ---
 title: "Genetic components of variance"
 author: "Jinliang Yang"
-date: "Mar. 27, 2024"
+date: "Mar. 23, 2026"
 output:
   xaringan::moon_reader:
     css: ["default", "../../asset/unl-150.css"]
