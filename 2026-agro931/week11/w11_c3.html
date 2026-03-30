@@ -4,7 +4,7 @@
     <title>Estimation of heritability</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-05" />
+    <meta name="date" content="2026-04-01" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 5, 2024
+### April 1, 2026
 ]
 
 ---
@@ -170,7 +170,7 @@ In total, 38 families with mother's score and mean score of her offspring.
 &gt; Data from Bob Sheehy, 1996.
 
 
-```r
+``` r
 d &lt;- read.csv('https://jyanglab.com/AGRO-931/data/drosophila.csv')
 dim(d)
 ```
@@ -179,7 +179,7 @@ dim(d)
 ## [1] 38  2
 ```
 
-```r
+``` r
 head(d)
 ```
 
@@ -200,7 +200,7 @@ head(d)
 
 
 
-```r
+``` r
 library(ggplot2)
 ggplot(d, aes(x=Mother, y=Offspring.Mean)) + 
   geom_point(color='red', size = 4) 
@@ -214,7 +214,7 @@ ggplot(d, aes(x=Mother, y=Offspring.Mean)) +
 
 
 
-```r
+``` r
 ggplot(d, aes(x=Mother, y=Offspring.Mean)) + 
   geom_point(color='red', size = 4) + 
   geom_smooth(method=lm, color='#2C3E50')
@@ -222,7 +222,7 @@ ggplot(d, aes(x=Mother, y=Offspring.Mean)) +
 
 &lt;img src="w11_c3_files/figure-html/unnamed-chunk-3-1.png" width="30%" style="display: block; margin: auto;" /&gt;
 
-```r
+``` r
 lm(Offspring.Mean ~ Mother, data=d)
 ```
 
@@ -268,7 +268,7 @@ E(O) = b_{OP}P = 0.4144 \times 20 + \mu
 
 
 
-```r
+``` r
 fit &lt;- lm(Offspring.Mean ~ Mother, data=d)
 o &lt;- predict(fit, data.frame(Mother=20, Offspring.Mea=NA))
 
