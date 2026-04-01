@@ -255,6 +255,48 @@ Note that $V_P$ is the variance of parents.
 
 ---
 
+# Example: Wood Quality Genetic Design
+
+A tree breeder wants to measure wood quality for selection. To increase precision, wood quality measurements are repeated spatially within a single tree. Variation due to common (general) environmental effects is assumed to be negligible for this trait, and epistasis is assumed to be absent.
+
+--
+
+## Mating Design and Parameters
+
+A mating design including both half-sib and full-sib families was created.
+
+- Total phenotypic variance: $V_P = 50$  
+- Half-sib intra-class correlation:  
+  $t = \frac{\mathrm{Cov}_{HS}}{V_P} = 0.12$  
+- Full-sib intra-class correlation:  
+  $t = \frac{\mathrm{Cov}_{FS}}{V_P} = 0.28$
+
+---
+
+## Mating Design and Parameters
+
+A mating design including both half-sib and full-sib families was created.
+
+- Total phenotypic variance: $V_P = 50$  
+- Half-sib intra-class correlation:  
+  $t = \frac{\mathrm{Cov}_{HS}}{V_P} = 0.12$  
+- Full-sib intra-class correlation:  
+  $t = \frac{\mathrm{Cov}_{FS}}{V_P} = 0.28$
+
+--
+
+- What is the expected coefficient of regression of offspring on parent?
+
+- What is the covariance between offspring and mid-parent ( $\bar{P}$ )?
+
+- What is the expected covariance between two measurements on the same individual? (hint:
+Covariance of the same genotype.)
+
+- What is the repeatability ( $r$ ) and narrow-sense heritability ( $h^2$ ) of a single measurement,
+the mean of three measurements, and the mean of five measurements?
+
+---
+
 # A sib design
 
 <div align="center">
