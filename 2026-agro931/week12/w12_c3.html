@@ -4,7 +4,7 @@
     <title>The breeder’s equation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-12" />
+    <meta name="date" content="2026-04-10" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 12, 2024
+### April 10, 2026
 ]
 
 ---
@@ -215,7 +215,7 @@ i = \frac{S}{\sigma_P}
 
 .pull-right[
 
-```r
+``` r
 curve(dnorm(x,0,1), xlim=c(-3,3), xaxt="n", xlab="Trait Value", main="", ylab="Density", lwd=3)
 fromd &lt;- qnorm(.95); tod &lt;- 3
 S.x  &lt;- c(fromd, seq(fromd, tod, 0.01), tod)
@@ -250,7 +250,7 @@ i = \frac{z}{p}
 
 .pull-right[
 
-```r
+``` r
 curve(dnorm(x,0,1), xlim=c(-3,3), xaxt="n", xlab="Trait Value", main="", ylab="Density", lwd=3)
 fromd &lt;- qnorm(.95); tod &lt;- 3
 S.x  &lt;- c(fromd, seq(fromd, tod, 0.01), tod)
@@ -271,7 +271,7 @@ A table of these values is found in Appendix A of the F&amp;M book.
 
 .pull-left[
 
-```r
+``` r
 ifun &lt;- function(p=0.5){
   x=qnorm(p=(1-p)) # get the truncation point
   z=dnorm(x) # get z
@@ -288,7 +288,7 @@ plot(p, i)
 
 .pull-right[
 
-```r
+``` r
 head(data.frame(p, i), 20)
 ```
 
@@ -408,7 +408,7 @@ A poultry breeder is selecting for 56-day body weight in chicken.
 --
 
 
-```r
+``` r
 i_m &lt;- ifun(p= 8/154) #2.05
 i_f &lt;- ifun(p= 48/155) # 1.14
 (i_m + i_f)/2*0.45*50
@@ -440,7 +440,7 @@ A poultry breeder is selecting for 56-day body weight in chicken.
 --
 
 
-```r
+``` r
 Sm &lt;- i_m*50 #102
 Sf &lt;- i_f*50 # 57
 ```

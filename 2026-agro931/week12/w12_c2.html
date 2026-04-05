@@ -4,8 +4,8 @@
     <title>Examples for heritability estimation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-10" />
-    <script src="libs/header-attrs-2.21/header-attrs.js"></script>
+    <meta name="date" content="2026-04-08" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
   </head>
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 10, 2024
+### April 8, 2026
 ]
 
 ---
@@ -41,7 +41,7 @@ class: center, middle, inverse, title-slide
 # Danish landrace pigs
 
 
-```r
+``` r
 p &lt;- read.csv('https://jyanglab.com/slides/swine_sib.csv')
 dim(p)
 ```
@@ -50,7 +50,7 @@ dim(p)
 ## [1] 198   6
 ```
 
-```r
+``` r
 table(p$sire)
 ```
 
@@ -61,7 +61,7 @@ table(p$sire)
 ```
 
 
-```r
+``` r
 dam &lt;- as.data.frame(table(p$dam))
 head(dam)
 ```
@@ -80,7 +80,7 @@ head(dam)
 # ANOVA
 
 
-```r
+``` r
 fit &lt;- lm(weight ~ sire + dam, data=p)
 summary(aov(fit))
 ```
@@ -258,7 +258,7 @@ t_{FS} &amp; = \frac{Cov(FS)}{V_P} = \frac{1/2V_A + 1/4V_D}{V_P}\\
 ### Read in data
 
 
-```r
+``` r
 corn &lt;- read.csv('https://jyanglab.com/AGRO-931/data/corn.csv')
 
 head(corn, 3)
@@ -276,7 +276,7 @@ head(corn, 3)
 ### Phenotypic distributions across environments
 
 
-```r
+``` r
 library(ggplot2)
 
 corn$geno &lt;- paste(corn$Male, corn$Female, sep="x")
@@ -316,7 +316,7 @@ p_{ijk} = \mu + m_i + f_j + I_{ij} + e_{ijk}
   - allows for non-additive effect of interactions between alleles that were inherited from both the male and female
 
 
-```r
+``` r
 fit &lt;- lm(Yld ~ Male + Female + Male:Female + ENV + REP, data=corn)
 summary(aov(fit))
 ```
@@ -381,7 +381,7 @@ summary(aov(fit))
 
 
 
-```r
+``` r
 summary(aov(fit))
 ```
 
