@@ -272,7 +272,7 @@ They plan to conduct 40 discrete generations of selection.
 
 [AlphaSimR](https://github.com/gaynorr/AlphaSimR)
   - An R package for breeding program simulations
-  - Here is the [introduction](https://cran.r-project.org/web/packages/AlphaSimR/vignettes/intro.html) of the package
+  - Here is the [introduction](https://cran.r-project.org/web/packages/AlphaSimR/index.html) of the package
 
 --
 

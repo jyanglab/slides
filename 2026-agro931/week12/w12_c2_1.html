@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Multi-environment trial: heritability estimation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jinliang Yang" />
+    <meta name="date" content="2026-04-10" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Multi-environment trial: heritability estimation
+]
+.author[
+### Jinliang Yang
+]
+.date[
+### April 10, 2026
+]
+
+---
+
+
+# A maize multi-environment example
+
+### Grain yield of maize hybrids across environments
+
+- 30 hybrids ( `\(5\)` males `\(\times\)` `\(6\)` females )
+- Tested in `\(e = 4\)` environments, each with `\(r = 3\)` replications
+- Trait: grain yield (bu/A)
+
+--
+
+### Why replication matters
+
+With replication within each environment we can separate:
+
+1. `\(\sigma_{GE}^2\)` — genotype-by-environment interaction
+2. `\(\sigma_\varepsilon^2\)` — within-environment residual error
+
+---
+# Read in the data
+
+
+``` r
+corn &lt;- read.csv("https://jyanglab.com/AGRO-931/data/corn.csv")
+
+# Create a single Genotype factor from the cross
+corn$Genotype &lt;- paste(corn$Male, corn$Female, sep = "x")
+corn$Genotype &lt;- factor(corn$Genotype)
+corn$ENV &lt;- factor(corn$ENV)
+corn$REP &lt;- factor(corn$REP)
+
+c(g = nlevels(corn$Genotype),
+  e = nlevels(corn$ENV),
+  r = nlevels(corn$REP),
+  n = nrow(corn))
+```
+
+```
+##   g   e   r   n 
+##  29   4   3 345
+```
+
+---
+# Model with `\(G \times E\)` interaction
+
+`\begin{align*}
+y_{ijk} = \mu + g_i + e_j + (ge)_{ij} + \varepsilon_{ijk}
+\end{align*}`
+
+- `\(g_i\)`: effect of the `\(i\)`th genotype
+- `\(e_j\)`: effect of the `\(j\)`th environment
+- `\((ge)_{ij}\)`: genotype-by-environment interaction
+- `\(\varepsilon_{ijk}\)`: within-environment residual (from replication)
+
+--
+
+With `\(r = 3\)` replicates per environment, the residual `\(\varepsilon_{ijk}\)` captures plot-to-plot variation __within__ each genotype-environment combination.
+
+---
+# ANOVA
+
+
+``` r
+fit &lt;- aov(Yld ~ Genotype + ENV + Genotype:ENV, data = corn)
+summary(fit)
+```
+
+```
+##               Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## Genotype      28  268.2    9.58   2.498 0.000109 ***
+## ENV            3  283.8   94.61  24.677 7.14e-14 ***
+## Genotype:ENV  84  425.9    5.07   1.322 0.054110 .  
+## Residuals    229  877.9    3.83                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+# ANOVA table with expected mean squares
+
+| Source | df | MS | E(MS) |
+| :----: | :-: | :-: | :----: |
+| Genotype | `\(g-1\)` | `\(MS_G\)` | `\(\sigma_\varepsilon^2 + r\sigma_{GE}^2 + re\sigma_G^2\)` |
+| Environment | `\(e-1\)` | `\(MS_E\)` | `\(\sigma_\varepsilon^2 + r\sigma_{GE}^2 + rg\sigma_E^2\)` |
+| `\(G \times E\)` | `\((g-1)(e-1)\)` | `\(MS_{GE}\)` | `\(\sigma_\varepsilon^2 + r\sigma_{GE}^2\)` |
+| Residual | `\(ge(r-1)\)` | `\(MS_\varepsilon\)` | `\(\sigma_\varepsilon^2\)` |
+
+--
+
+Solving for variance components:
+
+`\begin{align*}
+\sigma_\varepsilon^2 &amp;= MS_\varepsilon \\
+\sigma_{GE}^2 &amp;= \frac{MS_{GE} - MS_\varepsilon}{r} \\
+\sigma_G^2 &amp;= \frac{MS_G - MS_{GE}}{re}
+\end{align*}`
+
+---
+# Variance components in R
+
+
+``` r
+s &lt;- summary(fit)[[1]]
+
+MS_G  &lt;- s["Genotype",     "Mean Sq"]
+MS_GE &lt;- s["Genotype:ENV", "Mean Sq"]
+MS_e  &lt;- s["Residuals",    "Mean Sq"]
+
+g &lt;- nlevels(corn$Genotype)
+e &lt;- nlevels(corn$ENV)
+r &lt;- nlevels(corn$REP)
+
+sigma_e  &lt;- MS_e
+sigma_GE &lt;- (MS_GE - MS_e) / r
+sigma_G  &lt;- (MS_G  - MS_GE) / (r * e)
+
+c(sigma_G = round(sigma_G, 3),
+  sigma_GE = round(sigma_GE, 3),
+  sigma_e = round(sigma_e, 3))
+```
+
+```
+##  sigma_G sigma_GE  sigma_e 
+##       NA    0.412    3.834
+```
+
+---
+# Broad-sense heritability on entry means
+
+For genotype means across `\(e\)` environments and `\(r\)` replications:
+
+`\begin{align*}
+H^2 = \frac{\sigma_G^2}{\sigma_G^2 + \dfrac{\sigma_{GE}^2}{e} + \dfrac{\sigma_\varepsilon^2}{re}}
+\end{align*}`
+
+--
+
+
+``` r
+sigma_P &lt;- sigma_G + sigma_GE / e + sigma_e / (r * e)
+H2 &lt;- sigma_G / sigma_P
+
+c(sigma_P = round(sigma_P, 3), H2 = round(H2, 3))
+```
+
+```
+## sigma_P      H2 
+##      NA      NA
+```
+
+--
+
+### Interpretation
+
+- The denominator is the variance of a genotype __mean__ averaged over environments and reps
+- Increasing `\(r\)` shrinks `\(\sigma_\varepsilon^2 / re\)`; increasing `\(e\)` shrinks `\(\sigma_{GE}^2 / e\)`
+
+---
+# Compare: what if we ignored replication?
+
+If we had only genotype means (no reps), the residual would absorb both `\(\sigma_{GE}^2\)` and `\(\sigma_\varepsilon^2\)`:
+
+
+``` r
+means &lt;- aggregate(Yld ~ Genotype + ENV, corn, mean)
+fit0 &lt;- aov(Yld ~ Genotype + ENV, data = means)
+s0 &lt;- summary(fit0)[[1]]
+```
+
+--
+
+
+``` r
+MS_GE_confounded &lt;- s0["Residuals", "Mean Sq"]
+c(MS_GE_with_reps = round(MS_GE, 3),
+  MS_error_with_reps = round(MS_e, 3),
+  MS_residual_no_reps = round(MS_GE_confounded, 3))
+```
+
+```
+##     MS_GE_with_reps  MS_error_with_reps MS_residual_no_reps 
+##               5.070               3.834               1.700
+```
+
+`\(MS_{residual} \approx MS_{GE}\)`, because `\(MS_\varepsilon / r\)` is small relative to `\(\sigma_{GE}^2\)`.
+
+---
+# Take-home message
+
+- Replication within environments provides an __independent estimate__ of `\(\sigma_\varepsilon^2\)`
+- This lets us cleanly separate `\(G \times E\)` from residual error in the ANOVA
+- `\(H^2\)` on entry means accounts for both `\(\sigma_{GE}^2 / e\)` and `\(\sigma_\varepsilon^2 / re\)`
+- With more reps or more environments, the entry-mean heritability increases
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
