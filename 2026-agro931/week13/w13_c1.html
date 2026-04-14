@@ -4,7 +4,7 @@
     <title>Variability in response</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-15" />
+    <meta name="date" content="2026-04-13" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 15, 2024
+### April 13, 2026
 ]
 
 ---
@@ -155,7 +155,7 @@ Shows how the response is related to the selection differential
 
 .pull-right[
 
-```r
+``` r
 S &lt;- c(5, 6, 5, 6, 6, 10)
 R &lt;- c(3, 2, 1, 3, 2, 3)
 df &lt;- data.frame(s=cumsum(S), 
@@ -171,7 +171,7 @@ ggplot(df, aes(x=s, y=r)) +
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="w13_c1_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-1-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -196,7 +196,7 @@ Shows how the response is related to the selection differential
 
 .pull-right[
 
-```r
+``` r
 S &lt;- c(5, 6, 5, 6, 6, 10)
 R &lt;- c(3, 2, 1, 3, 2, 3)
 df &lt;- data.frame(s=cumsum(S), 
@@ -212,7 +212,7 @@ ggplot(df, aes(x=s, y=r)) +
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="w13_c1_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -306,7 +306,7 @@ They plan to conduct 40 discrete generations of selection.
 ### Creating founder population
 
 
-```r
+``` r
 # install.packages("AlphaSimR")
 library(AlphaSimR)
 founderPop = runMacs(nInd=100, nChr=39, segSites=10000)
@@ -336,7 +336,7 @@ founderPop
 ### Setting Simulation Parameters
 
 
-```r
+``` r
 SP = SimParam$new(founderPop)
 # The ‘A’ at the end indicates that the trait’s QTL only have additive effects.
 SP$addTraitA(nQtlPerChr=3) 
@@ -357,7 +357,7 @@ SP$setVarE(h2=0.5)
 - This step will take the haplotypes in `founderPop` and the information in `SP` to create an object of `Pop-class`.
 
 
-```r
+``` r
 set.seed(12345)
 pop1 = newPop(founderPop)
 pop2 = newPop(founderPop)
@@ -376,13 +376,13 @@ for(generation in 1:40){
 # Examining the Results
 
 
-```r
+``` r
 plot(0:40, genMean1, type="l", col="blue", lwd=3, 
      xlab="Generation", ylab="Mean Genotypic Value")
 lines(0:40, genMean2, col="red", lwd=3)
 ```
 
-&lt;img src="w13_c1_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-6-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Conduct the selection
@@ -390,7 +390,7 @@ lines(0:40, genMean2, col="red", lwd=3)
 ### Compare different selection schemes
 
 
-```r
+``` r
 set.seed(12345)
 pop1 = newPop(founderPop)
 pop2 = newPop(founderPop)
@@ -413,14 +413,14 @@ for(generation in 1:40){
 # Examining the Results
 
 
-```r
+``` r
 plot(0:40, genMean1, type="l", col="blue", lwd=3, 
      xlab="Generation", ylab="Mean Genotypic Value")
 lines(0:40, genMean2, col="red", lwd=3)
 lines(0:40, genMean3, col="green", lwd=3)
 ```
 
-&lt;img src="w13_c1_files/figure-html/unnamed-chunk-10-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="w13_c1_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 
     </textarea>

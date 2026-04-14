@@ -4,7 +4,7 @@
     <title>Asymmetry of responses</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-17" />
+    <meta name="date" content="2026-04-15" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 17, 2024
+### April 15, 2026
 ]
 
 ---
@@ -44,7 +44,7 @@ class: center, middle, inverse, title-slide
 
 .pull-right[
 
-```r
+``` r
 d &lt;- read.csv(file="https://jyanglab.com/AGRO-931/data/ILoil.csv", na.strings=".", header=TRUE)
 par(bty="l", pty="m", mar=c(5, 4, 1, 1))
 matplot(x=d$YR, y=d[, c("IHP", "ILP", "IHO", "ILO")], type="l", lty=1,
@@ -365,7 +365,7 @@ Up to about `\(2N_e\)` generations.
 
 
 
-```r
+``` r
 ifun(0.2)
 ```
 
@@ -392,7 +392,7 @@ ifun(0.2)
 \end{align*}`
 
 
-```r
+``` r
 2*12*ifun(0.2)*0.25*0.9
 ```
 
@@ -400,7 +400,7 @@ ifun(0.2)
 ## [1] 7.558972
 ```
 
-```r
+``` r
 2*96*ifun(0.2)*0.25*0.9
 ```
 
