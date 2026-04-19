@@ -4,7 +4,7 @@
     <title>Correlated traits: Index selection</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jinliang Yang" />
-    <meta name="date" content="2024-04-26" />
+    <meta name="date" content="2026-04-24" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../asset/unl-150.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Jinliang Yang
 ]
 .date[
-### April 26, 2024
+### April 24, 2026
 ]
 
 ---
@@ -292,7 +292,7 @@ I &amp; =  \sum_{i=1}^{m=7}b_iP_i \\
 # A simulated example
 
 
-```r
+``` r
 G &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Gmatrix.csv")
 P &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Pmatrix.csv")
 a &lt;- read.csv("https://jyanglab.com/slides/2024-agro931/Wmatrix.csv")
@@ -302,17 +302,25 @@ solve(as.matrix(P[, -1]))
 ```
 
 ```
-##           [,1]        [,2]       [,3]       [,4]        [,5]        [,6]        [,7]
-## KC  0.79474139 -0.08412097 -0.6252394 -0.5008019 -0.10351099  -0.5123586  -2.5482715
-## EL -0.08412097  0.31442910 -0.1616803  0.2426977  0.06199121  -0.3469347   0.9845905
-## EW -0.62523938 -0.16168025  6.9321926  1.5576210 -0.78367948   1.5797301  -0.6336474
-## ED -0.50080191  0.24269775  1.5576210  3.1885762 -0.34724248   1.9990310  -1.3838360
-## CL -0.10351099  0.06199121 -0.7836795 -0.3472425  0.40582077  -0.7215205   1.7977689
-## CW -0.51235860 -0.34693473  1.5797301  1.9990310 -0.72152053  21.4511330 -24.2007667
-## CD -2.54827155  0.98459046 -0.6336474 -1.3838360  1.79776894 -24.2007667  85.0088254
+##           [,1]        [,2]       [,3]       [,4]        [,5]        [,6]
+## KC  0.79474139 -0.08412097 -0.6252394 -0.5008019 -0.10351099  -0.5123586
+## EL -0.08412097  0.31442910 -0.1616803  0.2426977  0.06199121  -0.3469347
+## EW -0.62523938 -0.16168025  6.9321926  1.5576210 -0.78367948   1.5797301
+## ED -0.50080191  0.24269775  1.5576210  3.1885762 -0.34724248   1.9990310
+## CL -0.10351099  0.06199121 -0.7836795 -0.3472425  0.40582077  -0.7215205
+## CW -0.51235860 -0.34693473  1.5797301  1.9990310 -0.72152053  21.4511330
+## CD -2.54827155  0.98459046 -0.6336474 -1.3838360  1.79776894 -24.2007667
+##           [,7]
+## KC  -2.5482715
+## EL   0.9845905
+## EW  -0.6336474
+## ED  -1.3838360
+## CL   1.7977689
+## CW -24.2007667
+## CD  85.0088254
 ```
 
-```r
+``` r
 # function t to compute transpose
 t(as.matrix(G[,-1]))
 ```
@@ -338,7 +346,7 @@ The vector of weights, which is called the __Smith-Hazel index__, or __optimum i
 \end{align*}`
 
 
-```r
+``` r
 b &lt;- solve(as.matrix(P[, -1])) %*% t(as.matrix(G[, -1])) %*% as.matrix(a[,1])
 b
 ```
